@@ -31,8 +31,14 @@ class STATUT{
 			$db->beginTransaction();
 
 			// insert
+			$query = 'INSERT INTO STATUT (libStat) VALUES (?);';
+			
 			// prepare
+			$request = $db->prepare($query);
+			
 			// execute
+			$request->execute( [$libStat]);
+
 			$db->commit();
 			$request->closeCursor();
 		}

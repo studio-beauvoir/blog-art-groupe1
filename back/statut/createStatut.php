@@ -12,6 +12,7 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 
 // controle des saisies du formulaire
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
+ctrlSaisies('qsdqsd');
 
 // Insertion classe Statut
 require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php'; 
@@ -28,6 +29,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    }
+
+    if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
+
+        header("Location: ./createStatut.php");
+    }   // End of if ((isset($_POST["submit"])) ...
+
+    if (((isset($_POST['libStat'])) AND !empty($_POST['libStat']))
+        AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+        // Saisies valides
+        $erreur = false;
+
+        $libStat = ctrlSaisies($_POST['libStat']);
+
+        $monStatut->create($libStat);
+
+        header("Location: ./statut.php");
+    }   // Fin if ((isset($_POST['libStat'])) ...
+    else {
+        // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }   // End of else erreur saisies
     // controle des saisies du formulaire
 
     // insertion effective du statut

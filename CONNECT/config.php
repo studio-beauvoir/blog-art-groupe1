@@ -10,4 +10,5 @@ $serverBD = "mysql:dbname=$nomBD;host=$hostBD;charset=utf8";
 // nom utilisateur de connexion à la BDD
 $userBD = 'root';         // Votre login
 // mot de passe de connexion à la BDD
-$passBD = '';         // Votre Pass
+// $passBD = 'root';         // Pass WAMP MAC
+$passBD = '';         // Pass WAMP WINDOW

@@ -12,6 +12,7 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 
 // controle des saisies du formulaire
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
+ctrlSaisies('qsdqsd');
 
 // Insertion classe Statut
 require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php'; 
@@ -26,9 +27,8 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    //Opérateur ternaire, c'est un test écrit à plat sur une ligne
-    //$submit = isset($POST['submit']) ? $_POST['Submit'] : '';
-    //ou
+
+
     if(isset($_POST['Submit'])){
         $Submit = $_POST['Submit'];
     } else {
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Saisies valides
         $erreur = false;
 
-        $libStat = ctrlSaisies(($_POST['libStat']));
+        $libStat = ctrlSaisies($_POST['libStat']);
 
         $monStatut->create($libStat);
 
@@ -55,7 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
     }   // End of else erreur saisies
-    
     // controle des saisies du formulaire
 
     // insertion effective du statut

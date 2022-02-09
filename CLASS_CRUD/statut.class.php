@@ -16,13 +16,12 @@ class STATUT{
 	function get_AllStatuts(){
 		global $db;
 
-		// select
-		$query = 'SELECT * FROM STATUT;'; //J'ecris ma requête SQL et la met en variable
-		// prepare
-		$result = $db->query($query); //J'envoi la requete au serveur SQL avec query
-		// execute
-		$allStatuts = $result->fetchAll(); //Je recupere le resultat de ma requete
-		return($allStatuts); //Je return ma requete pour plus tard
+		// tt récupérer
+		$query = 'SELECT * FROM STATUT;';
+		$result = $db->query($query);
+		$allStatuts = $result->fetchAll();
+
+		return($allStatuts);
 	}
 
 	function create($libStat){
@@ -30,11 +29,9 @@ class STATUT{
 
 		try {
 			$db->beginTransaction();
-
-			// insert
-			
-			// prepare
-			// execute
+			$query = 'INSERT INTO STATUT (libStat) VALUES (?)';
+            $request = $db->prepare($query);
+            $request->execute([$libStat]);
 			$db->commit();
 			$request->closeCursor();
 		}

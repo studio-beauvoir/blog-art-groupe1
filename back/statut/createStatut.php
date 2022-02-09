@@ -14,9 +14,10 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Statut
+require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
 
 // Instanciation de la classe Statut
-
+$monStatut = new STATUT();
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -24,8 +25,14 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-
-
+    //Opérateur ternaire, c'est un test écrit à plat sur une ligne
+    //$submit = isset($POST['submit']) ? $_POST['Submit'] : '';
+    //ou
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    }
     // controle des saisies du formulaire
 
     // insertion effective du statut
@@ -33,10 +40,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
     // Gestion des erreurs => msg si saisies ko
+    if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
 
+        header("Location: ./createStatut.php");
+    }   // End of if ((isset($_POST["submit"])) ...
+if (((isset($_POST['libStat'])) AND !empty($_POST['libStat']))
+        AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+        // Saisies valides
+        $erreur = false;
 
+        $libStat = ctrlSaisies(($_POST['libStat']));
 
+        $monStatut->create($libStat);
 
+        header("Location: ./statut.php");
+    }   // Fin if ((isset($_POST['libStat'])) ...
+    else {
+        // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }   // End of else erreur saisies
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form

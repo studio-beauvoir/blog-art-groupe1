@@ -14,9 +14,10 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Statut
+require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
 
 // Instanciation de la classe Statut
-
+$monStatut = new STATUT(); //C'est l'instance de classeOn créé un objet en mémoire, à chaque fois qu'on appelle une méthode il faudra y faire appel 
 
 // Gestion des CIR => affichage erreur sinon
 $errCIR = 0;
@@ -66,15 +67,14 @@ $errCIR = 0;
     <tbody>
 <?php
     // Appel méthode : Get tous les statuts en BDD
-
+    $allStatuts = $monStatut->get_AllStatuts(); //On créé la variable allStatuts et on va chercher monStatut. On se sert ensuite de la méthode getAllStatuts
     // Boucle pour afficher
-    //foreach($all as $row) {
-
+    foreach($allStatuts as $row) {
 ?>
         <tr>
-		<td><h4>&nbsp; <?= "ici idStat"; ?> &nbsp;</h4></td>
+		<td><h4>&nbsp; <?= $row['idStat']; ?> &nbsp;</h4></td>
 
-        <td>&nbsp; <?= "ici libStat"; ?> &nbsp;</td>
+        <td>&nbsp; <?= $row['libStat']; ?> &nbsp;</td>
 
 <?php
         $idStat = 1; // En dur
@@ -96,7 +96,7 @@ $errCIR = 0;
 ?>
         </tr>
 <?php
-	// }	// End of foreach
+	    }	// End of foreach
 ?>
     </tbody>
     </table>

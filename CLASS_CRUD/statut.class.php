@@ -16,9 +16,11 @@ class STATUT{
 	function get_AllStatuts(){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		// tt récupérer
+		$query = 'SELECT * FROM STATUT;';
+		$result = $db->query($query);
+		$allStatuts = $result->fetchAll();
+
 		return($allStatuts);
 	}
 

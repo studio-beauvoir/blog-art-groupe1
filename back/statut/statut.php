@@ -14,8 +14,12 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Statut
+    // rajouté
+    require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php'; 
 
 // Instanciation de la classe Statut
+    // rajouté
+    $monStatut = new STATUT(); 
 
 
 // Gestion des CIR => affichage erreur sinon
@@ -66,28 +70,30 @@ $errCIR = 0;
     <tbody>
 <?php
     // Appel méthode : Get tous les statuts en BDD
+    $all = $monStatut->get_AllStatuts();
 
     // Boucle pour afficher
-    //foreach($all as $row) {
-
+    foreach($all as $row) {
+        // la boucle va écrire le code html juste en dessous
+        // on ferme la boucle quelques lignes plus tard
 ?>
         <tr>
-		<td><h4>&nbsp; <?= "ici idStat"; ?> &nbsp;</h4></td>
+		<td><h4>&nbsp; <?= $row['idStat']; ?> &nbsp;</h4></td>
 
-        <td>&nbsp; <?= "ici libStat"; ?> &nbsp;</td>
+        <td>&nbsp; <?= $row['libStat']; ?> &nbsp;</td>
 
 <?php
         $idStat = 1; // En dur
         if ($idStat != 1) {  // superAdmin
 ?>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateStatut.php?id=<?=1; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier statut" title="Modifier statut" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateStatut.php?id=<?=$row['idStat']; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier statut" title="Modifier statut" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 		<br /></td>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./deleteStatut.php?id=<?=1; ?>"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer statut" title="Supprimer statut" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./deleteStatut.php?id=<?=$row['idStat']; ?>"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer statut" title="Supprimer statut" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 		<br /></td>
 <?php
         } else {
 ?>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateStatut.php?id=<?=1; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier statut" title="Modifier statut" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateStatut.php?id=<?=$row['idStat']; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier statut" title="Modifier statut" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 		<br /></td>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="superAdmin"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer statut" title="Supprimer statut" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 		<br /></td>
@@ -96,7 +102,8 @@ $errCIR = 0;
 ?>
         </tr>
 <?php
-	// }	// End of foreach
+    // c'est ici qu'on ferme la boucle
+	}	// End of foreach
 ?>
     </tbody>
     </table>

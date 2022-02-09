@@ -14,8 +14,10 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Statut
+require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php'; 
 
 // Instanciation de la classe Statut
+$monStatut = new STATUT(); 
 
 
 // Gestion des erreurs de saisie

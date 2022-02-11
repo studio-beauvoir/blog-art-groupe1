@@ -16,11 +16,10 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 require_once __DIR__ . '/../../util/delAccents.php';
 
 // Insertion classe Statut
+require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php'; 
 
 // Instanciation de la classe Statut
-
-
-
+$monStatut = new STATUT(); 
 
 // Ctrl CIR
 // Insertion classe User
@@ -37,9 +36,6 @@ require_once __DIR__ . '/../../util/delAccents.php';
 $erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
-
 
     // controle des saisies du formulaire
 
@@ -100,9 +96,6 @@ include __DIR__ . '/initStatut.php';
 <?php
     // Supp : récup id à supprimer
     // id passé en GET
-
-
-
 
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">

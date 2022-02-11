@@ -38,7 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         header("Location: ./createStatut.php");
     }   // End of if ((isset($_POST["submit"])) ...
-
     if (((isset($_POST['libStat'])) AND !empty($_POST['libStat']))
         AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
         // Saisies valides
@@ -59,13 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // insertion effective du statut
 
-
-
     // Gestion des erreurs => msg si saisies ko
-
-
-
-
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form

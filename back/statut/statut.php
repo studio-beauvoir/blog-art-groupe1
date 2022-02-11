@@ -83,8 +83,7 @@ $errCIR = 0;
         <td>&nbsp; <?= $row['libStat']; ?> &nbsp;</td>
 
 <?php
-        $idStat = 1; // En dur
-        if ($idStat != 1) {  // superAdmin
+        if ($row['idStat'] != 1) {  // superAdmin
 ?>
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateStatut.php?id=<?=$row['idStat']; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier statut" title="Modifier statut" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 		<br /></td>

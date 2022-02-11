@@ -36,15 +36,23 @@ $monStatut = new STATUT();
 $erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
-
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // controle des saisies du formulaire
-
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    }
     // modification effective du statut
-
-
+    $libStat = ctrlSaisies($_POST['libStat']);
+    $idStat = ctrlSaisies($_POST['id']);
+    $monStatut->delete($idStat);
+    // header("Location: ./deleteStatut.php");
+    header("Location: ./statut.php");
 
     // Gestion des erreurs => msg si saisies ko
-
+    $erreur = true;
+    $errSaisies =  "Erreur, la saisie est obligatoire !";
 
 
     // A faire dans un 2ème temps
@@ -96,6 +104,9 @@ include __DIR__ . '/initStatut.php';
 <?php
     // Supp : récup id à supprimer
     // id passé en GET
+    $statut = $monStatut->get_1Statut($_GET['id']);
+
+    $libStat = $statut['libStat'];
 
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -107,16 +118,16 @@ include __DIR__ . '/initStatut.php';
 
         <div class="control-group">
             <label class="control-label" for="libStat"><b>Nom :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="libStat" id="libStat" size="80" maxlength="80" value="<?= $libStat; ?>" disabled="disabled" />
+            <input type="text" name="libStat" id="libStat" size="80" maxlength="80" value="<?= $libStat ?>" disabled="disabled" />
         </div>
 
         <div class="control-group">
             <div class="controls">
                 <br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Annuler" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <a href="./statut.php" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;">Annuler</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;"/>
                 <br>
             </div>
         </div>

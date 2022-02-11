@@ -54,8 +54,11 @@ class MEMBRE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM MEMBRE;';
 		// prepare
+		$result = $db->query($query);
 		// execute
+		$allStatuts = $result->fetchAll();
 		return($allNbMembersByStat);
 	}
 

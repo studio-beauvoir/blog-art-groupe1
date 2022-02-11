@@ -86,8 +86,6 @@ include __DIR__ . '/initStatut.php';
 
     $libStat = $statut['libStat'];
 
-
-
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 

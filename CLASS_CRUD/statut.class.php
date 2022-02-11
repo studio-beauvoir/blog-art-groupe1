@@ -95,9 +95,9 @@ class STATUT{
 			$db->beginTransaction();
 
 			// delete
-			$query = 'DELETE FROM STATUT (idStat) VALUES (?);';
+			$query = 'DELETE FROM STATUT WHERE `idStat` = ?;';
 			// prepare
-			$request = $db->prepare($query);
+			$request = $db->prepare($query); //Va regarder où il y a des "?"
 			// execute
 			$request->execute( [$idStat]);
 			$count = $request->rowCount(); //

@@ -13,6 +13,8 @@ require_once __DIR__ . '/../../util/utilErrOn.php';
 // controle des saisies du formulaire
 require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
+require_once __DIR__ . '/../../util/validator.php';
+
 // Insertion classe Statut
 require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php'; 
 
@@ -33,14 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $Submit = "";
     }
 
-    if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
+    $validator = Validator::make([
+        ValidationRule::required('libStat'),
+        ValidationRule::required('id')
+    ])->bindValues($_POST);
 
-        header("Location: ./updateStatut.php");
-    }   // End of if ((isset($_POST["submit"])) ...
-
-    if (((isset($_POST['libStat'])) AND !empty($_POST['libStat']))
-        AND (isset($_POST['id'])) AND !empty($_POST['id'])
-        AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+    if($validator->success()) {
         // Saisies valides
         $erreur = false;
 
@@ -49,13 +49,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $monStatut->update($idStat, $libStat);
 
         header("Location: ./statut.php");
-    }   // Fin if ((isset($_POST['libStat'])) ...
-    else {
+    } else {
         // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
     }   // End of else erreur saisies
-
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 
 
@@ -80,6 +78,10 @@ include __DIR__ . '/initStatut.php';
     // Modif : récup id à modifier
     // id passé en GET
 
+    if(!isset($_GET['id'])) {
+        header("Location: ./statut.php");
+        die();
+    }
     $statut = $monStatut->get_1Statut($_GET['id']);
 
     $libStat = $statut['libStat'];
@@ -87,7 +89,7 @@ include __DIR__ . '/initStatut.php';
 
 
 ?>
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
+    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
       <fieldset>
         <legend class="legend1">Formulaire Statut...</legend>
@@ -117,9 +119,9 @@ include __DIR__ . '/initStatut.php';
             <div class="controls">
                 <br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <a href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;">Réinitialiser</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;"/>
                 <br>
             </div>
         </div>

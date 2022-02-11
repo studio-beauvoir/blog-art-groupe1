@@ -23,9 +23,9 @@ $monStatut = new STATUT();
 
 // Ctrl CIR
 // Insertion classe User
-//require_once __DIR__ . '/../../CLASS_CRUD/user.class.php';
+require_once __DIR__ . '/../../CLASS_CRUD/user.class.php';
 // Instanciation de la classe User
-//$monUser = new USER();
+$monUser = new USER();
 
 // Insertion classe Membre
 //require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
     // A faire dans un 2ème temps
-    // Ctrl CIR : inexistence FK => del possible
+    // Ctrl CIR : inexistence Foreign Key => del possible
 
 
 

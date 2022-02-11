@@ -7,10 +7,25 @@ class STATUT{
 	function get_1Statut($idStat){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetch());
+		try {
+			$query = 'SELECT * FROM STATUT WHERE idStat=?;';
+			$request = $db->prepare($query);
+			
+			$request->execute([$idStat]);
+
+			$result = $request->fetch();
+
+			if(isset($request)) {
+				return($result);
+			} else {
+				throw new ErrorException('Statut not found');
+			}
+		}
+		catch (PDOException $e) {
+			$db->rollBack();
+			$request->closeCursor();
+			die('Erreur insert STATUT : ' . $e->getMessage());
+		}
 	}
 
 	function get_AllStatuts(){
@@ -55,9 +70,14 @@ class STATUT{
 		try {
 			$db->beginTransaction();
 
-			// update
+			// insert
+			$query = 'UPDATE STATUT SET libStat=? WHERE idStat=?;';
+
 			// prepare
+			$request = $db->prepare($query);
+			
 			// execute
+			$request->execute( [$libStat, $idStat]);
 			$db->commit();
 			$request->closeCursor();
 		}

@@ -7,17 +7,12 @@
 //
 ////////////////////////////////////////////////////////////
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
-
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
+// Insertion des fonctions utilitaires
+require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Statut
 require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php'; 
 
-//Insertion Validator
-require_once __DIR__ . '/../../util/validator.php';
 
 // Instanciation de la classe Statut
 $monStatut = new STATUT(); 

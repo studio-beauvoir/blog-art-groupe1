@@ -75,8 +75,11 @@ class STATUT{
 			$db->beginTransaction();
 
 			// delete
+			$query = 'DELETE FROM STATUT (idStat) VALUES (?);';
 			// prepare
+			$request = $db->prepare($query);
 			// execute
+			$request->execute( [$idStat]);
 			$count = $request->rowCount(); //
 			$db->commit();
 			$request->closeCursor();

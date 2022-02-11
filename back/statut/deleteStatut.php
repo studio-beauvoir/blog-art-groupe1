@@ -38,25 +38,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
         $Submit = "";
     }
-    // modification effective du statut
-    $idStat = ctrlSaisies($_POST['id']);
-    $monStatut->delete($idStat);
-    // header("Location: ./deleteStatut.php");
-    header("Location: ./statut.php");
 
-    // Gestion des erreurs => msg si saisies ko
-    $erreur = true;
-    $errSaisies =  "Erreur, la saisie est obligatoire !";
+    $validator = Validator::make([
+        ValidationRule::required('id')
+    ])->bindValues($_POST);
+
+    if($validator->success()) {
+        
+        // A faire dans un 2ème temps
+        // Ctrl CIR : inexistence Foreign Key => del possible
+        // $nbMembresStatut = $monMEMBRE->get_NbAllMembersByidStat();
+        // il existe des membres avec ce statut
+        // if($nbMembresStatut>0) {
+        //     header("Location: ./statut.php");
+        // } 
 
 
-    // A faire dans un 2ème temps
-    // Ctrl CIR : inexistence Foreign Key => del possible
-    $all = $monMEMBRE->get_NbAllMembersByidStat();
-    foreach($all as $row) {
-        if($row['idStat'] != 0){
-            
-        }
 
+        // modification effective du statut
+        $idStat = ctrlSaisies($_POST['id']);
+        $monStatut->delete($idStat);
+        // header("Location: ./deleteStatut.php");
+        header("Location: ./statut.php");
+
+    } else {
+        // Gestion des erreurs => msg si saisies ko
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }
 
 }   // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
 // Init variables form

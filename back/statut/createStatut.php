@@ -16,6 +16,9 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 // Insertion classe Statut
 require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php'; 
 
+//Insertion Validator
+require_once __DIR__ . '/../../util/validator.php';
+
 // Instanciation de la classe Statut
 $monStatut = new STATUT(); 
 
@@ -34,12 +37,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $Submit = "";
     }
 
-    if ((isset($_POST["Submit"])) AND ($Submit === "Initialiser")) {
+    $validator = Validator::make([
+        ValidationRule::required('libStat')
+    ])->bindValues($_POST);
 
-        header("Location: ./createStatut.php");
-    }   // End of if ((isset($_POST["submit"])) ...
-    if (((isset($_POST['libStat'])) AND !empty($_POST['libStat']))
-        AND (!empty($_POST['Submit']) AND ($Submit === "Valider"))) {
+    if($validator->success()) {
+
         // Saisies valides
         $erreur = false;
 
@@ -108,9 +111,9 @@ include __DIR__ . '/initStatut.php';
             <div class="controls">
                 <br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <a href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;">Réinitialiser</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;"/>
                 <br>
             </div>
         </div>

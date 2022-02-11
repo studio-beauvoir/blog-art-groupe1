@@ -23,14 +23,14 @@ $monStatut = new STATUT();
 
 // Ctrl CIR
 // Insertion classe User
-require_once __DIR__ . '/../../CLASS_CRUD/user.class.php';
+//require_once __DIR__ . '/../../CLASS_CRUD/user.class.php';
 // Instanciation de la classe User
-$monUser = new USER();
+//$monUser = new USER();
 
 // Insertion classe Membre
-require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
+//require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
 // Instanciation de la classe Membre
-$monMembre = new MEMBRE();
+//$monMembre = new MEMBRE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -44,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $Submit = "";
     }
     // modification effective du statut
-    $libStat = ctrlSaisies($_POST['libStat']);
     $idStat = ctrlSaisies($_POST['id']);
     $monStatut->delete($idStat);
     // header("Location: ./deleteStatut.php");

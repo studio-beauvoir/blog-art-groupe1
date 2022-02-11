@@ -23,9 +23,9 @@ require_once __DIR__ . '/../../CLASS_CRUD/user.class.php';
 $monUser = new USER();
 
 // Insertion classe Membre
-//require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
+require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
 // Instanciation de la classe Membre
-//$monMembre = new MEMBRE();
+$monMembre = new MEMBRE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -51,8 +51,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // A faire dans un 2ème temps
     // Ctrl CIR : inexistence Foreign Key => del possible
-
-
+    $all = $monMEMBRE->get_NbAllMembersByidStat();
+    foreach($all as $row) {
+        if($row['idStat'] != 0){
+            
+        }
 
 
 }   // End of if ($_SERVER["REQUEST_METHOD"] === "POST")

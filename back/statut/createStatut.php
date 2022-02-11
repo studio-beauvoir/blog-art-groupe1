@@ -61,19 +61,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form
 include __DIR__ . '/initStatut.php';
-?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-    <meta charset="utf-8" />
-    <title>Admin - CRUD Statut</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
+$pageTitle = "Admin - CRUD Statut";
+include __DIR__ . '/../../layouts/back/head.php';
+?>
+
     <h1>BLOGART22 Admin - CRUD Statut</h1>
     <h2>Ajout d'un statut</h2>
 

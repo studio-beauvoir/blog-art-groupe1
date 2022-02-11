@@ -7,11 +7,9 @@
 //
 ////////////////////////////////////////////////////////////
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
+// Insertion des fonctions utilitaires
+require_once __DIR__ . '/../../util/index.php';
 
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 // Insertion classe Statut
     // rajouté
@@ -25,33 +23,10 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 // Gestion des CIR => affichage erreur sinon
 $errCIR = 0;
 
-
-
+$pageTitle = "Gestion du Statut";
+include __DIR__ . '/../../layouts/back/head.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-	<title>Gestion du Statut</title>
-	<meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <style type="text/css">
-        .error {
-            padding: 2px;
-            border: solid 0px black;
-            color: red;
-            font-style: italic;
-            border-radius: 5px;
-        }
-        .superAdmin {
-            text-decoration: none;  /* del sourligné */
-            color: #797979;     /* Acier */
-/*            color: #919191;      Etain */
-        }
-    </style>
-</head>
-<body>
+
 	<h1>BLOGART22 Admin - CRUD Statut</h1>
 
 	<hr />

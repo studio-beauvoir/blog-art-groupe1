@@ -7,13 +7,8 @@
 //
 ////////////////////////////////////////////////////////////
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
-
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
-
-require_once __DIR__ . '/../../util/validator.php';
+// Insertion des fonctions utilitaires
+require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Statut
 require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php'; 
@@ -59,19 +54,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 // Init variables form
 include __DIR__ . '/initStatut.php';
-?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-    <meta charset="utf-8" />
-    <title>Admin - CRUD Statut</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
+
+$pageTitle = "Admin - CRUD Statut";
+include __DIR__ . '/../../layouts/back/head.php';
+?>
     <h1>BLOGART22 Admin - CRUD Statut</h1>
     <h2>Modification d'un statut</h2>
 <?php

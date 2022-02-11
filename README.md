@@ -12,4 +12,5 @@ Projet Blog'Art au MMI Bordeaux, promo 2024
 # Dossiers
 `/_RESSOURCE` : Fichier sql des bases de données et images pour l'aide à la conception du code.
 `/back` : Les fichiers edit, delete, view etc
-`/front` : dossiers contenant les assets (js, css, imgs)
+`/assets` : Dossiers contenant les assets (js, css, imgs)
+`/layouts` : Layouts à inclure pour factoriser le code (back-office ou front-office)

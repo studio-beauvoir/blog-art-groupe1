@@ -44,9 +44,20 @@ class USER{
 	function get_NbAllUsersByidStat($idStat){
 		global $db;
 
-		// select
-		// prepare
+		$db->beginTransaction();
+
+		$query = 'SELECT * FROM USER WHERE idStat=?;';
+		$request = $db->prepare($query);
+		
+		$request->execute([$idStat]);
+
 		// execute
+		$allUsersByStat = $request->fetchAll(); // [...,  ...]
+
+		$db->commit();
+		$request->closeCursor();
+
+		$allNbUsersByStat = count($allUsersByStat); // 2 par exemple 
 		return($allNbUsersByStat);
 	}
 

@@ -113,8 +113,6 @@ class LANGUE{
 		global $db;
 
 		try {
-			print_r([$numLang, $lib1Lang, $lib2Lang, $numPays]);
-			die();
 			$db->beginTransaction();
 
 			// insert

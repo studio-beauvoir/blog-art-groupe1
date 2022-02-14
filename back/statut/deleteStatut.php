@@ -43,8 +43,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // A faire dans un 2ème temps
         // Ctrl CIR : inexistence Foreign Key => del possible
         $nbMembresStatut = $monMembre->get_NbAllMembersByidStat($_POST['id']);
-        // il existe des membres avec ce statut
-        if($nbMembresStatut>0) {
+        $nbUsersStatut = $monUser->get_NbAllUsersByidStat($_POST['id']);
+
+        
+        // s'il existe au moins un membre ou un user avec ce statut
+        if($nbMembresStatut>0 OR $nbUsersStatut>0) {
             // on redirige avec l'affichage de l'erreur
             header("Location: ./statut.php?err_cir=true");
             // et on s'arrête là

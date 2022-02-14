@@ -38,7 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $lib1Lang = $validator->verifiedField('lib1Lang');
         $lib2Lang = $validator->verifiedField('lib2Lang');
         $numPays = $validator->verifiedField('idPays');
-
         
         $numLang = $maLangue->getNextNumLang($numPays);
         $maLangue->create($numLang, $lib1Lang, $lib2Lang, $numPays);
@@ -96,10 +95,17 @@ include __DIR__ . '/initLangue.php';
             </label>
 
 
-                <input type="text" name="idPays" id="idPays" size="5" maxlength="5" value="<?= "" ?>" autocomplete="on" />
+                <!-- <input type="text" name="idPays" id="idPays" size="5" maxlength="5" value="<?= "" ?>" autocomplete="on" /> -->
 
                 <!-- Listbox pays => 2ème temps -->
-
+                <select name="idPays" id="idPays">
+                    <?php 
+                        $allPays = $maLangue->get_AllPays();                    
+                        foreach($allPays as $pays) { 
+                    ?>
+                        <option value="<?= $pays['numPays'] ?>" ><?=$pays['frPays'] ?></option>
+                    <?php } ?>
+                </select>
             </div>
         </div>
     <!-- FIN Listbox Pays -->

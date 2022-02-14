@@ -7,11 +7,8 @@
 //
 ////////////////////////////////////////////////////////////
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
-
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
+// Insertion des fonctions utilitaires
+require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Langue
 require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php'; 
@@ -26,15 +23,31 @@ $erreur = false;
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
+    $validator = Validator::make([
+        ValidationRule::required('id'),
+        ValidationRule::required('lib1Lang'),
+        ValidationRule::required('lib2Lang'),
+        ValidationRule::required('idPays'),
+    ])->bindValues($_POST);
+    
 
+    if($validator->success()) {
+        $erreur = false;
 
-    // controle des saisies du formulaire
+        $numLang = $validator->verifiedField('id');
+        $lib1Lang = $validator->verifiedField('lib1Lang');
+        $lib2Lang = $validator->verifiedField('lib2Lang');
+        $numPays = $validator->verifiedField('idPays');
+        
+        $maLangue->update($numLang, $lib1Lang, $lib2Lang, $numPays);
 
-    // modification effective du langue
-
-
-
-    // Gestion des erreurs => msg si saisies ko
+        header("Location: ./langue.php");
+        die();
+    } else {
+        // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }   // End of else erreur saisies
 
 
 
@@ -65,11 +78,15 @@ include __DIR__ . '/initLangue.php';
     // Modif : récup id à modifier
     // id passé en GET
 
+    if(!isset($_GET['id'])) {
+        header("Location: ./langue.php");
+        die();
+    }
+    $langue = $maLangue->get_1Langue($_GET['id']);
 
-
-
-
-
+    $lib1Lang = $langue['lib1Lang'];
+    $lib2Lang = $langue['lib2Lang'];
+    $idPays = $langue['numPays'];
 
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -99,10 +116,18 @@ include __DIR__ . '/initLangue.php';
             </label>
 
 
-                <input type="text" name="idPays" id="idPays" size="5" maxlength="5" value="<?= "" ?>" autocomplete="on" />
+                <!-- <input type="text" name="idPays" id="idPays" size="5" maxlength="5" value="<?= $idPays ?>" autocomplete="on" /> -->
 
                 <!-- Listbox pays => 2ème temps -->
 
+                <select name="idPays" id="idPays">
+                    <?php 
+                        $allPays = $maLangue->get_AllPays();                    
+                        foreach($allPays as $pays) { 
+                    ?>
+                        <option <?=$pays['numPays']==$idPays?'selected':'' ?> value="<?= $pays['numPays'] ?>" ><?=$pays['frPays'] ?></option>
+                    <?php } ?>
+                </select>
             </div>
         </div>
     <!-- FIN Listbox Pays -->

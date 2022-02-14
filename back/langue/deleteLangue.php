@@ -87,7 +87,7 @@ include __DIR__ . '/initLangue.php';
     // Supp : récup id à supprimer
     // id passé en GET
     $langue = $maLangue->get_1Langue($_GET['id']);
-    $numLang = $langue['numLang'];
+    $numPays = $langue['numPays'];
     $lib1Lang = $langue['lib1Lang'];
     $lib2Lang = $langue['lib2Lang'];
 
@@ -120,7 +120,7 @@ include __DIR__ . '/initLangue.php';
             </label>
 
 
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numLang ?>" autocomplete="on" />
+                <input type="text" disabled name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numPays ?>" autocomplete="on" />
 
                 <!-- Listbox langue disabled => 2ème temps -->
 

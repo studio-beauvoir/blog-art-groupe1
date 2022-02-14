@@ -50,6 +50,15 @@ class LANGUE{
 		return($allLangues);
 	}
 
+	function get_AllPays(){
+		global $db;
+
+		$query = 'SELECT * FROM PAYS;';
+		$result = $db->query($query);
+		$allPays = $result->fetchAll();
+		return($allPays);
+	}
+
 	function get_AllLanguesByPays(){
 		global $db;
 
@@ -148,8 +157,6 @@ class LANGUE{
 
 			// execute
 			$request->execute([$lib1Lang, $lib2Lang, $numPays, $numLang]);
-			$db->commit();
-			$request->closeCursor();
 			$db->commit();
 			$request->closeCursor();
 		}

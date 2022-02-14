@@ -89,6 +89,17 @@ class Validator {
         return $this->hasSucceeded;
     }
 
+    public function verifiedField($fieldName) {
+        try {
+            if(!$this->hasSucceeded) {
+                throw new Error('La requête n\'a pas été validée');
+            }
+            return $this->fieldsValues[$fieldName];
+        } catch(Error $e) {
+			die('Erreur validator : ' . $e->getMessage());
+        }
+    }
+
     public function ruleExist($ruleToCompare) {
         $searchResultCount = array_filter(
             $this->rules, 

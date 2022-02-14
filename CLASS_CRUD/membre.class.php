@@ -53,15 +53,21 @@ class MEMBRE{
 	function get_NbAllMembersByidStat($idStat){
 		global $db;
 
+		$db->beginTransaction();
 
 		$query = 'SELECT * FROM MEMBRE WHERE idStat=?;';
 		$request = $db->prepare($query);
 		
 		$request->execute([$idStat]);
 
-		$result = $request->fetch();
+		// $db->commit();
 		// execute
-		$allNbMembersByStat = $request->fetchAll();
+		$allMembersByStat = $request->fetchAll(); // [...,  ...]
+		
+		$db->commit();
+		$request->closeCursor();
+		
+		$allNbMembersByStat = count($allMembersByStat); // 2 par exemple 
 		return($allNbMembersByStat);
 	}
 

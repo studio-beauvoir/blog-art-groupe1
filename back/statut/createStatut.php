@@ -39,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $monStatut->create($libStat);
 
         header("Location: ./statut.php");
+        die();
     }   // Fin if ((isset($_POST['libStat'])) ...
     else {
         // Saisies invalides

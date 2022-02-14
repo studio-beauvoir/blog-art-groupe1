@@ -24,14 +24,6 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-
-
-    if(isset($_POST['Submit'])){
-        $Submit = $_POST['Submit'];
-    } else {
-        $Submit = "";
-    }
-
     $validator = Validator::make([
         ValidationRule::required('libStat')
     ])->bindValues($_POST);
@@ -41,7 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Saisies valides
         $erreur = false;
 
-        $libStat = ctrlSaisies($_POST['libStat']);
+        // $libStat = ctrlSaisies($_POST['libStat']);
+        $libStat = $validator->verifiedField('libStat');
 
         $monStatut->create($libStat);
 

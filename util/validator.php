@@ -31,8 +31,8 @@ class ValidationRule {
     public function isValid() {
         if($this->isRequired) {
             if(
-                !isset($this->setValidator->$fieldsValues[$this->field])
-                OR empty($this->setValidator->$fieldsValues[$this->field])
+                !isset($this->validator->fieldsValues[$this->field])
+                OR empty($this->validator->fieldsValues[$this->field])
             ) return false;
         }
 
@@ -101,7 +101,7 @@ class Validator {
         foreach($this->rules as $rule) {
             if( !$rule->isValid() ) {
                 $this->hasSucceeded = false;
-                break;
+                // break;
             }
         }
 
@@ -150,10 +150,10 @@ class Validator {
      * Vérifie s'il y a conflit avec une règle sur un même field
      */
     private function ruleExist($ruleToCompare) {
-        $searchResultCount = array_filter(
+        $searchResultCount = count(array_filter(
             $this->rules, 
-            fn($rule)=>$rule->isSameField($ruleToCompare)
-        );
+            fn($rule)=>$rule->isSameFieldName($ruleToCompare)
+        ));
         // s'il y a au moins un résultat, la règle existe
         $exists = $searchResultCount > 0;
         return $exists;

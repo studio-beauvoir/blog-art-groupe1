@@ -94,11 +94,19 @@ class LANGUE{
 		global $db;
 
 		try {
+			print_r([$numLang, $lib1Lang, $lib2Lang, $numPays]);
+			die();
 			$db->beginTransaction();
 
 			// insert
+			$query = 'INSERT INTO LANGUE (numLang, lib1Lang, lib2Lang, numPays) VALUES (?, ?, ?, ?);';
+			
 			// prepare
+			$request = $db->prepare($query);
+			
 			// execute
+			$request->execute( [$numLang, $lib1Lang, $lib2Lang, $numPays]);
+
 			$db->commit();
 			$request->closeCursor();
 		}

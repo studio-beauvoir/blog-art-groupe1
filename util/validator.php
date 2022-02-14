@@ -41,6 +41,8 @@ class ValidationRule {
 
     public function setValidator($validator) {
         $this->validator = $validator;
+
+        return $this;
     }
 
     public function setIsRequired($isRequired) {
@@ -138,7 +140,7 @@ class Validator {
             if( !$this->ruleExist($potentialRule) ) {
                 array_push(
                     $this->rules, 
-                    $potentialRule
+                    $potentialRule->setValidator($this)
                 );
             } 
         }

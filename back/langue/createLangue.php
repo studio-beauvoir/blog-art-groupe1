@@ -28,19 +28,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $validator = Validator::make([
         ValidationRule::required('lib1Lang'),
         ValidationRule::required('lib2Lang'),
-        ValidationRule::required('numPays'),
+        ValidationRule::required('idPays'),
     ])->bindValues($_POST);
     
+
     if($validator->success()) {
         $erreur = false;
 
         $lib1Lang = $validator->verifiedField('lib1Lang');
         $lib2Lang = $validator->verifiedField('lib2Lang');
-        $numPays = $validator->verifiedField('numPays');
+        $numPays = $validator->verifiedField('idPays');
 
         
-        print_r($validator->fieldsValues);
-        die();
         $numLang = $maLangue->getNextNumLang($numPays);
         $maLangue->create($numLang, $lib1Lang, $lib2Lang, $numPays);
 

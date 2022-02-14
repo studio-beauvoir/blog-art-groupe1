@@ -33,7 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Saisies valides
         $erreur = false;
 
-        $libStat = ctrlSaisies($_POST['libStat']);
+        // $libStat = ctrlSaisies($_POST['libStat']);
+        $libStat = $validator->verifiedField('libStat');
 
         $monStatut->create($libStat);
 

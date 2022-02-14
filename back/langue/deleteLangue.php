@@ -1,17 +1,14 @@
 <?php
 ////////////////////////////////////////////////////////////
 //
-//  CRUD KANGUE (PDO) - Modifié : 4 Juillet 2021
+//  CRUD LANGUE (PDO) - Modifié : 4 Juillet 2021
 //
 //  Script  : deleteLangue.php  -  (ETUD)  BLOGART22
 //
 ////////////////////////////////////////////////////////////
 
 // Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
-
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
+require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Langue
 require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php'; 
@@ -23,26 +20,20 @@ $maLangue = new LANGUE();
 // Ctrl CIR
 // Insertion classe Angle
 
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
+
 // Instanciation de la classe Angle
-
-
-
-
+$monAngle = new ANGLE();
 
 // Insertion classe Thematique
-
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 // Instanciation de la classe Thematique
-
-
-
-
+$maThematique = new THEMATIQUE();
 
 // Insertion classe Motcle
-
+require_once __DIR__ . '/../../CLASS_CRUD/motcle.class.php';
 // Instanciation de la classe Motcle
-
-
-
+$monMotCle = new MOTCLE();
 
 
 // Gestion des erreurs de saisie
@@ -51,8 +42,12 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-
-
+    if(isset($_POST['Submit'])){
+        $Submit = $_POST['Submit'];
+    } else {
+        $Submit = "";
+    }
+    
     // controle CIR
 
     // delete effective du langue

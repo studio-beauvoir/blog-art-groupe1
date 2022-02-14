@@ -16,7 +16,6 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $maLangue = new LANGUE(); 
 
-
 // Ctrl CIR
 // Insertion classe Angle
 
@@ -26,7 +25,7 @@ require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 $monAngle = new ANGLE();
 
 // Insertion classe Thematique
-require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
+require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
 // Instanciation de la classe Thematique
 $maThematique = new THEMATIQUE();
 
@@ -42,23 +41,20 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    if(isset($_POST['Submit'])){
-        $Submit = $_POST['Submit'];
+    $validator = Validator::make([
+        ValidationRule::required('id')
+    ])->bindValues($_POST);
+
+    if($validator->success()) {
+        $numLang = $validator->verifiedField('id');
+        $maLangue->delete($numLang);
+
+        header("Location: ./langue.php");
+        die();
     } else {
-        $Submit = "";
+        $erreur = true;
+        $errSaisies =  "Erreur, la langue à supprimer n'existe pas !";
     }
-    
-    // controle CIR
-
-    // delete effective du langue
-
-
-
-
-
-
-
-
 
 }   // End of if ($_SERVER["REQUEST_METHOD"] === "POST")
 // Init variables form
@@ -90,10 +86,10 @@ include __DIR__ . '/initLangue.php';
 <?php
     // Supp : récup id à supprimer
     // id passé en GET
-
-
-
-
+    $langue = $maLangue->get_1Langue($_GET['id']);
+    $numLang = $langue['numLang'];
+    $lib1Lang = $langue['lib1Lang'];
+    $lib2Lang = $langue['lib2Lang'];
 
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -124,7 +120,7 @@ include __DIR__ . '/initLangue.php';
             </label>
 
 
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= "" ?>" autocomplete="on" />
+                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numLang ?>" autocomplete="on" />
 
                 <!-- Listbox langue disabled => 2ème temps -->
 
@@ -137,7 +133,7 @@ include __DIR__ . '/initLangue.php';
             <div class="controls">
                 <br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Annuler" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <a href="./langue.php" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;">Annuler</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
                 <br>

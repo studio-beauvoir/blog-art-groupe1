@@ -33,11 +33,6 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // controle des saisies du formulaire
-    if(isset($_POST['Submit'])){
-        $Submit = $_POST['Submit'];
-    } else {
-        $Submit = "";
-    }
 
     $validator = Validator::make([
         ValidationRule::required('id')
@@ -59,7 +54,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // sinon c'est qu'on peut supp sans soucis
 
         // modification effective du statut
-        $idStat = ctrlSaisies($_POST['id']);
+        // $idStat = ctrlSaisies($_POST['id']);
+        $idStat = $validator->verifiedField('id');
         $monStatut->delete($idStat);
 
         header("Location: ./statut.php");

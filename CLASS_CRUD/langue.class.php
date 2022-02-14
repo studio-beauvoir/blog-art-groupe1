@@ -7,10 +7,25 @@ class LANGUE{
 	function get_1Langue($numLang){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetch());
+		try {
+			$query = 'SELECT * FROM LANGUE WHERE numLang=?;';
+			$request = $db->prepare($query);
+			
+			$request->execute([$numLang]);
+
+			$result = $request->fetch();
+
+			if(isset($request)) {
+				return($result);
+			} else {
+				throw new ErrorException('Langue not found');
+			}
+		}
+		catch (PDOException $e) {
+			$db->rollBack();
+			$request->closeCursor();
+			die('Erreur insert LANGUE : ' . $e->getMessage());
+		}
 	}
 
 	function get_1LangueByPays($numLang){
@@ -136,8 +151,11 @@ class LANGUE{
 			$db->beginTransaction();
 
 			// delete
+			$query = 'DELETE FROM LANGUE WHERE `numLang` = ?;';
 			// prepare
+			$request = $db->prepare($query);
 			// execute
+			$request->execute([$numLang]);
 			$count = $request->rowCount();
 			$db->commit();
 			$request->closeCursor();

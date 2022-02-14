@@ -32,9 +32,13 @@ class LANGUE{
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM LANGUE WHERE numPays=?;';
 		// prepare
+		$request = $db->prepare($query);
 		// execute
-		return($result->fetch());
+		$request->execute([$numLang]);
+		$result = $request->fetch();
+		return($result);
 	}
 
 	function get_AllLangues(){
@@ -49,9 +53,9 @@ class LANGUE{
 	function get_AllLanguesByPays(){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM LANGUE WHERE numPays=?;';
+		$result = $db->query($query);
+		$allLangues = $result->fetchAll();
 		return($allLanguesByPays);
 	}
 
@@ -112,7 +116,7 @@ class LANGUE{
 			$db->beginTransaction();
 
 			// insert
-			$query = 'INSERT INTO LANGUE (numLang, lib1Lang, lib2Lang, numPays) VALUES (?,?, ?, ?)';
+			$query = 'INSERT INTO LANGUE (numLang, lib1Lang, lib2Lang, numPays) VALUES (?,?,?,?)';
 			
 			// prepare
 			$request = $db->prepare($query);

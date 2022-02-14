@@ -7,43 +7,63 @@ class THEMATIQUE{
 	function get_1Thematique($numThem){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetch());
+		try {
+			$query = 'SELECT * FROM THEMATIQUE WHERE numThem=?;';
+			$request = $db->prepare($query);
+			
+			$request->execute([$numThem]);
+
+			$result = $request->fetch();
+
+			if(isset($request)) {
+				return($result);
+			} else {
+				throw new ErrorException('Thematique not found');
+			}
+		}
+		catch (PDOException $e) {
+			$db->rollBack();
+			$request->closeCursor();
+			die('Erreur insert THEMATIQUE : ' . $e->getMessage());
+		}
 	}
 
 	function get_1ThematiqueByLang($numThem){
 		global $db;
 
 		// select
+		$query = 'SELECT * FROM THEMATIQUE WHERE numLang=?;';
 		// prepare
+		$request = $db->prepare($query);
 		// execute
-		return($result->fetch());
+		$request->execute([$numThem]);
+		$result = $request->fetch();
+		return($result);
 	}
 
 	function get_AllThematiques(){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM THEMATIQUE;';
+		$request = $db->query($query);
+		$allThematiques = $request->fetchAll();
+
 		return($allThematiques);
 	}
 
 	function get_AllThematiquesByLang(){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM THEMATIQUE WHERE numLang=?;';
+		$result = $db->query($query);
+		$allThematiquesByLang = $result->fetchAll();
 		return($allThematiquesByLang);
 	}
 
 	function get_NbAllThematiquesBynumLang($numLang){
 		global $db;
-
-		// select
+		
+		//select
 		// prepare
 		// execute
 		return($allNbThematiquesBynumLang);

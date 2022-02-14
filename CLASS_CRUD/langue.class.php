@@ -152,8 +152,7 @@ class LANGUE{
 			$request->execute([$lib1Lang, $lib2Lang, $numPays, $numLang]);
 			$db->commit();
 			$request->closeCursor();
-			$db->commit();
-			$request->closeCursor();
+			
 		}
 		catch (PDOException $e) {
 			$db->rollBack();

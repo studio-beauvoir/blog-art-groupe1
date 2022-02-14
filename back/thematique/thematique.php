@@ -8,25 +8,22 @@
 ////////////////////////////////////////////////////////////
 
 // Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
-
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
-// Del accents sur string
-require_once __DIR__ . '/../../util/delAccents.php';
+require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Thematique
+require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php'; 
 
 // Instanciation de la classe Thematique
-
+$maThematique = new THEMATIQUE();
 
 
 // Insertion classe Langue
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php'; 
 
 // Instanciation de la classe Langue
+$maLangue = new LANGUE();
 
 // BBCode
-
 
 // Ctrl CIR
 $errCIR = 0;
@@ -79,18 +76,17 @@ $errDel = 0;
     </thead>
     <tbody>
 <?php
-    // Appel méthode : Get toutes les Thematiques en BDD
+    $all = $maThematique->get_AllThematiques();
 
-    // Boucle pour afficher
-    //foreach($all as $row) {
+    foreach($all as $row) {
 ?>
         <tr>
 
-		<td><h4>&nbsp; <?= "ici numThem"; ?> &nbsp;</h4></td>
+		<td><h4>&nbsp; <?= $row['numThem']; ?> &nbsp;</h4></td>
 
-        <td>&nbsp; <?= "ici libThem"; ?> &nbsp;</td>
+        <td>&nbsp; <?= $row['libThem']; ?> &nbsp;</td>
 
-        <td>&nbsp; <?= "ici lib1Lang"; ?> &nbsp;</td>
+        <td>&nbsp; <?= $row['numLang']; ?> &nbsp;</td>
 
 		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateThematique.php?id=<?=1; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier thématique" title="Modifier thématique" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 		<br /></td>
@@ -99,7 +95,7 @@ $errDel = 0;
 
         </tr>
 <?php
-	// }	// End of foreach
+    }	// End of foreach
 ?>
     </tbody>
     </table>

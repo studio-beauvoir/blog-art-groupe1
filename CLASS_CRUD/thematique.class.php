@@ -25,9 +25,10 @@ class THEMATIQUE{
 	function get_AllThematiques(){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM THEMATIQUE;';
+		$request = $db->query($query);
+		$allThematiques = $request->fetchAll();
+		
 		return($allThematiques);
 	}
 

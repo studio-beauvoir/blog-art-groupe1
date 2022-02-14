@@ -60,13 +60,21 @@ class THEMATIQUE{
 		return($allThematiquesByLang);
 	}
 
-	function get_NbAllThematiquesBynumLang($numLang){
+	//HELP HERE
+	function get_NbAllThematiquesBynumLang($numLang){ 
 		global $db;
+
+		$db->beginTransaction();
 		
-		//select
-		// prepare
-		// execute
-		return($allNbThematiquesBynumLang);
+		$query = 'SELECT COUNT (*) FROM THEMATIQUE WHERE numLang=?';
+		$request = $db->prepare($query);
+		$request->execute([$numLang]);
+		$allNbThematiquesBynumLang = $request->fetch();
+
+		$db->commit();
+		$request->closeCursor();
+
+		return($allNbThematiquesBynumLang); 
 	}
 
 	// Récup dernière PK NumThem
@@ -133,9 +141,9 @@ class THEMATIQUE{
 		try {
 			$db->beginTransaction();
 
-			// insert
-			// prepare
-			// execute
+			$query = 'INSERT INTO THEMATIQUE (numThem, libThem, numLang) VALUES (?, ?, ?);';
+			$request = $db->prepare($query);
+			$request->execute( [$numThem, $libThem, $numLang]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -152,9 +160,9 @@ class THEMATIQUE{
 		try {
 			$db->beginTransaction();
 
-			// update
-			// prepare
-			// execute
+			$query = 'UPDATE THEMATIQUE SET libThem=?,numlang=? WHERE numThem=?;';
+			$request = $db->prepare($query);
+			$request->execute([$libThem, $numLang, $numThem]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -172,9 +180,9 @@ class THEMATIQUE{
 		try {
 			$db->beginTransaction();
 
-			// delete
-			// prepare
-			// execute
+			$query = 'DELETE FROM THEMATIQUE WHERE `numLang` = ?;';
+			$request = $db->prepare($query);
+			$request->execute([$numThem]);
 			$count = $request->rowCount();
 			$db->commit();
 			$request->closeCursor();

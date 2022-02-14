@@ -112,8 +112,13 @@ class LANGUE{
 			$db->beginTransaction();
 
 			// insert
+			$query = 'INSERT INTO LANGUE (numLang, lib1Lang, lib2Lang, numPays) VALUES (?,?, ?, ?)';
+			
 			// prepare
+			$request = $db->prepare($query);
+
 			// execute
+			$request->execute([$lib1Lang, $lib2Lang, $numPays, $numLang]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -130,9 +135,16 @@ class LANGUE{
 		try {
 			$db->beginTransaction();
 
-			// update
+			// insert
+			$query = 'UPDATE LANGUE SET lib1Lang=?,lib2Lang=?,numPays=? WHERE numLang=?;';
+			
 			// prepare
+			$request = $db->prepare($query);
+
 			// execute
+			$request->execute([$lib1Lang, $lib2Lang, $numPays, $numLang]);
+			$db->commit();
+			$request->closeCursor();
 			$db->commit();
 			$request->closeCursor();
 		}

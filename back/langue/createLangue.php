@@ -32,9 +32,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     ])->bindValues($_POST);
 
     if($validator->success()) {
-        $validator->verifiedField();
+        $erreur = false;
 
-        
+        $lib1Lang = $validator->verifiedField('lib1Lang');
+
+        $monStatut->create($libStat);
+
+        header("Location: ./statut.php");
     } else {
         // Saisies invalides
         $erreur = true;

@@ -6,6 +6,13 @@ class ValidationRule {
     public $field;
     public $isRequired;
 
+    function __construct($field) {
+        $this->field = $field;
+        $this->isRequired = false;
+
+        return $this;
+    }
+
     static public function make($field) {
         return new static($field);
     }
@@ -19,12 +26,7 @@ class ValidationRule {
     }
     
 
-    function __construct($field) {
-        $this->field = $field;
-        $this->isRequired = false;
 
-        return $this;
-    }
 
     public function isValid() {
         if($this->isRequired) {
@@ -58,23 +60,40 @@ class Validator {
 
     public $tested = false;
     public $hasSucceeded = null;
-
-
-    static public function make($rules) {
-        return new static($rules);
-    }
-
+    
+    
     function __construct($rules) {
         foreach($rules as $newRule) {
             $this->addRule($newRule);
         }
     }
 
+    /**
+     * Crée un validator avec les règles passées
+     * @param ValidatorRule $rules Les règles
+     * @return Validator
+     */
+    static public function make($rules) {
+        return new static($rules);
+    }
+
+    
+
+
+    /**
+     * Définit quel tableau associatif sera examiné
+     * @return this
+     */
     public function bindValues($fields) {
         $this->fieldsValues = $fields;
         return $this;
     }
 
+    /**
+     * Effectue la validation
+     * Si toutes les règles définies sont respectées, alors le validator est content
+     * @return bool
+     */
     public function success() {
         $this->tested = true;
 
@@ -89,27 +108,27 @@ class Validator {
         return $this->hasSucceeded;
     }
 
+    /**
+     * Retourne la valeur vérifiée, passé dans la fonction ctrlSaisies()
+     * Nécessite que le validator ait été validé via sa fonction success()
+     */
     public function verifiedField($fieldName) {
         try {
             if(!$this->hasSucceeded) {
-                throw new Error('La requête n\'a pas été validée');
+                throw new Error('Le validator n\'a pas été validée');
             }
-            return $this->fieldsValues[$fieldName];
+            return ctrlSaisies($this->fieldsValues[$fieldName]);
         } catch(Error $e) {
 			die('Erreur validator : ' . $e->getMessage());
         }
     }
 
-    public function ruleExist($ruleToCompare) {
-        $searchResultCount = array_filter(
-            $this->rules, 
-            fn($rule)=>$rule->isSameField($ruleToCompare)
-        );
-        // s'il y a au moins un résultat, la règle existe
-        $exists = $searchResultCount > 0;
-        return $exists;
-    }
 
+    /**
+     * Ajoute une règle au validator
+     * @param ValidatorRule $potentialRule
+     * @return this
+     */
     public function addRule($potentialRule) {
 
         // vérifie que c'est bien une rule
@@ -124,5 +143,19 @@ class Validator {
             } 
         }
         return $this;        
+    }
+
+
+    /**
+     * Vérifie s'il y a conflit avec une règle sur un même field
+     */
+    private function ruleExist($ruleToCompare) {
+        $searchResultCount = array_filter(
+            $this->rules, 
+            fn($rule)=>$rule->isSameField($ruleToCompare)
+        );
+        // s'il y a au moins un résultat, la règle existe
+        $exists = $searchResultCount > 0;
+        return $exists;
     }
 } 

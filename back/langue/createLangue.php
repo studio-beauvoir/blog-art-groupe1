@@ -7,11 +7,8 @@
 //
 ////////////////////////////////////////////////////////////
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
-
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
+// Insertion des fonctions utilitaires
+require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Langue
 require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php'; 
@@ -28,19 +25,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
+    $validator = Validator::make([
+        ValidationRule::required('lib1Lang'),
+        ValidationRule::required('lib2Lang'),
+        ValidationRule::required('numPays'),
+    ])->bindValues($_POST);
 
-    // controle des saisies du formulaire
+    if($validator->success()) {
+        $validator->verifiedField();
 
-    // création effective du user
-
-
-
-    // Gestion des erreurs => msg si saisies ko
-
-
-
-
-
+        
+    } else {
+        // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }   // End of else erreur saisies
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form
 include __DIR__ . '/initLangue.php';
@@ -113,9 +112,9 @@ include __DIR__ . '/initLangue.php';
             <div class="controls">
                 <br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <a href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;">Réinitialiser</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" />
                 <br>
             </div>
         </div>

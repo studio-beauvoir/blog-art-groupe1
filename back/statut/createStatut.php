@@ -24,14 +24,6 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-
-
-    if(isset($_POST['Submit'])){
-        $Submit = $_POST['Submit'];
-    } else {
-        $Submit = "";
-    }
-
     $validator = Validator::make([
         ValidationRule::required('libStat')
     ])->bindValues($_POST);

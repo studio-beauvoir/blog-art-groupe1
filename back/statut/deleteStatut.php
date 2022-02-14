@@ -47,19 +47,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
         // A faire dans un 2ème temps
         // Ctrl CIR : inexistence Foreign Key => del possible
-        // $nbMembresStatut = $monMEMBRE->get_NbAllMembersByidStat();
+        $nbMembresStatut = $monMembre->get_NbAllMembersByidStat($_POST['id']);
         // il existe des membres avec ce statut
-        // if($nbMembresStatut>0) {
-        //     header("Location: ./statut.php");
-        // } 
+        if($nbMembresStatut>0) {
+            // on redirige avec l'affichage de l'erreur
+            header("Location: ./statut.php?err_cir=true");
+            // et on s'arrête là
+            die();
+        } 
 
-
+        // sinon c'est qu'on peut supp sans soucis
 
         // modification effective du statut
         $idStat = ctrlSaisies($_POST['id']);
         $monStatut->delete($idStat);
-        // header("Location: ./deleteStatut.php");
+
         header("Location: ./statut.php");
+        die();
 
     } else {
         // Gestion des erreurs => msg si saisies ko

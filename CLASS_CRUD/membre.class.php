@@ -53,12 +53,15 @@ class MEMBRE{
 	function get_NbAllMembersByidStat($idStat){
 		global $db;
 
-		// select
-		$query = 'SELECT * FROM MEMBRE;';
-		// prepare
-		$result = $db->query($query);
+
+		$query = 'SELECT * FROM MEMBRE WHERE idStat=?;';
+		$request = $db->prepare($query);
+		
+		$request->execute([$idStat]);
+
+		$result = $request->fetch();
 		// execute
-		$allStatuts = $result->fetchAll();
+		$allNbMembersByStat = $request->fetchAll();
 		return($allNbMembersByStat);
 	}
 
@@ -102,7 +105,6 @@ class MEMBRE{
 			// execute
 				$db->commit();
 				$request2->closeCursor();
-			}
 		}
 		catch (PDOException $e) {
 			$db->rollBack();

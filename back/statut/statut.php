@@ -21,7 +21,7 @@ require_once __DIR__ . '/../../util/index.php';
 
 
 // Gestion des CIR => affichage erreur sinon
-$errCIR = 0;
+$errCIR = isset($_GET['err_cir']) && $_GET['err_cir'] == true;
 
 $pageTitle = "Gestion du Statut";
 include __DIR__ . '/../../layouts/back/head.php';

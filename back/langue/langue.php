@@ -7,15 +7,9 @@
 //
 ////////////////////////////////////////////////////////////
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
+// Insertion des fonctions utilitaires
+require_once __DIR__ . '/../../util/index.php';
 
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
-
-// Insertion classe Langue
-
-// Instanciation de la classe langue
 
 
 
@@ -23,27 +17,10 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 $errCIR = 0;
 $errDel = 0;
 
-
+$pageTitle = "Admin - CRUD Langue";
+include __DIR__ . '/../../layouts/back/head.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-	<title>Admin - CRUD Langue</title>
-	<meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <style type="text/css">
-        .error {
-            padding: 2px;
-            border: solid 0px black;
-            color: red;
-            font-style: italic;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
+
 	<h1>BLOGART22 Admin - CRUD Langue</h1>
 
 	<hr />

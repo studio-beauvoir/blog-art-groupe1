@@ -1,21 +1,20 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD MOTCLE (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : updateMotCle.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
+$submitBtn = "Modifier";
+$pageCrud = "mot clé";
+$pagePrecedent = "./$pageCrud.php";
+$pageTitle = "$submitBtn un $pageCrud";
+$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
 
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
+require_once __DIR__ . '/../../util/index.php';
 
-// Insertion classe MotCle
+// Insertion classe Thematique
+require_once __DIR__ . '/../../CLASS_CRUD/motcle.class.php';
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 
-// Instanciation de la classe MotCle
+// Instanciation de la classe Thematique
+$monMotCle = new MOTCLE();
+$maLangue = new LANGUE();
 
 
 // Gestion des erreurs de saisie
@@ -24,109 +23,75 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    $validator = Validator::make([
+        ValidationRule::required('id'),
+        ValidationRule::required('libMotCle'),
+        ValidationRule::required('idLang'),
+    ])->bindValues($_POST);
 
 
+    if($validator->success()) {
+        $erreur = false;
 
-    // controle des saisies du formulaire
+        $numMotCle = $validator->verifiedField('id');
+        $libMotCle = $validator->verifiedField('libMotCle');
+        $numLang = $validator->verifiedField('idLang');
+        
+        $monMotCle->update($numMotCle, $libMotCle, $numLang);
 
-    // modif effective de la MotCle
-
-
-
-    // Gestion des erreurs => msg si saisies ko
-
-
+        header("Location: ./motCle.php");
+        die();
+    } else {
+        // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }   // End of else erreur saisies
 
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 // Init variables form
 include __DIR__ . '/initMotCle.php';
-?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-    <meta charset="utf-8" />
-    <title>Admin - CRUD Mot Clé</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+include __DIR__ . '/../../layouts/back/head.php';
 
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-    <h1>BLOGART22 Admin - CRUD Mot Clé</h1>
-    <h2>Modification d'un Mot Clé</h2>
-<?php
-    // Modif : récup id à modifier
-    // id passé en GET
-
-
-
-
-
-
+if(!isset($_GET['id'])) {
+    header("Location: ./motcle.php");
+    die();
+}
+$motcle = $monMotCle->get_1MotCle($_GET['id']);
+$libMotCle = $motcle['libMotCle'];
+$idLang = $motcle['numLang'];
 
 ?>
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
-
-      <fieldset>
-        <legend class="legend1">Formulaire Mot Clé...</legend>
-
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
-        <div class="control-group">
-            <label class="control-label" for="libMotCle"><b>Libellé :&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="libMotCle" id="libMotCle" size="80" maxlength="100" value="<?= $libMotCle; ?>" placeholder="Décrivez le mot Clé" autocomplete="on" autofocus="autofocus" />
+    <form 
+        class="admin-form"
+        method="POST" 
+        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id']?>" 
+        enctype="multipart/form-data" 
+        accept-charset="UTF-8"
+    >
+        <input type="hidden" id="id" name="id" value="<?= $_GET['id'] ?>" />
+        
+        <div class="field">
+            <label for="libMotCle">Libellé :</label>
+            <input name="libMotCle" value="<?=$libMotCle?>" id="libMotCle" size="80" maxlength="80" />
         </div>
-        <br>
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- FK : Langue -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Listbox langue -->
-        <br>
 
-        <div class="control-group">
-            <label class="control-label" for="LibTypLang"><b>Langue :&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="hidden" id="idLang" name="idLang" value="<?= isset($_GET['idLang']) ? $_GET['idLang'] : '' ?>" />
-
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $idLang; ?>" autocomplete="on" />
-
-                <!-- Listbox langue => 2ème temps -->
-
+        <div class="field">
+            <label for="idLang"></label>
+            <select name="idLang" id="idLang">
+                <?php 
+                    $allLangues = $maLangue->get_AllLangues();                    
+                    foreach($allLangues as $langue) { 
+                ?>
+                    <option <?=$langue['numLang']==$idLang?'selected':'' ?> value="<?= $langue['numLang'] ?>" ><?=$langue['lib1Lang'] ?></option>
+                <?php } ?>
+            </select>
         </div>
-    <!-- FIN Listbox langue -->
-<!-- --------------------------------------------------------------- -->
-    <!-- FK : Langue -->
-<!-- --------------------------------------------------------------- -->
-        <div class="control-group">
-            <div class="error">
-<?php
-            if ($erreur) {
-                echo ($errSaisies);
-            }
-            else {
-                $errSaisies = "";
-                echo ($errSaisies);
-            }
-?>
-            </div>
+
+        <div class="controls">
+            <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
+            <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
         </div>
-        <div class="control-group">
-            <div class="controls">
-                <br><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                <br>
-            </div>
-        </div>
-      </fieldset>
     </form>
-<?php
-require_once __DIR__ . '/footerMotCle.php';
-
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

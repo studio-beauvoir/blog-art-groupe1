@@ -8,9 +8,50 @@ body {
     text-decoration: none;
 }
 
+/* reset all default styles  */
+* {
+    margin: 0;
+    padding: 0;
+    background: var(--background);
+    color: var(--color);
+    outline: 0px solid transparent;
+}
+*:focus {
+    outline: 3px solid #9da3f5;
+}
+
+.btn {
+    --color: var(--bg1);
+    --background: var(--i);
+    text-decoration: none;
+    font: var(--p);
+    display: inline-block;
+    text-align: center;
+    transition: transform .3s, outline .3s;
+}
+.btn:hover {
+    outline: 3px solid var(--i);
+}
+.btn:active {
+    transform: scale(0.90);
+}
+.btn.btn-lg {
+    padding: 0.9rem 1rem;
+    border-radius: var(--rounded-lg);
+}
+.btn.btn-md {
+    padding: 0.6rem 0.7rem;
+    border-radius: var(--rounded-md);
+}
+
 main, .container {
     margin: 0 auto;
     max-width: 1280px;
+}
+
+h1, h2, h3, h4 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 h1, .font-h1 {

@@ -1,5 +1,5 @@
 <?php if(isset($pageNav)) { ?>
-<nav class="font-h4 navbar">
+<nav class="font-p navbar">
     <?php 
         foreach($pageNav as $navItem) { 
             $navItemParts = explode(':', $navItem);

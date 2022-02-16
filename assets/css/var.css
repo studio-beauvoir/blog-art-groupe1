@@ -29,4 +29,7 @@
     --p: 400 1.125rem  "Lexend Deca", sans-serif;
     --label: 200 1.125rem  "Lexend Deca", sans-serif;
 
+
+    --rounded-md: 0.6rem;
+    --rounded-lg: 0.8rem;
 }

@@ -21,7 +21,7 @@ require_once __DIR__ . '../../../util/index.php';
             require_once __DIR__ . '/../../layouts/back/nav.php';
         ?>
 	    <?php if(isset($pageTitle)) { ?>
-            <h1><?=$pageTitle?></h1>
+            <h2><?=$pageTitle?></h2>
         <?php } ?>
 
         <?php if (isset($errDel) && ($errDel == 99) ) { ?>

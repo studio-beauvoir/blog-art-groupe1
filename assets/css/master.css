@@ -20,18 +20,49 @@ footer {
     display: flex;
     flex-direction: column;
     background-color: var(--bg2);
+    padding-top: 50px;
+}
+
+.logo {
+    width: 175px;
+    height: 80px;
+}
+
+.container.section-logo {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    padding: 1%;
 }
 
 .container.section-list{
     display: flex;
-    justify-content: space-around;
-    margin: 0;g
-    padding:0;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1%;
+}
+
+.section-list ul li,
+.section-list ul li p a {
+    padding-bottom: 5%;
+    text-decoration: none;
 }
 
 ul li{
     list-style: none;;
 }
+
+.container.section-law{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 1%;
+}
+
+
+
+
 
 
 

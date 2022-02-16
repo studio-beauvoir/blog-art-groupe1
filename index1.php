@@ -35,7 +35,7 @@ require_once __DIR__ . '/layouts/back/head.php';
 
 	<a class="btn btn-lg done" href="./BACK/statut/statut.php">Statut (*)</a>
 
-	<a class="btn btn-lg doing" href="./BACK/thematique/thematique.php">Thématique (*)</a>
+	<a class="btn btn-lg done" href="./BACK/thematique/thematique.php">Thématique (*)</a>
 	</div>
 	
 	

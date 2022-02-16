@@ -1,22 +1,13 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD ANGLE (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : createAngle.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
+// Insertion des fonctions utilitaires
+require_once __DIR__ . '/../../util/index.php';
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
+// Insertion classe Statut
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php'; 
 
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
-// Insertion classe Angle
-
-// Instanciation de la classe angle
-
+// Instanciation de la classe Statut
+$monAngle = new ANGLE(); 
 
 
 // Gestion des erreurs de saisie
@@ -25,98 +16,65 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    $validator = Validator::make([
+        ValidationRule::required('libAngl'),
+        ValidationRule::required('numLang'),
+    ])->bindValues($_POST);
 
+    if($validator->success()) {
 
+        // Saisies valides
+        $erreur = false;
 
-    // controle des saisies du formulaire
+        $libAngl = $validator->verifiedField('libAngl');
+        $numLang = $validator->verifiedField('numLang');
+        $numAngl = $monAngle->getNextNumAngl($libAngl);
+        
+        $monAngle->create($numAngl, $libAngl, $numLang);
 
-    // création effective de l'angle
-
-
-
-    // Gestion des erreurs => msg si saisies ko
-
-
-
+        header("Location: ./angle.php");
+        die();
+    }   // Fin if ((isset($_POST['libStat'])) ...
+    else {
+        // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }   // End of else erreur saisies
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form
 include __DIR__ . '/initAngle.php';
+
+$submitBtn = "Créer";
+$pagePrecedent = "./angle.php";
+$pageTitle = "Créer un angle";
+$pageNav = ['Home:/index1.php', 'Gestion des thématiques:'.$pagePrecedent, $pageTitle];
+$pageTitle = "Créer un Angle";
+$pageNav = ['Home:/index1.php', 'Gestion du Angle:./angle.php', $pageTitle];
+include __DIR__ . '/../../layouts/back/head.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-    <meta charset="utf-8" />
-    <title>Admin - CRUD Angle</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <form 
+        class="admin-form"
+        method="POST" 
+        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" 
+        enctype="multipart/form-data" 
+        accept-charset="UTF-8"
+    >
 
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-    <h1>BLOGART22 Admin - CRUD Angle</h1>
-    <h2>Ajout d'un angle</h2>
-
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
-
-      <fieldset>
-        <legend class="legend1">Formulaire Angle...</legend>
-
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
-
-        <div class="control-group">
-            <label class="control-label" for="libAngl"><b>Libellé :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="libAngl" id="libAngl" size="80" maxlength="80" value="<?= $libAngl; ?>" tabindex="10" autofocus="autofocus" />
-        </div>
-        <br>
-<!-- ---------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------- -->
-    <!-- Listbox Langue -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="LibTypLang">
-                <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
-            </label>
-
-            <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numLang; ?>" autocomplete="on" />
-
-            <!-- Listbox langue => 2ème temps -->
-
-            </div>
-        </div>
-    <!-- FIN Listbox Langue -->
-<!-- ---------------------------------------------------------------------- -->
-        <div class="control-group">
-            <div class="error">
-<?php
-            if ($erreur) {
-                echo ($errSaisies);
-            } else {
-                $errSaisies = "";
-                echo ($errSaisies);
-            }
-?>
-            </div>
+        <div class="field">
+            <label for="libAngl">Libellé</label>
+            <input name="libAngl" id="libAngl" size="80" maxlength="80" value="<?= $libAngl; ?>" />
         </div>
 
-        <div class="control-group">
-            <div class="controls">
-                <br><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                <br>
-            </div>
+        <div class="field">
+            <label for="numLang">Quelle langue :</label>
+            <input name="numLang" id="numLang" size="6" maxlength="6" value="<?= $numLang; ?>" />
         </div>
-      </fieldset>
+
+        <div class="controls">
+            <a class="btn btn-lg btn-text" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-secondary" href="./statut.php">Annuler</a>
+            <input class="btn btn-lg" type="submit" value="Valider" />
+        </div>
     </form>
-<?php
-require_once __DIR__ . '/footerAngle.php';
-
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

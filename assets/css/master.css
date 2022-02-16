@@ -46,30 +46,36 @@ footer {
 
 .container.section-list{
     display: flex;
-    justify-content: space-between;
     width: 100%;
-    padding: 1%;
 }
 
 .section-list ul li,
 .section-list ul li p a {
-    padding-bottom: 5%;
     text-decoration: none;
 }
 
 ul li{
-    list-style: none;;
+    list-style: none;
+    margin: 10px;
 }
 
-.container.section-law{
+.container-section-law{
     display: flex;
-    flex-direction: row;
     justify-content: flex-end;
     width: 100%;
-    padding: 1%;
+    background-color: var(--bg1);
 }
 
+.footer-droits{
+    display: flex;
+    margin: 20px 180px 20px 20px;
+}
 
+.footer-box {
+    display: flex;
+    width: 30%;
+    margin-bottom: 12px;
+}
 
 
 
@@ -107,7 +113,7 @@ input:focus,
 select:focus {
     border: 2px solid var(--gFocus);
 }
-input[disabled] {
+select[disabled], input[disabled] {
     --background: var(--bg3);
     --color: var(--p3);
     border-color: transparent;

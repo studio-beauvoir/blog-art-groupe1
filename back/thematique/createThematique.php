@@ -45,7 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // Init variables form
 include __DIR__ . '/initThematique.php';
 
-$pagePrecedent = "./statut.php";
+$submitBtn = "Créer";
+$pagePrecedent = "./thematique.php";
 $pageTitle = "Créer une Thématique";
 $pageNav = ['Home:/index1.php', 'Gestion des thématiques:'.$pagePrecedent, $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
@@ -59,8 +60,8 @@ include __DIR__ . '/../../layouts/back/head.php';
     >
 
         <div class="field">
-            <label for="libThem">Quelle langue</label>
-            <input name="libThem" placeholder="Titre de la thématique" id="libThem" size="80" maxlength="80" />
+            <label for="libThem">Titre de la thématique</label>
+            <input name="libThem" id="libThem" size="80" maxlength="80" />
         </div>
 
         <div class="field">
@@ -78,7 +79,7 @@ include __DIR__ . '/../../layouts/back/head.php';
         <div class="controls">
             <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
             <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
-            <input class="btn btn-lg" title="Valider" type="submit" value="Valider" />
+            <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
         </div>
     </form>
 <?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

@@ -1,9 +1,9 @@
 <?php
 
 $submitBtn = "Supprimer";
-$pageCrud = "angle";
+$pageCrud = "langue";
 $pagePrecedent = "./$pageCrud.php";
-$pageTitle = "Supprimer un $pageCrud";
+$pageTitle = "$submitBtn: $pageCrud";
 $pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
 
 //Insertion des fonctions utilitaires

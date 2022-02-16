@@ -16,10 +16,10 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 require_once __DIR__ . '/../../util/dateChangeFormat.php';
 
 // Insertion classe Thematique
+require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
 
 // Instanciation de la classe Thematique
-
-
+$maThematique = new THEMATIQUE();
 
 // BBCode
 
@@ -30,20 +30,29 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    $validator = Validator::make([
+        ValidationRule::required('id'),
+        ValidationRule::required('libThemm'),
+        ValidationRule::required('idLang'),
+    ])->bindValues($_POST);
 
 
-    // controle des saisies du formulaire
+    if($validator->success()) {
+        $erreur = false;
 
-    // modification effective de la thématique
+        $numThem = $validator->verifiedField('id');
+        $libThem = $validator->verifiedField('libThem');
+        $numLang = $validator->verifiedField('idLang');
+        
+        $maLangue->update($numThem, $libThem, $numLang);
 
-
-
-    // Gestion des erreurs => msg si saisies ko
-
-
-
-
-
+        header("Location: ./thematique.php");
+        die();
+    } else {
+        // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }   // End of else erreur saisies
 
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
@@ -65,14 +74,13 @@ include __DIR__ . '/initThematique.php';
     <h1>BLOGART22 Admin - CRUD Thematique</h1>
     <h2>Modification d'une Thematique</h2>
 <?php
-    // Modif : récup id à modifier
-    // id passé en GET
-
-
-
-
-
-
+    if(!isset($_GET['id'])) {
+        header("Location: ./thematique.php");
+        die();
+    }
+    $thematique = $maThematique->get_1Thematique($_GET['id']);
+    $libThem = $langue['libThem'];
+    $idLang = $langue['numLang'];
 
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">

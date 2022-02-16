@@ -8,12 +8,7 @@
 ////////////////////////////////////////////////////////////
 
 // Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
-
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
-// Mise en forme date
-require_once __DIR__ . '/../../util/dateChangeFormat.php';
+require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Thematique
 require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
@@ -32,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $validator = Validator::make([
         ValidationRule::required('id'),
-        ValidationRule::required('libThemm'),
+        ValidationRule::required('libThem'),
         ValidationRule::required('idLang'),
     ])->bindValues($_POST);
 
@@ -44,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $libThem = $validator->verifiedField('libThem');
         $numLang = $validator->verifiedField('idLang');
         
-        $maLangue->update($numThem, $libThem, $numLang);
+        $maThematique->update($numThem, $libThem, $numLang);
 
         header("Location: ./thematique.php");
         die();
@@ -79,11 +74,11 @@ include __DIR__ . '/initThematique.php';
         die();
     }
     $thematique = $maThematique->get_1Thematique($_GET['id']);
-    $libThem = $langue['libThem'];
-    $idLang = $langue['numLang'];
+    $libThem = $thematique['libThem'];
+    $idLang = $thematique['numLang'];
 
 ?>
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
+    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>?id=<?=$_GET['id']?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
       <fieldset>
         <legend class="legend1">Formulaire Thematique...</legend>
@@ -104,7 +99,7 @@ include __DIR__ . '/initThematique.php';
             <label class="control-label" for="LibTypLang"><b>Langue :&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="hidden" id="idLang" name="idLang" value="<?= isset($_GET['idLang']) ? $_GET['idLang'] : '' ?>" />
 
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numLang; ?>" autocomplete="on" />
+                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $idLang; ?>" autocomplete="on" />
 
                 <!-- Listbox langue => 2ème temps -->
 
@@ -132,9 +127,9 @@ include __DIR__ . '/initThematique.php';
             <div class="controls">
                 <br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <a href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;">Initialiser</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit"/>
                 <br>
             </div>
         </div>

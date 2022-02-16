@@ -51,11 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-
-
-
-
-
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 // Init variables form
 include __DIR__ . '/initLangue.php';
@@ -89,7 +84,7 @@ include __DIR__ . '/initLangue.php';
     $idPays = $langue['numPays'];
 
 ?>
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
+    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>?id=<?=$_GET['id']?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
       <fieldset>
         <legend class="legend1">Formulaire Langue...</legend>
@@ -150,7 +145,7 @@ include __DIR__ . '/initLangue.php';
             <div class="controls">
                 <br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <a href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;">Initialiser</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
                 <br>

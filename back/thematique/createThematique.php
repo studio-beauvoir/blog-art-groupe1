@@ -8,17 +8,12 @@
 ////////////////////////////////////////////////////////////
 
 // Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
-
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
+require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Thematique
-
+require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
 // Instanciation de la classe thématique
-
-
-
+$maThematique = new THEMATIQUE(); 
 
 // BBCode
 
@@ -29,19 +24,27 @@ $erreur = false;
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    $validator = Validator::make([
+        ValidationRule::required('libThem'),
+        ValidationRule::required('idLang'),
+    ])->bindValues($_POST);
 
+    if($validator->success()) {
+        $erreur = false;
 
+        $libThem = $validator->verifiedField('libThem');
+        $numLang = $validator->verifiedField('idLang');
+        
+        $numThem = $maThematique->getNextNumThem($numLang);
+        $maThematique->create($numThem, $libThem, $numLang);
 
-    // controle des saisies du formulaire
-
-    // création effective de la thématique
-
-
-
-    // Gestion des erreurs => msg si saisies ko
-
-
-
+        header("Location: ./thematique.php");
+        die();
+    } else {
+        // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }   // End of else erreur saisies
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form
@@ -84,7 +87,7 @@ include __DIR__ . '/initThematique.php';
             <label class="control-label" for="LibTypLang"><b>Quelle langue :&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="hidden" id="idTypLang" name="idTypLang" value="<?= $numLang; ?>" />
 
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numLang; ?>" autocomplete="on" />
+                <input type="text" name="idLang" id="idLang" size="6" maxlength="6" value="<?= $numLang; ?>" autocomplete="on" />
 
                 <!-- Listbox langue => 2ème temps -->
         </div>
@@ -111,7 +114,7 @@ include __DIR__ . '/initThematique.php';
             <div class="controls">
                 <br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <a href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;">Réinitialiser</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
                 <br>

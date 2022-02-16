@@ -61,10 +61,14 @@ include __DIR__ . '/../../layouts/back/head.php';
     // id passé en GET
 
     if(!isset($_GET['id'])) {
-        header("Location: ./langue.php");
+        header("Location: $pagePrecedent");
         die();
     }
     $langue = $maLangue->get_1Langue($_GET['id']);
+    if(!$langue) {
+        header("Location: $pagePrecedent");
+        die();
+    }
 
     $lib1Lang = $langue['lib1Lang'];
     $lib2Lang = $langue['lib2Lang'];

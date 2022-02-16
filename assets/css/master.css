@@ -9,8 +9,9 @@ main {
     align-items: flex-start;
 }
 .interactive{
-    color: var(--i);
+    color: var(--p2);
     text-decoration: none;
+    list-style: none;
 }
 
 .logo {
@@ -22,8 +23,9 @@ header{
     display: flex;
     flex-direction: row;
     background-color: var(--bg2);
+    width: 100%;
+    justify-content: space-between;
 }
-
 
 
 
@@ -75,7 +77,6 @@ ul li{
     width: 30%;
     margin-bottom: 12px;
 }
-
 
 
 

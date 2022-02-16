@@ -97,9 +97,9 @@ $lib2Lang = $langue['lib2Lang'];
         </div>
 
         <div class="controls">
-            <a class="btn btn-lg btn-text" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>">Réinitialiser</a>
-            <a class="btn btn-lg btn-secondary" href="<?=$pagePrecedent?>">Annuler</a>
-            <input class="btn btn-lg btn-danger" type="submit" value="Supprimer" />
+            <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent?>">Annuler</a>
+            <input class="btn btn-lg btn-danger" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
         </div>
     </form>
 <?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

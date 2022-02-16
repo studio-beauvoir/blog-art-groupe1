@@ -3,6 +3,11 @@ body {
     color: var(--p1);
     /* font: var(--p); */
 }
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
 .interactive{
     color: var(--i);
     text-decoration: none;
@@ -36,7 +41,28 @@ ul li {
 }
 
 *:focus {
-    outline: 3px solid #9da3f5;
+    outline: 3px solid var(--gFocus);
+}
+
+
+input {
+    padding: 0.9rem 1rem;
+    border-radius: var(--rounded-lg);
+    border: 2px solid var(--p1);
+    font: var(--p);
+}
+input[type="submit" i], input[type="button" i],
+input[type="submit"], input[type="button"] {
+    border: none;
+    cursor: pointer;
+}
+input:focus {
+    border: 2px solid var(--gFocus);
+}
+input[disabled] {
+    --background: var(--bg3);
+    --color: var(--p3);
+    border-color: transparent;
 }
 
 .btn {
@@ -48,6 +74,7 @@ ul li {
     text-align: center;
     transition: transform .2s, outline .2s;
 }
+
 .btn:hover {
     outline: 3px solid var(--i);
 }
@@ -61,6 +88,14 @@ ul li {
 .btn.btn-md {
     padding: 0.6rem 0.7rem;
     border-radius: var(--rounded-md);
+}
+.btn.btn-text {
+    --background: transparent;
+    --color: var(--p1);
+}
+.btn.btn-secondary {
+    --background: var(--bg2);
+    --color: var(--p1);
 }
 .btn.btn-danger {
     --background: var(--g3);
@@ -95,4 +130,7 @@ p, .font-p {
 }
 label, .font-label {
     font: var(--label);
+}
+label {
+    margin-bottom: 0.5rem;
 }

@@ -1,12 +1,4 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD STATUT (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : deleteStatut.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
-
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
@@ -74,49 +66,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // Init variables form
 include __DIR__ . '/initStatut.php';
 
-$pageTitle = "Admin - CRUD Statut";
+$pageTitle = "Supprimer un Statut";
+$pageNav = ['Home:/index1.php', 'Gestion du Statut:./statut.php', $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
-?>
-    <h1>BLOGART22 Admin - CRUD Statut</h1>
-    <h2>Suppression d'un statut</h2>
-<?php
-    // Supp : récup id à supprimer
-    // id passé en GET
-    $statut = $monStatut->get_1Statut($_GET['id']);
 
-    $libStat = $statut['libStat'];
+
+// Supp : récup id à supprimer
+// id passé en GET
+$statut = $monStatut->get_1Statut($_GET['id']);
+
+$libStat = $statut['libStat'];
 
 ?>
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
+    <form 
+        class="admin-form"
+        method="POST" 
+        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>" 
+        enctype="multipart/form-data" 
+        accept-charset="UTF-8"
+    >
+        <input type="hidden" id="id" name="id" value="<?=$_GET['id'] ?>" />
 
-      <fieldset>
-        <legend class="legend1">Formulaire Statut...</legend>
-
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
-
-        <div class="control-group">
-            <label class="control-label" for="libStat"><b>Nom :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="libStat" id="libStat" size="80" maxlength="80" value="<?= $libStat ?>" disabled="disabled" />
+        <div class="field">
+            <label for="libStat">Nom</label>
+            <input disabled name="libStat" id="libStat" size="80" maxlength="80" value="<?= $libStat; ?>" />
         </div>
 
-        <div class="control-group">
-            <div class="controls">
-                <br><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="./statut.php" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;">Annuler</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;"/>
-                <br>
-            </div>
+        <div class="controls">
+            <a class="btn btn-lg btn-text" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-secondary" href="./statut.php">Annuler</a>
+            <input class="btn btn-lg btn-danger" type="submit" value="Supprimer" />
         </div>
-      </fieldset>
     </form>
-    <br>
-    <i><div class="error"><br>=>&nbsp;Attention, une suppression doit respecter les CIR !</div></i>
-<?php
-require_once __DIR__ . '/footerStatut.php';
-
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

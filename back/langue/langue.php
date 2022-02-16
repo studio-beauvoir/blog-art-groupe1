@@ -8,8 +8,8 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $maLangue = new LANGUE(); 
 
-$pageTitle = "Admin - Gestion des Langues";
-$pageNav = ['Home:/index1.php', 'Gestion des Langues'];
+$pageTitle = "Gestion des Langues";
+$pageNav = ['Home:/index1.php', $pageTitle];
 require_once __DIR__ . '/../../layouts/back/head.php';
 ?>
 	<a class="btn btn-lg" href="./createLangue.php" title="Créer une langue">Créer une langue</a>

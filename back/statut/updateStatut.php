@@ -1,12 +1,4 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD STATUT (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : updateStatut.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
-
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
@@ -15,7 +7,6 @@ require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
 
 // Instanciation de la classe Statut
 $monStatut = new STATUT(); 
-
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -55,12 +46,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // Init variables form
 include __DIR__ . '/initStatut.php';
 
-
-$pageTitle = "Admin - CRUD Statut";
+$pageTitle = "Modifier un Statut";
+$pageNav = ['Home:/index1.php', 'Gestion du Statut:./statut.php', $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
-    <h1>BLOGART22 Admin - CRUD Statut</h1>
-    <h2>Modification d'un statut</h2>
 <?php
     // Modif : récup id à modifier
     // id passé en GET
@@ -74,48 +63,24 @@ include __DIR__ . '/../../layouts/back/head.php';
     $libStat = $statut['libStat'];
 
 ?>
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>" enctype="multipart/form-data" accept-charset="UTF-8">
+    <form 
+        class="admin-form"
+        method="POST" 
+        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>" 
+        enctype="multipart/form-data" 
+        accept-charset="UTF-8"
+    >
+        <input type="hidden" id="id" name="id" value="<?=$_GET['id'] ?>" />
 
-      <fieldset>
-        <legend class="legend1">Formulaire Statut...</legend>
-
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
-
-        <div class="control-group">
-            <label class="control-label" for="libStat"><b>Nom :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="libStat" id="libStat" size="80" maxlength="80" value="<?= $libStat; ?>" autofocus="autofocus" />
+        <div class="field">
+            <label for="libStat">Nom</label>
+            <input name="libStat" id="libStat" size="80" maxlength="80" value="<?= $libStat; ?>" />
         </div>
 
-        <div class="control-group">
-            <div class="error">
-<?php
-            if ($erreur) {
-                echo ($errSaisies);
-            }
-            else {
-                $errSaisies = "";
-                echo ($errSaisies);
-            }
-?>
-            </div>
+        <div class="controls">
+            <a class="btn btn-lg btn-text" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-secondary" href="./statut.php">Annuler</a>
+            <input class="btn btn-lg" type="submit" value="Valider" />
         </div>
-
-        <div class="control-group">
-            <div class="controls">
-                <br><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;">Réinitialiser</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;"/>
-                <br>
-            </div>
-        </div>
-      </fieldset>
     </form>
-<?php
-require_once __DIR__ . '/footerStatut.php';
-
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

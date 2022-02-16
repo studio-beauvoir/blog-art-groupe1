@@ -56,3 +56,38 @@ table tbody {
 .done { --background: var(--g5); --color: var(--bg1) }
 .to-test { --background: var(--g6); --color: var(--bg1) }
 .doing { --background: var(--g4); --color: var(--bg1) }
+
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.admin-form .field {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-form .controls {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1rem;
+}
+
+.errors {
+    display: flex;
+    flex-direction: column;
+    padding: 0.7rem 1rem;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    border-radius: var(--rounded-lg);
+    background: var(--p1);
+}
+
+.error {
+    font: var(--p);
+    color: var(--g3);
+}

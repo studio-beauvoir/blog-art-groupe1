@@ -9,7 +9,7 @@ require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
 $monStatut = new STATUT(); 
 
 $pageTitle = "Gestion du Statut";
-$pageNav = ['Home:/index1.php', 'Gestion du Statut'];
+$pageNav = ['Home:/index1.php', $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
 	<a class="btn btn-lg" href="./createStatut.php" title="Créer un statut">Créer un statut</a>
@@ -42,7 +42,7 @@ include __DIR__ . '/../../layouts/back/head.php';
                 </td>
                 <td>  
                     <!-- lien : test ternaire super admin -->
-                    <a class="btn btn-md" href="<?= $row['idStat']!=1?'./deleteStatut.php?id='.$row['idStat']:'#'; ?>" title="Supprimer le statut">Supprimer</a>
+                    <a class="btn btn-md btn-danger" href="<?= $row['idStat']!=1?'./deleteStatut.php?id='.$row['idStat']:'#'; ?>" title="Supprimer le statut">Supprimer</a>
                 </td>
             </tr>
         <?php }	// End of foreach ?>

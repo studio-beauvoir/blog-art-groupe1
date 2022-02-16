@@ -3,6 +3,19 @@ require_once __DIR__ . '../../../util/index.php';
 
 // Gestion des CIR => affichage erreur sinon
 $errCIR = isset($_GET['err_cir']) && $_GET['err_cir'] == true;
+
+$listErrors = [];
+
+if (isset($errDel) && ($errDel == 99) ) { 
+    array_push($listErrors ,"Erreur delete LANGUE : la suppression s'est mal passée !");
+}
+
+if ($errCIR) {
+    array_push($listErrors ,"Suppression impossible, existence de thématique(s), angle(s) et/ou mot(s) clé(s) associé(s) à cette langue. Vous devez d'abord supprimer le(s) thématique(s), le(s) angle(s) ou le(s) mots clés concerné(s).");
+}
+if (isset($erreur) && $erreur && isset($errSaisies)) { 
+    array_push($listErrors , $errSaisies);
+}
 ?>
 
 <!DOCTYPE html>
@@ -27,10 +40,10 @@ $errCIR = isset($_GET['err_cir']) && $_GET['err_cir'] == true;
             <?php } ?>
             </div>
 
-            <?php if (isset($errDel) && ($errDel == 99) ) { ?>
-                <i><div class="error">=>Erreur delete LANGUE : la suppression s'est mal passée !</div></i>
-            <?php } ?>
-
-            <?php if ($errCIR) { ?>
-                <i><div class="error">=>Suppression impossible, existence de thématique(s), angle(s) et/ou mot(s) clé(s) associé(s) à cette langue. Vous devez d'abord supprimer le(s) thématique(s), le(s) angle(s) ou le(s) mots clés concerné(s).</div></i>
+            <?php if(count($listErrors)>0) { ?>
+            <div class="errors">
+                <?php foreach($listErrors as $error) { ?>
+                    <div class="error"><?=$error ?></div>
+                <?php } ?>
+            </div>
             <?php } ?>

@@ -12,7 +12,7 @@ require_once __DIR__ . '/layouts/back/head.php';
 	<span class="btn btn-lg done">Terminé et testé</span>
 
 	<div class="list-crud">
-	<a class="btn btn-lg doing" href="./BACK/angle/angle.php">Angle (*)</a>
+	<a class="btn btn-lg done" href="./BACK/angle/angle.php">Angle (*)</a>
 
 	<a class="btn btn-lg" href="./BACK/article/article.php">Article (*)</a>
 
@@ -29,7 +29,7 @@ require_once __DIR__ . '/layouts/back/head.php';
 <!-- Membre (*) - reCaptcha à ajouter -->
 	<a class="btn btn-lg" href="./BACK/membre/membre.php">Membre (*)</a>
 
-	<a class="btn btn-lg" href="./BACK/motcle/motcle.php">Mot-clé (*)</a>
+	<a class="btn btn-lg doing" href="./BACK/motcle/motcle.php">Mot-clé (*)</a>
 
 	<a class="btn btn-lg" href="#">Mot-clé Article => dans Article</a>
 

@@ -38,11 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
     }   // End of else erreur saisies
-    // controle des saisies du formulaire
-
-    // insertion effective du statut
-
-    // Gestion des erreurs => msg si saisies ko
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form

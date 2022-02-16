@@ -49,7 +49,7 @@ ul li{
 }
 
 
-input {
+input, select {
     padding: 0.9rem 1rem;
     border-radius: var(--rounded-lg);
     border: 2px solid var(--p1);

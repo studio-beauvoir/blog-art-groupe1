@@ -8,11 +8,6 @@ body {
     text-decoration: none;
 }
 
-.img .logo{
-    width: ;
-    height: ;
-}
-
 .footer {
     flex-direction: row;
     background-color: var(--bg2);

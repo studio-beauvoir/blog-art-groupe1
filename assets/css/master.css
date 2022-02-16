@@ -27,7 +27,7 @@ body {
     font: var(--p);
     display: inline-block;
     text-align: center;
-    transition: transform .3s, outline .3s;
+    transition: transform .2s, outline .2s;
 }
 .btn:hover {
     outline: 3px solid var(--i);

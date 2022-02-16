@@ -37,3 +37,22 @@ table tbody {
 .page-header {
     margin-bottom: 6rem;
 }
+
+.list-crud {
+    margin: 5rem 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+    gap: 1rem;
+}
+
+.list-crud > * {
+    --background: var(--bg3);
+    --color: var(--p1);
+    text-align: left;
+}
+
+.done { --background: var(--g5); --color: var(--bg1) }
+.to-test { --background: var(--g6); --color: var(--bg1) }
+.doing { --background: var(--g4); --color: var(--bg1) }

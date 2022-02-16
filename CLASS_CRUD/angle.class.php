@@ -49,7 +49,7 @@ class ANGLE{
 
 	function get_AllAnglesByLang() {
 		global $db;
-		$query = 'SELECT * FROM ANGLE WHERE numAngl=?;';
+		$query = 'SELECT * FROM ANGLE WHERE numLang=?;';
 		$result = $db->query($query);
 		$allAnglesByLang = $result->fetchAll();
 		return($allAnglesByLang);
@@ -63,7 +63,7 @@ class ANGLE{
 		$query = 'SELECT COUNT (*) FROM ANGLE WHERE numAngl=?;';
 		$request = $db->prepare($query);
 		$request->execute([$numAngl]);
-		$allNbAnglesBynumAngl = $request->fetch();
+		$allNbAnglesBynumAngl = $request->fetchAll();
 
 		$db->commit();
 		$request->closeCursor();

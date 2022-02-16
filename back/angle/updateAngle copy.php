@@ -3,7 +3,7 @@
 //
 //  CRUD ANGLE (PDO) - Modifié : 4 Juillet 2021
 //
-//  Script  : createAngle.php  -  (ETUD)  BLOGART22
+//  Script  : updateAngle.php  -  (ETUD)  BLOGART22
 //
 ////////////////////////////////////////////////////////////
 
@@ -19,7 +19,13 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 
 
 
-// Gestion des erreurs de saisie
+// Insertion classe Langue
+
+// Instanciation de la classe langue
+
+
+
+// Gestion  erreurs de saisie
 $erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
@@ -27,10 +33,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-
     // controle des saisies du formulaire
 
-    // création effective de l'angle
+    // modification effective du angle
 
 
 
@@ -39,7 +44,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 
-}   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
+
+
+}   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 // Init variables form
 include __DIR__ . '/initAngle.php';
 ?>
@@ -56,8 +63,18 @@ include __DIR__ . '/initAngle.php';
 </head>
 <body>
     <h1>BLOGART22 Admin - CRUD Angle</h1>
-    <h2>Ajout d'un angle</h2>
+    <h2>Modification d'un angle</h2>
+<?php
+    // Modif : récup id à modifier
+    // id passé en GET
 
+
+
+
+
+
+
+?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
       <fieldset>
@@ -77,8 +94,9 @@ include __DIR__ . '/initAngle.php';
         <div class="control-group">
             <div class="controls">
             <label class="control-label" for="LibTypLang">
-                <b>Quelle langue :&nbsp;&nbsp;&nbsp;</b>
+                <b>Quelle langue :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
             </label>
+<!--  -->
 
             <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numLang; ?>" autocomplete="on" />
 
@@ -87,6 +105,7 @@ include __DIR__ . '/initAngle.php';
             </div>
         </div>
     <!-- FIN Listbox Langue -->
+<!-- ---------------------------------------------------------------------- -->
 <!-- ---------------------------------------------------------------------- -->
         <div class="control-group">
             <div class="error">

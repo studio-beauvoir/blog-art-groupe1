@@ -4,26 +4,35 @@
         </div>
 
         <div class="container section-list">
-            <ul>
-                <li><h4>Navigation</h4></li>
-                <li><p><a href="">LIEN </a></p></li> 
-                <li><p><a href="">LIEN </a></p></li>
-                <li><p><a href="">LIEN </a></p></li>
-            </ul>
-            <ul>
-                <li><h4>Légal</h4></li>
-                <li><p><a href="">Mentions légales</a></p></li>
-                <li><p><a href="">Conditions générales d'utilisation</a></p></li>
-                <li><p><a href="">LIEN </a></p></li>
-            </ul>
-            <ul>
-                <li><h4>Contact</h4></li>
-                <li><p><a href="">LIEN </a></p></li>
-                <li><p><a href="">LIEN </a></p></li>
-            </ul>
+            <div class="footer-box">
+                <ul>
+                    <li><h4>Navigation</h4></li>
+                    <li><p><a href="">Lien </a></p></li> 
+                    <li><p><a href="">Lien </a></p></li>
+                    <li><p><a href="">Lien </a></p></li>
+                </ul>
+            </div>
+            <div class="footer-box">
+                <ul>
+                    <li><h4>Légal</h4></li>
+                    <li><p><a href="">Mentions légales</a></p></li>
+                    <li><p><a href="">Conditions générales d'utilisation</a></p></li>
+                    <li><p><a href="">Lien </a></p></li>
+                </ul>
+            </div>
+            <div class="footer-box">
+                <ul>
+                    <li><h4>Contact</h4></li>
+                    <li><p><a href="">Lien </a></p></li>
+                    <li><p><a href="">Lien </a></p></li>
+                    <li><p><a href="">Lien </a></p></li>
+                </ul>
+            </div>
         </div>
 
-        <div class="container section-law">
-            <p>2022-2024 BSA - Tous Droits réservés</p>
+        <div class="container-section-law">
+            <div class="footer-droits">
+                <p>© 2022-2024 BSA - Tous droits réservés</p>
+            </div>
         </div>
 </footer>

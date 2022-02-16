@@ -1,3 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@200;400;500;600;700&display=swap');
+@import url('http://fonts.cdnfonts.com/css/a-attack-graffiti');
+
+:root {
+
+    --bg1: #00061A ;
+    --bg2: #202433 ;
+    --bg3: #40434D ;
+    --p1: #F2FCFF ;
+    --p2: #D5DDDF ;
+    --p3:#B9BEBF ;
+    --i:#FFFB00 ;
+    --g1:#2F23D6 ;
+    --g2:#4AC5E8 ;
+    --g3:#D91D1D ;
+    --g4:#EE7C0B ;
+    --g5:#05C323 ;
+    --g6:#EC03E5 ;
+
+
+    /* titres */
+    --h1: 400 6rem  'a Attack Graffiti', sans-serif;
+    --h2: 700 2.5rem  "Lexend Deca", sans-serif;
+    --h3: 600 1.75rem  "Lexend Deca", sans-serif;
+    --h4: 500 1.5rem  "Lexend Deca", sans-serif;
+        
+    /* contenu */
+    --p: 400 1.125rem  "Lexend Deca", sans-serif;
+    --label: 200 1.125rem  "Lexend Deca", sans-serif;
+
+
+}
 body {
     background-color: var(--bg1);
 }

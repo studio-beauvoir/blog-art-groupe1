@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@200;400;500;600;700&display=swap');
+@import url('http://fonts.cdnfonts.com/css/a-attack-graffiti');
+
 :root {
 
     --bg1: #00061A ;
@@ -16,7 +19,7 @@
 
 
     /* titres */
-    --h1: 400 6rem  "a attack graffiti", sans-serif;
+    --h1: 400 6rem  'a Attack Graffiti', sans-serif;
     --h2: 700 2.5rem  "Lexend Deca", sans-serif;
     --h3: 600 1.75rem  "Lexend Deca", sans-serif;
     --h4: 500 1.5rem  "Lexend Deca", sans-serif;

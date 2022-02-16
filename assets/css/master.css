@@ -8,6 +8,24 @@ body {
     text-decoration: none;
 }
 
+.footer {
+    flex-direction: row;
+    background-color: var(--bg2);
+}
+
+.footer .container-footer{
+    justify-content: space-between;
+}
+
+.footer .container-law {
+    text-align: right;
+}
+
+
+ul li {
+    list-style: none;
+}
+
 /* reset all default styles  */
 * {
     margin: 0;
@@ -16,6 +34,7 @@ body {
     color: var(--color);
     outline: 0px solid transparent;
 }
+
 *:focus {
     outline: 3px solid #9da3f5;
 }
@@ -27,7 +46,7 @@ body {
     font: var(--p);
     display: inline-block;
     text-align: center;
-    transition: transform .3s, outline .3s;
+    transition: transform .2s, outline .2s;
 }
 .btn:hover {
     outline: 3px solid var(--i);

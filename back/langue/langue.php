@@ -8,11 +8,11 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 // Instanciation de la classe langue
 $maLangue = new LANGUE(); 
 
-$pageTitle = "Admin - CRUD Langue";
-$pageNav = ['Home:/index1.php', 'CRUD Langue'];
+$pageTitle = "Admin - Gestion des Langues";
+$pageNav = ['Home:/index1.php', 'Gestion des Langues'];
 require_once __DIR__ . '/../../layouts/back/head.php';
 ?>
-	<a class="btn btn-lg" href="./createLangue.php">Créer une langue</a>
+	<a class="btn btn-lg" href="./createLangue.php" title="Créer une langue">Créer une langue</a>
 	<h3>Toutes les langues</h3>
 
 	<table>
@@ -46,6 +46,4 @@ require_once __DIR__ . '/../../layouts/back/head.php';
             <?php }	?>
         </tbody>
     </table>
-<?php
-require_once __DIR__ . '/../../layouts/back/foot.php';
-?>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

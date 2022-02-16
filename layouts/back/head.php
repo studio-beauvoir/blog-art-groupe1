@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '../../../util/index.php';
 
+// Gestion des CIR => affichage erreur sinon
+$errCIR = isset($_GET['err_cir']) && $_GET['err_cir'] == true;
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +31,6 @@ require_once __DIR__ . '../../../util/index.php';
                 <i><div class="error">=>Erreur delete LANGUE : la suppression s'est mal passée !</div></i>
             <?php } ?>
 
-            <?php if (isset($errCIR) && ($errCIR == 1) ) { ?>
+            <?php if ($errCIR) { ?>
                 <i><div class="error">=>Suppression impossible, existence de thématique(s), angle(s) et/ou mot(s) clé(s) associé(s) à cette langue. Vous devez d'abord supprimer le(s) thématique(s), le(s) angle(s) ou le(s) mots clés concerné(s).</div></i>
             <?php } ?>

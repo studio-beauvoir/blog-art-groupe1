@@ -25,7 +25,7 @@ footer {
 .container.section-list{
     display: flex;
     justify-content: space-around;
-    margin: 0;g
+    margin: 0;
     padding:0;
 }
 

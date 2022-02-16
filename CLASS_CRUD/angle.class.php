@@ -153,7 +153,6 @@ class ANGLE{
 
 		try {
 			$db->beginTransaction();
-
 			$query = 'UPDATE ANGLE SET libAngl=?,numLang=? WHERE numAngl=?;';
 			$request = $db->prepare($query);
 			$request->execute([$libAngl, $numLang, $numAngl]);

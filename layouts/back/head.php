@@ -1,13 +1,16 @@
+<?php
+require_once __DIR__ . '../../../util/index.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr-FR">
 <head>
     <meta charset="utf-8" />
     <title><?= isset($pageTitle)?$pageTitle:'Title' ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
-    <link href="<?=webSitePath() ?>/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="<?= webSitePath() ?>/assets/css/style.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
         .error {
             padding: 2px;

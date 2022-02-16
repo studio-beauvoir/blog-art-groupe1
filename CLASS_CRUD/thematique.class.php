@@ -61,6 +61,7 @@ class THEMATIQUE{
 	}
 
 	//HELP HERE
+	// à verif ------------------------------------------------------------------------------------------------------- !!!
 	function get_NbAllThematiquesBynumLang($numLang){ 
 		global $db;
 

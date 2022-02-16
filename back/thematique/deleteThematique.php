@@ -24,14 +24,14 @@ $monArticle = new ARTICLE();
 
 // BBCode
 
+$erreur = false;
+
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $validator = Validator::make([
-        ValidationRule::required('id'),
-        ValidationRule::required('libThem'),
-        ValidationRule::required('idLang'),
+        ValidationRule::required('id')
     ])->bindValues($_POST);
 
     if($validator->success()) {
@@ -77,7 +77,7 @@ include __DIR__ . '/initThematique.php';
 </head>
 <body>
     <h1>BLOGART22 Admin - CRUD Thematique</h1>
-    <h2>Suppression d'une Thematique</h2>
+    <h2>Suppression d'une Thématique</h2>
 <?php
     // Supp : récup id à supprimer
     // id passé en GET
@@ -86,7 +86,7 @@ include __DIR__ . '/initThematique.php';
     $numLang = $thematique['numLang'];
 
 ?>
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
+    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>" enctype="multipart/form-data" accept-charset="UTF-8">
 
       <fieldset>
         <legend class="legend1">Formulaire Thematique...</legend>
@@ -95,7 +95,7 @@ include __DIR__ . '/initThematique.php';
 
         <div class="control-group">
             <label class="control-label" for="libThem"><b>Libellé :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="libThem" id="libThem" size="80" maxlength="80" value="<?= $libThem; ?>" disabled="disabled" />
+            <input type="text" name="libThem" id="libThem" size="80" maxlength="80" value="<?= $libThem; ?>" />
         </div>
 
         <br>
@@ -130,6 +130,8 @@ include __DIR__ . '/initThematique.php';
         </div>
       </fieldset>
     </form>
+    <br>
+    <i><div class="error"><br>=>&nbsp;Attention, une suppression doit respecter les CIR !</div></i>
 <?php
 require_once __DIR__ . '/footerThematique.php';
 

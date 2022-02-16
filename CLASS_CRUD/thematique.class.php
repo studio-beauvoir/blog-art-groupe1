@@ -181,7 +181,7 @@ class THEMATIQUE{
 		try {
 			$db->beginTransaction();
 
-			$query = 'DELETE FROM THEMATIQUE WHERE `numLang` = ?;';
+			$query = 'DELETE FROM THEMATIQUE WHERE `numThem` = ?;';
 			$request = $db->prepare($query);
 			$request->execute([$numThem]);
 			$count = $request->rowCount();

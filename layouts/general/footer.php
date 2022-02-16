@@ -6,20 +6,20 @@
         <div class="container section-list">
             <ul>
                 <li><h4>Navigation</h4></li>
-                <li><p>lien</p></li>
-                <li><p>lien</p></li>
-                <li><p>lien</p></li>
+                <li><p><a href="">LIEN </a></p></li> 
+                <li><p><a href="">LIEN </a></p></li>
+                <li><p><a href="">LIEN </a></p></li>
             </ul>
             <ul>
                 <li><h4>Légal</h4></li>
-                <li><p>Mentions légales</p></li>
-                <li><p>Conditions générales d'utilisatino</p></li>
-                <li><p>lien</p></li>
+                <li><p><a href="">Mentions légales</a></p></li>
+                <li><p><a href="">Conditions générales d'utilisation</a></p></li>
+                <li><p><a href="">LIEN </a></p></li>
             </ul>
             <ul>
                 <li><h4>Contact</h4></li>
-                <li><p>lien</p></li>
-                <li><p>lien</p></li>
+                <li><p><a href="">LIEN </a></p></li>
+                <li><p><a href="">LIEN </a></p></li>
             </ul>
         </div>
 

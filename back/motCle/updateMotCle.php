@@ -1,7 +1,7 @@
 <?php
 
 $submitBtn = "Modifier";
-$pageCrud = "mot clé";
+$pageCrud = "motCle";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "$submitBtn un $pageCrud";
 $pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];

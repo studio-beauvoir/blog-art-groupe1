@@ -18,4 +18,16 @@ require_once __DIR__ . '../../../util/index.php';
     <body>
         <?php 
             require_once __DIR__ . './../general/header.php';
+            require_once __DIR__ . '/../../layouts/back/nav.php';
         ?>
+	    <?php if(isset($pageTitle)) { ?>
+            <h1><?=$pageTitle?></h1>
+        <?php } ?>
+
+        <?php if (isset($errDel) && ($errDel == 99) ) { ?>
+            <i><div class="error">=>Erreur delete LANGUE : la suppression s'est mal passée !</div></i>
+        <?php } ?>
+
+        <?php if (isset($errCIR) && ($errCIR == 1) ) { ?>
+            <i><div class="error">=>Suppression impossible, existence de thématique(s), angle(s) et/ou mot(s) clé(s) associé(s) à cette langue. Vous devez d'abord supprimer le(s) thématique(s), le(s) angle(s) ou le(s) mots clés concerné(s).</div></i>
+        <?php } ?>

@@ -12,24 +12,28 @@ main {
     color: var(--i);
     text-decoration: none;
 }
-
-.footer {
-    flex-direction: row;
+header{
     background-color: var(--bg2);
 }
 
-.footer .container-footer{
-    justify-content: space-between;
+footer {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg2);
 }
 
-.footer .container-law {
-    text-align: right;
+.container.section-list{
+    display: flex;
+    justify-content: space-around;
+    margin: 0;g
+    padding:0;
+}
+
+ul li{
+    list-style: none;;
 }
 
 
-ul li {
-    list-style: none;
-}
 
 /* reset all default styles  */
 * {

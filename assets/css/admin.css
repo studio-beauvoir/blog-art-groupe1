@@ -33,3 +33,7 @@ table tbody {
     color: var(--p1);
     background: var(--bg3);
 }
+
+.page-header {
+    margin-bottom: 6rem;
+}

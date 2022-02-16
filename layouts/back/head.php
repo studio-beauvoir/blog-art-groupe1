@@ -18,10 +18,12 @@ require_once __DIR__ . '../../../util/index.php';
     <body>
         <?php require_once __DIR__ . './../general/header.php'; ?>
         <main>
+            <div class="page-header">
             <?php require_once __DIR__ . '/../../layouts/back/nav.php'; ?>
             <?php if(isset($pageTitle)) { ?>
                 <h2><?=$pageTitle?></h2>
             <?php } ?>
+            </div>
 
             <?php if (isset($errDel) && ($errDel == 99) ) { ?>
                 <i><div class="error">=>Erreur delete LANGUE : la suppression s'est mal passée !</div></i>

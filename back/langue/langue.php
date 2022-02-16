@@ -22,21 +22,17 @@ $errCIR = 0;
 $errDel = 0;
 
 $pageTitle = "Admin - CRUD Langue";
-include __DIR__ . '/../../layouts/back/head.php';
+require_once __DIR__ . '/../../layouts/back/head.php';
 ?>
 
 	<h1>BLOGART22 Admin - CRUD Langue</h1>
 
 	<hr />
 	<h2>Nouvelle langue :<a href="./createLangue.php"><i>Créer une langue</i></a></h2>
-<?php
-    if ($errDel == 99) {
-?>
-	    
+    <?php if ($errDel == 99) { ?>
         <i><div class="error">=>Erreur delete LANGUE : la suppression s'est mal passée !</div></i>
-<?php
-    }   // End of if ($errDel == 99)
-?>
+    <?php } ?>
+
     <hr />
 	<h2>Toutes les langues</h2>
 
@@ -85,6 +81,5 @@ include __DIR__ . '/../../layouts/back/head.php';
     <p></p>
 <?php
 require_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/../../layouts/back/foot.php';
 ?>
-</body>
-</html>

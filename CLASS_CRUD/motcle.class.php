@@ -25,9 +25,9 @@ class MOTCLE{
 	function get_AllMotCles(){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM MOTCLE;';
+		$result = $db->query($query);
+		$allMotCles = $result->fetchAll();
 		return($allMotCles);
 	}
 

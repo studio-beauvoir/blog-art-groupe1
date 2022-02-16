@@ -1,12 +1,4 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD THEMATIQUE (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : thematique.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
-
 // Mode DEV
 require_once __DIR__ . '/../../util/index.php';
 
@@ -25,90 +17,45 @@ $maLangue = new LANGUE();
 
 // BBCode
 
-// Ctrl CIR
-$errCIR = 0;
-$errDel = 0;
-
-
+$pageTitle = "Gestion des thématiques";
+$pageNav = ['Home:/index1.php', $pageTitle];
+include __DIR__ . '/../../layouts/back/head.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-	<title>Admin - CRUD Thematique</title>
-	<meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <style type="text/css">
-        .error {
-            padding: 2px;
-            border: solid 0px black;
-            color: red;
-            font-style: italic;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
-	<h1>BLOGART22 Admin - CRUD Thematique</h1>
+    <a class="btn btn-lg" href="./createThematique.php" title="Créer un statut">Créer une thematique</a>
+	<h3>Toutes les statuts</h3>
 
-	<hr />
-	<h2>Nouvelle thematique :&nbsp;<a href="./createThematique.php"><i>Créer une thematique</i></a></h2>
-<?php
-    if ($errDel == 99) {
-?>
-	    <br />
-        <i><div class="error"><br>=>&nbsp;Erreur delete THEMATIQUE : la suppression s'est mal passée !</div></i>
-<?php
-    }   // End of if ($errDel == 99)
-?>
-    <hr />
-	<h2>Toutes les Thematiques</h2>
+	<table >
+        <thead>
+            <tr>
+                <th>Numéro</th>
+                <th>Libellé</th>
+                <th>Langue</th>
+                <th colspan="2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        // Appel méthode : Get tous les statuts en BDD
+        $all = $maThematique->get_AllThematiques();
+        // Boucle pour afficher
+        foreach($all as $row) {
+            // la boucle va écrire le code html juste en dessous
+            // on ferme la boucle quelques lignes plus tard
+        ?>
+            <tr>
+                <td><h4> <?= $row['numThem']; ?> </h4></td>
+                <td><?= $row['libThem']; ?></td>
+                <td><?= $row['numLang']; ?></td>
 
-	<table border="3" bgcolor="aliceblue">
-    <thead>
-        <tr>
-            <th>&nbsp;Numéro&nbsp;</th>
-            <th>&nbsp;Description&nbsp;</th>
-            <th>&nbsp;Langue&nbsp;</th>
-            <th colspan="2">&nbsp;Action&nbsp;</th>
-        </tr>
-    </thead>
-    <tbody>
-<?php
-    $all = $maThematique->get_AllThematiques();
-
-    foreach($all as $row) {
-?>
-        <tr>
-
-		<td><h4>&nbsp; <?= $row['numThem']; ?> &nbsp;</h4></td>
-
-        <td>&nbsp; <?= $row['libThem']; ?> &nbsp;</td>
-
-        <td>&nbsp; <?= $row['numLang']; ?> &nbsp;</td>
-
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateThematique.php?id=<?=$row['numThem']; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier thématique" title="Modifier thématique" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-		<br /></td>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./deleteThematique.php?id=<?=$row['numThem']; ?>"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer thématique" title="Supprimer thématique" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-		<br /></td>
-
-        </tr>
-<?php
-    }	// End of foreach
-?>
-    </tbody>
+                <!-- actions -->
+                <td>
+                    <a class="btn btn-md" href="./updateThematique.php?id=<?=$row['numThem']; ?>" title="Modifier">Modifier</a>
+                </td>
+                <td>  
+                    <a class="btn btn-md btn-danger" href="./deleteThematique.php?id=<?=$row['numThem'] ?>" title="Supprimer">Supprimer</a>
+                </td>
+            </tr>
+        <?php }	// End of foreach ?>
+        </tbody>
     </table>
-<?php
-    if ($errCIR == 1) {
-?>
-        <i><div class="error"><br>=>&nbsp;Suppression impossible, existence d'article(s) associé(s) à cette thématique. Vous devez d'abord supprimer le(s) thématique(s) concernée(s).</div></i>
-<?php
-    }   // End of if ($errCIR == 1)
-?>
-    <p>&nbsp;</p>
-<?php
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

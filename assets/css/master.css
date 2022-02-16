@@ -98,7 +98,7 @@ input:focus,
 select:focus {
     border: 2px solid var(--gFocus);
 }
-input[disabled] {
+select[disabled], input[disabled] {
     --background: var(--bg3);
     --color: var(--p3);
     border-color: transparent;

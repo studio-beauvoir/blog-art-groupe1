@@ -8,12 +8,7 @@
 ////////////////////////////////////////////////////////////
 
 // Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
-
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
-// Mise en forme date
-require_once __DIR__ . '/../../util/dateChangeFormat.php';
+require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Thematique
 require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
@@ -79,8 +74,8 @@ include __DIR__ . '/initThematique.php';
         die();
     }
     $thematique = $maThematique->get_1Thematique($_GET['id']);
-    $libThem = $langue['libThem'];
-    $idLang = $langue['numLang'];
+    $libThem = $thematique['libThem'];
+    $idLang = $thematique['numLang'];
 
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -104,7 +99,7 @@ include __DIR__ . '/initThematique.php';
             <label class="control-label" for="LibTypLang"><b>Langue :&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="hidden" id="idLang" name="idLang" value="<?= isset($_GET['idLang']) ? $_GET['idLang'] : '' ?>" />
 
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numLang; ?>" autocomplete="on" />
+                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $idLang; ?>" autocomplete="on" />
 
                 <!-- Listbox langue => 2ème temps -->
 

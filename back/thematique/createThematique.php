@@ -8,10 +8,7 @@
 ////////////////////////////////////////////////////////////
 
 // Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
-
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
+require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Thematique
 

@@ -1,110 +1,54 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD ANGLE (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : angle.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
+// Insertion des fonctions utilitaires
+require_once __DIR__ . '/../../util/index.php';
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
+// Insertion classe Statut
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php'; 
 
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
+// Instanciation de la classe Statut
+$monAngle = new ANGLE(); 
 
-// Insertion classe Angle
-
-// Instanciation de la classe angle
-
-
-
-// Ctrl CIR
-$errCIR = 0;
-
-$errDel = 0;
-
-
-
+$pageTitle = "Gestion de l'Angle";
+$pageNav = ['Home:/index1.php', $pageTitle];
+include __DIR__ . '/../../layouts/back/head.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-	<title>Admin - CRUD Angle</title>
-	<meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <style type="text/css">
-        .error {
-            padding: 2px;
-            border: solid 0px black;
-            color: red;
-            font-style: italic;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
-	<h1>BLOGART22 Admin - CRUD Angle</h1>
+	<a class="btn btn-lg" href="./createAngle.php" title="Créer un Angle">Créer un angle</a>
+	<h3>Toutes les angles</h3>
 
-	<hr />
-	<h2>Nouvel angle :&nbsp;<a href="./createangle.php"><i>Créer un angle</i></a></h2>
-<?php
-    if ($errDel == 99) {
-?>
-        <br />
-        <i><div class="error"><br>=>&nbsp;Erreur delete ANGLE : la suppression s'est mal passée !</div></i>
-<?php
-    }   // End of if ($errDel == 99)
-?>
-    <hr />
-	<h2>Tous les angles</h2>
+	<table >
+        <thead>
+            <tr>
+                <th>Numéro</th>
+                <th>Libellé</th>
+                <th>Langue</th>
+                <th colspan="2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        // Appel méthode : Get tous les statuts en BDD
+        $all = $monAngle->get_AllAngles();
+        // Boucle pour afficher
+        foreach($all as $row) {
+            // la boucle va écrire le code html juste en dessous
+            // on ferme la boucle quelques lignes plus tard
+        ?>
+            <tr>
+                <td><h4> <?= $row['numAngl']; ?> </h4></td>
+                <td><?= $row['libAngl']; ?></td>
+                <td><?= $row['numLang']; ?></td>
 
-	<table border="3" bgcolor="aliceblue">
-    <thead>
-        <tr>
-            <th>&nbsp;Numéro&nbsp;</th>
-            <th>&nbsp;Libellé&nbsp;</th>
-            <th>&nbsp;Langue&nbsp;</th>
-            <th colspan="2">&nbsp;Action&nbsp;</th>
-        </tr>
-    </thead>
-    <tbody>
-<?php
-    // Appel méthode : Get tous les angles en BDD
-
-    // Boucle pour afficher
-    //foreach($all as $row) {
-
-?>
-        <tr>
-		<td><h4>&nbsp; <?= "ici numAngl"; ?> &nbsp;</h4></td>
-
-        <td>&nbsp; <?= "ici libAngl"; ?> &nbsp;</td>
-
-        <td>&nbsp; <?= "ici lib1Lang"; ?> &nbsp;</td>
-
-		<td>&nbsp;&nbsp;&nbsp;&nbsp<a href="./updateAngle.php?id=<?=1; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier angle" title="Modifier angle" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp
-		<br /></td>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp<a href="./deleteAngle.php?id=<?=1; ?>"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer angle" title="Supprimer angle" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-		<br /></td>
-        </tr>
-<?php
-	// }	// End of foreach
-?>
-    </tbody>
+                <!-- actions -->
+                <td>
+                    <a class="btn btn-md" href="./updateAngle.php?id=<?=$row['numAngl']; ?>" title="Modifier l'angle">Modifier</a>
+                </td>
+                <td>  
+                    <!-- lien : test ternaire super admin -->
+                    <a class="btn btn-md btn-danger" href="<?= $row['numAngl']!=1?'./deleteAngle.php?id='.$row['numAngl']:'#'; ?>" title="Supprimer l'angle">Supprimer</a>
+                </td>
+            </tr>
+        <?php }	// End of foreach ?>
+        </tbody>
     </table>
-<?php
-    if ($errCIR == 1) {
-?>
-        <i><div class="error"><br>=>&nbsp;Suppression impossible, existence d'article(s) associé(s) à cet angle. Vous devez d'abord supprimer le(s) angle(s) concerné(s).</div></i>
-<?php
-    }   // End of if ($errCIR == 1)
-?>
-    <p>&nbsp;</p>
-<?php
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>
+

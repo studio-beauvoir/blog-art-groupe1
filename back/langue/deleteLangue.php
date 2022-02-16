@@ -57,9 +57,33 @@ $pageNav = ['Home:/index1.php', 'Gestion de la Langue:./langue.php', $pageTitle]
 include __DIR__ . '/../../layouts/back/head.php';
 
 
+<<<<<<< HEAD
 // Supp : récup id à supprimer
 // id passé en GET
 $langue = $maLangue->get_1Langue($_GET['id']);
+=======
+        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
+
+        <div class="control-group">
+            <label class="control-label" for="lib1Lang"><b>Libellé court :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+            <input type="text" name="lib1Lang" id="lib1Lang" size="80" maxlength="80" value="<?= $lib1Lang; ?>" tabindex="10" /><br>
+        </div>
+        <br>
+        <div class="control-group">
+            <label class="control-label" for="lib2Lang"><b>Libellé long :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+            <input type="text" name="lib1Lang" id="lib2Lang" size="80" maxlength="80" value="<?= $lib2Lang; ?>" tabindex="20" />
+        </div>
+        <br>
+<!-- --------------------------------------------------------------- -->
+<!-- --------------------------------------------------------------- -->
+    <!-- Listbox Pays -->
+        <br>
+        <div class="control-group">
+            <div class="controls">
+            <label class="control-label" for="LibTypPays">
+                <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
+            </label>
+>>>>>>> 0a7ff4ffb9b1c10d5c3a548744235892771de073
 
 $numPays = $langue['numPays'];
 $lib1Lang = $langue['lib1Lang'];

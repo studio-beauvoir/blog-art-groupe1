@@ -1,12 +1,4 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD THEMATIQUE (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : deleteThematique.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
-
 require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Thematique
@@ -14,7 +6,9 @@ require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
 // Instanciation de la classe thématique
 $maThematique = new THEMATIQUE(); 
 
-
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+// Instanciation de la classe thématique
+$maLangue = new LANGUE(); 
 
 // Ctrl CIR
 // Insertion classe Article
@@ -24,14 +18,14 @@ $monArticle = new ARTICLE();
 
 // BBCode
 
+$erreur = false;
+
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $validator = Validator::make([
-        ValidationRule::required('id'),
-        ValidationRule::required('libThem'),
-        ValidationRule::required('idLang'),
+        ValidationRule::required('id')
     ])->bindValues($_POST);
 
     if($validator->success()) {
@@ -48,92 +42,50 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 // Init variables form
 include __DIR__ . '/initThematique.php';
-?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-    <meta charset="utf-8" />
-    <title>Admin - CRUD Thematique</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-        #p1 {
-            max-width: 600px;
-            width: 600px;
-            max-height: 200px;
-            height: 200px;
-            border: 1px solid #000000;
-            background-color: whitesmoke;
-            /* Coins arrondis et couleur du cadre */
-            border: 2px solid grey;
-            -moz-border-radius: 8px;
-            -webkit-border-radius: 8px;
-            border-radius: 8px;
-        }
-    </style>
-</head>
-<body>
-    <h1>BLOGART22 Admin - CRUD Thematique</h1>
-    <h2>Suppression d'une Thematique</h2>
-<?php
-    // Supp : récup id à supprimer
-    // id passé en GET
-    $thematique = $maThematique->get_1Thematique($_GET['id']);
-    $libThem = $thematique['libThem'];
-    $numLang = $thematique['numLang'];
+$submitBtn = "Supprimer";
+$pagePrecedent = "./thematique.php";
+$pageTitle = "Supprimer une Thématique";
+$pageNav = ['Home:/index1.php', 'Gestion des thématiques:'.$pagePrecedent, $pageTitle];
+include __DIR__ . '/../../layouts/back/head.php';
+
+// Supp : récup id à supprimer
+// id passé en GET
+$thematique = $maThematique->get_1Thematique($_GET['id']);
+$libThem = $thematique['libThem'];
+$numLang = $thematique['numLang'];
 
 ?>
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
-
-      <fieldset>
-        <legend class="legend1">Formulaire Thematique...</legend>
-
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
-
-        <div class="control-group">
-            <label class="control-label" for="libThem"><b>Libellé :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="libThem" id="libThem" size="80" maxlength="80" value="<?= $libThem; ?>" disabled="disabled" />
+    <form 
+        class="admin-form"
+        method="POST" 
+        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id']?>" 
+        enctype="multipart/form-data" 
+        accept-charset="UTF-8"
+    >
+        <input type="hidden" id="id" name="id" value="<?= $_GET['id'] ?>" />
+        
+        <div class="field">
+            <label for="libThem">Titre de la thématique</label>
+            <input disabled name="libThem" value="<?=$libThem?>" id="libThem" size="80" maxlength="80" />
         </div>
 
-        <br>
-<!-- --------------------------------------------------------------- -->
-    <!-- FK : Langue -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Listbox langue -->
-        <br>
-
-        <div class="control-group">
-            <label class="control-label" for="LibTypLang"><b>Langue :&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="hidden" id="idLang" name="idLang" value="<?= isset($_GET['idLang']) ? $_GET['idLang'] : '' ?>" />
-
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numLang; ?>" autocomplete="on" />
-
-                <!-- Listbox langue disabled => 2ème temps -->
-
+        <div class="field">
+            <label for="idLang">Quelle langue</label>
+            <select disabled name="idLang" id="idLang">
+                <?php 
+                    $allLangues = $maLangue->get_AllLangues();                    
+                    foreach($allLangues as $langue) { 
+                ?>
+                    <option <?=$langue['numLang']==$idLang?'selected':'' ?> value="<?= $langue['numLang'] ?>" ><?=$langue['lib1Lang'] ?></option>
+                <?php } ?>
+            </select>
         </div>
-    <!-- FIN Listbox langue -->
-<!-- --------------------------------------------------------------- -->
-    <!-- FK : Langue -->
-<!-- --------------------------------------------------------------- -->
-        <div class="control-group">
-            <div class="controls">
-                <br><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="./thematique.php" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;">Annuler</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                <br>
-            </div>
+
+        <div class="controls">
+            <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
+            <input class="btn btn-lg btn-danger" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
         </div>
-      </fieldset>
     </form>
-<?php
-require_once __DIR__ . '/footerThematique.php';
-
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

@@ -29,7 +29,9 @@ $monArticle = new ARTICLE();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $validator = Validator::make([
-        ValidationRule::required('id')
+        ValidationRule::required('id'),
+        ValidationRule::required('libThem'),
+        ValidationRule::required('idLang'),
     ])->bindValues($_POST);
 
     if($validator->success()) {

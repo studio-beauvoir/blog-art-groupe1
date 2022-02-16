@@ -31,54 +31,61 @@ class ANGLE{
 	function get_1AngleByLang(string $numAngl) {
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM THEMATIQUE WHERE numAngl=?;';
+		$request = $db->prepare($query);
+		$request->execute([$numAngl]);
+		$result = $request->fetch();
 		return($result->fetch());
 	}
 
 	function get_AllAngles() {
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM ANGLE;';
+		$request = $db->query($query);
+		$allAngles = $request->fetchAll();
 		return($allAngles);
 	}
 
 	function get_AllAnglesByLang() {
 		global $db;
-
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM ANGLE WHERE numAngl=?;';
+		$result = $db->query($query);
+		$allAnglesByLang = $result->fetchAll();
 		return($allAnglesByLang);
 	}
 
-	function get_NbAllAnglesBynumLang(string $numLang) {
+	function get_NbAllAnglesBynumAngl(string $numAngl) {
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($allNbAnglesBynumLang);
+		$db->beginTransaction();
+
+		$query = 'SELECT COUNT (*) FROM ANGLE WHERE numAngl=?;';
+		$request = $db->prepare($query);
+		$request->execute([$numAngl]);
+		$allNbAnglesBynumAngl = $request->fetch();
+
+		$db->commit();
+		$request->closeCursor();
+		
+		return($allNbAnglesBynumAngl);
 	}
 
 	//  Récupérer la prochaine PK de la table ANGLE
-	function getNextNumAngl($numLang) {
+	function getNextNumAngl($numAngl) {
 		global $db;
 	
 		// Découpage FK LANGUE
-		$libLangSelect = substr($numLang, 0, 4);
-		$parmNumLang = $libLangSelect . '%';
+		$libLangSelect = substr($numAngl, 0, 4);
+		$parmnumAngl = $libLangSelect . '%';
 	
-		$requete = "SELECT MAX(numLang) AS numLang FROM ANGLE WHERE numLang LIKE '$parmNumLang';";
+		$requete = "SELECT MAX(numAngl) AS numAngl FROM ANGLE WHERE numAngl LIKE '$parmnumAngl';";
 		$result = $db->query($requete);
 	
 		if ($result) {
 			$tuple = $result->fetch();
-			$numLang = $tuple["numLang"];
-			if (is_null($numLang)) {    // New lang dans ANGLE
+			$numAngl = $tuple["numAngl"];
+			if (is_null($numAngl)) {    // New lang dans ANGLE
 				// Récup dernière PK utilisée
 				$requete = "SELECT MAX(numAngl) AS numAngl FROM ANGLE;";
 				$result = $db->query($requete);
@@ -92,7 +99,7 @@ class ANGLE{
 				$numSeq2Angl = 1;
 			} else {
 				// Récup dernière PK pour FK sélectionnée
-				$requete = "SELECT MAX(numAngl) AS numAngl FROM ANGLE WHERE numLang LIKE '$parmNumLang' ;";
+				$requete = "SELECT MAX(numAngl) AS numAngl FROM ANGLE WHERE numAngl LIKE '$parmnumAngl' ;";
 				$result = $db->query($requete);
 				$tuple = $result->fetch();
 				$numAngl = $tuple["numAngl"];
@@ -128,9 +135,9 @@ class ANGLE{
 		try {
 			$db->beginTransaction();
 
-			// insert
-			// prepare
-			// execute
+			$query = 'INSERT INTO ANGLE (numAngl, libAngl, numLang) VALUES (?, ?, ?);';
+			$request = $db->prepare($query);
+			$request->execute( [$numAngl, $libAngl, $numLang]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -146,10 +153,9 @@ class ANGLE{
 
 		try {
 			$db->beginTransaction();
-
-			// update
-			// prepare
-			// execute
+			$query = 'UPDATE ANGLE SET libAngl=?,numLang=? WHERE numAngl=?;';
+			$request = $db->prepare($query);
+			$request->execute([$libAngl, $numLang, $numAngl]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -163,13 +169,13 @@ class ANGLE{
 	// Ctrl FK sur THEMATIQUE, ANGLE, MOTCLE avec del
 	function delete(string $numAngl){
 		global $db;
-
+		
 		try {
 			$db->beginTransaction();
 
-			// delete
-			// prepare
-			// execute
+			$query = 'DELETE FROM ANGLE WHERE `numAngl` = ?;';
+			$request = $db->prepare($query);
+			$request->execute([$numAngl]);
 			$count = $request->rowCount();
 			$db->commit();
 			$request->closeCursor();

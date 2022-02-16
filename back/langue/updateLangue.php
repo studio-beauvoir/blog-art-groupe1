@@ -1,12 +1,4 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD LANGUE (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : updateLangue.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
-
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
@@ -54,22 +46,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 // Init variables form
 include __DIR__ . '/initLangue.php';
-?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-    <meta charset="utf-8" />
-    <title>Admin - CRUD Langue</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-    <h1>BLOGART22 Admin - CRUD Langue</h1>
-    <h2>Modification d'une langue</h2>
-<?php
+$pageTitle = "Modifier une Langue";
+$pageNav = ['Home:/index1.php', 'Gestion de la Langue:./langue.php', $pageTitle];
+include __DIR__ . '/../../layouts/back/head.php';
+
     // Modif : récup id à modifier
     // id passé en GET
 
@@ -84,26 +65,25 @@ include __DIR__ . '/initLangue.php';
     $idPays = $langue['numPays'];
 
 ?>
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF'])?>?id=<?=$_GET['id']?>" enctype="multipart/form-data" accept-charset="UTF-8">
+    <form 
+        class="admin-form"
+        method="POST" 
+        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>" 
+        enctype="multipart/form-data" 
+        accept-charset="UTF-8"
+    >
+        <input type="hidden" id="id" name="id" value="<?=$_GET['id'] ?>" />
 
-      <fieldset>
-        <legend class="legend1">Formulaire Langue...</legend>
-
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
-
-        <div class="control-group">
-            <label class="control-label" for="lib1Lang"><b>Libellé court :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="lib1Lang" id="lib1Lang" size="80" maxlength="80" value="<?= $lib1Lang; ?>" tabindex="10" autofocus="autofocus" /><br><br>
+        <div class="field">
+            <label for="lib1Lang">Libellé court</label>
+            <input name="lib1Lang" id="lib1Lang" size="80" maxlength="80" value="<?= $lib1Lang; ?>" />
         </div>
-        <div class="control-group">
-            <label class="control-label" for="lib2Lang"><b>Libellé long :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="lib2Lang" id="lib2Lang" size="80" maxlength="80" value="<?= $lib2Lang; ?>" tabindex="20" />
+
+        <div class="field">
+            <label for="lib2Lang">Libellé long</label>
+            <input name="lib2Lang" id="lib2Lang" size="80" maxlength="80" value="<?= $lib2Lang; ?>" />
         </div>
-        <br>
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Listbox Pays -->
-        <br>
+
         <div class="control-group">
             <div class="controls">
             <label class="control-label" for="LibTypPays">
@@ -125,38 +105,11 @@ include __DIR__ . '/initLangue.php';
                 </select>
             </div>
         </div>
-    <!-- FIN Listbox Pays -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-        <div class="control-group">
-            <div class="error">
-<?php
-            if ($erreur) {
-                echo ($errSaisies);
-            } else {
-                $errSaisies = "";
-                echo ($errSaisies);
-            }
-?>
-            </div>
-        </div>
 
-        <div class="control-group">
-            <div class="controls">
-                <br><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;">Initialiser</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                <br>
-            </div>
+        <div class="controls">
+            <a class="btn btn-lg btn-text" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-secondary" href="./langue.php">Annuler</a>
+            <input class="btn btn-lg" type="submit" value="Valider" />
         </div>
-      </fieldset>
     </form>
-<?php
-require_once __DIR__ . '/footerLangue.php';
-
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

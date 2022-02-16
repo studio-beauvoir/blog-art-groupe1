@@ -37,10 +37,10 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <td> <?= $row['lib2Lang']; ?> </td>
                 <td> <?= $row['numPays']; ?> </td>
                 <td>
-                    <a href="./updateLangue.php?id=<?=$row['numLang']; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier langue" title="Modifier langue" /></i></a>
+                    <a class="btn btn-md" href="./updateLangue.php?id=<?=$row['numLang']; ?>" title="Modifier la langue">Modifier</a>
                 </td>
                 <td>
-                    <a href="./deleteLangue.php?id=<?=$row['numLang']; ?>"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer langue" title="Supprimer langue" /></i></a>
+                    <a class="btn btn-md btn-danger" href="./deleteLangue.php?id=<?=$row['numLang']?>" title="Supprimer la langue">Supprimer</a>
                 </td>
             </tr>
             <?php }	?>

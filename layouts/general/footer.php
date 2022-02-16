@@ -1,6 +1,6 @@
 <footer>
         <div class="container">
-            <img src="assets\img\logo.png" alt="logo du blog bordeaux street art">
+            <img src="..\..\assets\img\logo.png" alt="logo du blog bordeaux street art">
         </div>
 
         <div class="container container-footer">

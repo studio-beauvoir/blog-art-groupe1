@@ -1,7 +1,7 @@
 <?php
 
 $submitBtn = "Supprimer";
-$pageCrud = "angle";
+$pageCrud = "langue";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "$submitBtn: $pageCrud";
 $pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];

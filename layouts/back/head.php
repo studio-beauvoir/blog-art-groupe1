@@ -16,18 +16,17 @@ require_once __DIR__ . '../../../util/index.php';
         <!-- <link href="<?= webSitePath() ?>/assets/css/style.css" rel="stylesheet" type="text/css" /> -->
     </head>
     <body>
-        <?php 
-            require_once __DIR__ . './../general/header.php';
-            require_once __DIR__ . '/../../layouts/back/nav.php';
-        ?>
-	    <?php if(isset($pageTitle)) { ?>
-            <h2><?=$pageTitle?></h2>
-        <?php } ?>
+        <?php require_once __DIR__ . './../general/header.php'; ?>
+        <main>
+            <?php require_once __DIR__ . '/../../layouts/back/nav.php'; ?>
+            <?php if(isset($pageTitle)) { ?>
+                <h2><?=$pageTitle?></h2>
+            <?php } ?>
 
-        <?php if (isset($errDel) && ($errDel == 99) ) { ?>
-            <i><div class="error">=>Erreur delete LANGUE : la suppression s'est mal passée !</div></i>
-        <?php } ?>
+            <?php if (isset($errDel) && ($errDel == 99) ) { ?>
+                <i><div class="error">=>Erreur delete LANGUE : la suppression s'est mal passée !</div></i>
+            <?php } ?>
 
-        <?php if (isset($errCIR) && ($errCIR == 1) ) { ?>
-            <i><div class="error">=>Suppression impossible, existence de thématique(s), angle(s) et/ou mot(s) clé(s) associé(s) à cette langue. Vous devez d'abord supprimer le(s) thématique(s), le(s) angle(s) ou le(s) mots clés concerné(s).</div></i>
-        <?php } ?>
+            <?php if (isset($errCIR) && ($errCIR == 1) ) { ?>
+                <i><div class="error">=>Suppression impossible, existence de thématique(s), angle(s) et/ou mot(s) clé(s) associé(s) à cette langue. Vous devez d'abord supprimer le(s) thématique(s), le(s) angle(s) ou le(s) mots clés concerné(s).</div></i>
+            <?php } ?>

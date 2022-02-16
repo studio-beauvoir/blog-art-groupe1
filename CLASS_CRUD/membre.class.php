@@ -26,9 +26,9 @@ class MEMBRE{
 	function get_AllMembres(){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM MEMBRE;';
+		$request = $db->query($query);
+		$allMembres = $request->fetchAll();
 		return($allMembres);
 	}
 

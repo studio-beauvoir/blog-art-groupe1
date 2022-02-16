@@ -8,8 +8,27 @@ body {
     text-decoration: none;
 }
 
+.img .logo{
+    width: ;
+    height: ;
+}
+
+.footer {
+    flex-direction: row;
+    background-color: var(--bg2);
+}
+
+.footer .container-footer{
+    justify-content: space-between;
+}
+
+.footer .container-law {
+    text-align: right;
+}
+
+
 ul li {
-    text-decoration: none;
+    list-style: none;
 }
 
 /* reset all default styles  */
@@ -20,6 +39,7 @@ ul li {
     color: var(--color);
     outline: 0px solid transparent;
 }
+
 *:focus {
     outline: 3px solid #9da3f5;
 }

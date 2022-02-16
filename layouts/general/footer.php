@@ -1,6 +1,6 @@
 <footer>
         <div class="container">
-            <img src="..\..\assets\img\logo.png" alt="logo du blog bordeaux street art">
+            <img class="logo" src="..\..\assets\img\logo.png" alt="logo du blog bordeaux street art">
         </div>
 
         <div class="container container-footer">
@@ -23,7 +23,7 @@
             </ul>
         </div>
 
-        <div class="container">
+        <div class="container container-law">
             <p>2022-2024 BSA - Tous Droits réservés</p>
         </div>
 </footer>

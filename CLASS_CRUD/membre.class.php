@@ -8,18 +8,34 @@ class MEMBRE{
 	function get_1Membre($numMemb){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetch());
+		try {
+			$query = 'SELECT * FROM MEMBRE WHERE numMemb=?;';
+			$request = $db->prepare($query);
+			
+			$request->execute([$numMemb]);
+
+			$result = $request->fetch();
+
+			if(isset($request)) {
+				return($result);
+			} else {
+				throw new ErrorException('Member not found');
+			}
+		}
+		catch (PDOException $e) {
+			$db->rollBack();
+			$request->closeCursor();
+			die('Erreur insert MEMBRE : ' . $e->getMessage());
+		}
 	}
 
 	function get_1MembreByEmail($eMailMemb){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM THEMATIQUE WHERE eMailMemb=?;';
+		$request = $db->prepare($query);
+		$request->execute([$eMailMemb]);
+		$result = $request->fetch();
 		return($result->fetch());
 	}
 
@@ -73,11 +89,10 @@ class MEMBRE{
 
 	function get_AllMembresByEmail($eMailMemb){
 		global $db;
-
-		// select
-		// prepare
-		// execute
-		return($result->fetchAll());
+		$query = 'SELECT * FROM ANGLE WHERE eMailMemb=?;';
+		$result = $db->query($query);
+		$allMembresByEmail = $result->fetchAll();
+		return($allMembresByEmail);
 	}
 
 	// Inscription membre

@@ -28,12 +28,12 @@ include __DIR__ . '/../../layouts/back/head.php';
 	<h1>BLOGART22 Admin - CRUD Langue</h1>
 
 	<hr />
-	<h2>Nouvelle langue :&nbsp;<a href="./createLangue.php"><i>Créer une langue</i></a></h2>
+	<h2>Nouvelle langue :<a href="./createLangue.php"><i>Créer une langue</i></a></h2>
 <?php
     if ($errDel == 99) {
 ?>
-	    <br />
-        <i><div class="error"><br>=>&nbsp;Erreur delete LANGUE : la suppression s'est mal passée !</div></i>
+	    
+        <i><div class="error">=>Erreur delete LANGUE : la suppression s'est mal passée !</div></i>
 <?php
     }   // End of if ($errDel == 99)
 ?>
@@ -43,11 +43,11 @@ include __DIR__ . '/../../layouts/back/head.php';
 	<table border="3" bgcolor="aliceblue">
     <thead>
         <tr>
-            <th>&nbsp;Numéro&nbsp;</th>
-            <th>&nbsp;Nom court&nbsp;</th>
-            <th>&nbsp;Nom long&nbsp;</th>
-            <th>&nbsp;Pays&nbsp;</th>
-            <th colspan="2">&nbsp;Action&nbsp;</th>
+            <th>Numéro</th>
+            <th>Nom court</th>
+            <th>Nom long</th>
+            <th>Pays</th>
+            <th colspan="2">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -57,18 +57,18 @@ include __DIR__ . '/../../layouts/back/head.php';
     foreach($all as $row) {
 ?>
         <tr>
-		<td><h4>&nbsp; <?= $row['numLang']; ?> &nbsp;</h4></td>
+		<td><h4> <?= $row['numLang']; ?> </h4></td>
 
-        <td>&nbsp; <?= $row['lib1Lang']; ?> &nbsp;</td>
+        <td> <?= $row['lib1Lang']; ?> </td>
 
-        <td>&nbsp; <?= $row['lib2Lang']; ?> &nbsp;</td>
+        <td> <?= $row['lib2Lang']; ?> </td>
 
-        <td>&nbsp; <?= $row['numPays']; ?> &nbsp;</td>
+        <td> <?= $row['numPays']; ?> </td>
 
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateLangue.php?id=<?=$row['numLang']; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier langue" title="Modifier langue" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-		<br /></td>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./deleteLangue.php?id=<?=$row['numLang']; ?>"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer langue" title="Supprimer langue" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-		<br /></td>
+		<td><a href="./updateLangue.php?id=<?=$row['numLang']; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier langue" title="Modifier langue" /></i></a>
+		</td>
+		<td><a href="./deleteLangue.php?id=<?=$row['numLang']; ?>"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer langue" title="Supprimer langue" /></i></a>
+		</td>
         </tr>
 <?php
     }	// End of foreach
@@ -78,11 +78,11 @@ include __DIR__ . '/../../layouts/back/head.php';
 <?php
     if ($errCIR == 1) {
 ?>
-        <i><div class="error"><br>=>&nbsp;Suppression impossible, existence de thématique(s), angle(s) et/ou mot(s) clé(s) associé(s) à cette langue. Vous devez d'abord supprimer le(s) thématique(s), le(s) angle(s) ou le(s) mots clés concerné(s).</div></i>
+        <i><div class="error">=>Suppression impossible, existence de thématique(s), angle(s) et/ou mot(s) clé(s) associé(s) à cette langue. Vous devez d'abord supprimer le(s) thématique(s), le(s) angle(s) ou le(s) mots clés concerné(s).</div></i>
 <?php
     }   // End of if ($errCIR == 1)
 ?>
-    <p>&nbsp;</p>
+    <p></p>
 <?php
 require_once __DIR__ . '/footer.php';
 ?>

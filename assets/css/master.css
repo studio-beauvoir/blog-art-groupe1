@@ -12,20 +12,28 @@ main {
     color: var(--i);
     text-decoration: none;
 }
+
+.logo {
+    width: 175px;
+    height: 80px;
+}
+
 header{
+    display: flex;
+    flex-direction: row;
     background-color: var(--bg2);
 }
+
+
+
+
+
 
 footer {
     display: flex;
     flex-direction: column;
     background-color: var(--bg2);
     padding-top: 50px;
-}
-
-.logo {
-    width: 175px;
-    height: 80px;
 }
 
 .container.section-logo {

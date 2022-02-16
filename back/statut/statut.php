@@ -42,7 +42,7 @@ include __DIR__ . '/../../layouts/back/head.php';
                 </td>
                 <td>  
                     <!-- lien : test ternaire super admin -->
-                    <a class="btn btn-md" href="<?= $row['idStat']!=1?'./deleteStatut.php?id='.$row['idStat']:'#'; ?>" title="Supprimer le statut">Supprimer</a>
+                    <a class="btn btn-md btn-danger" href="<?= $row['idStat']!=1?'./deleteStatut.php?id='.$row['idStat']:'#'; ?>" title="Supprimer le statut">Supprimer</a>
                 </td>
             </tr>
         <?php }	// End of foreach ?>

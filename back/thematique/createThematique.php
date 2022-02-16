@@ -8,8 +8,8 @@ require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
 $maThematique = new THEMATIQUE(); 
 
 require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
-// Instanciation de la classe thématique
-$maLangue = new LANGUE(); 
+// Instanciation de la classe langue
+$maLangue = new LANGUE();
 // BBCode
 
 

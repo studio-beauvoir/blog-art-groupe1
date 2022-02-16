@@ -12,8 +12,8 @@ $pageTitle = "Admin - CRUD Langue";
 $pageNav = ['Home:/index1.php', 'CRUD Langue'];
 require_once __DIR__ . '/../../layouts/back/head.php';
 ?>
-	<h2>Nouvelle langue :<a href="./createLangue.php"><i>Créer une langue</i></a></h2>
-	<h2>Toutes les langues</h2>
+	<a href="./createLangue.php">Créer une langue</a>
+	<h3>Toutes les langues</h3>
 
 	<table>
         <thead>

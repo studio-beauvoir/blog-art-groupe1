@@ -8,6 +8,11 @@ body {
     text-decoration: none;
 }
 
+main, .container {
+    margin: 0 auto;
+    max-width: 1280px;
+}
+
 h1, .font-h1 {
     font: var(--h1);
     color: var(--p1);

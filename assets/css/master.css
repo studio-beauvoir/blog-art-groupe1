@@ -18,17 +18,25 @@ main {
     height: 80px;
 }
 
+/* -----------------------------------HEADER-----------------------------------*/
 header{
     display: flex;
     flex-direction: row;
     background-color: var(--bg2);
 }
 
+/* 
+AJOUT DU CONTENU POUR LE HEADER
+AJOUT DU CONTENU POUR LE HEADER
+AJOUT DU CONTENU POUR LE HEADER
+AJOUT DU CONTENU POUR LE HEADER
+AJOUT DU CONTENU POUR LE HEADER
+AJOUT DU CONTENU POUR LE HEADER
+*/
 
+/* ----------------------------------- FIN HEADER-----------------------------------*/
 
-
-
-
+/* -----------------------------------FOOTER-----------------------------------*/
 footer {
     display: flex;
     flex-direction: column;
@@ -76,6 +84,7 @@ ul li{
     width: 30%;
     margin-bottom: 12px;
 }
+/* -----------------------------------FIN FOOTER-----------------------------------*/
 
 
 

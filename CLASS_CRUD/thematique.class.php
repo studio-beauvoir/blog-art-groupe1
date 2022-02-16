@@ -13,8 +13,6 @@ class THEMATIQUE{
 			
 			$request->execute([$numThem]);
 
-			var_dump($numThem);
-
 			$result = $request->fetch();
 
 			if(isset($request)) {

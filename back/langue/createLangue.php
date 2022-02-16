@@ -1,4 +1,11 @@
 <?php
+
+$submitBtn = "Créer";
+$pageCrud = "langue";
+$pagePrecedent = "./$pageCrud.php";
+$pageTitle = "$submitBtn: $pageCrud";
+$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
+
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
@@ -37,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numLang = $maLangue->getNextNumLang($numPays);
         $maLangue->create($numLang, $lib1Lang, $lib2Lang, $numPays);
 
-        header("Location: ./langue.php");
+        header("Location: $pagePrecedent");
         die();
     } else {
         // Saisies invalides
@@ -50,8 +57,6 @@ include __DIR__ . '/initLangue.php';
 
 
 //Architecture d'Arthaud
-$pageTitle = "Créer une langue";
-$pageNav = ['Home:/index1.php', 'Gestion de la Langue:./langue.php', $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
     <form 
@@ -85,9 +90,9 @@ include __DIR__ . '/../../layouts/back/head.php';
         </div>
 
         <div class="controls">
-            <a class="btn btn-lg btn-text" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
-            <a class="btn btn-lg btn-secondary" href="./langue.php">Annuler</a>
-            <input class="btn btn-lg" type="submit" value="Valider" />
+            <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent?>">Annuler</a>
+            <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
         </div>
     </form>
 <?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

@@ -14,4 +14,16 @@
     --g5:#05C323 ;
     --g6:#EC03E5 ;
 
+
+    /* titres */
+    --h1: 400 6rem  "a attack graffiti", sans-serif;
+    --h2: 700 2.5rem  "Lexend Deca", sans-serif;
+    --h3: 600 1.75rem  "Lexend Deca", sans-serif;
+    --h4: 500 1.5rem  "Lexend Deca", sans-serif;
+        
+    /* contenu */
+    --p: 400 1.125rem  "Lexend Deca", sans-serif;
+    --label: 200 1.125rem  "Lexend Deca", sans-serif;
+
+
 }

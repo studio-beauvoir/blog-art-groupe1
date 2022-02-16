@@ -1,4 +1,11 @@
 <?php
+
+$submitBtn = "Supprimer";
+$pageCrud = "langue";
+$pagePrecedent = "./$pageCrud.php";
+$pageTitle = "$submitBtn: $pageCrud";
+$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
+
 //Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
@@ -40,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numLang = $validator->verifiedField('id');
         $maLangue->delete($numLang);
 
-        header("Location: ./langue.php");
+        header("Location: $pagePrecedent");
         die();
     } else {
         $erreur = true;
@@ -52,38 +59,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 include __DIR__ . '/initLangue.php';
 
 //Architecture Arthaud
-$pageTitle = "Supprimer une Langue";
-$pageNav = ['Home:/index1.php', 'Gestion de la Langue:./langue.php', $pageTitle];
+
 include __DIR__ . '/../../layouts/back/head.php';
 
 
-<<<<<<< HEAD
 // Supp : récup id à supprimer
 // id passé en GET
 $langue = $maLangue->get_1Langue($_GET['id']);
-=======
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
-
-        <div class="control-group">
-            <label class="control-label" for="lib1Lang"><b>Libellé court :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="lib1Lang" id="lib1Lang" size="80" maxlength="80" value="<?= $lib1Lang; ?>" tabindex="10" /><br>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="lib2Lang"><b>Libellé long :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="lib1Lang" id="lib2Lang" size="80" maxlength="80" value="<?= $lib2Lang; ?>" tabindex="20" />
-        </div>
-        <br>
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Listbox Pays -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="LibTypPays">
-                <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
-            </label>
->>>>>>> 0a7ff4ffb9b1c10d5c3a548744235892771de073
 
 $numPays = $langue['numPays'];
 $lib1Lang = $langue['lib1Lang'];
@@ -115,9 +97,9 @@ $lib2Lang = $langue['lib2Lang'];
         </div>
 
         <div class="controls">
-            <a class="btn btn-lg btn-text" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>">Réinitialiser</a>
-            <a class="btn btn-lg btn-secondary" href="./langue.php">Annuler</a>
-            <input class="btn btn-lg btn-danger" type="submit" value="Supprimer" />
+            <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent?>">Annuler</a>
+            <input class="btn btn-lg btn-danger" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
         </div>
     </form>
 <?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

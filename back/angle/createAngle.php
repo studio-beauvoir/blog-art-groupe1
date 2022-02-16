@@ -45,6 +45,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // Init variables form
 include __DIR__ . '/initAngle.php';
 
+$submitBtn = "Créer";
+$pagePrecedent = "./angle.php";
+$pageTitle = "Créer un angle";
+$pageNav = ['Home:/index1.php', 'Gestion des thématiques:'.$pagePrecedent, $pageTitle];
 $pageTitle = "Créer un Angle";
 $pageNav = ['Home:/index1.php', 'Gestion du Angle:./angle.php', $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';

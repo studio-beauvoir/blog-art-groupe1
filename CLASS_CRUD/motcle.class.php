@@ -7,45 +7,67 @@ class MOTCLE{
 	function get_1MotCle($numMotCle){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetch());
+		try {
+			$query = 'SELECT * FROM MOTCLE WHERE numMotCle=?;';
+			$request = $db->prepare($query);
+			
+			$request->execute([$numMotCle]);
+
+			$result = $request->fetch();
+
+			if(isset($request)) {
+				return($result);
+			} else {
+				throw new ErrorException('Mot Cle not found');
+			}
+		}
+		catch (PDOException $e) {
+			$db->rollBack();
+			$request->closeCursor();
+			die('Erreur insert MOTCLE : ' . $e->getMessage());
+		}
 	}
 
 	function get_1MotCleByLang($numMotCle){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM MOTCLE WHERE numMotCle=?;';
+		$request = $db->prepare($query);
+		$request->execute([$numMotCle]);
+		$result = $request->fetch();
 		return($result->fetch());
 	}
 
 	function get_AllMotCles(){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM MOTCLE;';
+		$request = $db->query($query);
+		$allMotCles = $request->fetchAll();
 		return($allMotCles);
 	}
 
 	function get_AllMotsClesByLang(){
 		global $db;
-
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM MOTCLE WHERE numLang=?;';
+		$result = $db->query($query);
+		$allMotsClesByLang = $result->fetchAll();
 		return($allMotsClesByLang);
 	}
 
 	function get_NbAllMotsClesBynumLang($numLang){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$db->beginTransaction();
+
+		$query = 'SELECT COUNT (*) FROM MOTCLE WHERE numLang=?;';
+		$request = $db->prepare($query);
+		$request->execute([$numLang]);
+		$allNbMotsClesBynumLang = $request->fetchAll();
+
+		$db->commit();
+		$request->closeCursor();
+		
 		return($allNbMotsClesBynumLang);
 	}
 
@@ -130,9 +152,9 @@ class MOTCLE{
 		try {
 			$db->beginTransaction();
 
-			// insert
-			// prepare
-			// execute
+			$query = 'INSERT INTO MOTCLE (libMotCle, numLang) VALUES (?, ?);';
+			$request = $db->prepare($query);
+			$request->execute( [$libMotCle, $numLang]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -148,10 +170,9 @@ class MOTCLE{
 
 		try {
 			$db->beginTransaction();
-
-			// update
-			// prepare
-			// execute
+			$query = 'UPDATE MOTCLE SET libMotCle=?,numLang=? WHERE numMotCle=?;';
+			$request = $db->prepare($query);
+			$request->execute([$libMotCle, $numLang, $numMotCle]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -168,9 +189,9 @@ class MOTCLE{
 		try {
 			$db->beginTransaction();
 
-			// delete
-			// prepare
-			// execute
+			$query = 'DELETE FROM MOTCLE WHERE `numMotCle` = ?;';
+			$request = $db->prepare($query);
+			$request->execute([$numMotCle]);
 			$count = $request->rowCount();
 			$db->commit();
 			$request->closeCursor();

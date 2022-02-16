@@ -1,80 +1,106 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD MOTCLE (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : motCle.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
+<<<<<<< HEAD
+// Insertion des fonctions utilitaires
+require_once __DIR__ . '/../../util/index.php';
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
+// Insertion classe Statut
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php'; 
 
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
+// Instanciation de la classe Statut
+$monAngle = new ANGLE(); 
+
+$pageTitle = "Gestion de l'Angle";
+$pageNav = ['Home:/index1.php', $pageTitle];
+include __DIR__ . '/../../layouts/back/head.php';
+?>
+	<a class="btn btn-lg" href="./createAngle.php" title="Créer un Angle">Créer un angle</a>
+	<h3>Toutes les angles</h3>
+=======
+require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe MotCle
+require_once __DIR__ . '/../../CLASS_CRUD/motcle.class.php';
 
-// Instanciation de la classe MotCle
+//Instanciation de la classe MOTCLE
+$monMotCle = new MOTCLE();
 
+// Insertion classe Langue
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 
+// Instanciation de la classe Langue
+$maLangue = new LANGUE();
+
+// BBCode
+
+$pageTitle = "Gestion des Mots Clés";
+$pageNav = ['Home:/index1.php', $pageTitle];
+include __DIR__ . '/../../layouts/back/head.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-	<title>Admin - CRUD Mot Clé</title>
-	<meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-</head>
-<body>
-    <h1>BLOGART22 Admin - CRUD Mot Clé</h1>
 
-	<hr />
-	<h2>Nouveau Mot Clé :&nbsp;<a href="./createMotCle.php"><i>Créer un Mot Clé</i></a></h2>
-	<hr />
-	<h2>Tous les Mots Clés</h2>
+<a class="btn btn-lg" href="./createMotCle.php" title="Créer une Langue">Créer une Langue</a>
+	<h3>Tous les mots clés</h3>
+>>>>>>> 15431bb8125879c4cfd84c60cd5197f9693c1d43
 
-	<table border="3" bgcolor="aliceblue">
-    <thead>
-        <tr>
-            <th>&nbsp;Numéro&nbsp;</th>
-            <th>&nbsp;Nom Mot Clé&nbsp;</th>
-            <th>&nbsp;Langue&nbsp;</th>
-            <th colspan="2">&nbsp;Action&nbsp;</th>
-        </tr>
-    </thead>
-    <tbody>
+	<table >
+        <thead>
+            <tr>
+                <th>Numéro</th>
+<<<<<<< HEAD
+                <th>Libellé</th>
+=======
+                <th>Nom</th>
+>>>>>>> 15431bb8125879c4cfd84c60cd5197f9693c1d43
+                <th>Langue</th>
+                <th colspan="2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        // Appel méthode : Get tous les statuts en BDD
+<<<<<<< HEAD
+        $all = $monAngle->get_AllAngles();
+=======
+        $all = $monMotCle->get_AllMotCles();
+>>>>>>> 15431bb8125879c4cfd84c60cd5197f9693c1d43
+        // Boucle pour afficher
+        foreach($all as $row) {
+            // la boucle va écrire le code html juste en dessous
+            // on ferme la boucle quelques lignes plus tard
+        ?>
+            <tr>
+<<<<<<< HEAD
+                <td><h4> <?= $row['numAngl']; ?> </h4></td>
+                <td><?= $row['libAngl']; ?></td>
+                <td><?= $row['numLang']; ?></td>
 
-<?php
-    // Appel méthode : Get toutes les mots cles en BDD
-
-    // Boucle pour afficher
-    //foreach($all as $row) {
-?>
-        <tr>
-
-		<td><h4>&nbsp; <?= "ici numMotCle"; ?> &nbsp;</h4></td>
-
-        <td>&nbsp; <?= "ici libMotCle"; ?> &nbsp;</td>
-
-        <td>&nbsp; <?= "ici lib1Lang"; ?> &nbsp;</td>
-
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateMotCle.php?id=<?=1; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier mot clé" title="Modifier mot clé" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-		<br /></td>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;<a href="./deleteMotCle.php?id=<?=1; ?>"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer mot clé" title="Supprimer mot clé" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-		<br /></td>
-
-        </tr>
-<?php
-	// }	// End of foreach
-?>
-    </tbody>
+                <!-- actions -->
+                <td>
+                    <a class="btn btn-md" href="./updateAngle.php?id=<?=$row['numAngl']; ?>" title="Modifier l'angle">Modifier</a>
+                </td>
+                <td>  
+                    <!-- lien : test ternaire super admin -->
+                    <a class="btn btn-md btn-danger" href="<?= $row['numAngl']!=1?'./deleteAngle.php?id='.$row['numAngl']:'#'; ?>" title="Supprimer l'angle">Supprimer</a>
+=======
+                <td><h4> <?= $row['numMotCle']; ?> </h4></td>
+                <td><?= $row['libMotCle']; ?></td>
+                <td><?= $row['numLang']; ?></td>
+                
+                <!-- actions -->
+                <td>
+                    <a class="btn btn-md" href="./updateMotCle.php?id=<?=$row['numMotCle']; ?>" title="Modifier le mot clé">Modifier</a>
+                </td>
+                <td>  
+                    <!-- lien : test ternaire super admin -->
+                    <a class="btn btn-md btn-danger" href="./deleteMotCle.php?id=<?=$row['numMotCle'] ?>" title="Supprimer le mot clé">Supprimer</a>
+>>>>>>> 15431bb8125879c4cfd84c60cd5197f9693c1d43
+                </td>
+            </tr>
+        <?php }	// End of foreach ?>
+        </tbody>
     </table>
-    <br /><br/>
-<?php
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>
+<<<<<<< HEAD
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>
+
+=======
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>
+>>>>>>> 15431bb8125879c4cfd84c60cd5197f9693c1d43

@@ -5,11 +5,13 @@ body {
     color: var(--p1);
     /* font: var(--p); */
 }
+
 main {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
+
 .interactive{
     color: var(--p2);
     text-decoration: none;
@@ -258,6 +260,6 @@ ul li{
 .footer-box {
     display: flex;
     width: 30%;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
 }
 /* -----------------------------------FIN FOOTER-----------------------------------*/

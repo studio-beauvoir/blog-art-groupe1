@@ -1,4 +1,10 @@
 <?php
+
+$submitBtn = "Modifier";
+$pageCrud = "langue";
+$pagePrecedent = "./$pageCrud.php";
+$pageTitle = "$submitBtn: $pageCrud";
+$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
@@ -33,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
         $maLangue->update($numLang, $lib1Lang, $lib2Lang, $numPays);
 
-        header("Location: ./langue.php");
+        header("Location: $pagePrecedent");
         die();
     } else {
         // Saisies invalides
@@ -55,10 +61,14 @@ include __DIR__ . '/../../layouts/back/head.php';
     // id passé en GET
 
     if(!isset($_GET['id'])) {
-        header("Location: ./langue.php");
+        header("Location: $pagePrecedent");
         die();
     }
     $langue = $maLangue->get_1Langue($_GET['id']);
+    if(!$langue) {
+        header("Location: $pagePrecedent");
+        die();
+    }
 
     $lib1Lang = $langue['lib1Lang'];
     $lib2Lang = $langue['lib2Lang'];
@@ -84,32 +94,23 @@ include __DIR__ . '/../../layouts/back/head.php';
             <input name="lib2Lang" id="lib2Lang" size="80" maxlength="80" value="<?= $lib2Lang; ?>" />
         </div>
 
-        <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="LibTypPays">
-                <b>Quel pays :&nbsp;&nbsp;&nbsp;</b>
-            </label>
 
-
-                <!-- <input type="text" name="idPays" id="idPays" size="5" maxlength="5" value="<?= $idPays ?>" autocomplete="on" /> -->
-
-                <!-- Listbox pays => 2ème temps -->
-
-                <select name="idPays" id="idPays">
-                    <?php 
-                        $allPays = $maLangue->get_AllPays();                    
-                        foreach($allPays as $pays) { 
-                    ?>
-                        <option <?=$pays['numPays']==$idPays?'selected':'' ?> value="<?= $pays['numPays'] ?>" ><?=$pays['frPays'] ?></option>
-                    <?php } ?>
-                </select>
-            </div>
+        <div class="field">
+            <label for="idPays">Quel pays</label>
+            <select name="idPays" id="idPays">
+                <?php 
+                    $allPays = $maLangue->get_AllPays();                    
+                    foreach($allPays as $pays) { 
+                ?>
+                    <option <?=$pays['numPays']==$idPays?'selected':'' ?> value="<?= $pays['numPays'] ?>" ><?=$pays['frPays'] ?></option>
+                <?php } ?>
+            </select>
         </div>
 
         <div class="controls">
-            <a class="btn btn-lg btn-text" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>">Réinitialiser</a>
-            <a class="btn btn-lg btn-secondary" href="./langue.php">Annuler</a>
-            <input class="btn btn-lg" type="submit" value="Valider" />
+        <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent?>">Annuler</a>
+            <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
         </div>
     </form>
 <?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

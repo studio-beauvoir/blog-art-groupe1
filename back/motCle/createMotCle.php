@@ -1,5 +1,4 @@
 <?php
-
 // Mode DEV
 require_once __DIR__ . '/../../util/index.php';
 

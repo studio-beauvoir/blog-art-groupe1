@@ -1,6 +1,6 @@
 body {
     background-color: var(--bg1);
-    font: var(--p);
+    /* font: var(--p); */
 }
 .interactive{
     color: var(--i);

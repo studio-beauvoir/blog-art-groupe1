@@ -3,6 +3,7 @@ table {
     padding: 0;
     overflow: hidden;
     border: none;
+    font: var(--p);
 }
 table, th, td {
     border: hidden;

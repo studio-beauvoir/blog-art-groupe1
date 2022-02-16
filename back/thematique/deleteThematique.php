@@ -7,24 +7,20 @@
 //
 ////////////////////////////////////////////////////////////
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
-
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
+require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Thematique
-
+require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
 // Instanciation de la classe thématique
-
+$maThematique = new THEMATIQUE(); 
 
 
 
 // Ctrl CIR
 // Insertion classe Article
-
+require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
 // Instanciation de la classe Article
-
+$monArticle = new ARTICLE();
 
 // BBCode
 
@@ -32,20 +28,20 @@ require_once __DIR__ . '/../../util/ctrlSaisies.php';
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    $validator = Validator::make([
+        ValidationRule::required('id')
+    ])->bindValues($_POST);
 
+    if($validator->success()) {
+        $numThem = $validator->verifiedField('id');
+        $maThematique->delete($numThem);
 
-    // controle CIR
-
-    // delete effective du user
-
-
-
-
-
-
-
-
-
+        header("Location: ./thematique.php");
+        die();
+    } else {
+        $erreur = true;
+        $errSaisies =  "Erreur, la thématique à supprimer n'existe pas !";
+    }
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 // Init variables form
@@ -83,10 +79,9 @@ include __DIR__ . '/initThematique.php';
 <?php
     // Supp : récup id à supprimer
     // id passé en GET
-
-
-
-
+    $thematique = $maThematique->get_1Thematique($_GET['id']);
+    $libThem = $thematique['libThem'];
+    $numLang = $thematique['numLang'];
 
 ?>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -112,7 +107,7 @@ include __DIR__ . '/initThematique.php';
             <label class="control-label" for="LibTypLang"><b>Langue :&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="hidden" id="idLang" name="idLang" value="<?= isset($_GET['idLang']) ? $_GET['idLang'] : '' ?>" />
 
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $idLang; ?>" autocomplete="on" />
+                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numLang; ?>" autocomplete="on" />
 
                 <!-- Listbox langue disabled => 2ème temps -->
 
@@ -125,7 +120,7 @@ include __DIR__ . '/initThematique.php';
             <div class="controls">
                 <br><br>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Annuler" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
+                <a href="./thematique.php" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;">Annuler</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
                 <br>

@@ -7,10 +7,25 @@ class ANGLE{
 	function get_1Angle(string $numAngl) {
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetch());
+		try {
+			$query = 'SELECT * FROM ANGLE WHERE numAngl=?;';
+			$request = $db->prepare($query);
+			
+			$request->execute([$numAngl]);
+
+			$result = $request->fetch();
+
+			if(isset($request)) {
+				return($result);
+			} else {
+				throw new ErrorException('Angle not found');
+			}
+		}
+		catch (PDOException $e) {
+			$db->rollBack();
+			$request->closeCursor();
+			die('Erreur insert ANGLE : ' . $e->getMessage());
+		}
 	}
 
 	function get_1AngleByLang(string $numAngl) {

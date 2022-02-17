@@ -87,12 +87,16 @@ include __DIR__ . '/../../layouts/back/head.php';
     accept-charset="UTF-8"
 >
 
+
     <div class="field">
         <label for="photArt">Nom de l'article</label>
         <input type="file" name="photArt" id="photArt" required="required" accept=".jpg,.gif,.png,.jpeg" size="70" maxlength="70" title="Recherchez l'image à uploader !" />
         <input type="hidden" name="MAX_FILE_SIZE" value="<?= MAX_SIZE; ?>" />
         <p>
-        <?php              // Gestion extension images acceptées
+        <?php     
+        
+            require_once __DIR__ . '/ctrlerUploadImage.php'; // Gestion extension images acceptées
+
             $msgImagesOK = "&nbsp;&nbsp;>> Extension des images acceptées : .jpg, .gif, .png, .jpeg" . "<br>" .
             "(lageur, hauteur, taille max : 80000px, 80000px, 200 000 Go)";
             echo "<i>" . $msgImagesOK . "</i>";

@@ -1,48 +1,36 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD ARTICLE (PDO) - Modifié : 10 Juillet 2021
-//
-//  Script  : deleteArticle.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
+$submitBtn = "Supprimer";
+$pageCrud = "article";
+$pagePrecedent = "./$pageCrud.php";
+$pageTitle = "Supprimer un $pageCrud";
+$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
+//Insertion fichiers utiles
+require_once __DIR__ . '/../../util/index.php';
 
-// Init constantes
-include __DIR__ . '/initConst.php';
-// Init variables
-include __DIR__ . '/initVar.php';
+//Insertion classe Article.class
+require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
 
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
-// Mise en forme date
-require_once __DIR__ . '/../../util/dateChangeFormat.php';
+//Instanciation de la classe Article
+$monArticle = new ARTICLE(); 
 
-// Insertion classe Article
+//Insertion classe Angle
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 
-// Instanciation de la classe Article
+//Instanciation de la classe Angle
+$monAngle = new ANGLE(); 
 
+//Insertion classe Thématique
+require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
+
+//Instanciation de la classe Thématique
+$maThematique = new THEMATIQUE();
 
 // Ctrl CIR
-// Insertion classe MotCleArticle
-
-// Instanciation de la classe MotCleArticle
-
-
-// Insertion classe MotCle
-
-// Instanciation de la classe MotCle
-
 
 
 // Gestion des erreurs de saisie
 $erreur = false;
-// dossier images
-$targetDir = TARGET;
-
-// init mots cles
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -51,251 +39,163 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // controle CIR
 
-    // delete effective du article
+    // delete effective de l'angle
 
+    $validator = Validator::make([
+        ValidationRule::required('id')
+    ])->bindValues($_POST);
 
+    if($validator->success()) {
+        $idArt = $validator->verifiedField('id');
+        $monArticle->delete($idArt);
 
+        header("Location: $pagePrecedent");
+        die();
+    } else {
+        $erreur = true;
+        $errSaisies =  "Erreur, l'article à supprimer n'existe pas !";
+    }
 
+}
 
-
-
-
-
-
-}   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 // Init variables form
 include __DIR__ . '/initArticle.php';
-// En dur
-$urlPhotArt = "../uploads/imgArt2dd0b196b8b4e0afb45a748c3eba54ea.png";
+include __DIR__ . '/../../layouts/back/head.php';
+
+// controles
+if(!isset($_GET['id'])) header("Location: $pagePrecedent");
+$article = $monArticle->get_1Article($_GET['id']);
+if(!$article) header("Location: $pagePrecedent");
+
+$dtCreArt = $article['dtCreArt'];
+$libTitrArt = $article['dtCreArt'];
+$libChapoArt = $article['dtCreArt'];
+$libAccrochArt = $article['dtCreArt'];
+$parag1Art = $article['dtCreArt'];
+$libSsTitr1Art = $article['dtCreArt'];
+$parag2Art = $article['dtCreArt'];
+$libSsTitr2Art = $article['dtCreArt'];
+$parag3Art = $article['dtCreArt'];
+$libConclArt = $article['dtCreArt'];
+$urlPhotArt = $article['dtCreArt'];
+$idAngl = $article['numAngl'];
+$idThem = $article['numThem'];
 ?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-    <meta charset="utf-8" />
-    <title>Admin - CRUD Article</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
-
     <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <h1>BLOGART22 Admin - CRUD Article</h1>
-    <h2>Suppression d'un article</h2>
 
-<?php
-    // Supp : récup id à supprimer
-    // id passé en GET
-
-
-
-
-
-?>
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
-
-      <fieldset>
-        <legend class="legend1">Formulaire Article...</legend>
-
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
-
-        <div class="control-group">
-            <label class="control-label" for="libTitrArt"><b>Titre :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <input type="text" name="libTitrArt" id="libTitrArt" size="100" maxlength="100" value="<?= $libTitrArt; ?>" tabindex="10" disabled />
-            </div>
+    <form
+        class="admin-form"
+        method="POST" 
+        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id']?>" 
+        enctype="multipart/form-data" 
+        accept-charset="UTF-8"
+    >
+        <input type="hidden" id="id" name="id" value="<?= $_GET['id'] ?>" />
+        
+        <div class="field">
+        <label for="photArt">Nom de l'article</label>
+        <input type="file" disabled name="photArt" id="photArt" required="required" accept=".jpg,.gif,.png,.jpeg" size="70" maxlength="70" title="Recherchez l'image à uploader !" />
+        <input type="hidden" disabled name="MAX_FILE_SIZE" value="<?= MAX_SIZE; ?>" />
+        <p>
+        <?php              // Gestion extension images acceptées
+            $msgImagesOK = "&nbsp;&nbsp;>> Extension des images acceptées : .jpg, .gif, .png, .jpeg" . "<br>" .
+            "(lageur, hauteur, taille max : 80000px, 80000px, 200 000 Go)";
+            echo "<i>" . $msgImagesOK . "</i>";
+        ?>                
+        </p>
         </div>
 
-        <br>
-        <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="DtCreA"><b>Date de création :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="dtCreArt" id="dtCreArt" value="<?= $dtCreArt; ?>" disabled />
-            </div>
+        <div class="field">
+            <label for="libTitrArt">Nom de l'article</label>
+            <input disabled name="libTitrArt" value="<?=$libTitrArt?>" id="libTitrArt" placeholder="Sur 100 car." size="100" maxlength="100" />
         </div>
 
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libChapoArt"><b>Chapeau :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <textarea name="libChapoArt" id="libChapoArt" rows="10" cols="100" disabled><?= $libChapoArt; ?></textarea>
-            </div>
+        <div class="field">
+            <label for="dtCreArt">Date de création</label>
+            <input type="datetime-local" disabled name="dtCreArt" value="<?=$dtCreArt?>" id="dtCreArt"/>
         </div>
 
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libAccrochArt"><b>Accroche paragraphe 1 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <input type="text" name="libAccrochArt" id="libAccrochArt" size="100" maxlength="100" value="<?= $libAccrochArt; ?>" disabled />
-            </div>
+        <div class="field">
+            <label for="libChapoArt">Chapeau</label>
+            <textarea disabled name="libChapoArt" value="<?=$libChapoArt?>" id="libChapoArt" rows="10" placeholder="Sur 500 car."></textarea>
         </div>
 
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="parag1Art"><b>Paragraphe 1 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <textarea name="parag1Art" id="parag1Art" rows="10" cols="100" disabled><?= $parag1Art; ?></textarea>
-            </div>
+        <div class="field">
+            <label for="libAccrochArt">Accroche paragraphe 1</label>
+            <input disabled name="libAccrochArt" value="<?=$libAccrochArt?>" id="libAccrochArt" placeholder="Sur 100 car." size="100" maxlength="100" />
         </div>
 
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libSsTitr1Art"><b>Sous-titre 1 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b></label>
-            <div class="controls">
-                <input type="text" name="libSsTitr1Art" id="libSsTitr1Art" size="100" maxlength="100" value="<?= $libSsTitr1Art; ?>" disabled />
-            </div>
+        <div class="field">
+            <label for="parag1Art">Paragraphe 1</label>
+            <textarea disabled name="parag1Art" value="<?=$parag1Art?>" id="parag1Art" rows="10" placeholder="Sur 1200 car."></textarea>
         </div>
 
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="parag2Art"><b>Paragraphe 2 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <textarea name="parag2Art" id="parag2Art" rows="10" cols="100" disabled><?= $parag2Art; ?></textarea>
-            </div>
+        <div class="field">
+            <label for="libSsTitr1Art">Sous-titre 1</label>
+            <input disabled name="libSsTitr1Art" value="<?=$libSsTitr1Art?>" id="libSsTitr1Art" placeholder="Sur 100 car." size="100" maxlength="100" />
         </div>
 
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libSsTitr2Art"><b>Sous-titre 2 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b></label>
-            <div class="controls">
-                <input type="text" name="libSsTitr2Art" id="libSsTitr2Art" size="100" maxlength="100" value="<?= $libSsTitr2Art; ?>" disabled />
-            </div>
+        <div class="field">
+            <label for="parag2Art">Paragraphe 2</label>
+            <textarea disabled name="parag2Art" value="<?=$parag2Art?>" id="parag2Art" rows="10" placeholder="Sur 1200 car."></textarea>
         </div>
 
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="parag3Art"><b>Paragraphe 3 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <textarea name="parag3Art" id="parag3Art" rows="10" cols="100" disabled><?= $parag3Art; ?></textarea>
-            </div>
+        <div class="field">
+            <label for="libSsTitr2Art">Sous-titre 2</label>
+            <input disabled name="libSsTitr2Art" value="<?=$libSsTitr2Art?>" id="libSsTitr2Art" placeholder="Sur 100 car." size="100" maxlength="100" />
         </div>
 
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libConclArt"><b>Conclusion :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <textarea name="libConclArt" id="libConclArt" rows="10" cols="100" disabled><?= $libConclArt; ?></textarea>
-            </div>
+        <div class="field">
+            <label for="parag3Art">Paragraphe 3</label>
+            <textarea disabled name="parag3Art" value="<?=$parag3Art?>" id="parag3Art" rows="10" placeholder="Sur 1200 car."></textarea>
         </div>
 
-        <br>
-        <div class="control-group">
-            <div class="controls">
-                <p><b><i>Image associée :&nbsp;&nbsp;<img src="<?= $targetDir . htmlspecialchars($urlPhotArt); ?>" height="183" width="275" /></i></b></p>
-            </div>
-        </div>
-        <br>
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Listbox Langue -->
-        <br>
-        <div class="control-group">
-          <div class="controls">
-            <label class="control-label" for="LibTypLang">
-                <b>Quelle langue :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-            </label>
-
-
-            <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numAngl; ?>" autocomplete="on" disabled />
-
-            <!-- Listbox langue => 2ème temps -->
-
-          </div>
-        </div>
-    <!-- FIN Listbox Langue -->
-<!-- --------------------------------------------------------------- -->
-
-<!-- --------------------------------------------------------------- -->
-    <!-- FK : Angle, Thématique + TJ Mots Clés -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Listbox Angle live share -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="LibTypAngl">
-                <b>Quel angle :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-            </label>
-
-
-            <input type="text" name="idAngl" id="idAngl" size="5" maxlength="5" value="<?= $numAngl; ?>" autocomplete="on" disabled />
-
-            <!-- Listbox angle => 2ème temps -->
-
-            </div>
-        </div>
-    <!-- FIN Listbox Angle -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Listbox Thématique -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-                <label class="control-label" for="LibTypThem">
-                    <b>Quelle thématique :&nbsp;&nbsp;&nbsp;</b>
-                </label>
-
-
-                <input type="text" name="idThem" id="idThem" size="5" maxlength="5" value="<?= $numThem; ?>" autocomplete="on" disabled />
-
-                <!-- Listbox thematique => 2ème temps -->
-
-            </div>
-        </div>
-    <!-- FIN Listbox Thématique -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Drag and drop Mot Clé -->
-<!-- --------------------------------------------------------------- -->
-    <br><br>
-
-    <div class="controls">
-        <label class="control-label" for="LibTypMotsCles1">
-            <b>Choisissez les mots clés liés à l'article :&nbsp;&nbsp;&nbsp;</b>
-        </label>
-    </div>
-    <!-- A faire dans un 2/3ème temps  -->
-
-<!-- --------------------------------------------------------------- -->
-    <!-- FIN Drag and drop Mot Clé -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Fin FK : Angle, Thématique + TJ Mots Clés -->
-<!-- --------------------------------------------------------------- -->
-
-        <div class="control-group">
-            <div class="error">
-<?php
-            if ($erreur) {
-                echo ($errSaisies);
-            } else {
-                $errSaisies = "";
-                echo ($errSaisies);
-            }
-?>
-            </div>
+        <div class="field">
+            <label for="libConclArt">Conclusion</label>
+            <textarea disabled name="libConclArt" value="<?=$libConclArt?>" id="libConclArt" rows="10" placeholder="Sur 800 car."></textarea>
         </div>
 
-        <div class="control-group">
-            <div class="controls">
-                <br><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                <br>
-            </div>
+        <div class="field">
+            <label for="idLang">Quelle langue</label>
+            <select disabled name="idLang" id="idLang">
+                <?php 
+                    $allLangues = $maLangue->get_AllLangues();                    
+                    foreach($allLangues as $langue) { 
+                ?>
+                    <option value="<?= $langue['numLang'] ?>" ><?=$langue['lib1Lang'] ?></option>
+                <?php } ?>
+            </select>
         </div>
-      </fieldset>
+
+        <div class="field">
+            <label for="idAngl">Quelle angle</label>
+            <select disabled name="idAngl" id="idAngl">
+                <?php 
+                    $allAngles = $monAngle->get_AllAngles();                    
+                    foreach($allAngles as $angle) { 
+                ?>
+                    <option value="<?= $angle['numAngl'] ?>" ><?=$angle['libAngl'] ?></option>
+                <?php } ?>
+            </select>
+        </div>
+
+        <div class="field">
+            <label for="idLang">Quelle thématique</label>
+            <select disabled name="idLang" id="idLang">
+                <?php 
+                    $allThematiques = $maThematique->get_AllThematiques();                    
+                    foreach($allThematiques as $them) { 
+                ?>
+                    <option value="<?= $them['numThem'] ?>" ><?=$them['libThem'] ?></option>
+                <?php } ?>
+            </select>
+        </div>
+
+        <div class="controls">
+            <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
+            <input class="btn btn-lg btn-danger" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
+        </div>
     </form>
-<?php
-require_once __DIR__ . '/footerArticle.php';
-
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

@@ -7,10 +7,25 @@ class ARTICLE{
 	function get_1Article($numArt){
 		global $db;
 		
-		// select
-		// prepare
-		// execute
-		return($result->fetch());
+		try {
+			$query = 'SELECT * FROM ARTICLE WHERE numArt=?;';
+			$request = $db->prepare($query);
+			
+			$request->execute([$numArt]);
+
+			$result = $request->fetch();
+
+			if(isset($request)) {
+				return($result);
+			} else {
+				throw new ErrorException('Article not found');
+			}
+		}
+		catch (PDOException $e) {
+			$db->rollBack();
+			$request->closeCursor();
+			die('Erreur insert MEMBRE : ' . $e->getMessage());
+		}
 	}
 
 	function get_1ArticleAnd3FK($numArt){

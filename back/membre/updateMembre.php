@@ -1,4 +1,10 @@
 <?php
+
+$submitBtn = "Éditer";
+$pageCrud = "membre";
+$pagePrecedent = "./$pageCrud.php";
+$pageTitle = "$submitBtn un $pageCrud";
+$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.':'.$pagePrecedent, $pageTitle];
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
@@ -27,16 +33,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $Submit = "";
     }
 
-    var_dump($_POST);
     $validator->addRules([
         ValidationRule::required('id'),
         ValidationRule::required('prenomMemb'),
         ValidationRule::required('nomMemb'),
-        ValidationRule::required('pseudoMemb'),
-        ValidationRule::required('passMemb'),
-        ValidationRule::required('eMailMemb'),
-        ValidationRule::required('dtCreaMemb'),
-        ValidationRule::required('accordMemb'),
+        ValidationRule::required('pass1Memb'),
+        ValidationRule::required('pass2Memb'),
+        ValidationRule::required('eMail1Memb')->email(),
+        ValidationRule::required('eMail2Memb')->email(),
         ValidationRule::required('idStat')
     ])->bindValues($_POST);
 
@@ -47,16 +51,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numMemb = $validator->verifiedField('id');
         $prenomMemb = $validator->verifiedField('prenomMemb');
         $nomMemb = $validator->verifiedField('nomMemb');
-        $pseudoMemb = $validator->verifiedField('pseudoMemb');
-        $passMemb = $validator->verifiedField('passMemb');
+        
+        $pass1Memb = $validator->verifiedField('pass1Memb');
+        $pass2Memb = $validator->verifiedField('pass2Memb');
+        // check que pass1 == pass2
+
         $eMailMemb = $validator->verifiedField('eMailMemb');
-        $dtCreaMemb = $validator->verifiedField('dtCreaMemb');
-        $accordMemb = $validator->verifiedField('accordMemb');
         $idStat = $validator->verifiedField('idStat');
-        $monMembre->update($numMemb, $prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb, $idStat);
+        $monMembre->update($numMemb, $prenomMemb, $nomMemb, $pass1Memb, $eMailMemb, $idStat);
 
 
-        header("Location: ./angle.php");
+        header("Location: $pagePrecedent");
     } else {
         // Saisies invalides
         $erreur = true;
@@ -68,8 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // Init variables form
 include __DIR__ . '/initMembre.php';
 
-$pageTitle = "Modifier un Membre";
-$pageNav = ['Home:/index1.php', 'Gestion Membre:./membre.php', $pageTitle];
+
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
 
@@ -119,20 +123,18 @@ include __DIR__ . '/../../layouts/back/head.php';
             <input name="prenomMemb" id="prenomMemb" size="80" maxlength="80" value="<?= $prenomMemb; ?>" />
         </div>
 
+
         <div class="field">
             <label for="nomMemb">Nom</label>
             <input name="nomMemb" id="nomMemb" size="80" maxlength="80" value="<?= $nomMemb; ?>" />
         </div>
 
+
+
         <div class="field">
             <label for="pseudoMemb">Pseudo</label>
-            <input name="pseudoMembe" id="pseudoMemb" size="80" maxlength="80" value="<?= $pseudoMemb; ?>" disabled />
+            <input name="pseudoMemb" id="pseudoMemb" size="80" maxlength="80" value="<?= $pseudoMemb; ?>" disabled/>
         </div>
-
-        <!--<div class="field">
-            <label for="pass1Memb">Mot de passe</label>
-            <input name="passMemb" id="passMemb" size="80" maxlength="80" value="<?= $passMemb; ?>" />
-        </div>-->
 
         <div class="field">
             <label class="control-label" for="pass1Memb"><b>Mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
@@ -155,8 +157,13 @@ include __DIR__ . '/../../layouts/back/head.php';
         <small class="error">*Champ obligatoire si nouveau passe</small><br>
         
         <div class="field">
-            <label for="eMailMemb">EMail</label>
-            <input name="eMailMemb" id="eMailMemb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" />
+            <label for="eMail1Memb">EMail</label>
+            <input name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" />
+        </div>
+
+        <div class="field">
+            <label for="eMail2Memb">EMail</label>
+            <input name="eMail2Memb" id="eMail2Memb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" />
         </div>
 
         <div class="field">
@@ -182,9 +189,9 @@ include __DIR__ . '/../../layouts/back/head.php';
         </div>
 
         <div class="controls">
-            <a class="btn btn-lg btn-text" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>">Réinitialiser</a>
-            <a class="btn btn-lg btn-secondary" href="./membre.php">Annuler</a>
-            <input class="btn btn-lg" type="submit" value="Valider" />
+            <a class="btn btn-lg btn-text" title="Réinitialiser"  href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
+            <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
         </div>
     </form>
 <?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

@@ -122,6 +122,8 @@ class MEMBRE{
 	function update($numMemb, $prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat){
 		global $db;
 
+		var_dump($idStat);
+
 		try {
 			$db->beginTransaction();
 			

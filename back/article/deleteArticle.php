@@ -94,7 +94,7 @@ $idThem = $article['numThem'];
         <input type="hidden" id="id" name="id" value="<?= $_GET['id'] ?>" />
         
         <div class="field">
-        <label for="photArt">Nom de l'article</label>
+        <label for="photArt">Photo de l'article</label>
         <input type="file" disabled name="photArt" id="photArt" required="required" accept=".jpg,.gif,.png,.jpeg" size="70" maxlength="70" title="Recherchez l'image à uploader !" />
         <input type="hidden" disabled name="MAX_FILE_SIZE" value="<?= MAX_SIZE; ?>" />
         <p>
@@ -108,7 +108,7 @@ $idThem = $article['numThem'];
 
         <div class="field">
             <label for="libTitrArt">Nom de l'article</label>
-            <input disabled name="libTitrArt" value="<?=$libTitrArt?>" id="libTitrArt" placeholder="Sur 100 car." size="100" maxlength="100" />
+            <input disabled name="libTitrArt" id="libTitrArt" size="100" maxlength="100"  value="<?= $libTitrArt; ?>"/>
         </div>
 
         <div class="field">

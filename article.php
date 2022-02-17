@@ -47,16 +47,17 @@ require_once __DIR__ . '/layouts/front/head.php';
             <div class="expo-text">
                 <p>En ce début d’année, David Selor et son Mimil posent leurs valises à l'institut Bernard Magrez, centre contemporain de Bordeaux convoité par l’artiste depuis quelques années. Avec Fragile, il marque un renouveau, une remise en question qui se devine ne serait-ce que par le format de l’exposition. C’est en effet pas moins de 20 toiles qui sont exposées. Lui qui a tendance à réaliser ses Mimils en une quinzaine de minutes sur les murs, ici, il a parfois fallu jusqu’à plusieurs semaines pour les finaliser. Fragile, comme l’éphémérité des œuvres dans la rue, qui peuvent être effacées, détruites à cause de la nature de leur support. David Selor s’exprime sur des sujets variés tels que la solitude à plusieurs, de la beauté dans l’imperfection et la dégradation, de la dualité de l’amour et la de haine, ou encore de la rue et de la toile. Tout comme avec les Mimils dans la rue, il laisse le soin aux visiteurs de tirer leur propre interprétation, de faire écho avec leur expérience personnelle qui est unique pour chacun. Que verrez-vous, vous ? Peut-être même que vous remarquerez une évolution du Mimil, mais cela, c’est si vous acceptez de la voir.</p>
             </div>
-            <div class="conclusion">
-
-            </div>
+        </div>
+        <div class="conclusion">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </div>
         <div class="articles-end">
             <div class="auteur">
-
+                <p>Article créé par Jean dupont</p>
             </div>
             <div class="likes">
-
+                <p>18 personnes aiment cette article<br>On vous invite à faire de même si vous l’avez apprécié !</p>
+                <img src="" alt="">
             </div>
         </div>
         <div class="comments">

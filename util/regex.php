@@ -36,7 +36,7 @@
 function isPseudo(string $pseudo) {
     // entre 6 et 70 caractères, sans whitespace
     $pattern = "/^\S{6,70}$/";
-    return (preg_match ($pattern, $password)) ? true : false;
+    return (preg_match ($pattern, $pseudo)) ? true : false;
 }
 
 // password

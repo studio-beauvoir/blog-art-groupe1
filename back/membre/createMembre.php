@@ -18,12 +18,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $validator = Validator::make([
         ValidationRule::required('prenomMemb'),
         ValidationRule::required('nomMemb'),
-        ValidationRule::required('pseudoMemb')->pseudo,
+        ValidationRule::required('pseudoMemb')->pseudo(),
         ValidationRule::required('passMemb'),
         ValidationRule::required('eMailMemb')->email,
         ValidationRule::required('dtCreaMemb'),
         ValidationRule::required('accordMemb'),
-        ValidationRule::required('idStat')->password,
+        ValidationRule::required('idStat')->password(),
     ])->bindValues($_POST);
 
     if($validator->success()) {
@@ -59,8 +59,8 @@ $submitBtn = "Créer";
 $pagePrecedent = "./membre.php";
 $pageTitle = "Créer un membre";
 $pageNav = ['Home:/index1.php', 'Gestion des membres:'.$pagePrecedent, $pageTitle];
-$pageTitle = "Créer un Angle";
-$pageNav = ['Home:/index1.php', 'Gestion du Angle:./angle.php', $pageTitle];
+$pageTitle = "Créer un Membre";
+$pageNav = ['Home:/index1.php', 'Gestion du Membre:./membre.php', $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
     <form 
@@ -72,25 +72,32 @@ include __DIR__ . '/../../layouts/back/head.php';
     >
 
         <div class="field">
-            <label for="libAngl">Libellé</label>
-            <input name="libAngl" id="libAngl" size="80" maxlength="80" value="<?= $libAngl; ?>" />
+            <label for="prenomMemb">Prénom</label>
+            <input name="prenomMemb" id="prenomMemb" size="80" maxlength="80" value="<?= $prenomMemb; ?>" />
         </div>
 
         <div class="field">
-            <label for="numLang">Quelle langue :</label>
-            <select name="numLang" id="numLang">
-            <?php 
-                $allLangues = $maLangue->get_AllLangues();                    
-                foreach($allLangues as $langue) { 
-            ?>
-                <option value="<?= $langue['numLang'] ?>" ><?=$langue['lib1Lang'] ?></option>
-            <?php } ?>
-            </select>
+            <label for="nomMemb">Nom</label>
+            <input name="nomMemb" id="nomMemb" size="80" maxlength="80" value="<?= $nomMemb; ?>" />
+        </div>
+
+        <div class="field">
+            <label for="pseudoMemb">Pseudonyme</label>
+            <input name="pseudoMemb" id="pseudoMemb" size="80" maxlength="80" value="<?= $pseudoMemb; ?>" />
+        </div>
+
+        <div class="field">
+            <label for="pass1Memb">Mot passe</label>
+            <input type="password" name="pass1Memb" id="myInput1" size="80" maxlength="80" value="<? $passMemb;?>" />
+            <br>
+            <input type="checkbox" onclick="myFunction('myInput1')">
+            &nbsp;&nbsp;
+            <label><i>Afficher Mot de passe</i></label>
         </div>
 
         <div class="controls">
             <a class="btn btn-lg btn-text" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
-            <a class="btn btn-lg btn-secondary" href="./statut.php">Annuler</a>
+            <a class="btn btn-lg btn-secondary" href="./membre.php">Annuler</a>
             <input class="btn btn-lg" type="submit" value="Valider" />
         </div>
     </form>

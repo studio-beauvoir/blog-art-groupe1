@@ -154,10 +154,23 @@ include __DIR__ . '/../../layouts/back/head.php';
         </div>
         <small class="error">*Champ obligatoire si nouveau passe</small><br>
         
-        <div class="field">
+        <!--<div class="field">
             <label for="eMailMemb">EMail</label>
             <input name="eMailMemb" id="eMailMemb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" />
+        </div> -->
+
+        <div class="field">
+            <label class="control-label" for="eMail1Memb"><b>eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+            <input type="email" name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" autocomplete="on" />
         </div>
+
+        <br>
+        <div class="field">
+            <label class="control-label" for="eMail2Memb"><b>Confirmez l'eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+            <input type="email" name="eMail2Memb" id="eMail2Memb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" autocomplete="on" />
+        </div>
+        <small class="error">*Champ obligatoire si nouveau eMail</small><br>
+
 
         <div class="field">
             <label for="dtCreaMemb">Date de création</label>

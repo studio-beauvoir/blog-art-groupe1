@@ -25,7 +25,7 @@ $erreur = false;
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $validator = Validator::make([
-        ValidationRule::required('libAngl'),
+        ValidationRule::required('libAngl')->string()->maxLength(4),
         ValidationRule::required('numLang'),
     ])->bindValues($_POST);
 

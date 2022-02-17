@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $libSsTitr2Art = $validator->verifiedField('libSsTitr2Art');
         $parag3Art = $validator->verifiedField('parag3Art');
         $libConclArt = $validator->verifiedField('libConclArt');
-        $urlPhotArt = $validator->verifiedField('urlPhotArt');
+        // $urlPhotArt = $validator->verifiedField('urlPhotArt');
         $numAngl = $validator->verifiedField('numAngl');
         $numThem = $validator->verifiedField('numThem');
 

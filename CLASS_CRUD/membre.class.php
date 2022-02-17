@@ -42,7 +42,7 @@ class MEMBRE{
 	function get_AllMembres(){
 		global $db;
 
-		$query = 'SELECT * FROM MEMBRE;';
+		$query = 'SELECT * FROM MEMBRE INNER JOIN STATUT ON MEMBRE.idStat=STATUT.idStat;';
 		$request = $db->query($query);
 		$allMembres = $request->fetchAll();
 		return($allMembres);

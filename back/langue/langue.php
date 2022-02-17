@@ -35,7 +35,7 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <td><h4> <?= $row['numLang']; ?> </h4></td>
                 <td> <?= $row['lib1Lang']; ?> </td>
                 <td> <?= $row['lib2Lang']; ?> </td>
-                <td> <?= $row['numPays']; ?> </td>
+                <td><?= $row['frPays']; ?></td>
                 <td>
                     <a class="btn btn-md" href="./updateLangue.php?id=<?=$row['numLang']; ?>" title="Modifier la langue">Modifier</a>
                 </td>

@@ -41,7 +41,7 @@ class MOTCLE{
 	function get_AllMotCles(){
 		global $db;
 
-		$query = 'SELECT * FROM MOTCLE;';
+		$query = 'SELECT * FROM MOTCLE INNER JOIN LANGUE ON MOTCLE.numLang=LANGUE.numLang;';
 		$request = $db->query($query);
 		$allMotCles = $request->fetchAll();
 		return($allMotCles);

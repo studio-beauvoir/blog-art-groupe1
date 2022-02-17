@@ -44,7 +44,7 @@ class THEMATIQUE{
 	function get_AllThematiques(){
 		global $db;
 
-		$query = 'SELECT * FROM THEMATIQUE;';
+		$query = 'SELECT * FROM THEMATIQUE INNER JOIN LANGUE ON THEMATIQUE.numLang=LANGUE.numLang;';
 		$request = $db->query($query);
 		$allThematiques = $request->fetchAll();
 

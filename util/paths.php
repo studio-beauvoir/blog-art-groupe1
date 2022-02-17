@@ -13,4 +13,8 @@ function webSitePath() {
     );
 }
 
+function crudPath($crud) {
+    return webSitePath().'/BACK/'.$crud;
+}
+
 ?>

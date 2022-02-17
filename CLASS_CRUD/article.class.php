@@ -39,10 +39,10 @@ class ARTICLE{
 
 	function get_AllArticles(){
 		global $db;
-
-		// select
-		// prepare
-		// execute
+		
+		$query = 'SELECT * FROM ARTICLE;';
+		$request = $db->query($query);
+		$allArticles = $request->fetchAll();
 		return($allArticles);
 	}
 

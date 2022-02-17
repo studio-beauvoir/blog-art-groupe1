@@ -48,21 +48,25 @@ class MEMBRE{
 		return($allMembres);
 	}
 
+	//A VERIFIER
 	function get_ExistPseudo($pseudoMemb) {
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$db->beginTransaction();
+
+		$query = 'SELECT * FROM MEMBRE WHERE idStat=?;';
+		$request = $db->prepare($query);
+		$request->execute([$pseudoMemb]);
+		$result = $request->fetch();
 		return($result->rowCount());
 	}
 
 	function get_AllMembersByStat(){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM MEMBRE WHERE idStat=?;';
+		$result = $db->query($query);
+		$allMembersByStat = $result->fetchAll();
 		return($allMembersByStat);
 	}
 
@@ -102,9 +106,9 @@ class MEMBRE{
 		try {
 			$db->beginTransaction();
 
-			// insert
-			// prepare
-			// execute
+			$query = 'INSERT INTO MEMBRE (prenomMemb, nomMemb, pseudoMemb, passMemb, eMailMemb, dtCreaMemb, accordMemb, idStat) VALUES (?, ?, ?, ?, ?, ?, ?, ?);';
+			$request = $db->prepare($query);
+			$request->execute([$prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb, $idStat]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -121,18 +125,18 @@ class MEMBRE{
 		try {
 			$db->beginTransaction();
 			
-			// update
-			// prepare
-			// execute
-				$db->commit();
-				$request2->closeCursor();
+			$query = 'UPDATE MEMBRE SET prenomMemb=?, nomMemb=?, passMemb=?, eMailMemb=?, idStat=? WHERE numMemb=?;';
+			$request = $db->prepare($query);
+			$request->execute([$prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat, $numMemb]);
+			$db->commit();
+			$request->closeCursor(); //request2
 		}
 		catch (PDOException $e) {
 			$db->rollBack();
 			if ($passMemb == -1) {
-				$request1->closeCursor();
+				$request->closeCursor(); //request1
 			} else {
-				$request2->closeCursor();
+				$request->closeCursor(); //request2
 			}
 			die('Erreur update MEMBRE : ' . $e->getMessage());
 		}
@@ -145,9 +149,9 @@ class MEMBRE{
 		try {
 			$db->beginTransaction();
 
-			// delete
-			// prepare
-			// execute
+			$query = 'DELETE FROM ANGLE WHERE `numMemb` = ?;';
+			$request = $db->prepare($query);
+			$request->execute([$numMemb]);
 			$count = $request->rowCount();
 			$db->commit();
 			$request->closeCursor();

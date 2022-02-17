@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ValidationRule::required('nomMemb'),
         ValidationRule::required('pseudoMemb')->pseudo(),
         ValidationRule::required('passMemb'),
-        ValidationRule::required('eMailMemb')->email,
+        ValidationRule::required('eMailMemb')->email(),
         ValidationRule::required('dtCreaMemb'),
         ValidationRule::required('accordMemb'),
         ValidationRule::required('idStat')->password(),
@@ -63,6 +63,19 @@ $pageTitle = "Créer un Membre";
 $pageNav = ['Home:/index1.php', 'Gestion du Membre:./membre.php', $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
+
+<script>
+        // Affichage pass
+        function myFunction(myInputPass) {
+            var x = document.getElementById(myInputPass);
+            if (x.type === "password") {
+              x.type = "text";
+            } else {
+              x.type = "password";
+            }
+        }
+</script>
+
     <form 
         class="admin-form"
         method="POST" 
@@ -88,7 +101,7 @@ include __DIR__ . '/../../layouts/back/head.php';
 
         <div class="field">
             <label for="pass1Memb">Mot passe</label>
-            <input type="password" name="pass1Memb" id="myInput1" size="80" maxlength="80" value="<? $passMemb;?>" />
+            <input type="password" name="pass1Memb" id="myInput1" size="80" maxlength="80" value="<?= $passMemb; ?>" />
             <br>
             <input type="checkbox" onclick="myFunction('myInput1')">
             &nbsp;&nbsp;

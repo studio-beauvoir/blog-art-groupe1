@@ -23,7 +23,6 @@ $validator = Validator::make();
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    var_dump($_POST);
     $validator->addRules([
         ValidationRule::required('prenomMemb'),
         ValidationRule::required('nomMemb'),

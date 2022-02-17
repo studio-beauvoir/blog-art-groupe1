@@ -3,57 +3,76 @@
 $submitBtn = "Créer";
 $pageCrud = "article";
 $pagePrecedent = "./$pageCrud.php";
-$pageTitle = "$submitBtn un $pageCrud";
-$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
-// Mode DEV
+$pageTitle = "Créer un $pageCrud";
+$pageNav = ['Home:/index1.php', 'Gestion des articles:'.$pagePrecedent, $pageTitle];
+// Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
-// Init constantes
-include __DIR__ . '/initConst.php';
-// Init variables
-include __DIR__ . '/initVar.php';
+// Insertion classe Statut
+require_once __DIR__ . '/../../CLASS_CRUD/article.class.php'; 
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php'; 
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php'; 
+require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php'; 
 
-
-require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
+// Instanciation de la classe Membre
 $monArticle = new ARTICLE(); 
-
-require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 $maLangue = new LANGUE();
-
-require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 $monAngle = new ANGLE();
-
-require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
 $maThematique = new THEMATIQUE();
-
 
 // Gestion des erreurs de saisie
 $erreur = false;
+$validator = Validator::make();
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $validator = Validator::make([
-        ValidationRule::required('libMotCle'),
-        ValidationRule::required('idLang'),
+    $validator->addRules([
+        ValidationRule::required('libTitrArt'),
+        ValidationRule::required('libChapoArt'),
+        ValidationRule::required('libAccrochArt'),
+        ValidationRule::required('parag1Art'),
+        ValidationRule::required('libSsTitr1Art'),
+        ValidationRule::required('parag2Art'),
+        ValidationRule::required('libSsTitr2Art'),
+        ValidationRule::required('parag3Art'),
+        ValidationRule::required('libConclArt'),
+        ValidationRule::required('urlPhotArt'),
+        ValidationRule::required('numAngl'),
+        ValidationRule::required('numThem')
     ])->bindValues($_POST);
 
     if($validator->success()) {
+
+        // Saisies valides
         $erreur = false;
 
-        $libMotCle = $validator->verifiedField('libMotCle');
-        $numLang = $validator->verifiedField('idLang');
-        
-        $monMotCle->create($libMotCle, $numLang);
+        $libTitrArt = $validator->verifiedField('libTitrArt');
+        $libChapoArt = $validator->verifiedField('libChapoArt');
+        $libAccrochArt = $validator->verifiedField('libAccrochArt');
+        $parag1Art = $validator->verifiedField('parag1Art');
+        $libSsTitr1Art = $validator->verifiedField('libSsTitr1Art');
+        $parag2Art = $validator->verifiedField('parag2Art');
+        $libSsTitr2Art = $validator->verifiedField('libSsTitr2Art');
+        $parag3Art = $validator->verifiedField('parag3Art');
+        $libConclArt = $validator->verifiedField('libConclArt');
+        // $urlPhotArt = $validator->verifiedField('urlPhotArt');
+        $numAngl = $validator->verifiedField('numAngl');
+        $numThem = $validator->verifiedField('numThem');
 
-        header("Location: ./motCle.php");
+        date_default_timezone_set("Europe/Paris");
+        $dtCreArt = date("Y-m-d H:i:s"); 
+        
+        $monArticle->create($dtCreArt, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numAngl, $numThem);
+
+        header("Location: ./article.php");
         die();
-    } else {
+    }   // Fin if ((isset($_POST['libStat'])) ...
+    else {
         // Saisies invalides
         $erreur = true;
         $errSaisies =  "Erreur, la saisie est obligatoire !";
-    }   // End of else erreur saisies
+    }  // End of else erreur saisies
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form

@@ -21,6 +21,7 @@ class ValidationRule {
     private $shouldBeEmail = false;
     private $shouldBePseudo = false;
     private $shouldBeOfType = false;
+    private $shouldBeEqualTo = false;
 
     private $minLength = false;
     private $maxLength = false;
@@ -77,6 +78,11 @@ class ValidationRule {
 
     public function email() {
         $this->shouldBeEmail = true;
+        return $this;
+    }
+
+    public function equalTo($otherFieldName) {
+        $this->shouldBeEqualTo = $otherFieldName;
         return $this;
     }
 
@@ -138,6 +144,13 @@ class ValidationRule {
             }
         }
 
+        if($this->shouldBeEqualTo) {
+            if($this->getValue($this->shouldBeEqualTo) !== $this->getValue()) {
+                $this->addError(':field doit être égal à :shouldBeEqualTo');
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -157,8 +170,9 @@ class ValidationRule {
         return $this->field === $ruleToCompare->field;
     }
 
-    public function getValue() {
-        if(isset($this->validator->fieldsValues[$this->field])) return $this->validator->fieldsValues[$this->field];
+    public function getValue($field=false) {
+        $field = $field?$field:$this->field;
+        if(isset($this->validator->fieldsValues[$field])) return $this->validator->fieldsValues[$field];
         return NULL;
     }
 

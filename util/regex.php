@@ -48,7 +48,7 @@ function isPassWord(string $password) {
     // Pattern à appliquer à la chaine $password
     // Password doit comporter des lettres, chiffres et au moins un caractère spécial
     // Password doit avoir 6 caractères au mini et 15 au maxi
-    $pattern = "/^(?=.*\d)(?=.*[A-Za-z])(?=.*[!@#$%])[0-9A-Za-z!@#$%]{6,15}$/";
+    $pattern = "/^(?=.*\d)(?=.*[A-Za-z])(?=.*[!@#$%_])[0-9A-Za-z!@#$%_]{6,15}$/";
 
     return (preg_match ($pattern, $password)) ? true : false;
 }

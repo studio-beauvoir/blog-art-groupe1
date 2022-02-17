@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . '/regex.php';
 
 class ValidationRule {
     public $validator;
@@ -8,6 +9,7 @@ class ValidationRule {
     public $isRequired = false;
     public $shouldBePassword = false;
     public $shouldBeEmail = false;
+    public $shouldBePseudo = false;
 
     function __construct($field) {
         $this->field = $field;
@@ -27,6 +29,12 @@ class ValidationRule {
         return static::make($field)->setIsRequired(false);
     }
     
+
+    public function pseudo() {
+        $this->shouldBePseudo = true;
+        return $this;
+    }
+
     public function password() {
         $this->shouldBePassword = true;
         return $this;
@@ -46,11 +54,18 @@ class ValidationRule {
             ) return false;
         }
 
+        if($this->shouldBePseudo) {
+            // isPseudo est une fonction utilitaire
+            if(!isPseudo($this->getValue())) return false;
+        }
+
         if($this->shouldBePassword) {
+            // isPassword est une fonction utilitaire
             if(!isPassWord($this->getValue())) return false;
         }
 
         if($this->shouldBeEmail) {
+            // isEmail est une fonction utilitaire
             if(!isEmail($this->getValue())) return false;
         }
 

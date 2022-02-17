@@ -13,8 +13,8 @@ $monArticle = new ARTICLE();
 
 require_once __DIR__ . '/../../layouts/back/head.php';
 ?>
-	<a class="btn btn-lg" href="./createLangue.php" title="Créer une langue">Créer une langue</a>
-	<h3>Toutes les langues</h3>
+	<a class="btn btn-lg" href="./createAngle.php" title="Créer un angle">Créer un article</a>
+	<h3>Tous les articles</h3>
 
 	<table>
         <thead>

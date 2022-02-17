@@ -67,19 +67,22 @@ if(!isset($_GET['id'])) header("Location: $pagePrecedent");
 $article = $monArticle->get_1Article($_GET['id']);
 if(!$article) header("Location: $pagePrecedent");
 
+
 $dtCreArt = $article['dtCreArt'];
-$libTitrArt = $article['dtCreArt'];
-$libChapoArt = $article['dtCreArt'];
-$libAccrochArt = $article['dtCreArt'];
-$parag1Art = $article['dtCreArt'];
-$libSsTitr1Art = $article['dtCreArt'];
-$parag2Art = $article['dtCreArt'];
-$libSsTitr2Art = $article['dtCreArt'];
-$parag3Art = $article['dtCreArt'];
-$libConclArt = $article['dtCreArt'];
-$urlPhotArt = $article['dtCreArt'];
+$libTitrArt = $article['libTitrArt'];
+$libChapoArt = $article['libChapoArt'];
+$libAccrochArt = $article['libAccrochArt'];
+$parag1Art = $article['parag1Art'];
+$libSsTitr1Art = $article['libSsTitr1Art'];
+$parag2Art = $article['parag2Art'];
+$libSsTitr2Art = $article['libSsTitr2Art'];
+$parag3Art = $article['parag3Art'];
+$libConclArt = $article['libConclArt'];
+$urlPhotArt = $article['urlPhotArt'];
 $idAngl = $article['numAngl'];
 $idThem = $article['numThem'];
+
+
 ?>
     <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -96,7 +99,7 @@ $idThem = $article['numThem'];
         <div class="field">
         <label for="photArt">Photo de l'article</label>
         <input type="file" disabled name="photArt" id="photArt" required="required" accept=".jpg,.gif,.png,.jpeg" size="70" maxlength="70" title="Recherchez l'image à uploader !" />
-        <input type="hidden" disabled name="MAX_FILE_SIZE" value="<?= MAX_SIZE; ?>" />
+        <input type="hidden" disabled name="MAX_FILE_SIZE" value="<?= /*MAX_SIZE;*/ $e=1; ?>" />
         <p>
         <?php              // Gestion extension images acceptées
             $msgImagesOK = "&nbsp;&nbsp;>> Extension des images acceptées : .jpg, .gif, .png, .jpeg" . "<br>" .
@@ -113,12 +116,12 @@ $idThem = $article['numThem'];
 
         <div class="field">
             <label for="dtCreArt">Date de création</label>
-            <input type="datetime-local" disabled name="dtCreArt" value="<?=$dtCreArt?>" id="dtCreArt"/>
+            <input type="datetime-local" disabled name="dtCreArt" value="<?=preg_replace("/\s/","T", $dtCreArt)?>" id="dtCreArt"/>
         </div>
 
-        <div class="field">
+        <div class="field"> 
             <label for="libChapoArt">Chapeau</label>
-            <textarea disabled name="libChapoArt" value="<?=$libChapoArt?>" id="libChapoArt" rows="10" placeholder="Sur 500 car."></textarea>
+            <textarea disabled name="libChapoArt" id="libChapoArt" rows="10" placeholder="Sur 500 car."><?=$libChapoArt?></textarea>
         </div>
 
         <div class="field">
@@ -128,7 +131,7 @@ $idThem = $article['numThem'];
 
         <div class="field">
             <label for="parag1Art">Paragraphe 1</label>
-            <textarea disabled name="parag1Art" value="<?=$parag1Art?>" id="parag1Art" rows="10" placeholder="Sur 1200 car."></textarea>
+            <textarea disabled name="parag1Art" id="parag1Art" rows="10" placeholder="Sur 1200 car."><?=$parag1Art?></textarea>
         </div>
 
         <div class="field">
@@ -138,7 +141,7 @@ $idThem = $article['numThem'];
 
         <div class="field">
             <label for="parag2Art">Paragraphe 2</label>
-            <textarea disabled name="parag2Art" value="<?=$parag2Art?>" id="parag2Art" rows="10" placeholder="Sur 1200 car."></textarea>
+            <textarea disabled name="parag2Art" id="parag2Art" rows="10" placeholder="Sur 1200 car."><?=$parag2Art?></textarea>
         </div>
 
         <div class="field">
@@ -148,12 +151,12 @@ $idThem = $article['numThem'];
 
         <div class="field">
             <label for="parag3Art">Paragraphe 3</label>
-            <textarea disabled name="parag3Art" value="<?=$parag3Art?>" id="parag3Art" rows="10" placeholder="Sur 1200 car."></textarea>
+            <textarea disabled name="parag3Art" id="parag3Art" rows="10" placeholder="Sur 1200 car."><?=$parag3Art?></textarea>
         </div>
 
         <div class="field">
             <label for="libConclArt">Conclusion</label>
-            <textarea disabled name="libConclArt" value="<?=$libConclArt?>" id="libConclArt" rows="10" placeholder="Sur 800 car."></textarea>
+            <textarea disabled name="libConclArt" id="libConclArt" rows="10" placeholder="Sur 800 car."><?=$libConclArt?></textarea>
         </div>
 
         <div class="field">

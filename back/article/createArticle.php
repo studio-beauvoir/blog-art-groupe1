@@ -15,8 +15,10 @@ require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php'; 
 
 // Instanciation de la classe Membre
-$monMembre = new MEMBRE(); 
-$monStatut = new STATUT();
+$monArticle = new ARTICLE(); 
+$maLangue = new LANGUE();
+$monAngle = new ANGLE();
+$maThematique = new THEMATIQUE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -25,16 +27,19 @@ $validator = Validator::make();
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    var_dump($_POST);
     $validator->addRules([
-        ValidationRule::required('prenomMemb'),
-        ValidationRule::required('nomMemb'),
-        ValidationRule::required('pseudoMemb')->pseudo(),
-        ValidationRule::required('passMemb')->password(),
-        ValidationRule::required('eMailMemb')->email(),
-        // ValidationRule::required('dtCreaMemb'),
-        ValidationRule::required('accordMemb'),
-        ValidationRule::required('idStat')
+        ValidationRule::required('libTitrArt'),
+        ValidationRule::required('libChapoArt'),
+        ValidationRule::required('libAccrochArt'),
+        ValidationRule::required('parag1Art'),
+        ValidationRule::required('libSsTitr1Art'),
+        ValidationRule::required('parag2Art'),
+        ValidationRule::required('libSsTitr2Art'),
+        ValidationRule::required('parag3Art'),
+        ValidationRule::required('libConclArt'),
+        ValidationRule::required('urlPhotArt'),
+        ValidationRule::required('numAngl'),
+        ValidationRule::required('numThem')
     ])->bindValues($_POST);
 
     if($validator->success()) {
@@ -42,22 +47,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Saisies valides
         $erreur = false;
 
-        $prenomMemb = $validator->verifiedField('prenomMemb');
-        $nomMemb = $validator->verifiedField('nomMemb');
-        $pseudoMemb = $validator->verifiedField('pseudoMemb');
-        $passMemb = $validator->verifiedField('passMemb');
-        $eMailMemb = $validator->verifiedField('eMailMemb');
+        $libTitrArt = $validator->verifiedField('libTitrArt');
+        $libChapoArt = $validator->verifiedField('libChapoArt');
+        $libAccrochArt = $validator->verifiedField('libAccrochArt');
+        $parag1Art = $validator->verifiedField('parag1Art');
+        $libSsTitr1Art = $validator->verifiedField('libSsTitr1Art');
+        $parag2Art = $validator->verifiedField('parag2Art');
+        $libSsTitr2Art = $validator->verifiedField('libSsTitr2Art');
+        $parag3Art = $validator->verifiedField('parag3Art');
+        $libConclArt = $validator->verifiedField('libConclArt');
+        $urlPhotArt = $validator->verifiedField('urlPhotArt');
+        $numAngl = $validator->verifiedField('numAngl');
+        $numThem = $validator->verifiedField('numThem');
 
         date_default_timezone_set("Europe/Paris");
-        $dtCreaMemb = date("Y-m-d H:i:s"); 
-
-        $accordMemb = $validator->verifiedField('accordMemb')=="on";
-        $idStat = $validator->verifiedField('idStat');
+        $dtCreArt = date("Y-m-d H:i:s"); 
         
-        var_dump($dtCreaMemb);
-        $monMembre->create($prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb, $idStat);
+        $monArticle->create($dtCreArt, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numAngl, $numThem);
 
-        header("Location: ./membre.php");
+        header("Location: ./article.php");
         die();
     }   // Fin if ((isset($_POST['libStat'])) ...
     else {

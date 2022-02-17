@@ -19,7 +19,7 @@ require_once __DIR__ . '/../../layouts/back/head.php';
         <thead>
             <tr>
                 <th>Numéro</th>
-                <th>Identité</th>
+                <th colspan="2">Identité</th>
                 <th>Pseudo</th>
                 <th>eMail</th>
                 <th>Date création</th>
@@ -40,9 +40,9 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <td> <?= $row['prenomMemb']; ?> </td>
                 <td> <?= $row['nomMemb']; ?> </td>
                 <td> <?= $row['pseudoMemb']; ?> </td>
-                <td> <?= $row['passMemb']; ?> </td>
                 <td> <?= $row['eMailMemb']; ?> </td>
                 <td> <?= $row['dtCreaMemb']; ?> </td>
+                <td> <?= $row['passMemb']; ?> </td>
                 <td> <?= $row['accordMemb']; ?> </td>
                 <td> <?= $row['idStat']; ?> </td>
                 <td>

@@ -85,12 +85,12 @@ include __DIR__ . '/../../layouts/back/head.php';
 
         <div class="field">
             <label for="prenomMemb">Prénom</label>
-            <input name="prenomMemb" id="prenomMemb" size="80" maxlength="80" value="<?= $prenomMemb; ?>" />
+            <input name="prenomMemb" id="prenomMemb" size="80" maxlength="80" value="<?= $prenomMemb;?>" />
         </div>
 
         <div class="field">
             <label for="nomMemb">Nom</label>
-            <input name="nomMemb" id="nomMemb" size="80" maxlength="80" value="<?= $nomMemb; ?>" />
+            <input name="nomMemb" id="nomMemb" size="80" maxlength="80" value="<?= $nomMemb?>" />
         </div>
 
         <div class="field">
@@ -99,20 +99,48 @@ include __DIR__ . '/../../layouts/back/head.php';
         </div>
 
         <div class="field">
-            <label for="pass1Memb">Mot passe</label>
-            <input type="password" name="pass1Memb" id="myInput1" size="80" maxlength="80" value="<?= $passMemb; ?>" />
+            <label for="pass1Memb">Mot passe<span class="error">(*)</span></label>
+            <input type="password" name="pass1Memb" id="myInput1" size="80" maxlength="80" />
             <br>
             <input type="checkbox" onclick="myFunction('myInput1')">
+            &nbsp;&nbsp;
             <label><i>Afficher Mot de passe</i></label>
         </div>
 
         <div class="field">
-            <label for="pass2Memb">Confirmez le mot de passe<span class="error">(*)</span></label>
-            <input type="password" name="pass2Memb" id="myInput2" size="80" maxlength="80" value="<?= $passMemb; ?>" />
+            <label for="pass2Memb">Confirmez le mot de passe<span class="error">(*)</span> </label>
+            <input type="password" name="pass2Memb" id="myInput2" size="80" maxlength="80" />
             <br>
             <input type="checkbox" onclick="myFunction('myInput2')">
+            &nbsp;&nbsp;
             <label><i>Afficher Mot de passe</i></label>
         </div>
+
+        <div class="field">
+            <label for="eMail1Memb">eMail<span class="error">(*)</span></label>
+            <input name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80"/>
+        </div>
+
+        <div class="field">
+            <label for="eMail2Memb"><b>Confirmez l'eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+            <input type="email" name="eMail2Memb" id="eMail2Memb" size="80" maxlength="80" />
+        </div>
+
+        <div class="field">
+            <label for="accordMemb"><b>J'accepte que mes données soient conservées :</b></label>
+            <div class="controls">
+               <fieldset>
+                  <input type="radio" name="accordMemb"
+                  <?= ($accordMemb == "on") ? 'checked="checked"' : ''
+                  ?> value="on" />&nbsp;&nbsp;Oui&nbsp;&nbsp;&nbsp;&nbsp;
+                  <input type="radio" name="accordMemb"
+                  <?= ($accordMemb == "off") ? 'checked="checked"' : ''
+                  ?> value="off" checked="checked" />&nbsp;&nbsp;Non
+               </fieldset>
+            </div>
+        </div>
+
+        <i><div class="error"><br>*&nbsp;Champs obligatoires</div></i>
 
         <div class="controls">
             <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>

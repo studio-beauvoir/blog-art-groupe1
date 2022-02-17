@@ -38,9 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ValidationRule::required('prenomMemb'),
         ValidationRule::required('nomMemb'),
         ValidationRule::required('pass1Memb'),
-        ValidationRule::required('pass2Memb'),
+        ValidationRule::required('pass2Memb')->equalTo('pass1Memb'),
         ValidationRule::required('eMail1Memb')->email(),
-        ValidationRule::required('eMail2Memb')->email(),
+        ValidationRule::required('eMail2Memb')->email()->equalTo('eMail1Memb'),
         ValidationRule::required('idStat')
     ])->bindValues($_POST);
 
@@ -52,13 +52,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $prenomMemb = $validator->verifiedField('prenomMemb');
         $nomMemb = $validator->verifiedField('nomMemb');
         
-        $pass1Memb = $validator->verifiedField('pass1Memb');
-        $pass2Memb = $validator->verifiedField('pass2Memb');
+        $passMemb = $validator->verifiedField('pass2Memb');
         // check que pass1 == pass2
 
-        $eMailMemb = $validator->verifiedField('eMailMemb');
+        $eMailMemb = $validator->verifiedField('eMail2Memb');
+
         $idStat = $validator->verifiedField('idStat');
-        $monMembre->update($numMemb, $prenomMemb, $nomMemb, $pass1Memb, $eMailMemb, $idStat);
+        $monMembre->update($numMemb, $prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat);
 
 
         header("Location: $pagePrecedent");
@@ -157,12 +157,12 @@ include __DIR__ . '/../../layouts/back/head.php';
         <small class="error">*Champ obligatoire si nouveau passe</small><br>
         
         <div class="field">
-            <label for="eMail1Memb">EMail</label>
+            <label for="eMail1Memb">Email</label>
             <input name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" />
         </div>
 
         <div class="field">
-            <label for="eMail2Memb">EMail</label>
+            <label for="eMail2Memb">Confirmer l'email</label>
             <input name="eMail2Memb" id="eMail2Memb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" />
         </div>
 

@@ -33,6 +33,12 @@
 *
 *******************************************************/
 
+function isPseudo(string $pseudo) {
+    // entre 6 et 70 caractères, sans whitespace
+    $pattern = "/^\S{6,70}$/";
+    return (preg_match ($pattern, $password)) ? true : false;
+}
+
 // password
 // KO erreur format :
 // (preg_match("#\;\,\!\?\*\#\:\%[a-zA-Z0-9_-.]{6,70}#", $pass1Memb))

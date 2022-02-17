@@ -2,8 +2,6 @@
 // Mode DEV
 require_once __DIR__ . '/../../util/index.php';
 
-// Mise en forme date
-require_once __DIR__ . '/../../util/dateChangeFormat.php';
 
 // Insertion classe MotCle
 require_once __DIR__ . '/../../CLASS_CRUD/motcle.class.php';

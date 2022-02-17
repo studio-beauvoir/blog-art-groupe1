@@ -1,153 +1,152 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD ARTICLE (PDO) - Modifié : 10 Juillet 2021
-//
-//  Script  : createArticle.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
 
-// insert dans TJ motclearticle
-// upload image & insert path
-//
+$submitBtn = "Créer";
+$pageCrud = "article";
+$pagePrecedent = "./$pageCrud.php";
+$pageTitle = "$submitBtn un $pageCrud";
+$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
 // Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
+require_once __DIR__ . '/../../util/index.php';
 
 // Init constantes
 include __DIR__ . '/initConst.php';
 // Init variables
 include __DIR__ . '/initVar.php';
 
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
+// Insertion classe MotCle
+require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
+// Instanciation de la classe MotCle
+$monArticle = new ARTICLE(); 
 
-// Insertion classe Article
-
-// Instanciation de la classe Article
-
+// Instanciation de la classe Langue
+$maLangue = new LANGUE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+$validator = Validator::make([
+    ValidationRule::required('libMotCle'),
+    ValidationRule::required('idLang'),
+])->bindValues($_POST);
 
+if($validator->success()) {
+    $erreur = false;
 
+    $libMotCle = $validator->verifiedField('libMotCle');
+    $numLang = $validator->verifiedField('idLang');
+    
+    $monMotCle->create($libMotCle, $numLang);
 
-    // controle des saisies du formulaire
-
-    // création effective de l'article
-
-
-
-    // Gestion des erreurs => msg si saisies ko
-
-
-
-    // Traitnemnt : upload image => Nom image à la volée
-
+    header("Location: ./motCle.php");
+    die();
+} else {
+    // Saisies invalides
+    $erreur = true;
+    $errSaisies =  "Erreur, la saisie est obligatoire !";
+}   // End of else erreur saisies
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form
 include __DIR__ . '/initArticle.php';
+
+include __DIR__ . '/../../layouts/back/head.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-    <meta charset="utf-8" />
-    <title>Admin - CRUD Article</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+<form 
+    class="admin-form"
+    method="POST" 
+    action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" 
+    enctype="multipart/form-data" 
+    accept-charset="UTF-8"
+>
 
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <div class="field">
+        <label for="libTitrArt">Nom de l'article</label>
+        <input name="libTitrArt" id="libTitrArt" placeholder="Sur 100 car." size="100" maxlength="100" />
+    </div>
 
-    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <div class="field">
+        <label for="dtCreArt">Date de création</label>
+        <input type="datetime-local" name="dtCreArt" id="dtCreArt"/>
+    </div>
 
-</head>
-<body>
-    <h1>BLOGART22 Admin - CRUD Article</h1>
-    <h2>Ajout d'un article</h2>
+    <div class="field">
+        <label for="libChapoArt">Chapeau</label>
+        <textarea name="libChapoArt" id="libChapoArt" rows="10" placeholder="Décrivez le chapeau. Sur 500 car."></textarea>
+    </div>
 
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8" id="chgLang">
+    <div class="field">
+        <label for="libAccrochArt">Accroche paragraphe 1</label>
+        <input name="libAccrochArt" id="libAccrochArt" placeholder="Sur 100 car." size="100" maxlength="100" />
+    </div>
 
-      <fieldset>
-        <legend class="legend1">Formulaire Article...</legend>
+    <div class="field">
+        <label for="parag1Art">Paragraphe 1</label>
+        <textarea name="parag1Art" id="parag1Art" rows="10" placeholder="Décrivez le premier paragraphe. Sur 1200 car."></textarea>
+    </div>
 
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
+    <div class="field">
+        <label for="libSsTitr1Art">Sous-titre 1</label>
+        <input name="libSsTitr1Art" id="libSsTitr1Art" placeholder="Sur 100 car." size="100" maxlength="100" />
+    </div>
 
-        <div class="control-group">
-            <label class="control-label" for="libTitrArt"><b>Titre :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <input type="text" name="libTitrArt" id="libTitrArt" size="100" maxlength="100" value="<? if(isset($_GET['id'])) echo $_POST['libTitrArt']; ?>" tabindex="10" placeholder="Sur 100 car." autofocus="autofocus" />
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="DtCreA"><b>Date de création :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="datetime-local" name="dtCreArt" id="dtCreArt" value="<? if(isset($_GET['id'])) echo $_POST['dtCreArt']; ?>" tabindex="20" placeholder="" />
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libChapoArt"><b>Chapeau :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <textarea name="libChapoArt" id="libChapoArt" rows="10" cols="100" value="<? if(isset($_GET['id'])) echo $_POST['libChapoArt']; else echo $libChapoArt; ?>" tabindex="30" placeholder="Décrivez le chapeau. Sur 500 car." ></textarea>
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libAccrochArt"><b>Accroche paragraphe 1 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <input type="text" name="libAccrochArt" id="libAccrochArt" size="100" maxlength="100" value="<? if(isset($_GET['id'])) echo $_POST['libAccrochArt']; else echo $libAccrochArt; ?>" tabindex="40" placeholder="Sur 100 car." />
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="parag1Art"><b>Paragraphe 1 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <textarea name="parag1Art" id="parag1Art" rows="10" cols="100" value="<? if(isset($_GET['id'])) echo $_POST['parag1Art']; else echo $parag1Art; ?>" tabindex="50" placeholder="Décrivez le premier paragraphe. Sur 1200 car." ></textarea>
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libSsTitr1Art"><b>Sous-titre 1 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>b></label>
-            <div class="controls">
-                <input type="text" name="libSsTitr1Art" id="libSsTitr1Art" size="100" maxlength="100" value="<? if(isset($_GET['id'])) echo $_POST['libSsTitr1Art']; else echo $libSsTitr1Art; ?>" tabindex="60" placeholder="Sur 100 car." />
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="parag2Art"><b>Paragraphe 2 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <textarea name="parag2Art" id="parag2Art" rows="10" cols="100" value="<? if(isset($_GET['id'])) echo $_POST['parag2Art']; else echo $parag2Art; ?>" tabindex="70" placeholder="Décrivez le deuxième paragraphe. Sur 1200 car." ></textarea>
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libSsTitr2Art"><b>Sous-titre 2 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>b></label>
-            <div class="controls">
-                <input type="text" name="libSsTitr2Art" id="libSsTitr2Art" size="100" maxlength="100" value="<? if(isset($_GET['id'])) echo $_POST['libSsTitr2Art']; else echo $libSsTitr2Art; ?>" tabindex="80" placeholder="Sur 100 car." />
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="parag3Art"><b>Paragraphe 3 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <textarea name="parag3Art" id="parag3Art" rows="10" cols="100" value="<? if(isset($_GET['id'])) echo $_POST['parag3Art']; else echo $parag3Art; ?>" tabindex="90" placeholder="Décrivez le troisième paragraphe. Sur 1200 car." ></textarea>
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libConclArt"><b>Conclusion :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <textarea name="libConclArt" id="libConclArt" rows="10" cols="100" value="<? if(isset($_GET['id'])) echo $_POST['libConclArt']; else echo $libConclArt; ?>" tabindex="100" placeholder="Décrivez la conclusion. Sur 800 car." ></textarea>
-            </div>
-        </div>
-        <br>
+    <div class="field">
+        <label for="parag2Art">Paragraphe 2</label>
+        <textarea name="parag2Art" id="parag2Art" rows="10" placeholder="Décrivez le deuxième paragraphe. Sur 1200 car."></textarea>
+    </div>
+
+    <div class="field">
+        <label for="libSsTitr2Art">Sous-titre 2</label>
+        <input name="libSsTitr2Art" id="libSsTitr2Art" placeholder="Sur 100 car." size="100" maxlength="100" />
+    </div>
+
+    <div class="field">
+        <label for="parag3Art">Paragraphe 3</label>
+        <textarea name="parag3Art" id="parag3Art" rows="10" placeholder="Décrivez le troisième paragraphe. Sur 1200 car."></textarea>
+    </div>
+
+    <div class="field">
+        <label for="libConclArt">Conclusion</label>
+        <textarea name="libConclArt" id="libConclArt" rows="10" placeholder="Décrivez la conclusion. Sur 800 car."></textarea>
+    </div>
+
+    <div class="field">
+        <label for="idLang">Quelle langue</label>
+        <select name="idLang" id="idLang">
+            <?php 
+                $allLangues = $maLangue->get_AllLangues();                    
+                foreach($allLangues as $langue) { 
+            ?>
+                <option value="<?= $langue['numLang'] ?>" ><?=$langue['lib1Lang'] ?></option>
+            <?php } ?>
+        </select>
+    </div>
+
+    <div class="controls">
+        <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
+        <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
+        <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
+    </div>
+</form>
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- --------------------------------------------------------------- -->
+    <!-- Début Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
+<!-- --------------------------------------------------------------- -->
+
+    <!-- A faire dans un 3ème temps  -->
+
+<!-- --------------------------------------------------------------- -->
+    <!-- Fin Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
+<!-- --------------------------------------------------------------- -->
+
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>
+    
+
+
         <div class="control-group">
             <label class="control-label" for="urlPhotArt"><b>Importez l'illustration :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <div class="controls">
@@ -273,15 +272,6 @@ include __DIR__ . '/initArticle.php';
       </fieldset>
     </form>
 
-<!-- --------------------------------------------------------------- -->
-    <!-- Début Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
-<!-- --------------------------------------------------------------- -->
-
-    <!-- A faire dans un 3ème temps  -->
-
-<!-- --------------------------------------------------------------- -->
-    <!-- Fin Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
-<!-- --------------------------------------------------------------- -->
 
 <?php
 require_once __DIR__ . '/footerArticle.php';

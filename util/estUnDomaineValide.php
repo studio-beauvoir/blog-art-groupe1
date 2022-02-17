@@ -37,13 +37,13 @@ function estUnDomaineValide($url){
     // Retour selon besoins
     if(!$validation){
         // Procedure
-        echo "<br>Ce nom de domaine est invalide !";
+        // echo "<br>Ce nom de domaine est invalide !";
         // ou Fonction
-        //return FALSE;
+        return false;
     }else{
         // Procedure
-        echo "<br> <b>$url</b> est un nom de domaine valide !";
+        // echo "<br> <b>$url</b> est un nom de domaine valide !";
         // ou Fonction
-        //return TRUE;
+        return true;
     }
 }

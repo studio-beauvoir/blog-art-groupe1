@@ -4,11 +4,12 @@ class ValidationRule {
     public $validator;
 
     public $field;
-    public $isRequired;
+    public $isRequired = false;
+    public $shouldBePassword = false;
+    public $shouldBeEmail = false;
 
     function __construct($field) {
         $this->field = $field;
-        $this->isRequired = false;
 
         return $this;
     }
@@ -25,15 +26,31 @@ class ValidationRule {
         return static::make($field)->setIsRequired(false);
     }
     
+    public function password() {
+        $this->shouldBePassword = true;
+        return $this;
+    }
 
+    public function email() {
+        $this->shouldBeEmail = true;
+        return $this;
+    }
 
 
     public function isValid() {
         if($this->isRequired) {
             if(
-                !isset($this->validator->fieldsValues[$this->field])
+                $this->getValue() === NULL
                 OR empty($this->validator->fieldsValues[$this->field])
             ) return false;
+        }
+
+        if($this->shouldBePassword) {
+            if(!isPassWord($this->getValue())) return false;
+        }
+
+        if($this->shouldBeEmail) {
+            if(!isEmail($this->getValue())) return false;
         }
 
         return true;
@@ -53,6 +70,11 @@ class ValidationRule {
 
     public function isSameFieldName($ruleToCompare) {
         return $this->field === $ruleToCompare->field;
+    }
+
+    public function getValue() {
+        if(isset($this->validator->fieldsValues[$this->field])) return $this->validator->fieldsValues[$this->field];
+        return NULL;
     }
 }
 

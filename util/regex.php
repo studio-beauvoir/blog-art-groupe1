@@ -51,7 +51,7 @@ function isPassWord(string $password) {
 // (preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $eMail1Memb))
 function isEmail(string $eMail) {
     // Pattern à appliquer à la chaine $eMail
-    $pattern = "/^[a-zA-Z0-9\._-]+@[a-zA-Z0-9\._-]+\.[a-z]{6,70}$/i";
+    $pattern = "/^[a-zA-Z0-9\._-]+@[a-zA-Z0-9\._-]+\.[a-z]{2,70}$/i";
 
     return (preg_match ($pattern, $eMail)) ? true : false;
 }

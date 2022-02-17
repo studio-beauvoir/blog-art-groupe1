@@ -99,11 +99,18 @@ ul li{
 }
 
 
-input, select {
+input, select, textarea {
     padding: 0.9rem 1rem;
     border-radius: var(--rounded-lg);
     border: 2px solid var(--p1);
     font: var(--p);
+}
+textarea {
+    display: block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+         box-sizing: border-box;
+    width: 100%;
 }
 select option {
     color: var(--bg1);
@@ -114,10 +121,19 @@ input[type="submit"], input[type="button"] {
     cursor: pointer;
 }
 input:focus,
+textarea:focus,
 select:focus {
     border: 2px solid var(--gFocus);
 }
-select[disabled], input[disabled] {
+input[type^="date"] {
+    /* --background: var(--bg3); */
+}
+input[type^="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(100%);
+}
+
+textarea[disabled], select[disabled], input[disabled] {
     --background: var(--bg3);
     --color: var(--p3);
     border-color: transparent;

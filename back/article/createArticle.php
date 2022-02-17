@@ -23,9 +23,15 @@ $maThematique = new THEMATIQUE();
 // Gestion des erreurs de saisie
 $erreur = false;
 $validator = Validator::make();
+$fileValidator = Validator::make();
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $fileValidator->addRules([
+        ValidationRule::required('photArt')->image()
+    ])->bindValues($_FILES);
+
 
     $validator->addRules([
         ValidationRule::required('libTitrArt'),
@@ -38,15 +44,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ValidationRule::required('libSsTitr2Art'),
         ValidationRule::required('parag3Art'),
         ValidationRule::required('libConclArt'),
-        ValidationRule::required('urlPhotArt'),
+        ValidationRule::required('numLang'),
         ValidationRule::required('numAngl'),
         ValidationRule::required('numThem')
     ])->bindValues($_POST);
 
-    if($validator->success()) {
+    if( $fileValidator->success() AND $validator->success()) {
 
-        // Saisies valides
-        $erreur = false;
+        $img = uploadImage(
+            $fileValidator->verifiedFile('photArt'),
+            'imgArt' . md5(uniqid())
+        );
+        $urlPhotArt = $img['filename'];
 
         $libTitrArt = $validator->verifiedField('libTitrArt');
         $libChapoArt = $validator->verifiedField('libChapoArt');
@@ -57,27 +66,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $libSsTitr2Art = $validator->verifiedField('libSsTitr2Art');
         $parag3Art = $validator->verifiedField('parag3Art');
         $libConclArt = $validator->verifiedField('libConclArt');
-        // $urlPhotArt = $validator->verifiedField('urlPhotArt');
+        $numLang = $validator->verifiedField('numLang');
         $numAngl = $validator->verifiedField('numAngl');
         $numThem = $validator->verifiedField('numThem');
         $dtCreArt = $validator->verifiedField('dtCreArt'); 
         
         $monArticle->create($dtCreArt, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numAngl, $numThem);
 
-        header("Location: ./article.php");
+        header("Location: $pagePrecedent");
         die();
-    }   // Fin if ((isset($_POST['libStat'])) ...
-    else {
-        // Saisies invalides
-        $erreur = true;
-        $errSaisies =  "Erreur, la saisie est obligatoire !";
-    }  // End of else erreur saisies
-
+    } 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form
 include __DIR__ . '/initArticle.php';
 
 include __DIR__ . '/../../layouts/back/head.php';
+
+// affichage des erreurs
+$fileValidator->echoErrors();
+$validator->echoErrors();
+
 ?>
 <form 
     class="admin-form"
@@ -86,21 +94,12 @@ include __DIR__ . '/../../layouts/back/head.php';
     enctype="multipart/form-data" 
     accept-charset="UTF-8"
 >
-
-
     <div class="field">
-        <label for="photArt">Nom de l'article</label>
-        <input type="file" name="photArt" id="photArt" required="required" accept=".jpg,.gif,.png,.jpeg" size="70" maxlength="70" title="Recherchez l'image à uploader !" />
-        <input type="hidden" name="MAX_FILE_SIZE" value="<?= MAX_SIZE; ?>" />
+        <label for="photArt">Image</label>
+        <input type="file" name="photArt" id="photArt" accept=".jpg,.gif,.png,.jpeg" title="Recherchez l'image à uploader !" />
         <p>
-        <?php     
-        
-            require_once __DIR__ . '/ctrlerUploadImage.php'; // Gestion extension images acceptées
-
-            $msgImagesOK = "&nbsp;&nbsp;>> Extension des images acceptées : .jpg, .gif, .png, .jpeg" . "<br>" .
-            "(lageur, hauteur, taille max : 80000px, 80000px, 200 000 Go)";
-            echo "<i>" . $msgImagesOK . "</i>";
-        ?>                
+            Extension des images acceptées : .jpg, .gif, .png, .jpeg. 
+            <br/>10 Mo maximum
         </p>
     </div>
 
@@ -155,8 +154,8 @@ include __DIR__ . '/../../layouts/back/head.php';
     </div>
 
     <div class="field">
-        <label for="idLang">Quelle langue</label>
-        <select name="idLang" id="idLang">
+        <label for="numLang">Quelle langue</label>
+        <select name="numLang" id="numLang">
             <?php 
                 $allLangues = $maLangue->get_AllLangues();                    
                 foreach($allLangues as $langue) { 
@@ -167,8 +166,8 @@ include __DIR__ . '/../../layouts/back/head.php';
     </div>
 
     <div class="field">
-        <label for="idAngl">Quel angle</label>
-        <select name="idAngl" id="idAngl">
+        <label for="numAngl">Quel angle</label>
+        <select name="numAngl" id="numAngl">
             <?php 
                 $allAngles = $monAngle->get_AllAngles();                    
                 foreach($allAngles as $angle) { 
@@ -179,8 +178,8 @@ include __DIR__ . '/../../layouts/back/head.php';
     </div>
 
     <div class="field">
-        <label for="idLang">Quelle thématique</label>
-        <select name="idLang" id="idLang">
+        <label for="numThem">Quelle thématique</label>
+        <select name="numThem" id="numThem">
             <?php 
                 $allThematiques = $maThematique->get_AllThematiques();                    
                 foreach($allThematiques as $them) { 
@@ -200,6 +199,12 @@ include __DIR__ . '/../../layouts/back/head.php';
 </form>
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script>
+    document.querySelectorAll(`.field textarea`).forEach(el=>el.value="lorem ipsum textarea");
+    document.querySelectorAll(`.field input:not([type="file"], [type="submit"])`).forEach(el=>el.value="lorem ipsum input");
+    document.querySelectorAll(`.field input[type="datetime-local"]`).forEach(el=>el.value='2022-02-19T22:21');
+    document.querySelectorAll(`.field select`).forEach(el=>el.querySelector('select').setAttribute('selected', 'true'));
+</script>
     <!-- --------------------------------------------------------------- -->
     <!-- Début Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
 <!-- --------------------------------------------------------------- -->

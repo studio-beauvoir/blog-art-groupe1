@@ -20,11 +20,13 @@ class ValidationRule {
     private $shouldBePassword = false;
     private $shouldBeEmail = false;
     private $shouldBePseudo = false;
+    private $shouldBeImage = false;
     private $shouldBeOfType = false;
     private $shouldBeEqualTo = false;
 
     private $minLength = false;
     private $maxLength = false;
+    private $maxFileSize = false;
 
     private $errorsArray = [];
 
@@ -61,8 +63,19 @@ class ValidationRule {
         return $this;
     }
 
+    public function maxFileSize($max) {
+        $this->maxFileSize = $max;
+        return $this;
+    }
+
     public function string() {
         $this->shouldBeOfType = "string";
+        return $this;
+    }
+
+    public function image() {
+        $this->shouldBeImage = true;
+        $this->maxFileSize(MAX_IMG_SIZE);
         return $this;
     }
 
@@ -107,15 +120,23 @@ class ValidationRule {
         }
 
         if($this->shouldBePseudo) {
-            // isPseudo est une fonction utilitaire
+            // isPseudo est une fonction utilitaire (/util/regex.php)
             if(!isPseudo($this->getValue())) {
                 $this->addError(':field doit être un pseudo');
                 return false;
             }
         }
 
+        if($this->shouldBeImage) {
+            // isPseudo et getExtensionsAllowed sont des fonctions utilitaires (/util/ctrlUploadImage.php)
+            if(!isImage($this->getValue())) {
+                $this->addError(':field doit être une image de type '.implode(', ', getImageExtensionsAllowed()));
+                return false;
+            }
+        }
+
         if($this->shouldBePassword) {
-            // isPassword est une fonction utilitaire
+            // isPassword est une fonction utilitaire (/util/regex.php)
             if(!isPassWord($this->getValue())) {
                 $this->addError(':field doit être un mot de passe');
                 return false;
@@ -123,7 +144,7 @@ class ValidationRule {
         }
 
         if($this->shouldBeEmail) {
-            // isEmail est une fonction utilitaire
+            // isEmail est une fonction utilitaire (/util/regex.php)
             if(!isEmail($this->getValue())) {
                 $this->addError(':field doit être un email');
                 return false;
@@ -140,6 +161,13 @@ class ValidationRule {
         if($this->maxLength) {
             if(strlen($this->getValue()) > $this->maxLength) {
                 $this->addError(':field doit avoir une longueur de maximum :maxLength');
+                return false;
+            }
+        }
+
+        if($this->maxFileSize) {
+            if(filesize($this->getValue()['tmp_name']) > $this->maxFileSize) {
+                $this->addError(':field doit peser maximum '.($this->maxFileSize/1000).'Ko');
                 return false;
             }
         }
@@ -267,6 +295,22 @@ class Validator {
                 throw new Error('Le validator n\'a pas été validée');
             }
             return ctrlSaisies($this->fieldsValues[$fieldName]);
+        } catch(Error $e) {
+			die('Erreur validator : ' . $e->getMessage());
+        }
+    }
+
+
+    /**
+     * Retourne le fichier vérifié
+     * Nécessite que le validator ait été validé via sa fonction success()
+     */
+    public function verifiedFile($fieldName) {
+        try {
+            if(!$this->hasSucceeded) {
+                throw new Error('Le validator n\'a pas été validée');
+            }
+            return $this->fieldsValues[$fieldName];
         } catch(Error $e) {
 			die('Erreur validator : ' . $e->getMessage());
         }

@@ -65,7 +65,7 @@ require_once __DIR__ . '/layouts/front/head.php';
         </div>
         <div class="add-comments">
             <div class="text-comments">
-
+                <h4>Ajouter un commentaire</h4>
             </div>
             <div class="bloc-comments">
 

@@ -45,7 +45,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $pseudoMemb = $validator->verifiedField('pseudoMemb');
         $passMemb = $validator->verifiedField('passMemb');
         $eMailMemb = $validator->verifiedField('eMailMemb');
+
+        date_default_timezone_set("Europe/Paris");
         $dtCreaMemb = date("Y-m-d H:i:s"); 
+
         $accordMemb = $validator->verifiedField('accordMemb')=="on";
         $idStat = $validator->verifiedField('idStat');
         

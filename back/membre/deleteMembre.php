@@ -1,29 +1,28 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD MEMBRE (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : deleteMembre.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
-
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
-
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
-// Mise en forme date
-require_once __DIR__ . '/../../util/dateChangeFormat.php';
-
-// Insertion classe Membre
-
-// Instanciation de la classe Membre
+$submitBtn = "Supprimer";
+$pageCrud = "membre";
+$pagePrecedent = "./$pageCrud.php";
+$pageTitle = "Supprimer un $pageCrud";
+$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
 
 
-// Insertion classe Comment
+require_once __DIR__ . '/../../util/index.php';
 
-// Instanciation de la classe Comment
+require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
+$monMembre = new MEMBRE(); 
 
+require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
+$monStatut = new STATUT(); 
+
+// Ctrl CIR
+// Insertion classe Article
+
+// Instanciation de la classe Article
+
+
+
+// Gestion des erreurs de saisie
+$erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -32,140 +31,163 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // controle CIR
 
-    // delete effective du user
+    // delete effective de l'angle
 
+    $validator = Validator::make([
+        ValidationRule::required('id')
+    ])->bindValues($_POST);
 
+    if($validator->success()) {
+        $idMemb = $validator->verifiedField('id');
+        $monMembre->delete($idMemb);
+        // A faire dans un 2ème temps
+        // Ctrl CIR : inexistence Foreign Key => del possible
+        //Pour le CIR, il faut vérifier que numMemb n'est pas présent dans les tables :
+        //Comment
+        //Like Art
+        //Like Com
+        //$nbMembresStatut = $monMembre->get_NbAllMembersByidStat($_POST['id']);
+        //$nbUsersStatut = $monUser->get_NbAllUsersByidStat($_POST['id']);
 
+        
+        // s'il existe au moins un membre ou un user avec ce statut
+        //if($nbMembresStatut>0 OR $nbUsersStatut>0) {
+            // on redirige avec l'affichage de l'erreur
+            //header("Location: ./statut.php?err_cir=true");
+            // et on s'arrête là
+            //die();
+        //} 
 
+        // sinon c'est qu'on peut supp sans soucis
 
+        // modification effective du statut
+        // $idStat = ctrlSaisies($_POST['id']);
+        //$idStat = $validator->verifiedField('id');
+        //$monStatut->delete($idStat);
 
+        header("Location: $pagePrecedent");
+        die();
+    } else {
+        $erreur = true;
+        $errSaisies =  "Erreur, le membre à supprimer n'existe pas !";
+    }
 
+}
 
-
-
-}   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 // Init variables form
 include __DIR__ . '/initMembre.php';
+include __DIR__ . '/../../layouts/back/head.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-    <meta charset="utf-8" />
-    <title>Admin - CRUD Membre</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-        .error {
-            padding: 2px;
-            border: solid 0px black;
-            color: red;
-            font-style: italic;
-            border-radius: 5px;
+<script>
+        // Affichage pass
+        function myFunction(myInputPass) {
+            var x = document.getElementById(myInputPass);
+            if (x.type === "password") {
+              x.type = "text";
+            } else {
+              x.type = "password";
+            }
         }
-    </style>
-</head>
-<body>
-    <h1>BLOGART22 Admin - CRUD Membre</h1>
-    <h2>Suppression d'un membre</h2>
+</script>
+
 <?php
-    // Supp : récup id à supprimer
-    // id passé en GET
+// controles
+if(!isset($_GET['id'])) header("Location: $pagePrecedent");
+$membre = $monMembre->get_1Membre($_GET['id']);
+if(!$membre) header("Location: $pagePrecedent");
 
-
-
-
-
-
+$prenomMemb = $membre['prenomMemb'];
+$nomMemb = $membre['nomMemb'];
+$pseudoMemb = $membre['pseudoMemb'];
+$passMemb = $membre['passMemb'];
+$eMailMemb = $membre['eMailMemb'];
+$dtCreaMemb = $membre['dtCreaMemb'];
+$accordMemb = $membre['accordMemb'];
+$idStat = $membre['idStat'];
 ?>
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
+    <form
+        class="admin-form"
+        method="POST" 
+        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>" 
+        enctype="multipart/form-data" 
+        accept-charset="UTF-8"
+    >
+        <input type="hidden" id="id" name="id" value="<?= $_GET['id'] ?>" />
 
-      <fieldset>
-        <legend class="legend1">Formulaire Membre...</legend>
-
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
-        <div class="control-group">
-            <label class="control-label" for="prenomMemb"><b>Prénom :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="prenomMemb" id="prenomMemb" size="80" maxlength="80" value="<?= $prenomMemb; ?>" disabled />
+        <div class="field">
+            <label for="prenomMemb">Prénom</label>
+            <input disabled name="prenomMemb" id="prenomMemb" size="80" maxlength="80" value="<?= $prenomMemb; ?>" />
         </div>
+
+        <div class="field">
+            <label for="nomMemb">Nom</label>
+            <input disabled name="nomMemb" id="nomMemb" size="80" maxlength="80" value="<?= $nomMemb; ?>" />
+        </div>
+
+        <div class="field">
+            <label for="pseudoMemb">Pseudo</label>
+            <input disabled name="pseudoMembe" id="pseudoMemb" size="80" maxlength="80" value="<?= $pseudoMemb; ?>" disabled />
+        </div>
+
+        <div class="field">
+            <label class="control-label" for="pass1Memb"><b>Mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+            <input type="password" disabled name="pass1Memb" id="myInput1" size="80" maxlength="80" value="<?= $passMemb; ?>" autocomplete="on" />
+            <br>
+            <input type="checkbox" onclick="myFunction('myInput1')">
+            &nbsp;&nbsp;
+            <label><i>Afficher mot de passe</i></label>
+        </div>
+
         <br>
-        <div class="control-group">
-            <label class="control-label" for="nomMemb"><b>Nom :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="nomMemb" id="nomMemb" size="80" maxlength="80" value="<?= $nomMemb; ?>" disabled />
+        <div class="field">
+            <label class="control-label" for="pass2Memb"><b>Confirmez le mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+            <input type="password" disabled name="pass2Memb" id="myInput2" size="80" maxlength="80" value="<?= $passMemb; ?>" autocomplete="on" />
+            <br>
+            <input type="checkbox" onclick="myFunction('myInput2')">
+            &nbsp;&nbsp;
+            <label><i>Afficher mot de passe</i></label>
         </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="pseudoMemb"><b>Pseudonyme :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="pseudoMemb" id="pseudoMemb" size="80" maxlength="80" value="<?= $pseudoMemb; ?>" disabled />
+        <small class="error">*Champ obligatoire si nouveau passe</small><br>
+
+        <div class="field">
+            <label class="control-label" for="eMail1Memb"><b>eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+            <input type="email" disabled name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" autocomplete="on" />
         </div>
 
         <br>
-        <div class="control-group">
-            <label class="control-label" for="eMail1Memb"><b>eMail :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="email" name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" value="<?= $eMail1Memb; ?>" disabled />
+        <div class="field">
+            <label class="control-label" for="eMail2Memb"><b>Confirmez l'eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+            <input type="email" disabled name="eMail2Memb" id="eMail2Memb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" autocomplete="on" />
         </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="accordMemb"><b>J'ai accepté que mes données soient conservées :</b></label>
-            <div class="controls">
-               <fieldset>
-                  <input type="radio" name="accordMemb"
-                  <? if($accordMemb == 1) echo 'checked="checked"'; ?>
-                  value="on" disabled />&nbsp;&nbsp;Oui&nbsp;&nbsp;&nbsp;&nbsp;
-                  <input type="radio" name="accordMemb"
-                  <? if($accordMemb == 0) echo 'checked="checked"'; ?>
-                  value="off" disabled />&nbsp;&nbsp;Non
-               </fieldset>
-            </div>
-        </div>
-        <br>
+        <small class="error">*Champ obligatoire si nouveau eMail</small><br>
 
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- FK : Statut -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Listbox statut -->
-        <div class="control-group">
-            <label class="control-label" for="LibTypStat"><b>Statut :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="hidden" id="idStat" name="idStat" value="<?= isset($_GET['idStat']) ? $_GET['idStat'] : '' ?>" />
 
-                <input type="text" name="idStat" id="idStat" size="5" maxlength="5" value="<?= $idStat; ?>" autocomplete="on" />
-
-                <!-- Listbox statut disabled => 2ème temps -->
-
+        <div class="field">
+            <label for="dtCreaMemb">Date de création</label>
+            <input disabled name="dtCreaMemb" id="dtCreaMemb" size="80" maxlength="80" value="<?= $dtCreaMemb; ?>" />
         </div>
 
-    <!-- FIN Listbox statut -->
-<!-- --------------------------------------------------------------- -->
-    <!-- FK : Statut -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-        <br>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="dtCreaMemb"><b>Date création :&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="dtCreaMemb" id="dtCreaMemb" value="<?= $dtCreaMemb; ?>" disabled />
+        <div class="field">
+            <label for="accordMemb">Accord du membre au RGPD</label>
+            <input disabled name="accordMemb" id="accordMemb" size="80" maxlength="80" value="<?= $accordMemb; ?>" />
         </div>
-        <div class="control-group">
-            <div class="controls">
-                <br><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Annuler" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                <br>
-            </div>
+
+        <div class="field">
+            <label for="idStat">Quel statut :</label>
+            <select disabled name="idStat" id="idStat">
+            <?php 
+                $allStatuts = $monStatut->get_AllStatuts();                    
+                foreach($allStatuts as $statut) { 
+            ?>
+                <option <?=$statut['idStat']==$idStat?'selected':'' ?> value="<?= $statut['idStat'] ?>" ><?=$statut['libStat'] ?></option>
+            <?php } ?>
+            </select>
         </div>
-      </fieldset>
+
+        <div class="controls">
+            <!--<a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a> -->
+            <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
+            <input class="btn btn-lg btn-danger" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
+        </div>
     </form>
-    <br>
-    <i><div class="error"><br>=>&nbsp;Attention, une suppression doit respecter les CIR !</div></i>
-<?php
-require_once __DIR__ . '/footerMembre.php';
-
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

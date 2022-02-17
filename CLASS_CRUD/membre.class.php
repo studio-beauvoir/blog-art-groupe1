@@ -122,6 +122,8 @@ class MEMBRE{
 	function update($numMemb, $prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat){
 		global $db;
 
+		var_dump($idStat);
+
 		try {
 			$db->beginTransaction();
 			
@@ -149,7 +151,7 @@ class MEMBRE{
 		try {
 			$db->beginTransaction();
 
-			$query = 'DELETE FROM ANGLE WHERE `numMemb` = ?;';
+			$query = 'DELETE FROM MEMBRE WHERE `numMemb` = ?;';
 			$request = $db->prepare($query);
 			$request->execute([$numMemb]);
 			$count = $request->rowCount();

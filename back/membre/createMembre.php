@@ -10,25 +10,29 @@ require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Statut
 require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php'; 
+require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php'; 
 
 // Instanciation de la classe Membre
 $monMembre = new MEMBRE(); 
+$monStatut = new STATUT();
 
 // Gestion des erreurs de saisie
 $erreur = false;
+$validator = Validator::make();
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $validator = Validator::make([
+    var_dump($_POST);
+    $validator->addRules([
         ValidationRule::required('prenomMemb'),
         ValidationRule::required('nomMemb'),
         ValidationRule::required('pseudoMemb')->pseudo(),
-        ValidationRule::required('passMemb'),
+        ValidationRule::required('passMemb')->password(),
         ValidationRule::required('eMailMemb')->email(),
-        ValidationRule::required('dtCreaMemb'),
+        // ValidationRule::required('dtCreaMemb'),
         ValidationRule::required('accordMemb'),
-        ValidationRule::required('idStat')->password(),
+        ValidationRule::required('idStat')
     ])->bindValues($_POST);
 
     if($validator->success()) {
@@ -41,10 +45,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $pseudoMemb = $validator->verifiedField('pseudoMemb');
         $passMemb = $validator->verifiedField('passMemb');
         $eMailMemb = $validator->verifiedField('eMailMemb');
-        $dtCreaMemb = $validator->verifiedField('dtCreaMemb');
-        $accordMemb = $validator->verifiedField('accordMemb');
+
+        date_default_timezone_set("Europe/Paris");
+        $dtCreaMemb = date("Y-m-d H:i:s"); 
+
+        $accordMemb = $validator->verifiedField('accordMemb')=="on";
         $idStat = $validator->verifiedField('idStat');
         
+        var_dump($dtCreaMemb);
         $monMembre->create($prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb, $idStat);
 
         header("Location: ./membre.php");
@@ -75,7 +83,8 @@ include __DIR__ . '/../../layouts/back/head.php';
         }
 </script>
 
-    <form 
+<?=$validator->echoErrors()?>
+    <form
         class="admin-form"
         method="POST" 
         action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" 
@@ -84,46 +93,47 @@ include __DIR__ . '/../../layouts/back/head.php';
     >
 
         <div class="field">
-            <label for="prenomMemb">Prénom</label>
+            <label for="prenomMemb">Prénom<span class="error">(*)</span> :</label>
             <input name="prenomMemb" id="prenomMemb" size="80" maxlength="80" value="<?= $prenomMemb;?>" />
         </div>
 
         <div class="field">
-            <label for="nomMemb">Nom</label>
+            <label for="nomMemb">Nom<span class="error">(*)</span> :</label>
             <input name="nomMemb" id="nomMemb" size="80" maxlength="80" value="<?= $nomMemb?>" />
         </div>
 
         <div class="field">
-            <label for="pseudoMemb">Pseudonyme</label>
+            <label for="pseudoMemb">Pseudonyme<span class="error">(*)</span> :</label>
             <input name="pseudoMemb" id="pseudoMemb" size="80" maxlength="70" value="<?= $pseudoMemb; ?>" />
         </div>
 
         <div class="field">
-            <label for="pass1Memb">Mot passe<span class="error">(*)</span></label>
-            <input type="password" name="pass1Memb" id="myInput1" size="80" maxlength="80" />
+            <label for="passMemb">Mot passe<span class="error">(*)</span></label>
+            <input type="password" name="passMemb" id="passMemb" size="80" maxlength="80" />
             <br>
-            <input type="checkbox" onclick="myFunction('myInput1')">
+            <input type="checkbox" onclick="myFunction('passMemb')">
             &nbsp;&nbsp;
             <label><i>Afficher Mot de passe</i></label>
         </div>
 
+        <br>
         <div class="field">
-            <label for="pass2Memb">Confirmez le mot de passe<span class="error">(*)</span> </label>
-            <input type="password" name="pass2Memb" id="myInput2" size="80" maxlength="80" />
+            <label for="pass2Memb">Confirmez le mot de passe<span class="error">(*)</span></label>
+            <input type="password" name="pass2Memb" id="pass2Memb" size="80" maxlength="80"/>
             <br>
-            <input type="checkbox" onclick="myFunction('myInput2')">
+            <input type="checkbox" onclick="myFunction('pass2Memb')">
             &nbsp;&nbsp;
             <label><i>Afficher Mot de passe</i></label>
         </div>
 
-        <div class="field">
-            <label for="eMail1Memb">eMail<span class="error">(*)</span></label>
-            <input name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80"/>
+        </div><div class="field">
+            <label for="eMailMemb">eMail<span class="error">(*)</span></label>
+            <input name="eMailMemb" id="eMailMemb" size="80" maxlength="80"/>
         </div>
 
         <div class="field">
-            <label for="eMail2Memb"><b>Confirmez l'eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="email" name="eMail2Memb" id="eMail2Memb" size="80" maxlength="80" />
+            <label for="eMail1Memb">Confirmez l'eMail<span class="error">(*)</span></label>
+            <input name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" />
         </div>
 
         <div class="field">
@@ -141,6 +151,18 @@ include __DIR__ . '/../../layouts/back/head.php';
         </div>
 
         <i><div class="error"><br>*&nbsp;Champs obligatoires</div></i>
+
+        <div class="field">
+            <label for="idStat">Statut :</label>
+            <select name="idStat" id="idStat">
+            <?php 
+                $allStatuts = $monStatut->get_AllStatuts();                    
+                foreach($allStatuts as $statut) { 
+            ?>
+                <option <?=$statut['idStat']==$idStat?'selected':'' ?> value="<?= $statut['idStat'] ?>" ><?=$statut['libStat'] ?></option>
+            <?php } ?>
+            </select>
+        </div>
 
         <div class="controls">
             <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>

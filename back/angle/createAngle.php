@@ -1,4 +1,10 @@
 <?php
+
+$submitBtn = "Créer";
+$pageCrud = "angle";
+$pagePrecedent = "./$pageCrud.php";
+$pageTitle = "Créer un $pageCrud";
+$pageNav = ['Home:/index1.php', 'Gestion des angles:'.$pagePrecedent, $pageTitle];
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
@@ -47,12 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // Init variables form
 include __DIR__ . '/initAngle.php';
 
-$submitBtn = "Créer";
-$pagePrecedent = "./angle.php";
-$pageTitle = "Créer un angle";
-$pageNav = ['Home:/index1.php', 'Gestion des angles:'.$pagePrecedent, $pageTitle];
-$pageTitle = "Créer un Angle";
-$pageNav = ['Home:/index1.php', 'Gestion du Angle:./angle.php', $pageTitle];
+
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
     <form 
@@ -81,9 +82,9 @@ include __DIR__ . '/../../layouts/back/head.php';
         </div>
 
         <div class="controls">
-            <a class="btn btn-lg btn-text" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
-            <a class="btn btn-lg btn-secondary" href="./statut.php">Annuler</a>
-            <input class="btn btn-lg" type="submit" value="Valider" />
+            <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
+            <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
         </div>
     </form>
 <?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

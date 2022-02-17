@@ -21,11 +21,12 @@ $maLangue = new LANGUE();
 // Gestion des erreurs de saisie
 $erreur = false;
 
+$validator = Validator::make();
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $validator = Validator::make([
-        ValidationRule::required('libAngl')->string()->maxLength(4),
+    $validator->addRules([
+        ValidationRule::required('libAngl')->maxLength(2),
         ValidationRule::required('numLang'),
     ])->bindValues($_POST);
 
@@ -56,6 +57,7 @@ include __DIR__ . '/initAngle.php';
 
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
+    <?=$validator->echoErrors() ?>
     <form 
         class="admin-form"
         method="POST" 
@@ -66,7 +68,7 @@ include __DIR__ . '/../../layouts/back/head.php';
 
         <div class="field">
             <label for="libAngl">Libellé</label>
-            <input name="libAngl" id="libAngl" size="80" maxlength="80" value="<?= $libAngl; ?>" />
+            <input name="libAngl" id="libAngl" size="80" maxlength="80" value="<?= $validator->oldField('libAngl') ?>" />
         </div>
 
         <div class="field">
@@ -76,7 +78,7 @@ include __DIR__ . '/../../layouts/back/head.php';
                 $allLangues = $maLangue->get_AllLangues();                    
                 foreach($allLangues as $langue) { 
             ?>
-                <option value="<?= $langue['numLang'] ?>" ><?=$langue['lib1Lang'] ?></option>
+                <option <?=$langue['numLang']==$validator->oldField('numLang')?'selected':'' ?> value="<?= $langue['numLang'] ?>" ><?=$langue['lib1Lang'] ?></option>
             <?php } ?>
             </select>
         </div>

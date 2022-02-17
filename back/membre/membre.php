@@ -11,6 +11,10 @@ $monMembre = new MEMBRE();
 $pageTitle = "Gestion des Membres";
 $pageNav = ['Home:/index1.php', $pageTitle];
 require_once __DIR__ . '/../../layouts/back/head.php';
+
+$from = 'Y-m-d H:i:s';
+$to = 'd/m/Y H:i:s';
+$dtCreaMemb = dateChangeFormat($dtCreaMemb, $from, $to);
 ?>
 	<a class="btn btn-lg" href="./createMembre.php" title="Créer un membre">Créer un membre</a>
 	<h3>Tous les membres</h3>

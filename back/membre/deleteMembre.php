@@ -40,19 +40,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if($validator->success()) {
         $idMemb = $validator->verifiedField('id');
         $monMembre->delete($idMemb);
+        // A faire dans un 2ème temps
+        // Ctrl CIR : inexistence Foreign Key => del possible
+        //Pour le CIR, il faut vérifier que numMemb n'est pas présent dans les tables :
+        //Comment
+        //Like Art
+        //Like Com
+        //$nbMembresStatut = $monMembre->get_NbAllMembersByidStat($_POST['id']);
+        //$nbUsersStatut = $monUser->get_NbAllUsersByidStat($_POST['id']);
+
+        
+        // s'il existe au moins un membre ou un user avec ce statut
+        //if($nbMembresStatut>0 OR $nbUsersStatut>0) {
+            // on redirige avec l'affichage de l'erreur
+            //header("Location: ./statut.php?err_cir=true");
+            // et on s'arrête là
+            //die();
+        //} 
+
+        // sinon c'est qu'on peut supp sans soucis
+
+        // modification effective du statut
+        // $idStat = ctrlSaisies($_POST['id']);
+        //$idStat = $validator->verifiedField('id');
+        //$monStatut->delete($idStat);
 
         header("Location: $pagePrecedent");
         die();
     } else {
         $erreur = true;
-        $errSaisies =  "Erreur, la thématique à supprimer n'existe pas !";
+        $errSaisies =  "Erreur, le membre à supprimer n'existe pas !";
     }
 
 }
-//Pour le CIR, il faut vérifier que numMemb n'est pas présent dans les tables :
-//Comment
-//Like Art
-//Like Com
 
 // Init variables form
 include __DIR__ . '/initMembre.php';
@@ -88,7 +108,7 @@ $idStat = $membre['idStat'];
     <form
         class="admin-form"
         method="POST" 
-        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id']?>" 
+        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>" 
         enctype="multipart/form-data" 
         accept-charset="UTF-8"
     >
@@ -165,7 +185,7 @@ $idStat = $membre['idStat'];
         </div>
 
         <div class="controls">
-            <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
+            <!--<a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a> -->
             <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
             <input class="btn btn-lg btn-danger" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
         </div>

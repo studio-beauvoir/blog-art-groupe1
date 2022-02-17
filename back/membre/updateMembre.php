@@ -16,7 +16,7 @@ $monStatut = new STATUT();
 
 // Gestion des erreurs de saisie
 $erreur = false;
-
+$validator = Validator::make();
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -27,7 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $Submit = "";
     }
 
-    $validator = Validator::make([
+    var_dump($_POST);
+    $validator->addRules([
         ValidationRule::required('id'),
         ValidationRule::required('prenomMemb'),
         ValidationRule::required('nomMemb'),
@@ -103,6 +104,7 @@ include __DIR__ . '/../../layouts/back/head.php';
     $idStat = $membre['idStat'];
 
 ?>
+<?=$validator->echoErrors()?>
     <form 
         class="admin-form"
         method="POST" 
@@ -124,7 +126,7 @@ include __DIR__ . '/../../layouts/back/head.php';
 
         <div class="field">
             <label for="pseudoMemb">Pseudo</label>
-            <input name="pseudoMemb" id="pseudoMemb" size="80" maxlength="80" value="<?= $pseudoMemb; ?>" disabled/>
+            <input name="pseudoMembe" id="pseudoMemb" size="80" maxlength="80" value="<?= $pseudoMemb; ?>" disabled />
         </div>
 
         <!--<div class="field">

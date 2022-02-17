@@ -24,7 +24,7 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <th>Pseudo</th>
                 <th>eMail</th>
                 <th>Date création</th>
-                <th>Connexion<br>auto</th>
+                <th>Mot de passe</th>
                 <th>Accord<br>RGPD</th>
                 <th>Statut</th>
                 <th colspan="2">Action</th>
@@ -46,8 +46,8 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <td> <?= $row['eMailMemb']; ?> </td>
                 <td> <?= dateChangeFormat($row['dtCreaMemb'], $from, $to); ?> </td>
                 <td> <?= $row['passMemb']; ?> </td>
-                <td> <?= $row['accordMemb']; ?> </td>
-                <td> <?= $row['idStat']; ?> </td>
+                <td> <?= $row['accordMemb']==true?"Oui":"Non"; ?> </td>
+                <td><a href="<?=crudPath('statut/updateStatut.php?id='.$row['idStat'])?>"><?= $row['libStat']; ?></a></td>
                 <td>
                     <a class="btn btn-md" href="./updateMembre.php?id=<?=$row['numMemb']; ?>" title="Modifier le membre">Modifier</a>
                 </td>

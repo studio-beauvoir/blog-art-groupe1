@@ -1,10 +1,10 @@
 <?php
 
-$submitBtn = "Gestion";
+$submitBtn = "CRUD";
 $pageCrud = "article";
 $pagePrecedent = "./$pageCrud.php";
-$pageTitle = "$submitBtn: $pageCrud";
-$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
+$pageTitle = "$submitBtn - $pageCrud";
+$pageNav = ['Home:/index1.php', $pageTitle];
 
 require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../CLASS_CRUD/article.class.php'; 
@@ -41,8 +41,8 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <td> <?= $row['libTitrArt']; ?> </td>
                 <td> <?= $row['libChapoArt']; ?> </td>
                 <td> <?= $row['libAccrochArt']; ?> </td>
-                <td> <?= $row['numAngl']; ?> </td>
-                <td> <?= $row['numThem']; ?> </td>
+                <td><a href="<?=crudPath('angle/updateAngle.php?id='.$row['numAngl'])?>"><?= $row['libAngl']; ?></a></td>
+                <td><a href="<?=crudPath('thematique/updateThematique.php?id='.$row['numThem'])?>"><?= $row['libThem']; ?></a></td>
                 <td>
                     <a class="btn btn-md" href="./updateArticle.php?id=<?=$row['numArt']; ?>" title="Modifier l'article">Modifier</a>
                 </td>

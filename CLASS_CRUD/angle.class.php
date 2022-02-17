@@ -41,7 +41,8 @@ class ANGLE{
 	function get_AllAngles() {
 		global $db;
 
-		$query = 'SELECT * FROM ANGLE;';
+		// $query = 'SELECT * FROM ANGLE;';
+		$query = 'SELECT * FROM ANGLE INNER JOIN LANGUE ON ANGLE.numLang=LANGUE.numLang;';
 		$request = $db->query($query);
 		$allAngles = $request->fetchAll();
 		return($allAngles);

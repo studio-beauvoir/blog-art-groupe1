@@ -84,17 +84,17 @@ include __DIR__ . '/../../layouts/back/head.php';
     >
 
         <div class="field">
-            <label for="prenomMemb">Prénom</label>
+            <label for="prenomMemb">Prénom<span class="error">(*)</span> :</label>
             <input name="prenomMemb" id="prenomMemb" size="80" maxlength="80" value="<?= $prenomMemb;?>" />
         </div>
 
         <div class="field">
-            <label for="nomMemb">Nom</label>
+            <label for="nomMemb">Nom<span class="error">(*)</span> :</label>
             <input name="nomMemb" id="nomMemb" size="80" maxlength="80" value="<?= $nomMemb?>" />
         </div>
 
         <div class="field">
-            <label for="pseudoMemb">Pseudonyme</label>
+            <label for="pseudoMemb">Pseudonyme<span class="error">(*)</span> :</label>
             <input name="pseudoMemb" id="pseudoMemb" size="80" maxlength="70" value="<?= $pseudoMemb; ?>" />
         </div>
 

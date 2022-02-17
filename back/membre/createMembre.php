@@ -16,19 +16,21 @@ $monMembre = new MEMBRE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
+$validator = Validator::make();
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $validator = Validator::make([
+    var_dump($_POST);
+    $validator->addRules([
         ValidationRule::required('prenomMemb'),
         ValidationRule::required('nomMemb'),
         ValidationRule::required('pseudoMemb')->pseudo(),
-        ValidationRule::required('passMemb'),
+        ValidationRule::required('passMemb')->password(),
         ValidationRule::required('eMailMemb')->email(),
-        ValidationRule::required('dtCreaMemb'),
+        // ValidationRule::required('dtCreaMemb'),
         ValidationRule::required('accordMemb'),
-        ValidationRule::required('idStat')->password(),
+        // ValidationRule::required('idStat')
     ])->bindValues($_POST);
 
     if($validator->success()) {
@@ -41,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $pseudoMemb = $validator->verifiedField('pseudoMemb');
         $passMemb = $validator->verifiedField('passMemb');
         $eMailMemb = $validator->verifiedField('eMailMemb');
-        $dtCreaMemb = $validator->verifiedField('dtCreaMemb');
+        $dtCreaMemb = 'SELECT CURRENT_TIMESTAMP';
         $accordMemb = $validator->verifiedField('accordMemb');
         $idStat = $validator->verifiedField('idStat');
         
@@ -75,7 +77,8 @@ include __DIR__ . '/../../layouts/back/head.php';
         }
 </script>
 
-    <form 
+<?=$validator->echoErrors()?>
+    <form
         class="admin-form"
         method="POST" 
         action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" 
@@ -99,31 +102,32 @@ include __DIR__ . '/../../layouts/back/head.php';
         </div>
 
         <div class="field">
-            <label for="pass1Memb">Mot passe<span class="error">(*)</span></label>
-            <input type="password" name="pass1Memb" id="myInput1" size="80" maxlength="80" />
+            <label for="passMemb">Mot passe<span class="error">(*)</span></label>
+            <input type="password" name="passMemb" id="passMemb" size="80" maxlength="80" />
             <br>
-            <input type="checkbox" onclick="myFunction('myInput1')">
+            <input type="checkbox" onclick="myFunction('passMemb')">
             &nbsp;&nbsp;
             <label><i>Afficher Mot de passe</i></label>
         </div>
 
+        <br>
         <div class="field">
-            <label for="pass2Memb">Confirmez le mot de passe<span class="error">(*)</span> </label>
-            <input type="password" name="pass2Memb" id="myInput2" size="80" maxlength="80" />
+            <label for="pass2Memb">Confirmez le mot de passe<span class="error">(*)</span></label>
+            <input type="password" name="pass2Memb" id="pass2Memb" size="80" maxlength="80"/>
             <br>
-            <input type="checkbox" onclick="myFunction('myInput2')">
+            <input type="checkbox" onclick="myFunction('pass2Memb')">
             &nbsp;&nbsp;
             <label><i>Afficher Mot de passe</i></label>
         </div>
 
-        <div class="field">
-            <label for="eMail1Memb">eMail<span class="error">(*)</span></label>
-            <input name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80"/>
+        </div><div class="field">
+            <label for="eMailMemb">eMail<span class="error">(*)</span></label>
+            <input name="eMailMemb" id="eMailMemb" size="80" maxlength="80"/>
         </div>
 
         <div class="field">
-            <label for="eMail2Memb"><b>Confirmez l'eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="email" name="eMail2Memb" id="eMail2Memb" size="80" maxlength="80" />
+            <label for="eMail1Memb">Confirmez l'eMail<span class="error">(*)</span></label>
+            <input name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" />
         </div>
 
         <div class="field">

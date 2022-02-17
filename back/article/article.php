@@ -13,7 +13,7 @@ $monArticle = new ARTICLE();
 
 require_once __DIR__ . '/../../layouts/back/head.php';
 ?>
-	<a class="btn btn-lg" href="./createAngle.php" title="Créer un angle">Créer un article</a>
+	<a class="btn btn-lg" href="./createArticle.php" title="Créer un article">Créer un article</a>
 	<h3>Tous les articles</h3>
 
 	<table>

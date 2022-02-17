@@ -33,6 +33,12 @@
 *
 *******************************************************/
 
+function isPseudo(string $pseudo) {
+    // entre 6 et 70 caractères, sans whitespace
+    $pattern = "/^\S{6,70}$/";
+    return (preg_match ($pattern, $pseudo)) ? true : false;
+}
+
 // password
 // KO erreur format :
 // (preg_match("#\;\,\!\?\*\#\:\%[a-zA-Z0-9_-.]{6,70}#", $pass1Memb))
@@ -42,7 +48,7 @@ function isPassWord(string $password) {
     // Pattern à appliquer à la chaine $password
     // Password doit comporter des lettres, chiffres et au moins un caractère spécial
     // Password doit avoir 6 caractères au mini et 15 au maxi
-    $pattern = "/^(?=.*\d)(?=.*[A-Za-z])(?=.*[!@#$%])[0-9A-Za-z!@#$%]{6,15}$/";
+    $pattern = "/^(?=.*\d)(?=.*[A-Za-z])(?=.*[!@#$%_])[0-9A-Za-z!@#$%_]{6,15}$/";
 
     return (preg_match ($pattern, $password)) ? true : false;
 }
@@ -51,7 +57,7 @@ function isPassWord(string $password) {
 // (preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $eMail1Memb))
 function isEmail(string $eMail) {
     // Pattern à appliquer à la chaine $eMail
-    $pattern = "/^[a-zA-Z0-9\._-]+@[a-zA-Z0-9\._-]+\.[a-z]{6,70}$/i";
+    $pattern = "/^[a-zA-Z0-9\._-]+@[a-zA-Z0-9\._-]+\.[a-z]{2,70}$/i";
 
     return (preg_match ($pattern, $eMail)) ? true : false;
 }

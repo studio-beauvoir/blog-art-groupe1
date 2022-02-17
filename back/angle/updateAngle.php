@@ -8,6 +8,8 @@ require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 // Instanciation de la classe Angle
 $monAngle = new ANGLE(); 
 
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+$maLangue = new LANGUE();
 // Gestion des erreurs de saisie
 $erreur = false;
 
@@ -81,8 +83,15 @@ include __DIR__ . '/../../layouts/back/head.php';
         </div>
 
         <div class="field">
-            <label for="libAngl">Quelle langue :</label>
-            <input name="idLang" id="idLang" size="6" maxlength="6" value="<?= $idLang; ?>"/>
+            <label for="idLang">Quelle langue :</label>
+            <select name="idLang" id="idLang">
+            <?php 
+                $allLangues = $maLangue->get_AllLangues();                    
+                foreach($allLangues as $langue) { 
+            ?>
+                <option <?=$langue['numLang']==$idLang?'selected':'' ?> value="<?= $langue['numLang'] ?>" ><?=$langue['lib1Lang'] ?></option>
+            <?php } ?>
+            </select>
         </div>
 
         <div class="controls">

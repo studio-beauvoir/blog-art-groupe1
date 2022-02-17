@@ -89,7 +89,7 @@ class MOTCLE{
 	}
 
 	// Récupérer next PK de la table MOTCLE
-	function getNextNumMoCle($numLang) {
+	function getNextNumMotCle($numLang) {
 		global $db;
 	
 		// Découpage FK LANGUE
@@ -116,10 +116,10 @@ class MOTCLE{
 				$numSeq2MoCle = 1;
 			} else {
 				// Récup dernière PK pour FK sélectionnée
-				$requete = "SELECT MAX(numMoCle) AS numMoCle FROM MOTCLE WHERE numLang LIKE '$parmNumLang';";
+				$requete = "SELECT MAX(numMotCle) AS numMotCle FROM MOTCLE WHERE numLang LIKE '$parmNumLang';";
 				$result = $db->query($requete);
 				$tuple = $result->fetch();
-				$numMoCle = $tuple["numMoCle"];
+				$numMoCle = $tuple["numMotCle"];
 	
 				// No séquence actuel LANGUE
 				$numSeq1MoCle = (int)substr($numMoCle, 4, 2);

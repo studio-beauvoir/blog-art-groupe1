@@ -1,18 +1,41 @@
 <?php
 
+require_once __DIR__ . '/regex.php';
+
+function isOfType($type, $value) {
+    $types = explode('|', $type);
+    foreach($types as $t) {
+        if(gettype($value) === $type) {
+            return true;
+        }
+    }
+    return false;
+}
+
 class ValidationRule {
     public $validator;
 
     public $field;
-    public $isRequired;
+    public $isRequired = false;
+    private $shouldBePassword = false;
+    private $shouldBeEmail = false;
+    private $shouldBePseudo = false;
+    private $shouldBeOfType = false;
+    private $shouldBeEqualTo = false;
+
+    private $minLength = false;
+    private $maxLength = false;
+
+    private $errorsArray = [];
 
     function __construct($field) {
         $this->field = $field;
-        $this->isRequired = false;
 
         return $this;
     }
 
+
+    // méthodes de règle
     static public function make($field) {
         return new static($field);
     }
@@ -24,16 +47,108 @@ class ValidationRule {
     static public function optionnal($field) {
         return static::make($field)->setIsRequired(false);
     }
+
+
     
+    public function minLength($min) { 
+        $this->string();
+        $this->minLength = $min; 
+        return $this;
+    }
+    public function maxLength($max) { 
+        $this->string();
+        $this->maxLength = $max; 
+        return $this;
+    }
 
+    public function string() {
+        $this->shouldBeOfType = "string";
+        return $this;
+    }
 
+    public function pseudo() {
+        $this->shouldBePseudo = true;
+        return $this;
+    }
+
+    public function password() {
+        $this->shouldBePassword = true;
+        return $this;
+    }
+
+    public function email() {
+        $this->shouldBeEmail = true;
+        return $this;
+    }
+
+    public function equalTo($otherFieldName) {
+        $this->shouldBeEqualTo = $otherFieldName;
+        return $this;
+    }
+
+    // fin méthodes de règles
 
     public function isValid() {
         if($this->isRequired) {
             if(
-                !isset($this->validator->fieldsValues[$this->field])
+                $this->getValue() === NULL
                 OR empty($this->validator->fieldsValues[$this->field])
-            ) return false;
+            ) {
+                $this->addError(':field est requis');
+                return false;
+            }
+        }
+
+        if($this->shouldBeOfType) {
+            if(!isOfType($this->shouldBeOfType, $this->getValue())) {
+                $this->addError(':field doit être de type :shouldBeOfType');
+                return false;
+            }
+        }
+
+        if($this->shouldBePseudo) {
+            // isPseudo est une fonction utilitaire
+            if(!isPseudo($this->getValue())) {
+                $this->addError(':field doit être un pseudo');
+                return false;
+            }
+        }
+
+        if($this->shouldBePassword) {
+            // isPassword est une fonction utilitaire
+            if(!isPassWord($this->getValue())) {
+                $this->addError(':field doit être un mot de passe');
+                return false;
+            }
+        }
+
+        if($this->shouldBeEmail) {
+            // isEmail est une fonction utilitaire
+            if(!isEmail($this->getValue())) {
+                $this->addError(':field doit être un email');
+                return false;
+            }
+        }
+
+        if($this->minLength) {
+            if(strlen($this->getValue()) < $this->minLength) {
+                $this->addError(':field doit avoir une longueur d\'au moins :minLength');
+                return false;
+            }
+        }
+
+        if($this->maxLength) {
+            if(strlen($this->getValue()) > $this->maxLength) {
+                $this->addError(':field doit avoir une longueur de maximum :maxLength');
+                return false;
+            }
+        }
+
+        if($this->shouldBeEqualTo) {
+            if($this->getValue($this->shouldBeEqualTo) !== $this->getValue()) {
+                $this->addError(':field doit être égal à :shouldBeEqualTo');
+                return false;
+            }
         }
 
         return true;
@@ -54,6 +169,29 @@ class ValidationRule {
     public function isSameFieldName($ruleToCompare) {
         return $this->field === $ruleToCompare->field;
     }
+
+    public function getValue($field=false) {
+        $field = $field?$field:$this->field;
+        if(isset($this->validator->fieldsValues[$field])) return $this->validator->fieldsValues[$field];
+        return NULL;
+    }
+
+    public function addError($msg) {
+        array_push(
+            $this->errorsArray, 
+            preg_replace_callback(
+                "/:(\w+)/", 
+                function($matches) {
+                    return get_object_vars($this)[$matches[1]];
+                }, 
+                $msg
+            )
+        );
+    }
+
+    public function errors() {
+        return $this->errorsArray;
+    }
 }
 
 class Validator {
@@ -62,12 +200,13 @@ class Validator {
 
     public $tested = false;
     public $hasSucceeded = null;
+
+    public $errorsArray = [];
     
     
-    function __construct($rules) {
-        foreach($rules as $newRule) {
-            $this->addRule($newRule);
-        }
+    public function __construct($rules) {
+        $this->addRules($rules);
+        return $this;
     }
 
     /**
@@ -75,10 +214,17 @@ class Validator {
      * @param ValidatorRule $rules Les règles
      * @return Validator
      */
-    static public function make($rules) {
+    static public function make($rules=[]) {
         return new static($rules);
     }
 
+
+    public function addRules($rules) {
+        foreach($rules as $newRule) {
+            $this->addRule($newRule);
+        }
+        return $this;
+    }
     
 
 
@@ -103,7 +249,8 @@ class Validator {
         foreach($this->rules as $rule) {
             if( !$rule->isValid() ) {
                 $this->hasSucceeded = false;
-                // break;
+                $this->addErrors($rule->errors());
+                break;
             }
         }
 
@@ -125,6 +272,11 @@ class Validator {
         }
     }
 
+
+    public function oldField($fieldName) {
+        if(isset($this->fieldsValues[$fieldName])) return $this->fieldsValues[$fieldName];
+        return '';
+    }
 
     /**
      * Ajoute une règle au validator
@@ -159,5 +311,24 @@ class Validator {
         // s'il y a au moins un résultat, la règle existe
         $exists = $searchResultCount > 0;
         return $exists;
+    }
+
+    public function errors() {
+        return $this->errorsArray;
+    }
+
+    public function echoErrors() {
+        if(count($this->errorsArray)==0) return;
+        echo '<div class="errors">';
+        foreach($this->errorsArray as $error) {
+            echo '<div class="error">'.$error.'</div>';
+        }
+        echo '</div>';
+    }
+
+    private function addErrors($errors) {
+        foreach($errors as $error) {
+            array_push($this->errorsArray, $error);
+        }
     }
 } 

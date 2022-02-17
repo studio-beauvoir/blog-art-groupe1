@@ -11,6 +11,7 @@ $monMembre = new MEMBRE();
 $pageTitle = "Gestion des Membres";
 $pageNav = ['Home:/index1.php', $pageTitle];
 require_once __DIR__ . '/../../layouts/back/head.php';
+
 ?>
 	<a class="btn btn-lg" href="./createMembre.php" title="Créer un membre">Créer un membre</a>
 	<h3>Tous les membres</h3>
@@ -19,7 +20,7 @@ require_once __DIR__ . '/../../layouts/back/head.php';
         <thead>
             <tr>
                 <th>Numéro</th>
-                <th>Identité</th>
+                <th colspan="2">Identité</th>
                 <th>Pseudo</th>
                 <th>eMail</th>
                 <th>Date création</th>
@@ -32,7 +33,9 @@ require_once __DIR__ . '/../../layouts/back/head.php';
         <tbody>
             <?php
                 $all = $monMembre->get_AllMembres();
-
+                $from = 'Y-m-d H:i:s';
+                $to = 'd/m/Y H:i:s';
+                
                 foreach($all as $row) {
             ?>
             <tr>
@@ -40,9 +43,9 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <td> <?= $row['prenomMemb']; ?> </td>
                 <td> <?= $row['nomMemb']; ?> </td>
                 <td> <?= $row['pseudoMemb']; ?> </td>
-                <td> <?= $row['passMemb']; ?> </td>
                 <td> <?= $row['eMailMemb']; ?> </td>
-                <td> <?= $row['dtCreaMemb']; ?> </td>
+                <td> <?= dateChangeFormat($row['dtCreaMemb'], $from, $to); ?> </td>
+                <td> <?= $row['passMemb']; ?> </td>
                 <td> <?= $row['accordMemb']; ?> </td>
                 <td> <?= $row['idStat']; ?> </td>
                 <td>

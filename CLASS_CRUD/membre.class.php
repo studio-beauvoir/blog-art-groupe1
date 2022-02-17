@@ -8,45 +8,65 @@ class MEMBRE{
 	function get_1Membre($numMemb){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetch());
+		try {
+			$query = 'SELECT * FROM MEMBRE WHERE numMemb=?;';
+			$request = $db->prepare($query);
+			
+			$request->execute([$numMemb]);
+
+			$result = $request->fetch();
+
+			if(isset($request)) {
+				return($result);
+			} else {
+				throw new ErrorException('Member not found');
+			}
+		}
+		catch (PDOException $e) {
+			$db->rollBack();
+			$request->closeCursor();
+			die('Erreur insert MEMBRE : ' . $e->getMessage());
+		}
 	}
 
 	function get_1MembreByEmail($eMailMemb){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM THEMATIQUE WHERE eMailMemb=?;';
+		$request = $db->prepare($query);
+		$request->execute([$eMailMemb]);
+		$result = $request->fetch();
 		return($result->fetch());
 	}
 
 	function get_AllMembres(){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM MEMBRE;';
+		$request = $db->query($query);
+		$allMembres = $request->fetchAll();
 		return($allMembres);
 	}
 
+	//A VERIFIER
 	function get_ExistPseudo($pseudoMemb) {
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$db->beginTransaction();
+
+		$query = 'SELECT * FROM MEMBRE WHERE idStat=?;';
+		$request = $db->prepare($query);
+		$request->execute([$pseudoMemb]);
+		$result = $request->fetch();
 		return($result->rowCount());
 	}
 
 	function get_AllMembersByStat(){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM MEMBRE WHERE idStat=?;';
+		$result = $db->query($query);
+		$allMembersByStat = $result->fetchAll();
 		return($allMembersByStat);
 	}
 
@@ -73,11 +93,10 @@ class MEMBRE{
 
 	function get_AllMembresByEmail($eMailMemb){
 		global $db;
-
-		// select
-		// prepare
-		// execute
-		return($result->fetchAll());
+		$query = 'SELECT * FROM ANGLE WHERE eMailMemb=?;';
+		$result = $db->query($query);
+		$allMembresByEmail = $result->fetchAll();
+		return($allMembresByEmail);
 	}
 
 	// Inscription membre
@@ -87,9 +106,9 @@ class MEMBRE{
 		try {
 			$db->beginTransaction();
 
-			// insert
-			// prepare
-			// execute
+			$query = 'INSERT INTO MEMBRE (prenomMemb, nomMemb, pseudoMemb, passMemb, eMailMemb, dtCreaMemb, accordMemb, idStat) VALUES (?, ?, ?, ?, ?, ?, ?, ?);';
+			$request = $db->prepare($query);
+			$request->execute([$prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb, $idStat]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -103,21 +122,23 @@ class MEMBRE{
 	function update($numMemb, $prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat){
 		global $db;
 
+		var_dump($idStat);
+
 		try {
 			$db->beginTransaction();
 			
-			// update
-			// prepare
-			// execute
-				$db->commit();
-				$request2->closeCursor();
+			$query = 'UPDATE MEMBRE SET prenomMemb=?, nomMemb=?, passMemb=?, eMailMemb=?, idStat=? WHERE numMemb=?;';
+			$request = $db->prepare($query);
+			$request->execute([$prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat, $numMemb]);
+			$db->commit();
+			$request->closeCursor(); //request2
 		}
 		catch (PDOException $e) {
 			$db->rollBack();
 			if ($passMemb == -1) {
-				$request1->closeCursor();
+				$request->closeCursor(); //request1
 			} else {
-				$request2->closeCursor();
+				$request->closeCursor(); //request2
 			}
 			die('Erreur update MEMBRE : ' . $e->getMessage());
 		}
@@ -130,9 +151,9 @@ class MEMBRE{
 		try {
 			$db->beginTransaction();
 
-			// delete
-			// prepare
-			// execute
+			$query = 'DELETE FROM MEMBRE WHERE `numMemb` = ?;';
+			$request = $db->prepare($query);
+			$request->execute([$numMemb]);
 			$count = $request->rowCount();
 			$db->commit();
 			$request->closeCursor();

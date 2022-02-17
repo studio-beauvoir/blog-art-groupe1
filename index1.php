@@ -14,7 +14,7 @@ require_once __DIR__ . '/layouts/back/head.php';
 	<div class="list-crud">
 	<a class="btn btn-lg to-test" href="./BACK/angle/angle.php">Angle (*)</a>
 
-	<a class="btn btn-lg" href="./BACK/article/article.php">Article (*)</a>
+	<a class="btn btn-lg doing" href="./BACK/article/article.php">Article (*)</a>
 
 	<a class="btn btn-lg" href="./BACK/comment/comment.php">Commentaire (*)</a>
 
@@ -29,9 +29,9 @@ require_once __DIR__ . '/layouts/back/head.php';
 <!-- Membre (*) - reCaptcha à ajouter -->
 	<a class="btn btn-lg doing" href="./BACK/membre/membre.php">Membre (*)</a>
 
-	<a class="btn btn-lg doing" href="./BACK/motcle/motcle.php">Mot-clé (*)</a>
+	<a class="btn btn-lg to-test" href="./BACK/motcle/motcle.php">Mot-clé (*)</a>
 
-	<a class="btn btn-lg" href="#">Mot-clé Article => dans Article</a>
+	<a class="btn btn-lg " href="#">Mot-clé Article => dans Article</a>
 
 	<a class="btn btn-lg done" href="./BACK/statut/statut.php">Statut (*)</a>
 

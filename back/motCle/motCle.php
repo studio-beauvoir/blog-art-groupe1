@@ -20,7 +20,7 @@ $pageNav = ['Home:/index1.php', $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
 
-<a class="btn btn-lg" href="./createMotCle.php" title="Créer une Langue">Créer une Langue</a>
+<a class="btn btn-lg" href="./createMotCle.php" title="Créer un mot clé">Créer un mot clé</a>
 	<h3>Tous les mots clés</h3>
 
 	<table >

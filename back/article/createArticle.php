@@ -1,292 +1,183 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD ARTICLE (PDO) - Modifié : 10 Juillet 2021
-//
-//  Script  : createArticle.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
 
-// insert dans TJ motclearticle
-// upload image & insert path
-//
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
+$submitBtn = "Créer";
+$pageCrud = "article";
+$pagePrecedent = "./$pageCrud.php";
+$pageTitle = "Créer un $pageCrud";
+$pageNav = ['Home:/index1.php', 'Gestion des articles:'.$pagePrecedent, $pageTitle];
+// Insertion des fonctions utilitaires
+require_once __DIR__ . '/../../util/index.php';
 
-// Init constantes
-include __DIR__ . '/initConst.php';
-// Init variables
-include __DIR__ . '/initVar.php';
+// Insertion classe Statut
+require_once __DIR__ . '/../../CLASS_CRUD/article.class.php'; 
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php'; 
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php'; 
+require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php'; 
 
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
-
-// Insertion classe Article
-
-// Instanciation de la classe Article
-
+// Instanciation de la classe Membre
+$monArticle = new ARTICLE(); 
+$maLangue = new LANGUE();
+$monAngle = new ANGLE();
+$maThematique = new THEMATIQUE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
+$validator = Validator::make();
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    $validator->addRules([
+        ValidationRule::required('libTitrArt'),
+        ValidationRule::required('libChapoArt'),
+        ValidationRule::required('libAccrochArt'),
+        ValidationRule::required('parag1Art'),
+        ValidationRule::required('libSsTitr1Art'),
+        ValidationRule::required('parag2Art'),
+        ValidationRule::required('libSsTitr2Art'),
+        ValidationRule::required('parag3Art'),
+        ValidationRule::required('libConclArt'),
+        ValidationRule::required('urlPhotArt'),
+        ValidationRule::required('numAngl'),
+        ValidationRule::required('numThem')
+    ])->bindValues($_POST);
 
+    if($validator->success()) {
 
+        // Saisies valides
+        $erreur = false;
 
-    // controle des saisies du formulaire
+        $libTitrArt = $validator->verifiedField('libTitrArt');
+        $libChapoArt = $validator->verifiedField('libChapoArt');
+        $libAccrochArt = $validator->verifiedField('libAccrochArt');
+        $parag1Art = $validator->verifiedField('parag1Art');
+        $libSsTitr1Art = $validator->verifiedField('libSsTitr1Art');
+        $parag2Art = $validator->verifiedField('parag2Art');
+        $libSsTitr2Art = $validator->verifiedField('libSsTitr2Art');
+        $parag3Art = $validator->verifiedField('parag3Art');
+        $libConclArt = $validator->verifiedField('libConclArt');
+        // $urlPhotArt = $validator->verifiedField('urlPhotArt');
+        $numAngl = $validator->verifiedField('numAngl');
+        $numThem = $validator->verifiedField('numThem');
 
-    // création effective de l'article
+        date_default_timezone_set("Europe/Paris");
+        $dtCreArt = date("Y-m-d H:i:s"); 
+        
+        $monArticle->create($dtCreArt, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numAngl, $numThem);
 
-
-
-    // Gestion des erreurs => msg si saisies ko
-
-
-
-    // Traitnemnt : upload image => Nom image à la volée
-
+        header("Location: ./article.php");
+        die();
+    }   // Fin if ((isset($_POST['libStat'])) ...
+    else {
+        // Saisies invalides
+        $erreur = true;
+        $errSaisies =  "Erreur, la saisie est obligatoire !";
+    }   // End of else erreur saisies
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form
-include __DIR__ . '/initArticle.php';
+include __DIR__ . '/initMembre.php';
+
+include __DIR__ . '/../../layouts/back/head.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-    <meta charset="utf-8" />
-    <title>Admin - CRUD Article</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
-
-    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-</head>
-<body>
-    <h1>BLOGART22 Admin - CRUD Article</h1>
-    <h2>Ajout d'un article</h2>
-
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8" id="chgLang">
-
-      <fieldset>
-        <legend class="legend1">Formulaire Article...</legend>
-
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
-
-        <div class="control-group">
-            <label class="control-label" for="libTitrArt"><b>Titre :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <input type="text" name="libTitrArt" id="libTitrArt" size="100" maxlength="100" value="<? if(isset($_GET['id'])) echo $_POST['libTitrArt']; ?>" tabindex="10" placeholder="Sur 100 car." autofocus="autofocus" />
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="DtCreA"><b>Date de création :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="datetime-local" name="dtCreArt" id="dtCreArt" value="<? if(isset($_GET['id'])) echo $_POST['dtCreArt']; ?>" tabindex="20" placeholder="" />
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libChapoArt"><b>Chapeau :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <textarea name="libChapoArt" id="libChapoArt" rows="10" cols="100" value="<? if(isset($_GET['id'])) echo $_POST['libChapoArt']; else echo $libChapoArt; ?>" tabindex="30" placeholder="Décrivez le chapeau. Sur 500 car." ></textarea>
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libAccrochArt"><b>Accroche paragraphe 1 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <input type="text" name="libAccrochArt" id="libAccrochArt" size="100" maxlength="100" value="<? if(isset($_GET['id'])) echo $_POST['libAccrochArt']; else echo $libAccrochArt; ?>" tabindex="40" placeholder="Sur 100 car." />
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="parag1Art"><b>Paragraphe 1 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <textarea name="parag1Art" id="parag1Art" rows="10" cols="100" value="<? if(isset($_GET['id'])) echo $_POST['parag1Art']; else echo $parag1Art; ?>" tabindex="50" placeholder="Décrivez le premier paragraphe. Sur 1200 car." ></textarea>
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libSsTitr1Art"><b>Sous-titre 1 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>b></label>
-            <div class="controls">
-                <input type="text" name="libSsTitr1Art" id="libSsTitr1Art" size="100" maxlength="100" value="<? if(isset($_GET['id'])) echo $_POST['libSsTitr1Art']; else echo $libSsTitr1Art; ?>" tabindex="60" placeholder="Sur 100 car." />
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="parag2Art"><b>Paragraphe 2 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <textarea name="parag2Art" id="parag2Art" rows="10" cols="100" value="<? if(isset($_GET['id'])) echo $_POST['parag2Art']; else echo $parag2Art; ?>" tabindex="70" placeholder="Décrivez le deuxième paragraphe. Sur 1200 car." ></textarea>
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libSsTitr2Art"><b>Sous-titre 2 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>b></label>
-            <div class="controls">
-                <input type="text" name="libSsTitr2Art" id="libSsTitr2Art" size="100" maxlength="100" value="<? if(isset($_GET['id'])) echo $_POST['libSsTitr2Art']; else echo $libSsTitr2Art; ?>" tabindex="80" placeholder="Sur 100 car." />
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="parag3Art"><b>Paragraphe 3 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <textarea name="parag3Art" id="parag3Art" rows="10" cols="100" value="<? if(isset($_GET['id'])) echo $_POST['parag3Art']; else echo $parag3Art; ?>" tabindex="90" placeholder="Décrivez le troisième paragraphe. Sur 1200 car." ></textarea>
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libConclArt"><b>Conclusion :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <textarea name="libConclArt" id="libConclArt" rows="10" cols="100" value="<? if(isset($_GET['id'])) echo $_POST['libConclArt']; else echo $libConclArt; ?>" tabindex="100" placeholder="Décrivez la conclusion. Sur 800 car." ></textarea>
-            </div>
-        </div>
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="urlPhotArt"><b>Importez l'illustration :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <input type="hidden" name="MAX_FILE_SIZE" value="<?= MAX_SIZE; ?>" />
-                <input type="file" name="monfichier" id="monfichier" required="required" accept=".jpg,.gif,.png,.jpeg" size="70" maxlength="70" value="<? if(isset($_GET['id'])) echo $_POST['urlPhotArt']; else echo $urlPhotArt; ?>" tabindex="110" placeholder="Sur 70 car." title="Recherchez l'image à uploader !" />
-                <p>
-<?php              // Gestion extension images acceptées
-                  $msgImagesOK = "&nbsp;&nbsp;>> Extension des images acceptées : .jpg, .gif, .png, .jpeg" . "<br>" .
-                    "(lageur, hauteur, taille max : 80000px, 80000px, 200 000 Go)";
-                  echo "<i>" . $msgImagesOK . "</i>";
-?>
-                </p>
-            </div>
-        </div>
-
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Listbox Langue -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-                <label class="control-label" for="LibTypLang">
-                    <b>Quelle langue :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-                </label>
-
-
-
-                <input type="text" name="idLang" id="idLang" size="5" maxlength="5" value="<?= $numAngl; ?>" autocomplete="on" />
-
-                <!-- Listbox langue => 2ème temps -->
-
-            </div>
-        </div>
-    <!-- FIN Listbox Langue -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-
-<!-- --------------------------------------------------------------- -->
-    <!-- FK : Angle, Thématique + TJ Mots Clés -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Listbox Angle live share -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-                <label class="control-label" for="LibTypAngl">
-                    <b>Quel angle :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-                </label>
-
-
-                <input type="text" name="idAngl" id="idAngl" size="5" maxlength="5" value="<?= $numAngl; ?>" autocomplete="on" />
-
-                <!-- Listbox angle => 2ème temps -->
-
-            </div>
-        </div>
-    <!-- FIN Listbox Angle -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Listbox Thématique -->
-    <!-- Grp 7 -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-                <label class="control-label" for="LibTypThem">
-                    <b>Quelle thématique :&nbsp;&nbsp;&nbsp;</b>
-                </label>
-
-
-                <input type="text" name="idThem" id="idThem" size="5" maxlength="5" value="<?= $numThem; ?>" autocomplete="on" />
-
-                <!-- Listbox thematique => 2ème temps -->
-
-            </div>
-        </div>
-    <!-- FIN Listbox Thématique -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-
-<!-- --------------------------------------------------------------- -->
-<!-- Drag and drop sur Mots clés -->
-<!-- --------------------------------------------------------------- -->
-    <br><br>
-    <div class="controls">
-        <label class="control-label" for="LibTypMotsCles1">
-            <b>Choisissez les mots clés liés à l'article :&nbsp;&nbsp;&nbsp;</b>
-        </label>
-    </div>
-    <!-- A faire dans un 2/3ème temps  -->
-
-<!-- --------------------------------------------------------------- -->
-<!-- End of Drag and drop sur Mots clés -->
-<!-- --------------------------------------------------------------- -->
-
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Fin FK : Angle, Thématique + TJ Mots Clés -->
-<!-- --------------------------------------------------------------- -->
-
-        <div class="control-group">
-            <div class="error">
-<?php
-            if ($erreur) {
-                echo ($errSaisies);
+<script>
+        // Affichage pass
+        function myFunction(myInputPass) {
+            var x = document.getElementById(myInputPass);
+            if (x.type === "password") {
+              x.type = "text";
             } else {
-                $errSaisies = "";
-                echo ($errSaisies);
+              x.type = "password";
             }
-?>
-            </div>
+        }
+</script>
+
+<?=$validator->echoErrors()?>
+    <form
+        class="admin-form"
+        method="POST" 
+        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" 
+        enctype="multipart/form-data" 
+        accept-charset="UTF-8"
+    >
+
+        <div class="field">
+            <label for="prenomMemb">Prénom<span class="error">(*)</span> :</label>
+            <input name="prenomMemb" id="prenomMemb" size="80" maxlength="80" value="<?= $prenomMemb;?>" />
         </div>
 
-        <div class="control-group">
+        <div class="field">
+            <label for="nomMemb">Nom<span class="error">(*)</span> :</label>
+            <input name="nomMemb" id="nomMemb" size="80" maxlength="80" value="<?= $nomMemb?>" />
+        </div>
+
+        <div class="field">
+            <label for="pseudoMemb">Pseudonyme<span class="error">(*)</span> :</label>
+            <input name="pseudoMemb" id="pseudoMemb" size="80" maxlength="70" value="<?= $pseudoMemb; ?>" />
+        </div>
+
+        <div class="field">
+            <label for="passMemb">Mot passe<span class="error">(*)</span></label>
+            <input type="password" name="passMemb" id="passMemb" size="80" maxlength="80" />
+            <br>
+            <input type="checkbox" onclick="myFunction('passMemb')">
+            &nbsp;&nbsp;
+            <label><i>Afficher Mot de passe</i></label>
+        </div>
+
+        <br>
+        <div class="field">
+            <label for="pass2Memb">Confirmez le mot de passe<span class="error">(*)</span></label>
+            <input type="password" name="pass2Memb" id="pass2Memb" size="80" maxlength="80"/>
+            <br>
+            <input type="checkbox" onclick="myFunction('pass2Memb')">
+            &nbsp;&nbsp;
+            <label><i>Afficher Mot de passe</i></label>
+        </div>
+
+        </div><div class="field">
+            <label for="eMailMemb">eMail<span class="error">(*)</span></label>
+            <input name="eMailMemb" id="eMailMemb" size="80" maxlength="80"/>
+        </div>
+
+        <div class="field">
+            <label for="eMail1Memb">Confirmez l'eMail<span class="error">(*)</span></label>
+            <input name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" />
+        </div>
+
+        <div class="field">
+            <label for="accordMemb"><b>J'accepte que mes données soient conservées :</b></label>
             <div class="controls">
-                <br><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                <br>
+               <fieldset>
+                  <input type="radio" name="accordMemb"
+                  <?= ($accordMemb == "on") ? 'checked="checked"' : ''
+                  ?> value="on" />&nbsp;&nbsp;Oui&nbsp;&nbsp;&nbsp;&nbsp;
+                  <input type="radio" name="accordMemb"
+                  <?= ($accordMemb == "off") ? 'checked="checked"' : ''
+                  ?> value="off" checked="checked" />&nbsp;&nbsp;Non
+               </fieldset>
             </div>
         </div>
-      </fieldset>
+
+        <i><div class="error"><br>*&nbsp;Champs obligatoires</div></i>
+
+        <div class="field">
+            <label for="idStat">Statut :</label>
+            <select name="idStat" id="idStat">
+            <?php 
+                $allStatuts = $monStatut->get_AllStatuts();                    
+                foreach($allStatuts as $statut) { 
+            ?>
+                <option <?=$statut['idStat']==$idStat?'selected':'' ?> value="<?= $statut['idStat'] ?>" ><?=$statut['libStat'] ?></option>
+            <?php } ?>
+            </select>
+        </div>
+
+        <div class="controls">
+            <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
+            <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
+        </div>
     </form>
-
-<!-- --------------------------------------------------------------- -->
-    <!-- Début Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
-<!-- --------------------------------------------------------------- -->
-
-    <!-- A faire dans un 3ème temps  -->
-
-<!-- --------------------------------------------------------------- -->
-    <!-- Fin Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
-<!-- --------------------------------------------------------------- -->
-
-<?php
-require_once __DIR__ . '/footerArticle.php';
-
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

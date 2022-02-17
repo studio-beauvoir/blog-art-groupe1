@@ -1,4 +1,10 @@
 <?php
+
+$submitBtn = "Créer";
+$pageCrud = "angle";
+$pagePrecedent = "./$pageCrud.php";
+$pageTitle = "Créer un $pageCrud";
+$pageNav = ['Home:/index1.php', 'Gestion des angles:'.$pagePrecedent, $pageTitle];
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
@@ -9,15 +15,18 @@ require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 // Instanciation de la classe Statut
 $monAngle = new ANGLE(); 
 
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+$maLangue = new LANGUE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
 
+$validator = Validator::make();
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $validator = Validator::make([
-        ValidationRule::required('libAngl'),
+    $validator->addRules([
+        ValidationRule::required('libAngl')->maxLength(2),
         ValidationRule::required('numLang'),
     ])->bindValues($_POST);
 
@@ -45,14 +54,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // Init variables form
 include __DIR__ . '/initAngle.php';
 
-$submitBtn = "Créer";
-$pagePrecedent = "./angle.php";
-$pageTitle = "Créer un angle";
-$pageNav = ['Home:/index1.php', 'Gestion des thématiques:'.$pagePrecedent, $pageTitle];
-$pageTitle = "Créer un Angle";
-$pageNav = ['Home:/index1.php', 'Gestion du Angle:./angle.php', $pageTitle];
+
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
+    <?=$validator->echoErrors() ?>
     <form 
         class="admin-form"
         method="POST" 
@@ -63,18 +68,25 @@ include __DIR__ . '/../../layouts/back/head.php';
 
         <div class="field">
             <label for="libAngl">Libellé</label>
-            <input name="libAngl" id="libAngl" size="80" maxlength="80" value="<?= $libAngl; ?>" />
+            <input name="libAngl" id="libAngl" size="80" maxlength="80" value="<?= $validator->oldField('libAngl') ?>" />
         </div>
 
         <div class="field">
             <label for="numLang">Quelle langue :</label>
-            <input name="numLang" id="numLang" size="6" maxlength="6" value="<?= $numLang; ?>" />
+            <select name="numLang" id="numLang">
+            <?php 
+                $allLangues = $maLangue->get_AllLangues();                    
+                foreach($allLangues as $langue) { 
+            ?>
+                <option <?=$langue['numLang']==$validator->oldField('numLang')?'selected':'' ?> value="<?= $langue['numLang'] ?>" ><?=$langue['lib1Lang'] ?></option>
+            <?php } ?>
+            </select>
         </div>
 
         <div class="controls">
-            <a class="btn btn-lg btn-text" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
-            <a class="btn btn-lg btn-secondary" href="./statut.php">Annuler</a>
-            <input class="btn btn-lg" type="submit" value="Valider" />
+            <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
+            <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
         </div>
     </form>
 <?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

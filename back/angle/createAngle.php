@@ -9,6 +9,8 @@ require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 // Instanciation de la classe Statut
 $monAngle = new ANGLE(); 
 
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+$maLangue = new LANGUE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -68,7 +70,14 @@ include __DIR__ . '/../../layouts/back/head.php';
 
         <div class="field">
             <label for="numLang">Quelle langue :</label>
-            <input name="numLang" id="numLang" size="6" maxlength="6" value="<?= $numLang; ?>" />
+            <select name="numLang" id="numLang">
+            <?php 
+                $allLangues = $maLangue->get_AllLangues();                    
+                foreach($allLangues as $langue) { 
+            ?>
+                <option value="<?= $langue['numLang'] ?>" ><?=$langue['lib1Lang'] ?></option>
+            <?php } ?>
+            </select>
         </div>
 
         <div class="controls">

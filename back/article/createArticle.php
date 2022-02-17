@@ -29,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $validator->addRules([
         ValidationRule::required('libTitrArt'),
+        ValidationRule::required('dtCreArt'),
         ValidationRule::required('libChapoArt'),
         ValidationRule::required('libAccrochArt'),
         ValidationRule::required('parag1Art'),
@@ -59,9 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // $urlPhotArt = $validator->verifiedField('urlPhotArt');
         $numAngl = $validator->verifiedField('numAngl');
         $numThem = $validator->verifiedField('numThem');
-
-        date_default_timezone_set("Europe/Paris");
-        $dtCreArt = date("Y-m-d H:i:s"); 
+        $dtCreArt = $validator->verifiedField('dtCreArt'); 
         
         $monArticle->create($dtCreArt, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numAngl, $numThem);
 
@@ -164,7 +163,7 @@ include __DIR__ . '/../../layouts/back/head.php';
     </div>
 
     <div class="field">
-        <label for="idAngl">Quelle angle</label>
+        <label for="idAngl">Quel angle</label>
         <select name="idAngl" id="idAngl">
             <?php 
                 $allAngles = $monAngle->get_AllAngles();                    

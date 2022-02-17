@@ -36,7 +36,7 @@ include __DIR__ . '/../../layouts/back/head.php';
             <tr>
                 <td><h4> <?= $row['numAngl']; ?> </h4></td>
                 <td><?= $row['libAngl']; ?></td>
-                <td><?= $row['numLang']; ?></td>
+                <td><a href="<?=crudPath('langue/updateLangue.php?id='.$row['numLang'])?>"><?= $row['lib1Lang']; ?></a></td>
 
                 <!-- actions -->
                 <td>

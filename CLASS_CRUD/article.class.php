@@ -41,7 +41,7 @@ class ARTICLE{
 	function get_AllArticles(){
 		global $db;
 		
-		$query = 'SELECT * FROM ARTICLE;';
+		$query = 'SELECT * FROM ARTICLE INNER JOIN THEMATIQUE ON ARTICLE.numThem = THEMATIQUE.numThem INNER JOIN ANGLE ON ARTICLE.numAngl=ANGLE.numAngl;';
 		$request = $db->query($query);
 		$allArticles = $request->fetchAll();
 		return($allArticles);

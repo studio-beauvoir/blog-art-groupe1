@@ -187,13 +187,12 @@ class Validator {
     public $tested = false;
     public $hasSucceeded = null;
 
-    private $errorsArray = [];
+    public $errorsArray = [];
     
     
-    function __construct($rules) {
-        foreach($rules as $newRule) {
-            $this->addRule($newRule);
-        }
+    public function __construct($rules) {
+        $this->addRules($rules);
+        return $this;
     }
 
     /**
@@ -201,10 +200,17 @@ class Validator {
      * @param ValidatorRule $rules Les règles
      * @return Validator
      */
-    static public function make($rules) {
+    static public function make($rules=[]) {
         return new static($rules);
     }
 
+
+    public function addRules($rules) {
+        foreach($rules as $newRule) {
+            $this->addRule($newRule);
+        }
+        return $this;
+    }
     
 
 
@@ -253,6 +259,11 @@ class Validator {
     }
 
 
+    public function oldField($fieldName) {
+        if(isset($this->fieldsValues[$fieldName])) return $this->fieldsValues[$fieldName];
+        return '';
+    }
+
     /**
      * Ajoute une règle au validator
      * @param ValidatorRule $potentialRule
@@ -290,6 +301,15 @@ class Validator {
 
     public function errors() {
         return $this->errorsArray;
+    }
+
+    public function echoErrors() {
+        if(count($this->errorsArray)==0) return;
+        echo '<div class="errors">';
+        foreach($this->errorsArray as $error) {
+            echo '<div class="error">'.$error.'</div>';
+        }
+        echo '</div>';
     }
 
     private function addErrors($errors) {

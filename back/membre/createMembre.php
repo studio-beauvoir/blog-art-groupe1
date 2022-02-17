@@ -10,9 +10,11 @@ require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Statut
 require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php'; 
+require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php'; 
 
 // Instanciation de la classe Membre
 $monMembre = new MEMBRE(); 
+$monStatut = new STATUT();
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -30,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ValidationRule::required('eMailMemb')->email(),
         // ValidationRule::required('dtCreaMemb'),
         ValidationRule::required('accordMemb'),
-        // ValidationRule::required('idStat')
+        ValidationRule::required('idStat')
     ])->bindValues($_POST);
 
     if($validator->success()) {
@@ -43,10 +45,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $pseudoMemb = $validator->verifiedField('pseudoMemb');
         $passMemb = $validator->verifiedField('passMemb');
         $eMailMemb = $validator->verifiedField('eMailMemb');
-        $dtCreaMemb = 'SELECT CURRENT_TIMESTAMP';
-        $accordMemb = $validator->verifiedField('accordMemb');
+
+        date_default_timezone_set("Europe/Paris");
+        $dtCreaMemb = date("Y-m-d H:i:s"); 
+
+        $accordMemb = $validator->verifiedField('accordMemb')=="on";
         $idStat = $validator->verifiedField('idStat');
         
+        var_dump($dtCreaMemb);
         $monMembre->create($prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb, $idStat);
 
         header("Location: ./membre.php");
@@ -145,6 +151,18 @@ include __DIR__ . '/../../layouts/back/head.php';
         </div>
 
         <i><div class="error"><br>*&nbsp;Champs obligatoires</div></i>
+
+        <div class="field">
+            <label for="idStat">Statut :</label>
+            <select name="idStat" id="idStat">
+            <?php 
+                $allStatuts = $monStatut->get_AllStatuts();                    
+                foreach($allStatuts as $statut) { 
+            ?>
+                <option <?=$statut['idStat']==$idStat?'selected':'' ?> value="<?= $statut['idStat'] ?>" ><?=$statut['libStat'] ?></option>
+            <?php } ?>
+            </select>
+        </div>
 
         <div class="controls">
             <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>

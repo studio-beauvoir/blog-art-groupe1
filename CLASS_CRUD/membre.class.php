@@ -151,7 +151,7 @@ class MEMBRE{
 		try {
 			$db->beginTransaction();
 
-			$query = 'DELETE FROM ANGLE WHERE `numMemb` = ?;';
+			$query = 'DELETE FROM MEMBRE WHERE `numMemb` = ?;';
 			$request = $db->prepare($query);
 			$request->execute([$numMemb]);
 			$count = $request->rowCount();

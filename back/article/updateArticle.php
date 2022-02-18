@@ -1,18 +1,22 @@
 <?php
 
 $submitBtn = "Éditer";
-$pageCrud = "membre";
+$pageCrud = "article";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "$submitBtn un $pageCrud";
 $pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.':'.$pagePrecedent, $pageTitle];
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
-// Insertion classe Membre
-require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php'; 
+require_once __DIR__ . '/../../CLASS_CRUD/article.class.php'; 
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php'; 
+require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php'; 
+require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php'; 
 
-// Instanciation de la classe Membre
-$monMembre = new MEMBRE(); 
+$monArticle = new ARTICLE(); 
+$maLangue = new LANGUE();
+$monAngle = new ANGLE();
+$maThematique = new THEMATIQUE();
 
 //Insertion de la classe Statut
 require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';

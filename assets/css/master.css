@@ -15,10 +15,11 @@ main {
 
 /* ---- Header----*/
 
-.interactive{
-    color: var(--p2);
+.interactive-lien-text{
+    color: var(--i);
     text-decoration: none;
     list-style: none;
+    font: var(--p);
 }
 
 .logo {
@@ -148,6 +149,7 @@ h4, .font-h4 {
 p, .font-p {
     font: var(--p);
 }
+
 label, .font-label {
     font: var(--label);
 }
@@ -160,18 +162,22 @@ label {
 /* -----------------------------------HEADER-----------------------------------*/
 header{
     display: flex;
-    flex-direction: row;
     background-color: var(--bg2);
+    padding: 25px;
 }
 
-/* 
-AJOUT DU CONTENU POUR LE HEADER
-AJOUT DU CONTENU POUR LE HEADER
-AJOUT DU CONTENU POUR LE HEADER
-AJOUT DU CONTENU POUR LE HEADER
-AJOUT DU CONTENU POUR LE HEADER
-AJOUT DU CONTENU POUR LE HEADER
-*/
+.header-box{
+    display: flex;
+    justify-content:space-between;
+    width: 100%;
+}
+
+.header-box-liste
+, .header-box-liste ul{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 
 /* ----------------------------------- FIN HEADER-----------------------------------*/
 

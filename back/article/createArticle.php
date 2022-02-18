@@ -3,12 +3,11 @@
 $submitBtn = "Créer";
 $pageCrud = "article";
 $pagePrecedent = "./$pageCrud.php";
-$pageTitle = "Créer un $pageCrud";
-$pageNav = ['Home:/index1.php', 'Gestion des articles:'.$pagePrecedent, $pageTitle];
+$pageTitle = "$submitBtn un $pageCrud";
+$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.':'.$pagePrecedent, $pageTitle];
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
-// Insertion classe Statut
 require_once __DIR__ . '/../../CLASS_CRUD/article.class.php'; 
 require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php'; 
 require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php'; 

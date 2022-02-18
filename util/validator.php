@@ -1,6 +1,10 @@
 <?php
 
+// en v 2 v c'est un peu inutile de les ré inclure vu 
+// qu'on se sert des utils via /util/index.php, qui inclut tout à la suite
+// mais on fait ça dans le cas où on incluerait seulement le validator.php
 require_once __DIR__ . '/regex.php';
+require_once __DIR__ . '/ctrlUploadImage.php';
 
 function isOfType($type, $value) {
     $types = explode('|', $type);

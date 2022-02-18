@@ -43,6 +43,12 @@ function uploadImage($file, $filename=false) {
     if(!$filename) $filename = $file['name'];
     $nomImage = $filename . '.' . $extension;
 
+    if (!is_dir(uploadPath())) {
+        if (!mkdir(uploadPath(), 0755)) {
+            exit("<p>Erreur : création du dossier 'uploads' impossible ! <br>Vérifiez les droits en création ou créer le dossier en amont !");
+        } // End of if (!mkdir(TARGET, 0755))
+    }
+
     // enregistre le fichier
     $isUploaded = move_uploaded_file($file['tmp_name'], uploadPath($nomImage));
     // retourne le résultat (bool)

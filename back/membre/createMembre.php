@@ -51,7 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $accordMemb = $validator->verifiedField('accordMemb')=="on";
         $idStat = $validator->verifiedField('idStat');
         
-        var_dump($dtCreaMemb);
         $monMembre->create($prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb, $idStat);
 
         header("Location: ./membre.php");

@@ -276,6 +276,9 @@ span.green {
 span.bleu {
     color: var(--g2)
 }
+.p3 {
+    color: var(--p3)
+}
 
 .artist-box {
     width: 100%;

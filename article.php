@@ -20,7 +20,7 @@ require_once __DIR__ . '/layouts/front/head.php';
     </div>
     <div class="discover">
         <div class="discover-title">
-            <h2>Decouvrez-en plus sur ce personnage que vous ne connaissez que tres peu… <span class="orange">Pour l’instant</span> !</h2>
+            <h2>Découvrez-en plus sur ce personnage que vous ne connaissez que très peu… <span class="orange">Pour l’instant</span> !</h2>
         </div>
     </div>
     <div class="container articles">

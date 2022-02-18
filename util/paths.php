@@ -35,6 +35,13 @@ function crudPath($crud="") {
 /**
  * Retourne le lien vers un crud dans le navigateur
  */
+function webAssetPath($morePath="") {
+    return webSitePath('/assets/'.$morePath);
+}
+
+/**
+ * Retourne le lien vers un crud dans le navigateur
+ */
 function webUploadPath($morePath="") {
     return webSitePath('/assets/uploads/'.$morePath);
 }

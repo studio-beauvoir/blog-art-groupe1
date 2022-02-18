@@ -168,6 +168,8 @@ class MEMBRE{
 
 
 	function register($prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb){
-		$idStat = 1;
+		die('pas encore fait');
+		$idStat = 3; // Membre niveau 1
+		$this->create();
 	}
 }	// End of class

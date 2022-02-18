@@ -1,138 +1,63 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD COMMENT (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : comment.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
+$submitBtn = "CRUD";
+$pageCrud = "commentaire";
+$pagePrecedent = "./$pageCrud.php";
+$pageTitle = "$submitBtn - $pageCrud";
+$pageNav = ['Home:/index1.php', $pageTitle];
 
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
+require_once __DIR__ . '/../../util/index.php';
+require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php'; 
 
-// Mise en forme date
-require_once __DIR__ . '/../../util/dateChangeFormat.php';
+$monComment = new COMMENT(); 
 
-// Insertion classe Comment
-
-// Instanciation de la classe Comment
-
-
+require_once __DIR__ . '/../../layouts/back/head.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-    <title>Admin - CRUD Commentaire</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <style type="text/css">
-        .error {
-            padding: 2px;
-            border: solid 0px black;
-            color: red;
-            font-style: italic;
-            border-radius: 5px;
-        }
-        .OK {
-            padding: 2px;
-            border: solid 0px black;
-            color: deeppink;
-            font-style: italic;
-            border-radius: 5px;
-        }
-        .KO {
-            padding: 2px;
-            border: solid 0px black;
-            color: darkgoldenrod;
-            font-style: italic;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
-  <h1>BLOGART22 Admin - CRUD Commentaire</h1>
+	<a class="btn btn-lg" href="./createComment.php" title="Créer un commentaire">Créer un commentaire</a>
+	<h3>Tous les commentaires</h3>
 
-  <hr />
-  <h2>Nouveau commentaire :&nbsp;<a href="./createComment.php"><i>Créer un commentaire</i></a></h2>
-  <hr />
-  <h2>Tous les commentaires</h2>
+	<table>
+        <thead>
+            <tr>
+                <th>Numéro<br>Article</th>
+                <th>Numéro<br>Comment</th>
+                <th>Pseudo</th>
+                <th>Date création<br>Commentaire</th>
+                <th>Commentaire</th>
+                <th>Date modération</th>
+                <th>Commentaire<br>visible</th>
+                <th>Justification modération<br>si non visible</th>
+                <th>Delete<br>logique</th>
+                <th colspan="2">Action</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <?php
+                $from = 'Y-m-d H:i:s';
+                $to = 'd/m/Y H:i:s';
 
-  <table border="3" bgcolor="aliceblue">
-    <thead>
-        <tr>
-            <th>&nbsp;Numéro&nbsp;<br>&nbsp;Article&nbsp;</th>
-            <th>&nbsp;Numéro&nbsp;<br>&nbsp;Comment.&nbsp;</th>
-            <th>&nbsp;Pseudo&nbsp;</th>
-            <th>&nbsp;Date création&nbsp;<br>&nbsp;Commentaire&nbsp;</th>
-            <th>&nbsp;Commentaire&nbsp;</th>
-            <th>&nbsp;Date modération&nbsp;</th>
-            <th>&nbsp;Commentaire&nbsp;<br>&nbsp;visible&nbsp;</th>
-            <th>&nbsp;Justification&nbsp;modération&nbsp;<br>&nbsp;si non visible&nbsp;</th>
-            <th>&nbsp;Delete&nbsp;<br>&nbsp;logique&nbsp;</th>
-            <th colspan="2">&nbsp;Action&nbsp;</th>
-        </tr>
-    </thead>
-    <tbody>
-<?php
-    // Format date en FR
-    $from = 'Y-m-d H:i:s';
-    $to = 'd/m/Y H:i:s';
-
-    // Appel méthode : Get tous les comments en BDD
-
-    // Boucle pour afficher
-    //foreach($all as $row) {
-
-        // date dtCreCom => FR
-        // $dtCreCom = dateChangeFormat($dtCreCom, $from, $to);
-
-        // date dtModCom => FR
-        // $dtModCom = dateChangeFormat($dtModCom, $from, $to);
-?>
-        <tr>
-        <td><h4>&nbsp; <?= "ici numArt"; ?> &nbsp;</h4></td>
-
-        <td><h4>&nbsp; <?= "ici numSeqCom"; ?> &nbsp;</h4></td>
-
-        <td>&nbsp; <?= "ici pseudoMemb"; ?> &nbsp;</td>
-
-        <td>&nbsp; <?= "ici dtCreCom"; ?> &nbsp;</td>
-
-        <td>&nbsp; <?= "ici libCom"; ?> &nbsp;</td>
-
-        <td>&nbsp; <?= "ici dtModCom"; ?> &nbsp;</td>
-
-
-        <td>&nbsp;<span class="OK">&nbsp; <?= "ici attModOK"; ?> &nbsp;</span></td>
-
-
-        <td>&nbsp; <?= "ici notifComKOAff"; ?> &nbsp;</td>
-
-
-        <td>&nbsp;<span class="OK">&nbsp; <?= "ici delLogiq"; ?> &nbsp;</span></td>
-
-
-<!-- F1 aff Comments (Modérateur / Admin / Super-admin) -->
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="./updateComment.php?id1=<?=1; ?>"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier commentaire" title="Modifier commentaire" /></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <br /></td>
-
-<!-- Del logique (Modérateur / Admin / Super-admin) -->
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" title="Suppression logique..."><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer commentaire" title="Supprimer/rétablir commentaire" /></i></a><br>&nbsp;&nbsp;<span class="error">(Logique)</span>&nbsp;&nbsp;
-        <br /></td>
-        </tr>
-<?php
-    // } // End of foreach
-?>
-    </tbody>
+                $all = $monComment->get_AllComments();
+                foreach($all as $row) {
+            ?>
+            <tr>
+                <td><h4> <?= $row['numArt']; ?> </h4></td>
+                <td> <?= $row['numSeqCom']; ?> </td>
+                <td> <?= $row['pseudoMemb']; ?> </td>
+                <td> <?= dateChangeFormat($row['dtCreCom'],$from,$to); ?> </td>
+                <td> <?= $row['libCom']; ?> </td>
+                <td> <?= dateChangeFormat($row['dtModCom'],$from,$to); ?> </td> 
+                <td> <?= $row['attModOK']; ?> </td> 
+                <td> <?= $row['notifComKOAff']; ?> </td> 
+                <td> <?= $row['delLogiq']; ?> </td> 
+                <td>
+                    <a class="btn btn-md" href="./updateComment.php?idCom=<?=$row['numArt'];?>&idArt=<?=$row['numSeqCom']?>" title="Modifier l'article">Modifier</a>
+                </td>
+                <td>
+                    <a class="btn btn-md btn-danger" href="./deleteComment.php?idCom=<?=$row['numArt'];?>&idArt=<?=$row['numSeqCom']?>" title="Supprimer l'article">Supprimer</a>
+                </td>
+            </tr>
+            <?php }	?>
+        </tbody>
     </table>
-    <p>&nbsp;</p>
-<?php
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

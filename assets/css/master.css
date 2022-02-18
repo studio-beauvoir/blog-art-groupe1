@@ -392,6 +392,7 @@ span.green {
 
 .text-comments {
     margin-left: 8.3%;
+    margin-top: 80px;
     color: var(--p1)
 }
 
@@ -403,6 +404,7 @@ span.green {
     background-color: white;
     border-radius: 15px;
     margin-left: 8.3%;
+    color: black;
 }
 
 .box-btn {

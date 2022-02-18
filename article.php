@@ -7,17 +7,7 @@ $pageTitle = "Panel admin";
 $pageNav = ['Home'];
 require_once __DIR__ . '/layouts/front/head.php';
 ?>
-    <div class="head-bg"> <!-- <img src="" alt="Oeuvre de David Selor de son personnage Mimil, servant d'arrière plan"> -->
-        <div class="head-title-h1">
-
-        </div>
-        <div class="head-title-h2">
-
-        </div>
-        <div class="head-text">
-
-        </div>
-    </div>
+    <div class="head-bg"> <!-- <img src="" alt="Oeuvre de David Selor de son personnage Mimil, servant d'arrière plan"> --></div>
     <div class="discover">
         <div class="discover-title">
             <h2>Découvrez-en plus sur ce personnage que vous ne connaissez que très peu… <span class="orange">Pour l’instant</span> !</h2>
@@ -224,9 +214,9 @@ require_once __DIR__ . '/layouts/front/head.php';
             <div class="text-comments">
                 <h4>Ajouter un commentaire</h4>
             </div>
-            <div class="add-bloc-comments">
+            <textarea id="comments" name="comments" rows="3" class="add-bloc-comments">
 
-            </div>
+            </textarea>
             <div class="box-btn">
                 <div class="btn-comments">
                     <h3>Commenter</h3>

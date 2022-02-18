@@ -19,8 +19,6 @@ $maLangue = new LANGUE();
 $monAngle = new ANGLE();
 $maThematique = new THEMATIQUE();
 
-// Gestion des erreurs de saisie
-$erreur = false;
 $validator = Validator::make();
 $fileValidator = Validator::make();
 
@@ -57,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $urlPhotArt = $img['filename'];
 
         $libTitrArt = $validator->verifiedField('libTitrArt');
+        $dtCreArt = $validator->verifiedField('dtCreArt'); 
         $libChapoArt = $validator->verifiedField('libChapoArt');
         $libAccrochArt = $validator->verifiedField('libAccrochArt');
         $parag1Art = $validator->verifiedField('parag1Art');
@@ -68,7 +67,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numLang = $validator->verifiedField('numLang');
         $numAngl = $validator->verifiedField('numAngl');
         $numThem = $validator->verifiedField('numThem');
-        $dtCreArt = $validator->verifiedField('dtCreArt'); 
         
         $monArticle->create($dtCreArt, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numAngl, $numThem);
 

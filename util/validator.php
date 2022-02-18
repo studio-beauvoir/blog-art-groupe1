@@ -37,7 +37,7 @@ class ValidationRule {
 
     private $errorMessage = [
         'isRequired' => ":field est requis",
-        'shouldBePassword' => ":field ne correspond pas aux attentes d'un mot de passe",
+        'shouldBePassword' => "Le mot de passe doit comporter entre 6 et 15 caractères, et au moins une lettre, un chiffre et un caractère spécial",
         'shouldBeEmail' =>":field doit être un email",
         'shouldBePseudo' =>":field doit comporter entre 6 et 70 caractères",
         'shouldBeImage' =>":field doit être une image",

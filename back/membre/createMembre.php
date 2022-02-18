@@ -100,7 +100,7 @@ include __DIR__ . '/../../layouts/back/head.php';
             <input type="password" name="passMemb" id="passMemb" size="80" maxlength="80" />
             <label><input type="checkbox" onclick="myFunction('passMemb')"><i>Afficher Mot de passe</i></label>
             <p>
-                Le mot de passe doit comporter entre 6 et 15 caractères, et au moins une lettre, un chiffre et un caractère spécial
+                Le mot de passe doit comporter entre 6 et 15 caractères, et au moins une lettre, un chiffre et un caractère spécial parmi !@#$%_-\.\?
             </p>
         </div>
 

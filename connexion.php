@@ -23,6 +23,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 require_once __DIR__ . '/layouts/front/head.php';
 ?>
+
+<script>
+        // Affichage pass
+        function myFunction(myInputPass) {
+            var x = document.getElementById(myInputPass);
+            if (x.type === "password") {
+              x.type = "text";
+            } else {
+              x.type = "password";
+            }
+        }
+</script>
 <div class="container">
     <h1>Se connecter</h1>
 
@@ -41,7 +53,12 @@ require_once __DIR__ . '/layouts/front/head.php';
         
         <div class="field">
             <label> Mot de passe </label>
-            <input type="passMemb" name="passMemb">
+            <input type="password" name="passMemb" id="passMemb">
+            <label><input type="checkbox" onclick="myFunction('passMemb')"><i>Afficher Mot de passe</i></label>
+            <p>
+                Le mot de passe doit comporter entre 6 et 15 caractères, 
+                <br/>et au moins une lettre, un chiffre et un caractère spécial parmi !@#$%_-\.\?
+            </p>
         </div>
 
         <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />

@@ -529,30 +529,40 @@ span.bleu {
     width: 60%;
     height: 100%;
     margin-left: 10px;
-}
-
-.home-box-text-title {
-    height:30%;
+    padding: 20px;
 }
 
 .home-box-text-p {
     height: 52%;
+    max-width: 100%;
 }
 
-.home-box-text-btn {
+.right {
     display: flex;
     justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.left {
+    margin-bottom: 20px;
 }
 
 .home-box-text-btn-h4 {
-    height: 50px;
+    height: 46px;
     background-color: var(--i);
-    width: 20%;
-    border-radius: 15px;
+    width: 22%;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     color: black;
+}
+
+.page-change {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 80px;
 }
 
 

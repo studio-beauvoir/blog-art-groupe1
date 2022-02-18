@@ -91,13 +91,20 @@ $validator->echoErrors();
     enctype="multipart/form-data" 
     accept-charset="UTF-8"
 >
+
+
     <div class="field">
         <label for="photArt">Image</label>
-        <input type="file" name="photArt" id="photArt" accept=".jpg,.gif,.png,.jpeg" title="Recherchez l'image à uploader !" />
-        <p>
-            Extension des images acceptées : .jpg, .gif, .png, .jpeg. 
-            <br/>10 Mo maximum
-        </p>
+        <label for="photArt" class="field-imgContent">
+            <img id="previewPhotoArt" class="img-thumbnail input" src="" />
+            <div class="field-actions">
+                <input data-preview="previewPhotoArt" type="file" name="photArt" id="photArt" accept=".jpg,.gif,.png,.jpeg" title="Recherchez l'image à uploader !" />
+                <p>
+                    Extension des images acceptées : .jpg, .gif, .png, .jpeg. 
+                    <br/>10 Mo maximum
+                </p>
+            </div>
+        </label>
     </div>
 
     <div class="field">
@@ -196,12 +203,7 @@ $validator->echoErrors();
 </form>
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script>
-    document.querySelectorAll(`.field textarea`).forEach(el=>el.value="lorem ipsum textarea");
-    document.querySelectorAll(`.field input:not([type="file"], [type="submit"])`).forEach(el=>el.value="lorem ipsum input");
-    document.querySelectorAll(`.field input[type="datetime-local"]`).forEach(el=>el.value='2022-02-19T22:21');
-    document.querySelectorAll(`.field select`).forEach(el=>el.querySelector('select').setAttribute('selected', 'true'));
-</script>
+
     <!-- --------------------------------------------------------------- -->
     <!-- Début Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
 <!-- --------------------------------------------------------------- -->

@@ -35,30 +35,33 @@ class ValidationRule {
     private $maxLength = false;
     private $maxFileSize = false;
 
-    private $errorMessage;
+    private $errorMessage = [
+        'isRequired' => ":field est requis",
+        'shouldBePassword' => ":field ne correspond pas aux attentes d'un mot de passe",
+        'shouldBeEmail' =>":field doit être un email",
+        'shouldBePseudo' =>":field doit comporter entre 6 et 70 caractères",
+        'shouldBeImage' =>":field doit être une image",
+        'shouldBeOfType' => ":field doit être de type :shouldBeOfType",
+        'shouldBeEqualTo' => ":field doit être identique au champ :shouldBeEqualTo",
+        'shouldBeEqualToValue' => ":field doit être égal à :shouldBeEqualToValue",
+        'minLength' => ":field ne doit pas faire moins de :minLength",
+        'maxLength' => ":field ne doit pas faire plus de :maxLength",
+        'maxFileSize' => ":field dépasse la taille autorisée",
+    ];
     private $errorsArray = [];
 
     function __construct($field) {
         $this->field = $field;
 
-        $this->errorMessage = [
-            'isRequired' => ":field est requis",
-            'shouldBePassword' => ":field ne correspond pas aux attentes d'un mot de passe",
-            'shouldBeEmail' =>":field doit être un email",
-            'shouldBePseudo' =>":field doit comporter entre",
-            'shouldBeImage' =>":field doit être une image de type ".implode(', ', getImageExtensionsAllowed()),
-            'shouldBeOfType' => ":field doit être de type :shouldBeOfType",
-            'shouldBeEqualTo' => ":field doit être identique au champ :shouldBeEqualTo",
-            'shouldBeEqualToValue' => ":field doit être égal à :shouldBeEqualToValue",
-            'minLength' => ":field ne doit pas faire moins de :minLength",
-            'maxLength' => ":field ne doit pas faire plus de :maxLength",
-            'maxFileSize' => ":field dépasse la taille autorisée",
-            // 'maxFileSize' => ":field ne doit pas dépasser ".($this->maxFileSize/1000).'Ko',
-        ];
-
         return $this;
     }
 
+
+    public function customError($error, $message) {
+        if(!isset($this->errorMessage[$error])) return $this;
+        $this->errorMessage[$error] = $message;
+        return $this;
+    }
 
     // méthodes de règle
     static public function make($field) {
@@ -73,9 +76,7 @@ class ValidationRule {
         return static::make($field)->setIsRequired(false);
     }
 
-    public function customError($error, $message) {
-        $this->errorMessage[$error] = $message;
-    }
+ 
     
     public function minLength($min) { 
         $this->string();
@@ -132,6 +133,7 @@ class ValidationRule {
     // fin méthodes de règles
 
     public function isValid() {
+        $isValid = true;
         if(
             $this->getValue() === NULL
             OR empty($this->validator->fieldsValues[$this->field])
@@ -150,79 +152,81 @@ class ValidationRule {
 
         if($this->shouldBeOfType) {
             if(!isOfType($this->shouldBeOfType, $this->getValue())) {
-                $this->addError(':field doit être de type :shouldBeOfType');
-                return false;
+                $this->addError('shouldBeOfType');
+                $isValid = false;
             }
         }
 
         if($this->shouldBePseudo) {
             // isPseudo est une fonction utilitaire (/util/regex.php)
             if(!isPseudo($this->getValue())) {
-                $this->addError(':field doit être un pseudo');
-                return false;
+                $this->addError('shouldBePseudo');
+                $isValid = false;
             }
         }
 
         if($this->shouldBeImage) {
             // isPseudo et getExtensionsAllowed sont des fonctions utilitaires (/util/ctrlUploadImage.php)
             if(!isImage($this->getValue())) {
-                $this->addError(':field doit être une image de type '.implode(', ', getImageExtensionsAllowed()));
-                return false;
+                $this->customError('shouldBeImage', ':field doit être une image de type '.implode(', ', getImageExtensionsAllowed()));
+                $this->addError('shouldBeImage');
+                $isValid = false;
             }
         }
 
         if($this->shouldBePassword) {
             // isPassword est une fonction utilitaire (/util/regex.php)
             if(!isPassWord($this->getValue())) {
-                $this->addError(':field doit être un mot de passe');
-                return false;
+                $this->addError('shouldBePassword');
+                $isValid = false;
             }
         }
 
         if($this->shouldBeEmail) {
             // isEmail est une fonction utilitaire (/util/regex.php)
             if(!isEmail($this->getValue())) {
-                $this->addError(':field doit être un email');
-                return false;
+                $this->addError('shouldBeEmail');
+                $isValid = false;
             }
         }
 
         if($this->minLength) {
             if(strlen($this->getValue()) < $this->minLength) {
-                $this->addError(':field doit avoir une longueur d\'au moins :minLength');
-                return false;
+                $this->addError('minLength');
+                $isValid = false;
             }
         }
 
         if($this->maxLength) {
             if(strlen($this->getValue()) > $this->maxLength) {
-                $this->addError(':field doit avoir une longueur de maximum :maxLength');
-                return false;
+                $this->addError('maxLength');
+                $isValid = false;
             }
         }
 
         if($this->maxFileSize) {
             if(filesize($this->getValue()['tmp_name']) > $this->maxFileSize) {
-                $this->addError(':field doit peser maximum '.($this->maxFileSize/1000).'Ko');
-                return false;
+                $this->customError('maxFileSize',':field doit peser maximum '.($this->maxFileSize/1000).'Ko');
+                $this->addError('maxFileSize');
+                $isValid = false;
             }
         }
 
         if($this->shouldBeEqualTo) {
             if($this->getValue($this->shouldBeEqualTo) !== $this->getValue()) {
-                $this->addError(':field doit être égal à :shouldBeEqualTo');
-                return false;
+                $this->addError('shouldBeEqualTo');
+                $isValid = false;
             }
         }
 
         if($this->shouldBeEqualToValue) {
             if($this->shouldBeEqualToValue !== $this->getValue()) {
-                $this->addError(':field doit être égal à :shouldBeEqualToValue');
-                return false;
+                $this->addError('shouldBeEqualToValue');
+                $isValid = false;
             }
         }
 
-        return true;
+        return $isValid;
     }
 
     public function setValidator($validator) {
@@ -247,7 +251,7 @@ class ValidationRule {
         return NULL;
     }
 
-    public function addError($msg) {
+    public function addError($errorName) {
         array_push(
             $this->errorsArray, 
             preg_replace_callback(
@@ -255,7 +259,7 @@ class ValidationRule {
                 function($matches) {
                     return get_object_vars($this)[$matches[1]];
                 }, 
-                $msg
+                $this->errorMessage[$errorName]
             )
         );
     }

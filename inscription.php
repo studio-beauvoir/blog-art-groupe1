@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $accordMemb = $validator->verifiedField('accordMemb')=="on";
         
-        $monMembre->register($nomMemb, $prenomMemb, $pseudoMemb, $passMemb, $eMailMemb);
+        $monMembre->register($nomMemb, $prenomMemb, $pseudoMemb, $passMemb, $eMailMemb, $accordMemb);
 
         header("Location: ./thematique.php");
         die();
@@ -97,7 +97,7 @@ require_once __DIR__ . '/layouts/front/head.php';
         <input type="password" name="passMemb" id="passMemb" size="80" maxlength="80" />
         <br>
         <input type="checkbox" onclick="myFunction('passMemb')">
-        &nbsp;&nbsp;
+        
         <label><i>Afficher Mot de passe</i></label>
     </div>
 
@@ -105,17 +105,13 @@ require_once __DIR__ . '/layouts/front/head.php';
         <label for="accordMemb"><b>J'accepte que mes données soient conservées :</b></label>
         <div class="controls">
         <fieldset>
-            <input type="radio" name="accordMemb"
-            <?= ($accordMemb == "on") ? 'checked="checked"' : ''
-            ?> value="on" />&nbsp;&nbsp;Oui&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="radio" name="accordMemb"
-            <?= ($accordMemb == "off") ? 'checked="checked"' : ''
-            ?> value="off" checked="checked" />&nbsp;&nbsp;Non
+            <input type="radio" name="accordMemb" value="on" />Oui
+            <input type="radio" name="accordMemb"value="off" checked="checked" />Non
         </fieldset>
         </div>
     </div>
 
-    <i><div class="error"><br>*&nbsp;Champs obligatoires</div></i>
+    <i><div class="error"><br>*Champs obligatoires</div></i>
 
 </form>
     
@@ -129,31 +125,3 @@ require_once __DIR__ . '/layouts/front/head.php';
 
 <?php require_once __DIR__ . '/layouts/front/foot.php';?>
 
-
-<!-- Connection : Vérifier si l'utilisateur est 
-déjà connecté ou pas avec les cookies, sinon lui 
-dire de le faire. 
-
-MDP : Hasher le mot de passe 
-(créer une nouvelle chaine de caractère unique)
-    echo(password_hash($pass, PASSWORD_DEFAULT>));
-        --Affiche le mot de passe en "hash", il est "crypté
-w
-    if($_SERVER['REQUEST_METHOD']=='POST') {
-        echo($_POST['pass'])
-        if(password_verify($_POST['pass'], $pass) === true) {
-            --Permet de vérifier le mot de passe, 
-                si c'est 1, cest OK
-            echo('<p>Bon mot de passe </p>');
-            setcookie('user', $user, time() + 3600);
-        } else {
-            echo('<p>Mauvais mot de passe </p>')
-        }
-    }
-
-    if(isset($_COOKIE['user'])){
-        echo 'Bonjour' . $_COOKIE['user'] 
-    }
-    else {
-        echo "Merci de vous connecter" 
-    }

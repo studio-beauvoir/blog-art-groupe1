@@ -120,6 +120,10 @@ textarea[disabled], select[disabled], input[disabled] {
     --color: var(--p1);
 }
 
+.box-etat{
+    display: inline;
+}
+
 main, .container {
     margin: 0 auto;
     max-width: 1280px;
@@ -163,7 +167,7 @@ label {
 header{
     display: flex;
     background-color: var(--bg2);
-    padding: 25px;
+    padding: 5px;
 }
 
 .header-box{

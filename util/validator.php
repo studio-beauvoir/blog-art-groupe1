@@ -21,6 +21,8 @@ class ValidationRule {
 
     public $field;
     public $isRequired = false;
+    public $isFilled = false;
+
     private $shouldBePassword = false;
     private $shouldBeEmail = false;
     private $shouldBePseudo = false;
@@ -106,15 +108,21 @@ class ValidationRule {
     // fin méthodes de règles
 
     public function isValid() {
-        if($this->isRequired) {
-            if(
-                $this->getValue() === NULL
-                OR empty($this->validator->fieldsValues[$this->field])
-            ) {
+        if(
+            $this->getValue() === NULL
+            OR empty($this->validator->fieldsValues[$this->field])
+            OR (is_array($this->getValue()) AND isset($this->getValue()['size']) AND $this->getValue()['size']===0)
+        ) {
+            if($this->isRequired) {
                 $this->addError(':field est requis');
                 return false;
+            } else {
+                return true;
             }
         }
+        
+        $this->isFilled = true;
+        $this->validator->fieldsFilled[$this->field] = true;
 
         if($this->shouldBeOfType) {
             if(!isOfType($this->shouldBeOfType, $this->getValue())) {
@@ -229,6 +237,7 @@ class ValidationRule {
 class Validator {
     public $rules = [];
     public $fieldsValues = [];
+    public $fieldsFilled = [];
 
     public $tested = false;
     public $hasSucceeded = null;
@@ -315,6 +324,22 @@ class Validator {
                 throw new Error('Le validator n\'a pas été validée');
             }
             return $this->fieldsValues[$fieldName];
+        } catch(Error $e) {
+			die('Erreur validator : ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Retourne si le champ ou le fichier est rempli
+     * Nécessite que le validator ait été validé via sa fonction success()
+     */
+    public function isFilled($fieldName) {
+        var_dump($this->fieldsFilled);
+        try {
+            if(!$this->hasSucceeded) {
+                throw new Error('Le validator n\'a pas été validée');
+            }
+            return (isset($this->fieldsFilled[$fieldName]) AND $this->fieldsFilled[$fieldName]===true);
         } catch(Error $e) {
 			die('Erreur validator : ' . $e->getMessage());
         }

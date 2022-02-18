@@ -26,6 +26,11 @@ require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
 //Instanciation de la classe Thématique
 $maThematique = new THEMATIQUE();
 
+//Insertion classe Langue
+require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+
+//Instanciation de la classe Langue
+$maLangue = new LANGUE(); 
 // Ctrl CIR
 
 
@@ -68,6 +73,8 @@ $article = $monArticle->get_1Article($_GET['id']);
 if(!$article) header("Location: $pagePrecedent");
 
 
+
+
 $dtCreArt = $article['dtCreArt'];
 $libTitrArt = $article['libTitrArt'];
 $libChapoArt = $article['libChapoArt'];
@@ -96,17 +103,10 @@ $idThem = $article['numThem'];
     >
         <input type="hidden" id="id" name="id" value="<?= $_GET['id'] ?>" />
         
+
         <div class="field">
-        <label for="photArt">Photo de l'article</label>
-        <input type="file" disabled name="photArt" id="photArt" required="required" accept=".jpg,.gif,.png,.jpeg" size="70" maxlength="70" title="Recherchez l'image à uploader !" />
-        <input type="hidden" disabled name="MAX_FILE_SIZE" value="<?= /*MAX_SIZE;*/ $e=1; ?>" />
-        <p>
-        <?php              // Gestion extension images acceptées
-            $msgImagesOK = "&nbsp;&nbsp;>> Extension des images acceptées : .jpg, .gif, .png, .jpeg" . "<br>" .
-            "(lageur, hauteur, taille max : 80000px, 80000px, 200 000 Go)";
-            echo "<i>" . $msgImagesOK . "</i>";
-        ?>                
-        </p>
+            <label for="urlPhotArt">Image</label>
+            <img src="<?= webUploadPath($urlPhotArt) ?>">
         </div>
 
         <div class="field">
@@ -166,7 +166,8 @@ $idThem = $article['numThem'];
                     $allLangues = $maLangue->get_AllLangues();                    
                     foreach($allLangues as $langue) { 
                 ?>
-                    <option value="<?= $langue['numLang'] ?>" ><?=$langue['lib1Lang'] ?></option>
+                    <option value="<?= $langue['numLang'] ?>" > <?=$langue['lib1Lang'] ?></option>
+                    <option <?=$langue['numLang']==$idLang?'selected':'' ?> value="<?= $langue['numLang'] ?>" ><?=$langue['lib1Lang'] ?></option>
                 <?php } ?>
             </select>
         </div>

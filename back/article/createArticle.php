@@ -26,7 +26,7 @@ $fileValidator = Validator::make();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $fileValidator->addRules([
-        ValidationRule::required('photArt')->image()
+        ValidationRule::required('photArt')->image()->customError('isRequired', "L'image est requise")
     ])->bindValues($_FILES);
 
 

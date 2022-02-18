@@ -8,15 +8,9 @@ $pageNav = ['Home'];
 require_once __DIR__ . '/layouts/front/head.php';
 ?>
     <div class="head-bg"> <!-- <img src="" alt="Oeuvre de David Selor de son personnage Mimil, servant d'arrière plan"> -->
-        <div class="head-title-h1">
-
-        </div>
-        <div class="head-title-h2">
-
-        </div>
-        <div class="head-text">
-
-        </div>
+    <div class="head-h1"><h1>Comment n'avez-vous pas pu le voir ?</h1></div>
+    <div class="head-h2"><h2>Comment <span class="bleu"> n</span>’avez-vous <span class="bl">pas</span> pu le voir ?</h2></div>
+    <div class="head-h4"><h4>Le personnage Mimil créé par l’artiste David Selor est en effet partout dans les rues ! Impossible de le rater. Après avoir arpenté les villes du monde entier, le créateur revient dans sa ville natale. Il nous présente en exclusivité sa nouvelle exposition, nommée <span class="green"> Fragile.</span></h4></div>
     </div>
     <div class="discover">
         <div class="discover-title">
@@ -49,7 +43,7 @@ require_once __DIR__ . '/layouts/front/head.php';
             </div>
         </div>
         <div class="conclusion">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Vous l’aurez compris, le Mimil est l’emblème de l’artiste. Il souhaite lui donner une toute autre importance en le plaçant au sein même du patrimoine de Bordeaux. Ce personnage étant déjà très présent sur les murs de la ville, il se démocratise de plus en plus en visitant désormais les toiles. Dans les récentes réalisations de David Selor, nous pouvons citer la fresque “Je resterai éternellement… jaune” pour la ville de Bruges, s’ajoutant à l’exposition à l’institut Bernard Magrez. Cet événement est l’occasion de voir les œuvres de l’artiste sous un nouveau jour, dans le thème du renouveau. Découvrir ou redécouvrir Mimil à l’exposition Fragile ne pourra qu’enrichir la poésie de cet étrange animal, encore si mystérieux pour beaucoup.</p>
         </div>
         <div class="articles-end">
             <div class="auteur">
@@ -224,9 +218,9 @@ require_once __DIR__ . '/layouts/front/head.php';
             <div class="text-comments">
                 <h4>Ajouter un commentaire</h4>
             </div>
-            <div class="add-bloc-comments">
+            <textarea id="comments" name="comments" rows="3" class="add-bloc-comments">
 
-            </div>
+            </textarea>
             <div class="box-btn">
                 <div class="btn-comments">
                     <h3>Commenter</h3>

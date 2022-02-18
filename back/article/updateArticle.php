@@ -32,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $validator->addRules([
         ValidationRule::required('id'),
+        ValidationRule::required('urlPhotArt'),
         ValidationRule::required('libTitrArt'),
         ValidationRule::required('libChapoArt'),
         ValidationRule::required('libAccrochArt'),
@@ -41,7 +42,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ValidationRule::required('libSsTitr2Art'),
         ValidationRule::required('parag3Art'),
         ValidationRule::required('libConclArt'),
-        ValidationRule::required('numLang'),
         ValidationRule::required('numAngl'),
         ValidationRule::required('numThem')
     ])->bindValues($_POST);
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if( $fileValidator->success() AND $validator->success()) {
 
 
-        $urlPhotArt = $validator->verifiedField('urlP$urlPhotArt');
+        $urlPhotArt = $validator->verifiedField('urlPhotArt');
 
         // modification de l'image uniquement si on en a envoyé une
         if($fileValidator->isFilled('photArt')) {
@@ -71,7 +71,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $libSsTitr2Art = $validator->verifiedField('libSsTitr2Art');
         $parag3Art = $validator->verifiedField('parag3Art');
         $libConclArt = $validator->verifiedField('libConclArt');
-        $numLang = $validator->verifiedField('numLang');
         $numAngl = $validator->verifiedField('numAngl');
         $numThem = $validator->verifiedField('numThem');
         
@@ -103,6 +102,7 @@ $validator->echoErrors();
     // $idStat = $article['idStat'];
     $urlPhotArt = $article['urlPhotArt'];
 
+    $dtCreArt = $article['dtCreArt'];
     $libTitrArt = $article['libTitrArt'];
     $libChapoArt = $article['libChapoArt'];
     $libAccrochArt = $article['libAccrochArt'];
@@ -144,59 +144,47 @@ $validator->echoErrors();
 
     <div class="field">
         <label for="dtCreArt">Date de création</label>
-        <input type="datetime-local" name="dtCreArt" id="dtCreArt"/>
+        <input value="<?=preg_replace('/\s/', 'T', $dtCreArt) ?>" type="datetime-local" name="dtCreArt" id="dtCreArt"/>
     </div>
 
     <div class="field">
         <label for="libChapoArt">Chapeau</label>
-        <textarea name="libChapoArt" id="libChapoArt" rows="10" placeholder="Décrivez le chapeau. Sur 500 car."></textarea>
+        <textarea name="libChapoArt" id="libChapoArt" rows="10" placeholder="Décrivez le chapeau. Sur 500 car."><?=$libChapoArt ?></textarea>
     </div>
 
     <div class="field">
         <label for="libAccrochArt">Accroche paragraphe 1</label>
-        <input name="libAccrochArt" id="libAccrochArt" placeholder="Sur 100 car." size="100" maxlength="100" />
+        <input value="<?=$libAccrochArt ?>" name="libAccrochArt" id="libAccrochArt" placeholder="Sur 100 car." size="100" maxlength="100" />
     </div>
 
     <div class="field">
         <label for="parag1Art">Paragraphe 1</label>
-        <textarea name="parag1Art" id="parag1Art" rows="10" placeholder="Décrivez le premier paragraphe. Sur 1200 car."></textarea>
+        <textarea name="parag1Art" id="parag1Art" rows="10" placeholder="Décrivez le premier paragraphe. Sur 1200 car."><?=$parag1Art ?></textarea>
     </div>
 
     <div class="field">
         <label for="libSsTitr1Art">Sous-titre 1</label>
-        <input name="libSsTitr1Art" id="libSsTitr1Art" placeholder="Sur 100 car." size="100" maxlength="100" />
+        <input value="<?=$libSsTitr1Art ?>" name="libSsTitr1Art" id="libSsTitr1Art" placeholder="Sur 100 car." size="100" maxlength="100" />
     </div>
 
     <div class="field">
         <label for="parag2Art">Paragraphe 2</label>
-        <textarea name="parag2Art" id="parag2Art" rows="10" placeholder="Décrivez le deuxième paragraphe. Sur 1200 car."></textarea>
+        <textarea name="parag2Art" id="parag2Art" rows="10" placeholder="Décrivez le deuxième paragraphe. Sur 1200 car."><?=$parag2Art ?></textarea>
     </div>
 
     <div class="field">
         <label for="libSsTitr2Art">Sous-titre 2</label>
-        <input name="libSsTitr2Art" id="libSsTitr2Art" placeholder="Sur 100 car." size="100" maxlength="100" />
+        <input value="<?=$libSsTitr2Art ?>" name="libSsTitr2Art" id="libSsTitr2Art" placeholder="Sur 100 car." size="100" maxlength="100" />
     </div>
 
     <div class="field">
         <label for="parag3Art">Paragraphe 3</label>
-        <textarea name="parag3Art" id="parag3Art" rows="10" placeholder="Décrivez le troisième paragraphe. Sur 1200 car."></textarea>
+        <textarea name="parag3Art" id="parag3Art" rows="10" placeholder="Décrivez le troisième paragraphe. Sur 1200 car."><?=$parag3Art ?></textarea>
     </div>
 
     <div class="field">
         <label for="libConclArt">Conclusion</label>
-        <textarea name="libConclArt" id="libConclArt" rows="10" placeholder="Décrivez la conclusion. Sur 800 car."></textarea>
-    </div>
-
-    <div class="field">
-        <label for="numLang">Quelle langue</label>
-        <select name="numLang" id="numLang">
-            <?php 
-                $allLangues = $maLangue->get_AllLangues();                    
-                foreach($allLangues as $langue) { 
-            ?>
-                <option value="<?= $langue['numLang'] ?>" ><?=$langue['lib1Lang'] ?></option>
-            <?php } ?>
-        </select>
+        <textarea name="libConclArt" id="libConclArt" rows="10" placeholder="Décrivez la conclusion. Sur 800 car."><?=$libConclArt ?></textarea>
     </div>
 
     <div class="field">
@@ -206,7 +194,7 @@ $validator->echoErrors();
                 $allAngles = $monAngle->get_AllAngles();                    
                 foreach($allAngles as $angle) { 
             ?>
-                <option value="<?= $angle['numAngl'] ?>" ><?=$angle['libAngl'] ?></option>
+            <option <?=$angle['numAngl']==$numAngl?'selected':'' ?> value="<?= $angle['numAngl'] ?>" ><?=$angle['libAngl'] ?></option>
             <?php } ?>
         </select>
     </div>
@@ -218,7 +206,7 @@ $validator->echoErrors();
                 $allThematiques = $maThematique->get_AllThematiques();                    
                 foreach($allThematiques as $them) { 
             ?>
-                <option value="<?= $them['numThem'] ?>" ><?=$them['libThem'] ?></option>
+                <option <?=$them['numThem']==$numThem?'selected':'' ?> value="<?= $them['numThem'] ?>" ><?=$them['libThem'] ?></option>
             <?php } ?>
         </select>
     </div>

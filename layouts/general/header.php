@@ -7,7 +7,7 @@
         <ul>
             <li><a href="" class="interactive-lien-text"> Connexion</a></li>
             <li ><a href="" class="interactive-lien-text"> Inscription</a></li> 
-             
+            <li><a href="" class="interactive-lien-text"> Se déconnecter</a></li>  
         </ul> 
     </nav>
     </div>

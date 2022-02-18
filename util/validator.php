@@ -29,15 +29,32 @@ class ValidationRule {
     private $shouldBeImage = false;
     private $shouldBeOfType = false;
     private $shouldBeEqualTo = false;
+    private $shouldBeEqualToValue = false;
 
     private $minLength = false;
     private $maxLength = false;
     private $maxFileSize = false;
 
+    private $errorMessage;
     private $errorsArray = [];
 
     function __construct($field) {
         $this->field = $field;
+
+        $this->errorMessage = [
+            'isRequired' => ":field est requis",
+            'shouldBePassword' => ":field ne correspond pas aux attentes d'un mot de passe",
+            'shouldBeEmail' =>":field doit être un email",
+            'shouldBePseudo' =>":field doit comporter entre",
+            'shouldBeImage' =>":field doit être une image de type ".implode(', ', getImageExtensionsAllowed()),
+            'shouldBeOfType' => ":field doit être de type :shouldBeOfType",
+            'shouldBeEqualTo' => ":field doit être identique au champ :shouldBeEqualTo",
+            'shouldBeEqualToValue' => ":field doit être égal à :shouldBeEqualToValue",
+            'minLength' => ":field ne doit pas faire moins de :minLength",
+            'maxLength' => ":field ne doit pas faire plus de :maxLength",
+            'maxFileSize' => ":field dépasse la taille autorisée",
+            // 'maxFileSize' => ":field ne doit pas dépasser ".($this->maxFileSize/1000).'Ko',
+        ];
 
         return $this;
     }
@@ -56,7 +73,9 @@ class ValidationRule {
         return static::make($field)->setIsRequired(false);
     }
 
-
+    public function customError($error, $message) {
+        $this->errorMessage[$error] = $message;
+    }
     
     public function minLength($min) { 
         $this->string();
@@ -105,6 +124,11 @@ class ValidationRule {
         return $this;
     }
 
+    public function equalToValue($value) {
+        $this->shouldBeEqualToValue = $value;
+        return $this;
+    }
+
     // fin méthodes de règles
 
     public function isValid() {
@@ -114,7 +138,7 @@ class ValidationRule {
             OR (is_array($this->getValue()) AND isset($this->getValue()['size']) AND $this->getValue()['size']===0)
         ) {
             if($this->isRequired) {
-                $this->addError(':field est requis');
+                $this->addError('isRequired');
                 return false;
             } else {
                 return true;
@@ -187,6 +211,13 @@ class ValidationRule {
         if($this->shouldBeEqualTo) {
             if($this->getValue($this->shouldBeEqualTo) !== $this->getValue()) {
                 $this->addError(':field doit être égal à :shouldBeEqualTo');
+                return false;
+            }
+        }
+
+        if($this->shouldBeEqualToValue) {
+            if($this->shouldBeEqualToValue !== $this->getValue()) {
+                $this->addError(':field doit être égal à :shouldBeEqualToValue');
                 return false;
             }
         }

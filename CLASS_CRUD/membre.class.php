@@ -165,4 +165,9 @@ class MEMBRE{
 			die('Erreur delete MEMBRE : ' . $e->getMessage());
 		}
 	}
+
+
+	function register($prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb){
+		$idStat = 1;
+	}
 }	// End of class

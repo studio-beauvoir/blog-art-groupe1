@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../CLASS_CRUD/membre.class.php';
 
-function getLoggedUserOrFalse() {
+function getLoggedMemberOrFalse() {
     $monMembre = new MEMBRE();
     $loggedMember = false;
 

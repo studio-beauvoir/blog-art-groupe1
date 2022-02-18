@@ -188,7 +188,7 @@ include __DIR__ . '/../../layouts/back/head.php';
             <label for="idStat">Quel statut :</label>
             <select name="idStat" id="idStat">
             <?php 
-                $allStatuts = $monStatut->get_AllStatuts();                    
+                $allStatuts = $monStatut->get_AllStatutsExceptSuperAdmin();                    
                 foreach($allStatuts as $statut) { 
             ?>
                 <option <?=$statut['idStat']==$idStat?'selected':'' ?> value="<?= $statut['idStat'] ?>" ><?=$statut['libStat'] ?></option>

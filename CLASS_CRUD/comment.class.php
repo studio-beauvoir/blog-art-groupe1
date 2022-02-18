@@ -28,7 +28,16 @@ class COMMENT{
 		}
 	}
 
-	//LA DIFF AVEC BY ARTICLE ET NUMART ???-----------------------------------------------
+	function get_AllComments() {
+		global $db;
+
+		$query = 'SELECT * FROM COMMENT INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb;';
+		$result = $db->query($query);
+		$allComments = $result->fetchAll();
+
+		return($allComments);
+	}
+
 	function get_AllCommentsByNumArt($numArt){
 		global $db;
 

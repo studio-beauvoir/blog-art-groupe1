@@ -87,17 +87,28 @@ require_once __DIR__ . '/layouts/front/head.php';
     </div>
 
     <div class="field">
-        <label for="eMailMemb">Email</label>
-        <input name="eMailMemb" id="eMailMemb" placeholder="" size="100" maxlength="100" />
+        <label for="eMailMemb">eMail<span class="error">(*)</span></label>
+        <input name="eMailMemb" id="eMailMemb" size="80" maxlength="80"/>
     </div>
 
+    <div class="field">
+        <label for="eMail1Memb">Confirmez l'eMail<span class="error">(*)</span></label>
+        <input name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" />
+    </div>
 
     <div class="field">
         <label for="passMemb">Mot passe<span class="error">(*)</span></label>
         <input type="password" name="passMemb" id="passMemb" size="80" maxlength="80" />
         <br>
         <input type="checkbox" onclick="myFunction('passMemb')">
-        
+        <label><i>Afficher Mot de passe</i></label>
+    </div>
+
+    <div class="field">
+        <label for="pass2Memb">Confirmez le mot de passe<span class="error">(*)</span></label>
+        <input type="password" name="pass2Memb" id="pass2Memb" size="80" maxlength="80"/>
+        <br>
+        <input type="checkbox" onclick="myFunction('pass2Memb')">
         <label><i>Afficher Mot de passe</i></label>
     </div>
 

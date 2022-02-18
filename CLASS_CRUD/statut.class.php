@@ -38,6 +38,16 @@ class STATUT{
 
 		return($allStatuts);
 	}
+	function get_AllStatutsExceptSuperAdmin(){
+		global $db;
+
+		// tt récupérer
+		$query = 'SELECT * FROM STATUT WHERE idStat != 1;';
+		$result = $db->query($query);
+		$allStatuts = $result->fetchAll();
+
+		return($allStatuts);
+	}
 
 	function create($libStat){
 		global $db;

@@ -5,8 +5,8 @@
     </div>
     <nav class="header-box-liste">
         <ul>
-            <li><a href="" class="interactive-lien-text"> Connexion</a></li>
-            <li ><a href="" class="interactive-lien-text"> Inscription</a></li> 
+            <li><a href="../../connexion.php" class="interactive-lien-text"> Connexion</a></li>
+            <li ><a href="../../inscription.php" class="interactive-lien-text"> Inscription</a></li> 
             <li><a href="" class="interactive-lien-text"> Se déconnecter</a></li>  
         </ul> 
     </nav>

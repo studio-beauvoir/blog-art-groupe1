@@ -8,7 +8,8 @@ class COMMENT{
 		global $db;
 		
 		try {
-			$query = 'SELECT * FROM COMMENT WHERE numSeqCom=?, numArt=?;';
+			$db->beginTransaction();
+			$query = 'SELECT * FROM COMMENT WHERE numSeqCom=? AND numArt=?;';
 			$request = $db->prepare($query);
 			
 			$request->execute([$numSeqCom, $numArt]);
@@ -152,15 +153,15 @@ class COMMENT{
 
 	// Moderation : TRUE si comment affiché, FALSE sinon
 	// et remarques possibles admin si non affiché
-	function update($numSeqCom, $numArt, $attModOK, $notifComKOAff, $delLogiq){
+	function update($libCom, $numSeqCom, $numArt, $attModOK, $notifComKOAff, $delLogiq){
 		global $db;
 
 		try {
 			$db->beginTransaction();
-
-			$query = 'UPDATE COMMENT SET ttModOK=?, attModOK=?, dtModCom=NOW(), notifComKOAff=?, delLogiq=? WHERE numSeqCom=?, numArt=?';
+			var_dump($numArt);
+			$query = 'UPDATE COMMENT SET libCom=?, attModOK=?, attModOK=?, dtModCom=NOW(), notifComKOAff=?, delLogiq=? WHERE numSeqCom=?, numArt=?';
 			$request = $db->prepare($query);
-			$request->execute([$attModOK, $notifComKOAff, $delLogiq, $numSeqCom, $numArt]);
+			$request->execute([$libCom, $attModOK, $notifComKOAff, $delLogiq, $numSeqCom, $numArt]);
 			$db->commit();
 			$request->closeCursor();
 		}

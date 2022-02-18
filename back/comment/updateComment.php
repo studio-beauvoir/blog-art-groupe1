@@ -1,227 +1,157 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD COMMENT (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : updateComment.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
+$submitBtn = "Éditer";
+$pageCrud = "comment";
+$pagePrecedent = "./$pageCrud.php";
+$pageTitle = "$submitBtn un $pageCrud";
+$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.':'.$pagePrecedent, $pageTitle];
+// Insertion des fonctions utilitaires
+require_once __DIR__ . '/../../util/index.php';
 
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
+require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php';  
+require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';  
+require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';  
 
-// Insertion classe Comment
+$monComment = new COMMENT();
+$monArticle = new ARTICLE();
+$monMembre = new MEMBRE();
 
-// Instanciation de la classe Comment
+$validator = Validator::make();
 
-
-//--> Appel parser BBCode
-
-
-// Gestion des erreurs de saisie
-$erreur = false;
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    $validator->addRules([
+        ValidationRule::required('idCom'),
+        ValidationRule::required('idArt'),
+        ValidationRule::required('attModOK'),
+        ValidationRule::required('libCom'),
+        ValidationRule::required('numMemb'),
+        ValidationRule::required('numSeqCom'),
+    ])->bindValues($_POST);
+
+    if($validator->success()) {
+
+        $numSeqCom = $validator->verifiedField('idCom');
+        $numArt = $validator->verifiedField('idArt');
+        $attModOK = $validator->verifiedField('attModOK');
+        $libCom = $validator->verifiedField('libCom');
+        $numMemb = $validator->verifiedField('numMemb');
+        $numSeqCom = $validator->verifiedField('numSeqCom');
+        
+        $monComment->update($libCom, $numSeqCom, $numArt, $attModOK, $notifComKOAff, $delLogiq);
+
+        header("Location: $pagePrecedent");
+        die();
+    }
+}   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 
 
-    // controle des saisies du formulaire
-
-    // modification effective du comment
-
-
-
-    // Gestion des erreurs => msg si saisies ko
-
-
-
-
-
-
-
-}   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form
 include __DIR__ . '/initComment.php';
-$htmlCode    = "";
-$noBBCode    = "";
-$description = "";
-?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-    <meta charset="utf-8" />
-    <title>Admin - CRUD Commentaire</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
-  <!-- Style du formulaire et des boutons -->
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
-    <script src="./script_global.js"></script>
+include __DIR__ . '/../../layouts/back/head.php';
 
-    <style type="text/css">
-        textarea { /* Désactivez redimensionnement par défaut */
-            resize: none;
-        }
-    </style>
-</head>
-<body>
-    <h1>BLOGART22 Admin - CRUD Commentaire</h1>
-    <h2>Mise à jour d'un commentaire</h2>
-<?php
-    // Modif : récup id à modifier
-    // id passé en GET
+// affichage des erreurs
+$validator->echoErrors();
 
+    if(!isset($_GET['idCom']) OR !isset($_GET['idArt'])) {
+        header("Location: $pagePrecedent");
+        die();
+    }
+    $comment = $monComment->get_1Comment($_GET['idCom'],$_GET['idArt']);
+    $numMemb = $comment['numMemb'];
+    $numArt = $comment['numArt'];
+    $libCom = $comment['libCom'];
 
+    $membre = $monMembre->get_1Membre($numMemb);
+    $article = $monArticle->get_1Article($numArt);
 
-
-
-
-
+    // $numSeqCom = $comment['numSeqCom'];
+    // $numArt = $comment['numArt'];
+    // $dtCreCom = $comment['dtCreCom'];
+    // $libCom = $comment['libCom'];
+    // $attModOK = $comment['attModOK'];
+    // $dtModCom = $comment['dtModCom'];
+    // $notifComKOAff = $comment['notifComKOAff'];
+    // $delLogiq = $comment['delLogiq'];
+    // $numMemb = $comment['numMemb'];
 
 ?>
+<form 
+    class="user-form"
+    method="POST" 
+    action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?idCom=<?=$_GET['idCom']?>&idArt=<?=$_GET['idArt']?>" 
+    enctype="multipart/form-data" 
+    accept-charset="UTF-8"
+>
 
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
+    <legend class="legend1">Modération : validez un commentaire...</legend>
 
-      <fieldset>
-        <legend class="legend1">Modération : validez un commentaire...</legend>
+    <div class="field">
+        <label for="pseudoMemb">Quel membre</label>
+        <input disabled name="pseudoMemb" id="pseudoMemb" size="80" maxlength="80" value="<?= $membre['pseudoMemb']; ?>" />
+    </div>
 
-        <input type="hidden" id="id1" name="id1" value="<?= isset($_GET['id1']) ? $_GET['id1'] : '' ?>" />
-        <input type="hidden" id="id2" name="id2" value="<?= isset($_GET['id2']) ? $_GET['id2'] : '' ?>" />
+    <div class="field">
+        <label for="libTitrArt">Quel article :</label>
+        <input disabled name="libTitrArt" id="libTitrArt" size="80" maxlength="80" value="<?= $article['libTitrArt']; ?>" />
+    </div>
 
-<!-- --------------------------------------------------------------- -->
-    <!-- FK : Membre, Article -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Listbox Membre -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="LibTypAngl">
-                <b>Quel membre :&nbsp;&nbsp;&nbsp;</b>
-            </label>
-            <input type="hidden" id="idTypMemb" name="idTypMemb" value="<?= $numMemb; ?>" />
+    <div class="field">
+        <label for="libCom">Commentaire à valider :</label>
+        <input disabled name="libCom" value="<?=$libCom?>" id="libCom" size="80" maxlength="80" />
+    </div>
 
-            <input type="text" name="idMemb" id="idMemb" size="5" maxlength="5" value="<?= $idMemb; ?>" autocomplete="on" />
-
-            <!-- Listbox membre => 2ème temps -->
-
-            </div>
+    <div class="field">
+        <label for="attModOK">En tant que modérateur, je valide le post :</label>
+        <div class="controls">
+            <fieldset>
+                <input type="radio" name="attModOK" value="on" />Oui
+                <input type="radio" name="attModOK" value="off" />Non
+            </fieldset>
         </div>
-    <!-- FIN Listbox Membre -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Listbox Article -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="LibTypThem">
-                <b>Quel article :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-            </label>
-            <input type="hidden" id="idTypArt" name="idTypArt" value="<?= $numArt; ?>" />
+    </div>
 
-            <input type="text" name="idArt" id="idArt" size="5" maxlength="5" value="<?= $idArt; ?>" autocomplete="on" />
-
-            <!-- Listbox article => 2ème temps -->
-
-            </div>
+    <div class="field">
+        <label for="notifComKOAff">En voici les raisons :</label>
+        <div class="controls">
+            <textarea name="notifComKOAff" id="notifComKOAff" rows="10" cols="70" tabindex="70" placeholder="Décrivez la raison pour laquelle vous ne voulez pas afficher le post." ><?= $notifComKOAff; ?></textarea>
         </div>
-    <!-- FIN Listbox Article -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Fin FK : Membre, Article -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- textarea comment -->
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libCom"><b>Commentaire à valider :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
+    </div>
 
-            <textarea name="libCom" id="libCom" tabindex="30"  rows="20" cols="70" style="background-color:white;" disabled="disabled"><?= $libCom; ?></textarea>
-            </div>
+    <small class="error">Vous pouvez ajouter une notification de rejet du post (propos difammatoires, injures, vulgarité,...)</small>
+
+    <div>
+        <label for="delLogiq">En tant que modérateur, je veux que le post soit supprimé :</label>
+        <div class="controls">
+            <fieldset>
+                <input type="radio" name="delLogiq" value="on" />Oui
+                <input type="radio" name="delLogiq" value="off" />Non
+            </fieldset>
         </div>
-    <!-- End textarea comment -->
+    </div>
+
+    <!-- mot cle a rajouter -->
+
+    <div class="controls">
+        <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
+        <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
+        <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
+    </div>
+</form>
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <!-- --------------------------------------------------------------- -->
+    <!-- Début Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
 <!-- --------------------------------------------------------------- -->
 
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="attModOK"><b>En tant que modérateur, je valide le post :</b></label>
-            <div class="controls">
-               <fieldset>
-                  <input type="radio" name="attModOK"
-                  <? if($attModOK == 1) echo 'checked="checked"'; ?>
-                  value="on" />&nbsp;&nbsp;Oui&nbsp;&nbsp;&nbsp;&nbsp;
-                  <input type="radio" name="attModOK"
-                  <? if($attModOK == 0) echo 'checked="checked"'; ?>
-                  value="off" />&nbsp;&nbsp;Non
-               </fieldset>
-            </div>
-        </div>
+    <!-- A faire dans un 3ème temps  -->
 
 <!-- --------------------------------------------------------------- -->
-     <!-- Début textarea notification commentaire -->
-        <div class="control-group">
-            <label class="control-label" for="notifComKOAff"><b>En voici les raisons :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-                <textarea name="notifComKOAff" id="notifComKOAff" rows="10" cols="70" tabindex="70" placeholder="Décrivez la raison pour laquelle vous ne voulez pas afficher le post." ><?= $notifComKOAff; ?></textarea>
-            </div>
-        </div>
-       <small class="error">Vous pouvez ajouter une notification de rejet du post (propos difammatoires, injures, vulgarité,...)</small><br>
-    <!-- End textarea notification commentaire -->
+    <!-- Fin Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
 <!-- --------------------------------------------------------------- -->
 
-<!-- --------------------------------------------------------------- -->
-    <!-- Suppression logique du commentaire -->
-       <br>
-        <div class="control-group">
-            <label class="control-label" for="delLogiq"><b>En tant que modérateur, je veux que le post soit supprimé :</b></label>
-            <div class="controls">
-               <fieldset>
-                  <input type="radio" name="delLogiq"
-                  <? if($delLogiq == 1) echo 'checked="checked"'; ?>
-                  value="on" />&nbsp;&nbsp;Oui&nbsp;&nbsp;&nbsp;&nbsp;
-                  <input type="radio" name="delLogiq"
-                  <? if($delLogiq == 0) echo 'checked="checked"'; ?>
-                  value="off" />&nbsp;&nbsp;Non
-               </fieldset>
-            </div>
-        </div>
-        <br>
-<!-- --------------------------------------------------------------- -->
-
-        <div class="control-group">
-            <div class="error">
-<?php
-            if ($erreur) {
-                echo ($errSaisies);
-            } else {
-                $errSaisies = "";
-                echo ($errSaisies);
-            }
-?>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <div class="controls">
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                <br>
-            </div>
-        </div>
-      </fieldset>
-    </form>
-<?php
-require_once __DIR__ . '/footerComment.php';
-
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

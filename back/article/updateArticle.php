@@ -128,13 +128,17 @@ $validator->echoErrors();
 
     <div class="field">
         <label for="photArt">Image</label>
-        <img src="<?= webUploadPath($urlPhotArt) ?>" />
-        <input type="hidden" id="urlPhotArt" name="urlPhotArt" value="<?=$urlPhotArt ?>" />
-        <input type="file" name="photArt" id="photArt" accept=".jpg,.gif,.png,.jpeg" title="Recherchez l'image à uploader !" />
-        <p>
-            Extension des images acceptées : .jpg, .gif, .png, .jpeg. 
-            <br/>10 Mo maximum
-        </p>
+        <label for="photArt" class="field-imgContent">
+            <img id="previewPhotoArt" class="img-thumbnail input"  src="<?= webUploadPath($urlPhotArt) ?>" />
+            <div class="field-actions">
+                <input type="hidden" id="urlPhotArt" name="urlPhotArt" value="<?=$urlPhotArt ?>" />
+                <input data-preview="previewPhotoArt" type="file" name="photArt" id="photArt" accept=".jpg,.gif,.png,.jpeg" title="Recherchez l'image à uploader !" />
+                <p>
+                    Extension des images acceptées : .jpg, .gif, .png, .jpeg. 
+                    <br/>10 Mo maximum
+                </p>
+            </div>
+        </label>
     </div>
 
     <div class="field">

@@ -51,8 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     ])->bindValues($_POST);
 
     if($validator->success()) {
-        $idArt = $validator->verifiedField('id');
-        $monArticle->delete($idArt);
+        $numArt = $validator->verifiedField('id');
+        $monArticle->delete($numArt);
 
         header("Location: $pagePrecedent");
         die();

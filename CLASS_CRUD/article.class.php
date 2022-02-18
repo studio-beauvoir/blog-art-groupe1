@@ -201,7 +201,7 @@ class ARTICLE{
 		try {
 			$db->beginTransaction();
 
-			$query = 'DELETE FROM MEMBRE WHERE `numArt` = ?;';
+			$query = 'DELETE FROM ARTICLE WHERE `numArt` = ?;';
 			$request = $db->prepare($query);
 			$request->execute([$numArt]);
 			$count = $request->rowCount();

@@ -1,146 +1,112 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD COMMENT (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : createComment.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
 
-// EDI WYSIWYG : ckeditor4
-//
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
+$submitBtn = "Créer";
+$pageCrud = "comment";
+$pagePrecedent = "./$pageCrud.php";
+$pageTitle = "$submitBtn un $pageCrud";
+$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.':'.$pagePrecedent, $pageTitle];
+// Insertion des fonctions utilitaires
+require_once __DIR__ . '/../../util/index.php';
 
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
-
-// Insertion classe Comment
+require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php'; 
+require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php'; 
+require_once __DIR__ . '/../../CLASS_CRUD/article.class.php'; 
 
 // Instanciation de la classe Comment
+$monComment = new COMMENT();
+$monMembre = new MEMBRE();
+$monArticle = new ARTICLE();
 
+$validator = Validator::make();
 
-// Gestion des erreurs de saisie
-$erreur = false;
-
+// Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    // controle des saisies du formulaire
+    $validator->addRules([
+        ValidationRule::required('libCom'),
+        ValidationRule::required('numMemb'),
+        ValidationRule::required('numArt'),
+    ])->bindValues($_POST);
 
+    if($validator->success()) {
+        $libCom = $validator->verifiedField('libCom');
+        $numMemb = $validator->verifiedField('numMemb'); 
+        $numArt = $validator->verifiedField('numArt');
+        $numSeqArt = $monComment->getNextNumCom($numArt);
+        
+        $monComment->create($numSeqArt, $numMemb, $libCom, $numMemb);
 
-    // insertion classe comment
-
-
+        header("Location: $pagePrecedent");
+        die();
+    } 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form
 include __DIR__ . '/initComment.php';
-// Var init
 
+include __DIR__ . '/../../layouts/back/head.php';
+
+// affichage des erreurs
+$validator->echoErrors();
 
 ?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-    <meta charset="utf-8" />
-    <title>Admin - CRUD Commentaire</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+<form 
+    class="post-form"
+    method="POST" 
+    action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" 
+    enctype="multipart/form-data" 
+    accept-charset="UTF-8"
+>
 
-  <!-- Style du formulaire et des boutons -->
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <p class="important">(Tous les champs sont requis)</p>
 
-</head>
-<body>
-    <h1>BLOGART22 Admin - CRUD Commentaire</h1>
-    <h2>Ajout d'un commentaire</h2>
+    <div class="field">
+        <label for="numMemb">Quel membre</label>
+        <select name="numMemb" id="numMemb">
+            <?php 
+                $allMembres = $monMembre->get_AllMembres();                    
+                foreach($allMembres as $membre) { 
+            ?>
+                <option <?=$membre['numMemb']==$validator->oldField('numMemb')?'selected':'' ?> value="<?= $membre['numMemb'] ?>" ><?=$membre['pseudoMemb'] ?></option>
+            <?php } ?>
+        </select>
+    </div>
 
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
+    <div class="field">
+        <label for="numArt">Quel article</label>
+        <select name="numArt" id="numArt">
+            <?php 
+                $allArticles = $monArticle->get_AllArticles();                    
+                foreach($allArticles as $article) { 
+            ?>
+                <option <?=$article['numArt']==$validator->oldField('numArt')?'selected':'' ?> value="<?= $article['numArt'] ?>" ><?=$article['libTitrArt'] ?></option>
+            <?php } ?>
+        </select>
+    </div>
 
-      <fieldset>
-        <legend class="legend1">Commentez un commentaire...</legend>
+    <div class="field">
+        <label for="libCom">Ajoutez votre commentaire :</label>
+        <textarea name="libCom" id="libCom" rows="20" cols="100" placeholder="Votre commentaire"><?=$validator->oldField('libCom') ?></textarea>
+    </div>
 
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
+    <!-- mot cle a rajouter -->
+
+    <div class="controls">
+        <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
+        <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
+        <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
+    </div>
+</form>
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <!-- --------------------------------------------------------------- -->
+    <!-- Début Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
+<!-- --------------------------------------------------------------- -->
+
+    <!-- A faire dans un 3ème temps  -->
 
 <!-- --------------------------------------------------------------- -->
-    <!-- FK : Membre, Article -->
+    <!-- Fin Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
 <!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Listbox Membre -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="LibTypAngl">
-                <b>Quel membre :&nbsp;&nbsp;&nbsp;</b>
-            </label>
-            <input type="text" name="idMemb" id="idMemb" size="5" maxlength="5" value="<?= ""; ?>" autocomplete="on" />
 
-            <!-- Listbox membre => 2ème temps -->
-
-            </div>
-        </div>
-    <!-- FIN Listbox Membre -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Listbox Article -->
-        <br>
-        <div class="control-group">
-            <div class="controls">
-            <label class="control-label" for="LibTypThem">
-                <b>Quel article :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-            </label>
-            <input type="text" name="idArt" id="idArt" size="5" maxlength="5" value="<?= ""; ?>" autocomplete="on" />
-
-            <!-- Listbox Article => 2ème temps -->
-
-            </div>
-        </div>
-    <!-- FIN Listbox Article -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Fin FK : Membre, Article -->
-<!-- --------------------------------------------------------------- -->
-    <!-- textarea comment -->
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="libCom"><b>Ajoutez votre Commentaire :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <div class="controls">
-              <textarea name="libCom" id="editor1" tabindex="30" style="height:400px; width:700px; padding:2px; border:solid 1px black; color:steelblue; border-radius:5px;" rows="20" cols="100" title="Texte à mettre en forme" value="<? if(isset($_GET['libCom'])) echo $_POST['libCom']; ?>"></textarea>
-            </div>
-        </div>
-        <br>
-    <!-- End textarea comment -->
-<!-- --------------------------------------------------------------- -->
-       <small class="error">Votre post est soumis à validation avant son affichage sur le blog (moins d'une semaine)...</small><br><br>
-
-        <div class="control-group">
-            <div class="error">
-<?php
-            if ($erreur) {
-                echo ($errSaisies);
-            } else {
-                $errSaisies = "";
-                echo ($errSaisies);
-            }
-?>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <div class="controls">
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                <br>
-            </div>
-        </div>
-      </fieldset>
-    </form>
-<?php
-require_once __DIR__ . '/footerComment.php';
-
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

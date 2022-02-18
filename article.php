@@ -8,8 +8,8 @@ $pageNav = ['Home'];
 require_once __DIR__ . '/layouts/front/head.php';
 ?>
     <div class="head-bg"> <!-- <img src="" alt="Oeuvre de David Selor de son personnage Mimil, servant d'arrière plan"> -->
-    <div class="head-h1"><h1>Comment n'avez-vous pas pu le voir ?</h1></div>
-    <div class="head-h2"><h2>Comment <span class="bleu"> n</span>’avez-vous <span class="bl">pas</span> pu le voir ?</h2></div>
+    <div class="head-h1"><h1>comment n'avez-vous pas pu le voir ?</h1></div>
+    <div class="head-h2"><h2>Comment <span class="bleu"> n</span>’avez-vous <span class="bleu">pas</span> pu le voir ?</h2></div>
     <div class="head-h4"><h4>Le personnage Mimil créé par l’artiste David Selor est en effet partout dans les rues ! Impossible de le rater. Après avoir arpenté les villes du monde entier, le créateur revient dans sa ville natale. Il nous présente en exclusivité sa nouvelle exposition, nommée <span class="green"> Fragile.</span></h4></div>
     </div>
     <div class="discover">

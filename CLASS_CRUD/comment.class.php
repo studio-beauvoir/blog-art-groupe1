@@ -131,15 +131,15 @@ class COMMENT{
 	} // End of function
 
 	// comment en attente : Moderation affComOK à FALSE
-	function create($numSeqCom, $numArt, $dtCreCom, $libCom, $numMemb){
+	function create($numSeqCom, $numArt, $libCom, $numMemb){
 		global $db;
 
 		try {
 			$db->beginTransaction();
 
-			$query = 'INSERT INTO COMMENT (numSeqCom, numArt, dtCreCom, libCom, numMemb) VALUES (?, ?, ?, ?, ?);';
+			$query = 'INSERT INTO COMMENT (numSeqCom, numArt, dtCreCom, libCom, attModOK, numMemb) VALUES (?, ?, NOW(), ?, 0, ?);';
 			$request = $db->prepare($query);
-			$request->execute( [$numSeqCom, $numArt, $dtCreCom, $libCom, $numMemb]);
+			$request->execute( [$numSeqCom, $numArt, $libCom, $numMemb]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -152,15 +152,15 @@ class COMMENT{
 
 	// Moderation : TRUE si comment affiché, FALSE sinon
 	// et remarques possibles admin si non affiché
-	function update($numSeqCom, $numArt, $attModOK, $dtModCom, $notifComKOAff, $delLogiq){
+	function update($numSeqCom, $numArt, $attModOK, $notifComKOAff, $delLogiq){
 		global $db;
 
 		try {
 			$db->beginTransaction();
 
-			$query = 'UPDATE COMMENT SET ttModOK=?, attModOK=?, dtModCom=?, notifComKOAff=?, delLogiq=? WHERE numSeqCom=?, numArt=?';
+			$query = 'UPDATE COMMENT SET ttModOK=?, attModOK=?, dtModCom=NOW(), notifComKOAff=?, delLogiq=? WHERE numSeqCom=?, numArt=?';
 			$request = $db->prepare($query);
-			$request->execute([$attModOK, $dtModCom, $notifComKOAff, $delLogiq, $numSeqCom, $numArt]);
+			$request->execute([$attModOK, $notifComKOAff, $delLogiq, $numSeqCom, $numArt]);
 			$db->commit();
 			$request->closeCursor();
 		}

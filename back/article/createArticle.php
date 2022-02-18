@@ -92,7 +92,7 @@ $validator->echoErrors();
     accept-charset="UTF-8"
 >
 
-
+    <p class="important">(Tous les champs sont requis)</p>
     <div class="field">
         <label for="photArt">Image</label>
         <label for="photArt" class="field-imgContent">

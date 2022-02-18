@@ -172,4 +172,30 @@ class MEMBRE{
 		$idStat = 3; // Membre niveau 1
 		$this->create();
 	}
+
+	function login() {
+		// $query = 'SELECT * FROM MEMBRE WHERE numMemb = ?;';
+		// $result = $db->prepare($query);
+		// $result->execute([$_SESSION['numMemb']]);
+		// $rowU = $result->fetch();
+		// if($rowU){
+		//     $numMemb = $rowU['numMemb'];
+		//     $your_name = $rowU['your_name'];
+		// }
+
+		
+		$query = "SELECT * FROM MEMBRE WHERE pseudoMemb = ? AND passMemb = ?";
+		$result = $db->prepare($query);
+		$result->execute([$pseudoMemb, $passMemb]);
+		$rowCount = $result->rowCount();
+
+		if($rowCount < 1){
+			$_SESSION['message'] = "Erreur de Login. Veuillez réessayer.";
+			// header('location: connexion.php');
+		}else{
+			$row = $result->fetch();
+			$_SESSION['userid'] = $row['userid'];
+			header('location: index1.php');
+		}
+	}
 }	// End of class

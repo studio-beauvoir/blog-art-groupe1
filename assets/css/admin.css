@@ -1,3 +1,9 @@
+
+.important {
+    font-weight: bold;
+    /* color: var(--g3); */
+}
+
 table {
     border-radius: 20px;
     padding: 0;

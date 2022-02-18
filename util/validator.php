@@ -326,7 +326,6 @@ class Validator {
             if( !$rule->isValid() ) {
                 $this->hasSucceeded = false;
                 $this->addErrors($rule->errors());
-                break;
             }
         }
 

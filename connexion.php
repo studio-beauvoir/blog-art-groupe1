@@ -1,66 +1,50 @@
 <?php
 
-$submitBtn = "Créer";
-$pageCrud = "langue";
-$pagePrecedent = "./$pageCrud.php";
-$pageTitle = "$submitBtn: $pageCrud";
-$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
-
+$submitBtn = "Connexion";
+$pageTitle = "$submitBtn";
 require_once __DIR__ . '/util/index.php';
-require_once __DIR__ . '/CONNECT/database.php';
-require_once __DIR__ . '/layouts/front/head.php';
+require_once __DIR__ . '/CLASS_CRUD/membre.class.php'; 
 
-$pageTitle = "Panel user";
-$pageNav = ['Connexion'];
+$monMembre = new MEMBRE();
 
-global $db;
+$validator = Validator::make();
 
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $validator->addRules([
+        ValidationRule::required('pseudoMemb')->customError('isRequired', 'Le pseudo est requis'),
+        ValidationRule::required('passMemb')->customError('isRequired', 'Le mot de passe est requis')->password()
+    ])->bindValues($_POST);
 
-// $query = 'SELECT * FROM MEMBRE WHERE numMemb = ?;';
-// $result = $db->prepare($query);
-// $result->execute([$_SESSION['numMemb']]);
-// $rowU = $result->fetch();
-// if($rowU){
-//     $numMemb = $rowU['numMemb'];
-//     $your_name = $rowU['your_name'];
-// }
-
-
-
-$pseudoMemb = ctrlSaisies($_POST['pseudoMemb']);
-$passMemb = ctrlSaisies($_POST['passMemb']);
-
-$query = "SELECT * FROM MEMBRE WHERE pseudoMemb = ? AND passMemb = ?";
-$result = $db->prepare($query);
-$result->execute([$pseudoMemb, $passMemb]);
-$rowCount = $result->rowCount();
-
-if($rowCount < 1){
-	$_SESSION['message'] = "Erreur de Login. Veuillez réessayer.";
-	// header('location: connexion.php');
-}else{
-	$row = $result->fetch();
-	$_SESSION['userid'] = $row['userid'];
-	header('location: index1.php');
+    if($validator->success()) {
+        $pseudoMemb = $validator->verifiedField('pseudoMemb');
+        $passMemb = $validator->verifiedField('passMemb');
+    }
 }
+
+require_once __DIR__ . '/layouts/front/head.php';
 ?>
+<div class="container">
+    <h1>Se connecter</h1>
 
+    <?=$validator->echoErrors() ?>
+    <form 
+        class="user-form"
+        method="POST" 
+        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" 
+        enctype="multipart/form-data" 
+        accept-charset="UTF-8"
+    >
+        <div class="field">
+            <label>Pseudo</label>
+            <input value="<?=$validator->oldField('pseudoMemb')?>" type="text" name="pseudoMemb">
+        </div>
+        
+        <div class="field">
+            <label> Mot de passe </label>
+            <input type="passMemb" name="passMemb">
+        </div>
 
-<h1>Connexion</h1>
-<form method="POST" action="index1.php">
-
-    <div class="field">
-        <label>Pseudo</label>
-        <input type="text" name="pseudoMemb">
-    </div>
-    
-    <div class="field">
-        <label> Mot de passe </label>
-        <input type="passMemb" name="passMemb"> <br/><br/>
-    </div>
-
-    <input class="btn btn-lg" title="Se connecter" type="submit" value="Connexion" />
-
-</form>
-
+        <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
+    </form>
+</div>
 <?php require_once __DIR__ . '/layouts/front/foot.php';?>

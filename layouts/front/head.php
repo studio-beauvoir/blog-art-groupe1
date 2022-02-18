@@ -7,6 +7,7 @@
 
         <link href="<?= webSitePath() ?>/assets/css/var.css" rel="stylesheet" type="text/css" />
         <link href="<?= webSitePath() ?>/assets/css/master.css" rel="stylesheet" type="text/css" />
+        <link href="<?= webSitePath() ?>/assets/css/front.css" rel="stylesheet" type="text/css" />
         <!-- <link href="<?= webSitePath() ?>/assets/css/style.css" rel="stylesheet" type="text/css" /> -->
     </head>
     <body>

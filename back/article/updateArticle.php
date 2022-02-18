@@ -148,7 +148,7 @@ $validator->echoErrors();
 
     <div class="field">
         <label for="dtCreArt">Date de création</label>
-        <input value="<?=preg_replace('/\s/', 'T', $dtCreArt) ?>" type="datetime-local" name="dtCreArt" id="dtCreArt"/>
+        <input disabled value="<?=preg_replace('/\s/', 'T', $dtCreArt) ?>" type="datetime-local" name="dtCreArt" id="dtCreArt"/>
     </div>
 
     <div class="field">

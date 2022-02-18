@@ -35,7 +35,7 @@ table tbody {
 }
 
 .page-header {
-    margin-bottom: 6rem;
+    padding: 50px 50px 50px 0px;
 }
 
 .list-crud {

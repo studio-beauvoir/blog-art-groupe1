@@ -24,7 +24,7 @@ class ARTICLE{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur insert MEMBRE : ' . $e->getMessage());
+			die('Erreur get 1 MEMBRE : ' . $e->getMessage());
 		}
 	}
 

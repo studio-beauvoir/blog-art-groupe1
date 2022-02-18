@@ -17,7 +17,6 @@ $monMembre = new MEMBRE();
 $monStatut = new STATUT();
 
 // Gestion des erreurs de saisie
-$erreur = false;
 $validator = Validator::make();
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
@@ -29,15 +28,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ValidationRule::required('pseudoMemb')->pseudo(),
         ValidationRule::required('passMemb')->password(),
         ValidationRule::required('eMailMemb')->email(),
-        // ValidationRule::required('dtCreaMemb'),
-        ValidationRule::required('accordMemb'),
+        ValidationRule::required('accordMemb')->equalToValue('on')->customError('shouldBeEqualToValue', 'Vous devez accepter les conditions d\'utilisation'),
         ValidationRule::required('idStat')
     ])->bindValues($_POST);
 
     if($validator->success()) {
-
-        // Saisies valides
-        $erreur = false;
 
         $prenomMemb = $validator->verifiedField('prenomMemb');
         $nomMemb = $validator->verifiedField('nomMemb');
@@ -56,11 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: ./membre.php");
         die();
     }   // Fin if ((isset($_POST['libStat'])) ...
-    else {
-        // Saisies invalides
-        $erreur = true;
-        $errSaisies =  "Erreur, la saisie est obligatoire !";
-    }   // End of else erreur saisies
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form
@@ -108,43 +98,33 @@ include __DIR__ . '/../../layouts/back/head.php';
         <div class="field">
             <label for="passMemb">Mot passe<span class="error">(*)</span></label>
             <input type="password" name="passMemb" id="passMemb" size="80" maxlength="80" />
-            <br>
-            <input type="checkbox" onclick="myFunction('passMemb')">
-            &nbsp;&nbsp;
-            <label><i>Afficher Mot de passe</i></label>
+            <label><input type="checkbox" onclick="myFunction('passMemb')"><i>Afficher Mot de passe</i></label>
+            <p>
+                Le mot de passe doit comporter entre 6 et 15 caractères, et au moins une lettre, un chiffre et un caractère spécial parmi &@#$%_-.?!
+            </p>
         </div>
 
-        <br>
         <div class="field">
             <label for="pass2Memb">Confirmez le mot de passe<span class="error">(*)</span></label>
             <input type="password" name="pass2Memb" id="pass2Memb" size="80" maxlength="80"/>
-            <br>
-            <input type="checkbox" onclick="myFunction('pass2Memb')">
-            &nbsp;&nbsp;
-            <label><i>Afficher Mot de passe</i></label>
+            <label><input type="checkbox" onclick="myFunction('pass2Memb')"><i>Afficher Mot de passe</i></label>
         </div>
 
         </div><div class="field">
-            <label for="eMailMemb">eMail<span class="error">(*)</span></label>
+            <label for="eMailMemb">Email<span class="error">(*)</span></label>
             <input name="eMailMemb" id="eMailMemb" size="80" maxlength="80"/>
         </div>
 
         <div class="field">
-            <label for="eMail1Memb">Confirmez l'eMail<span class="error">(*)</span></label>
+            <label for="eMail1Memb">Confirmez l'email<span class="error">(*)</span></label>
             <input name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" />
         </div>
 
         <div class="field">
             <label for="accordMemb"><b>J'accepte que mes données soient conservées :</b></label>
             <div class="controls">
-               <fieldset>
-                  <input type="radio" name="accordMemb"
-                  <?= ($accordMemb == "on") ? 'checked="checked"' : ''
-                  ?> value="on" />&nbsp;&nbsp;Oui&nbsp;&nbsp;&nbsp;&nbsp;
-                  <input type="radio" name="accordMemb"
-                  <?= ($accordMemb == "off") ? 'checked="checked"' : ''
-                  ?> value="off" checked="checked" />&nbsp;&nbsp;Non
-               </fieldset>
+                  <label class="font-h4"><input type="radio" name="accordMemb" value="on" />Oui</label>
+                  <label class="font-h4"><input type="radio" name="accordMemb" value="off" checked="checked" />Non</label>
             </div>
         </div>
 

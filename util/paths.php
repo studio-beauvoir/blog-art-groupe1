@@ -36,7 +36,7 @@ function crudPath($crud="") {
  * Retourne le lien vers un crud dans le navigateur
  */
 function webUploadPath($morePath="") {
-    return webSitePath('/uploads/'.$morePath);
+    return webSitePath('/assets/uploads/'.$morePath);
 }
 
 ?>

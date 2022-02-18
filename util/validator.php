@@ -381,8 +381,16 @@ class Validator {
     }
 
 
-    public function oldField($fieldName) {
+    public function oldField($fieldName, $fieldValueFromBDD=false) {
         if(isset($this->fieldsValues[$fieldName])) return $this->fieldsValues[$fieldName];
+        if($fieldValueFromBDD) return $fieldValueFromBDD;
+        return '';
+    }
+
+    // marche pas
+    public function oldFile($fieldName, $fieldValueFromBDD=false) {
+        if(isset($this->fieldsValues[$fieldName])) return $this->fieldsValues[$fieldName]['tmp_name'];
+        if($fieldValueFromBDD) return $fieldValueFromBDD;
         return '';
     }
 

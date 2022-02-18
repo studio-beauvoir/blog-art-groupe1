@@ -109,52 +109,52 @@ $validator->echoErrors();
 
     <div class="field">
         <label for="libTitrArt">Nom de l'article</label>
-        <input name="libTitrArt" id="libTitrArt" placeholder="Sur 100 car." size="100" maxlength="100" />
+        <input value="<?=$validator->oldField('libTitrArt') ?>" name="libTitrArt" id="libTitrArt" placeholder="Sur 100 car." size="100" maxlength="100" />
     </div>
 
     <div class="field">
         <label for="dtCreArt">Date de création</label>
-        <input type="datetime-local" name="dtCreArt" id="dtCreArt"/>
+        <input value="<?=$validator->oldField('dtCreArt') ?>" type="datetime-local" name="dtCreArt" id="dtCreArt"/>
     </div>
 
     <div class="field">
         <label for="libChapoArt">Chapeau</label>
-        <textarea name="libChapoArt" id="libChapoArt" rows="10" placeholder="Décrivez le chapeau. Sur 500 car."></textarea>
+        <textarea name="libChapoArt" id="libChapoArt" rows="10" placeholder="Décrivez le chapeau. Sur 500 car."><?=$validator->oldField('libChapoArt') ?></textarea>
     </div>
 
     <div class="field">
         <label for="libAccrochArt">Accroche paragraphe 1</label>
-        <input name="libAccrochArt" id="libAccrochArt" placeholder="Sur 100 car." size="100" maxlength="100" />
+        <input value="<?=$validator->oldField('libAccrochArt') ?>" name="libAccrochArt" id="libAccrochArt" placeholder="Sur 100 car." size="100" maxlength="100" />
     </div>
 
     <div class="field">
         <label for="parag1Art">Paragraphe 1</label>
-        <textarea name="parag1Art" id="parag1Art" rows="10" placeholder="Décrivez le premier paragraphe. Sur 1200 car."></textarea>
+        <textarea name="parag1Art" id="parag1Art" rows="10" placeholder="Décrivez le premier paragraphe. Sur 1200 car."><?=$validator->oldField('parag1Art') ?></textarea>
     </div>
 
     <div class="field">
         <label for="libSsTitr1Art">Sous-titre 1</label>
-        <input name="libSsTitr1Art" id="libSsTitr1Art" placeholder="Sur 100 car." size="100" maxlength="100" />
+        <input value="<?=$validator->oldField('libSsTitr1Art') ?>" name="libSsTitr1Art" id="libSsTitr1Art" placeholder="Sur 100 car." size="100" maxlength="100" />
     </div>
 
     <div class="field">
         <label for="parag2Art">Paragraphe 2</label>
-        <textarea name="parag2Art" id="parag2Art" rows="10" placeholder="Décrivez le deuxième paragraphe. Sur 1200 car."></textarea>
+        <textarea name="parag2Art" id="parag2Art" rows="10" placeholder="Décrivez le deuxième paragraphe. Sur 1200 car."><?=$validator->oldField('parag2Art') ?></textarea>
     </div>
 
     <div class="field">
         <label for="libSsTitr2Art">Sous-titre 2</label>
-        <input name="libSsTitr2Art" id="libSsTitr2Art" placeholder="Sur 100 car." size="100" maxlength="100" />
+        <input value="<?=$validator->oldField('libSsTitr1Art') ?>" name="libSsTitr2Art" id="libSsTitr2Art" placeholder="Sur 100 car." size="100" maxlength="100" />
     </div>
 
     <div class="field">
         <label for="parag3Art">Paragraphe 3</label>
-        <textarea name="parag3Art" id="parag3Art" rows="10" placeholder="Décrivez le troisième paragraphe. Sur 1200 car."></textarea>
+        <textarea name="parag3Art" id="parag3Art" rows="10" placeholder="Décrivez le troisième paragraphe. Sur 1200 car."><?=$validator->oldField('parag3Art') ?></textarea>
     </div>
 
     <div class="field">
         <label for="libConclArt">Conclusion</label>
-        <textarea name="libConclArt" id="libConclArt" rows="10" placeholder="Décrivez la conclusion. Sur 800 car."></textarea>
+        <textarea name="libConclArt" id="libConclArt" rows="10" placeholder="Décrivez la conclusion. Sur 800 car."><?=$validator->oldField('libConclArt') ?></textarea>
     </div>
 
     <div class="field">
@@ -164,7 +164,7 @@ $validator->echoErrors();
                 $allLangues = $maLangue->get_AllLangues();                    
                 foreach($allLangues as $langue) { 
             ?>
-                <option value="<?= $langue['numLang'] ?>" ><?=$langue['lib1Lang'] ?></option>
+                <option <?=$langue['numLang']==$validator->oldField('numLang')?'selected':'' ?> value="<?= $langue['numLang'] ?>" ><?=$langue['lib1Lang'] ?></option>
             <?php } ?>
         </select>
     </div>
@@ -176,7 +176,7 @@ $validator->echoErrors();
                 $allAngles = $monAngle->get_AllAngles();                    
                 foreach($allAngles as $angle) { 
             ?>
-                <option value="<?= $angle['numAngl'] ?>" ><?=$angle['libAngl'] ?></option>
+                <option <?=$angle['numAngl']==$validator->oldField('numAngl')?'selected':'' ?> value="<?= $angle['numAngl'] ?>" ><?=$angle['libAngl'] ?></option>
             <?php } ?>
         </select>
     </div>
@@ -188,7 +188,7 @@ $validator->echoErrors();
                 $allThematiques = $maThematique->get_AllThematiques();                    
                 foreach($allThematiques as $them) { 
             ?>
-                <option value="<?= $them['numThem'] ?>" ><?=$them['libThem'] ?></option>
+                <option <?=$them['numThem']==$validator->oldField('numThem')?'selected':'' ?> value="<?= $them['numThem'] ?>" ><?=$them['libThem'] ?></option>
             <?php } ?>
         </select>
     </div>

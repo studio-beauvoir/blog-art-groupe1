@@ -29,14 +29,14 @@ class ARTICLE{
 	}
 
 	//ça j'ai AP
-	function get_1ArticleAnd3FK($numArt){
-		global $db;
+	// function get_1ArticleAnd3FK($numArt){
+	// 	global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetch());
-	}
+	// 	// select
+	// 	// prepare
+	// 	// execute
+	// 	return($result->fetch());
+	// }
 
 	function get_AllArticles(){
 		global $db;

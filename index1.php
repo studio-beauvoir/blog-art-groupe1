@@ -7,9 +7,11 @@ $pageTitle = "Panel admin";
 $pageNav = ['Home'];
 require_once __DIR__ . '/layouts/back/head.php';
 ?>
+	<div class="box-etat">
 	<span class="btn btn-lg doing">En cours de dev</span>
 	<span class="btn btn-lg to-test">À tester</span>
 	<span class="btn btn-lg done">Terminé et testé</span>
+	</div>
 
 	<div class="list-crud">
 	<a class="btn btn-lg to-test" href="./BACK/angle/angle.php">Angle (*)</a>

@@ -18,192 +18,218 @@ $maLangue = new LANGUE();
 $monAngle = new ANGLE();
 $maThematique = new THEMATIQUE();
 
-//Insertion de la classe Statut
-require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
-
-//Instanciation de le classe Statut
-$monStatut = new STATUT();
-
-// Gestion des erreurs de saisie
-$erreur = false;
 $validator = Validator::make();
+$fileValidator = Validator::make();
+
+
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    $fileValidator->addRules([
+        ValidationRule::optionnal('photArt')->image()
+    ])->bindValues($_FILES);
 
-    if(isset($_POST['Submit'])){
-        $Submit = $_POST['Submit'];
-    } else {
-        $Submit = "";
-    }
 
     $validator->addRules([
         ValidationRule::required('id'),
-        ValidationRule::required('prenomMemb'),
-        ValidationRule::required('nomMemb'),
-        ValidationRule::required('pass1Memb'),
-        ValidationRule::required('pass2Memb')->equalTo('pass1Memb'),
-        ValidationRule::required('eMail1Memb')->email(),
-        ValidationRule::required('eMail2Memb')->email()->equalTo('eMail1Memb'),
-        ValidationRule::required('idStat')
+        ValidationRule::required('urlPhotArt'),
+        ValidationRule::required('libTitrArt'),
+        ValidationRule::required('libChapoArt'),
+        ValidationRule::required('libAccrochArt'),
+        ValidationRule::required('parag1Art'),
+        ValidationRule::required('libSsTitr1Art'),
+        ValidationRule::required('parag2Art'),
+        ValidationRule::required('libSsTitr2Art'),
+        ValidationRule::required('parag3Art'),
+        ValidationRule::required('libConclArt'),
+        ValidationRule::required('numAngl'),
+        ValidationRule::required('numThem')
     ])->bindValues($_POST);
 
-    if($validator->success()) {
-        // Saisies valides
-        $erreur = false;
+    if( $fileValidator->success() AND $validator->success()) {
 
-        $numMemb = $validator->verifiedField('id');
-        $prenomMemb = $validator->verifiedField('prenomMemb');
-        $nomMemb = $validator->verifiedField('nomMemb');
+
+        $urlPhotArt = $validator->verifiedField('urlPhotArt');
+
+        // modification de l'image uniquement si on en a envoyé une
+        if($fileValidator->isFilled('photArt')) {
+            $img = uploadImage(
+                $fileValidator->verifiedFile('photArt'),
+                'imgArt' . md5(uniqid())
+            );
+            $urlPhotArt = $img['filename'];
+        }
+
+
+        $numArt = $validator->verifiedField('id'); 
+        $libTitrArt = $validator->verifiedField('libTitrArt');
+        $libChapoArt = $validator->verifiedField('libChapoArt');
+        $libAccrochArt = $validator->verifiedField('libAccrochArt');
+        $parag1Art = $validator->verifiedField('parag1Art');
+        $libSsTitr1Art = $validator->verifiedField('libSsTitr1Art');
+        $parag2Art = $validator->verifiedField('parag2Art');
+        $libSsTitr2Art = $validator->verifiedField('libSsTitr2Art');
+        $parag3Art = $validator->verifiedField('parag3Art');
+        $libConclArt = $validator->verifiedField('libConclArt');
+        $numAngl = $validator->verifiedField('numAngl');
+        $numThem = $validator->verifiedField('numThem');
         
-        $passMemb = $validator->verifiedField('pass2Memb');
-        // check que pass1 == pass2
-
-        $eMailMemb = $validator->verifiedField('eMail2Memb');
-
-        $idStat = $validator->verifiedField('idStat');
-        $monMembre->update($numMemb, $prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat);
-
+        $monArticle->update($numArt, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numAngl, $numThem);
 
         header("Location: $pagePrecedent");
-    } else {
-        // Saisies invalides
-        $erreur = true;
-        $errSaisies =  "Erreur, la saisie est obligatoire !";
-    }   // End of else erreur saisies
+        die();
+    }
 }   // Fin if ($_SERVER["REQUEST_METHOD"] === "POST")
 
 
 // Init variables form
-include __DIR__ . '/initMembre.php';
-
+include __DIR__ . '/initArticle.php';
 
 include __DIR__ . '/../../layouts/back/head.php';
-?>
 
-<script>
-        // Affichage pass
-        function myFunction(myInputPass) {
-            var x = document.getElementById(myInputPass);
-            if (x.type === "password") {
-              x.type = "text";
-            } else {
-              x.type = "password";
-            }
-        }
-</script>
+// affichage des erreurs
+$fileValidator->echoErrors();
+$validator->echoErrors();
 
-<?php
     // Modif : récup id à modifier
     // id passé en GET
 
     if(!isset($_GET['id'])) {
-        header("Location: ./membre.php");
+        header("Location: $pagePrecedent");
         die();
     }
-    $membre = $monMembre->get_1Membre($_GET['id']);
-    $prenomMemb = $membre['prenomMemb'];
-    $nomMemb = $membre['nomMemb'];
-    $pseudoMemb = $membre['pseudoMemb'];
-    $passMemb = $membre['passMemb'];
-    $eMailMemb = $membre['eMailMemb'];
-    $dtCreaMemb = $membre['dtCreaMemb'];
-    $accordMemb = $membre['accordMemb'];
-    $idStat = $membre['idStat'];
+    $article = $monArticle->get_1Article($_GET['id']);
+    // $idStat = $article['idStat'];
+    $urlPhotArt = $article['urlPhotArt'];
+
+    $dtCreArt = $article['dtCreArt'];
+    $libTitrArt = $article['libTitrArt'];
+    $libChapoArt = $article['libChapoArt'];
+    $libAccrochArt = $article['libAccrochArt'];
+    $parag1Art = $article['parag1Art'];
+    $libSsTitr1Art = $article['libSsTitr1Art'];
+    $parag2Art = $article['parag2Art'];
+    $libSsTitr2Art = $article['libSsTitr2Art'];
+    $parag3Art = $article['parag3Art'];
+    $libConclArt = $article['libConclArt'];
+    $numAngl = $article['numAngl'];
+    $numThem = $article['numThem'];
 
 ?>
-<?=$validator->echoErrors()?>
-    <form 
-        class="admin-form"
-        method="POST" 
-        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>" 
-        enctype="multipart/form-data" 
-        accept-charset="UTF-8"
-    >
-        <input type="hidden" id="id" name="id" value="<?=$_GET['id'] ?>" />
+<form 
+    class="admin-form"
+    method="POST" 
+    action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id']?>" 
+    enctype="multipart/form-data" 
+    accept-charset="UTF-8"
+>
 
-        <div class="field">
-            <label for="prenomMemb">Prénom</label>
-            <input name="prenomMemb" id="prenomMemb" size="80" maxlength="80" value="<?= $prenomMemb; ?>" />
-        </div>
+    <input type="hidden" id="id" name="id" value="<?=$_GET['id'] ?>" />
 
+    <div class="field">
+        <label for="photArt">Image</label>
+        <img src="<?= webUploadPath($urlPhotArt) ?>" />
+        <input type="hidden" id="urlPhotArt" name="urlPhotArt" value="<?=$urlPhotArt ?>" />
+        <input type="file" name="photArt" id="photArt" accept=".jpg,.gif,.png,.jpeg" title="Recherchez l'image à uploader !" />
+        <p>
+            Extension des images acceptées : .jpg, .gif, .png, .jpeg. 
+            <br/>10 Mo maximum
+        </p>
+    </div>
 
-        <div class="field">
-            <label for="nomMemb">Nom</label>
-            <input name="nomMemb" id="nomMemb" size="80" maxlength="80" value="<?= $nomMemb; ?>" />
-        </div>
+    <div class="field">
+        <label for="libTitrArt">Nom de l'article</label>
+        <input value="<?=$libTitrArt ?>" name="libTitrArt" id="libTitrArt" placeholder="Sur 100 car." size="100" maxlength="100" />
+    </div>
 
+    <div class="field">
+        <label for="dtCreArt">Date de création</label>
+        <input value="<?=preg_replace('/\s/', 'T', $dtCreArt) ?>" type="datetime-local" name="dtCreArt" id="dtCreArt"/>
+    </div>
 
+    <div class="field">
+        <label for="libChapoArt">Chapeau</label>
+        <textarea name="libChapoArt" id="libChapoArt" rows="10" placeholder="Décrivez le chapeau. Sur 500 car."><?=$libChapoArt ?></textarea>
+    </div>
 
-        <div class="field">
-            <label for="pseudoMemb">Pseudo</label>
-            <input name="pseudoMemb" id="pseudoMemb" size="80" maxlength="80" value="<?= $pseudoMemb; ?>" disabled/>
-        </div>
+    <div class="field">
+        <label for="libAccrochArt">Accroche paragraphe 1</label>
+        <input value="<?=$libAccrochArt ?>" name="libAccrochArt" id="libAccrochArt" placeholder="Sur 100 car." size="100" maxlength="100" />
+    </div>
 
-        <div class="field">
-            <label class="control-label" for="pass1Memb"><b>Mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="password" name="pass1Memb" id="myInput1" size="80" maxlength="80" value="<?= $passMemb; ?>" autocomplete="on" />
-            <br>
-            <input type="checkbox" onclick="myFunction('myInput1')">
-            &nbsp;&nbsp;
-            <label><i>Afficher mot de passe</i></label>
-        </div>
+    <div class="field">
+        <label for="parag1Art">Paragraphe 1</label>
+        <textarea name="parag1Art" id="parag1Art" rows="10" placeholder="Décrivez le premier paragraphe. Sur 1200 car."><?=$parag1Art ?></textarea>
+    </div>
 
-        <br>
-        <div class="field">
-            <label class="control-label" for="pass2Memb"><b>Confirmez le mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="password" name="pass2Memb" id="myInput2" size="80" maxlength="80" value="<?= $passMemb; ?>" autocomplete="on" />
-            <br>
-            <input type="checkbox" onclick="myFunction('myInput2')">
-            &nbsp;&nbsp;
-            <label><i>Afficher mot de passe</i></label>
-        </div>
-        <small class="error">*Champ obligatoire si nouveau passe</small><br>
-        
-        <div class="field">
-            <label for="eMail1Memb">Email</label>
-            <input name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" />
-        </div>
+    <div class="field">
+        <label for="libSsTitr1Art">Sous-titre 1</label>
+        <input value="<?=$libSsTitr1Art ?>" name="libSsTitr1Art" id="libSsTitr1Art" placeholder="Sur 100 car." size="100" maxlength="100" />
+    </div>
 
-        <div class="field">
-            <label for="eMail2Memb">Confirmer l'email</label>
-            <input name="eMail2Memb" id="eMail2Memb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" />
-        </div>
+    <div class="field">
+        <label for="parag2Art">Paragraphe 2</label>
+        <textarea name="parag2Art" id="parag2Art" rows="10" placeholder="Décrivez le deuxième paragraphe. Sur 1200 car."><?=$parag2Art ?></textarea>
+    </div>
 
-        <br>
-        <div class="field">
-            <label class="control-label" for="eMail2Memb"><b>Confirmez l'eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="email" name="eMail2Memb" id="eMail2Memb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" autocomplete="on" />
-        </div>
-        <small class="error">*Champ obligatoire si nouveau eMail</small><br>
+    <div class="field">
+        <label for="libSsTitr2Art">Sous-titre 2</label>
+        <input value="<?=$libSsTitr2Art ?>" name="libSsTitr2Art" id="libSsTitr2Art" placeholder="Sur 100 car." size="100" maxlength="100" />
+    </div>
 
+    <div class="field">
+        <label for="parag3Art">Paragraphe 3</label>
+        <textarea name="parag3Art" id="parag3Art" rows="10" placeholder="Décrivez le troisième paragraphe. Sur 1200 car."><?=$parag3Art ?></textarea>
+    </div>
 
-        <div class="field">
-            <label for="dtCreaMemb">Date de création</label>
-            <input name="dtCreaMemb" id="dtCreaMemb" size="80" maxlength="80" value="<?= $dtCreaMemb; ?>" />
-        </div>
+    <div class="field">
+        <label for="libConclArt">Conclusion</label>
+        <textarea name="libConclArt" id="libConclArt" rows="10" placeholder="Décrivez la conclusion. Sur 800 car."><?=$libConclArt ?></textarea>
+    </div>
 
-        <div class="field">
-            <label for="accordMemb">Accord du membre au RGPD</label>
-            <input name="accordMemb" id="accordMemb" size="80" maxlength="80" value="<?= $accordMemb; ?>" />
-        </div>
-
-        <div class="field">
-            <label for="idStat">Quel statut :</label>
-            <select name="idStat" id="idStat">
+    <div class="field">
+        <label for="numAngl">Quel angle</label>
+        <select name="numAngl" id="numAngl">
             <?php 
-                $allStatuts = $monStatut->get_AllStatuts();                    
-                foreach($allStatuts as $statut) { 
+                $allAngles = $monAngle->get_AllAngles();                    
+                foreach($allAngles as $angle) { 
             ?>
-                <option <?=$statut['idStat']==$idStat?'selected':'' ?> value="<?= $statut['idStat'] ?>" ><?=$statut['libStat'] ?></option>
+            <option <?=$angle['numAngl']==$numAngl?'selected':'' ?> value="<?= $angle['numAngl'] ?>" ><?=$angle['libAngl'] ?></option>
             <?php } ?>
-            </select>
-        </div>
+        </select>
+    </div>
 
-        <div class="controls">
-            <a class="btn btn-lg btn-text" title="Réinitialiser"  href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>">Réinitialiser</a>
-            <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
-            <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
-        </div>
-    </form>
+    <div class="field">
+        <label for="numThem">Quelle thématique</label>
+        <select name="numThem" id="numThem">
+            <?php 
+                $allThematiques = $maThematique->get_AllThematiques();                    
+                foreach($allThematiques as $them) { 
+            ?>
+                <option <?=$them['numThem']==$numThem?'selected':'' ?> value="<?= $them['numThem'] ?>" ><?=$them['libThem'] ?></option>
+            <?php } ?>
+        </select>
+    </div>
+
+    <!-- mot cle a rajouter -->
+
+    <div class="controls">
+        <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
+        <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
+        <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
+    </div>
+</form>
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <!-- --------------------------------------------------------------- -->
+    <!-- Début Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
+<!-- --------------------------------------------------------------- -->
+
+    <!-- A faire dans un 3ème temps  -->
+
+<!-- --------------------------------------------------------------- -->
+    <!-- Fin Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
+<!-- --------------------------------------------------------------- -->
+
 <?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

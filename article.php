@@ -86,17 +86,33 @@ require_once __DIR__ . '/layouts/front/head.php';
             </div>
         </div>
         <div class="comments">
+            <h3>Commentaires</h3>
+        </div>
+        <div class="bloc-comments">
+            <div class="bloc-top"></div>
+            <div class="bloc-bot">
+                <div class="bloc-text-top">
 
+                </div>
+                <div class="bloc-text-mid">
+
+                </div>
+                <div class="bloc-text-bot">
+
+                </div>
+            </div>
         </div>
         <div class="add-comments">
             <div class="text-comments">
                 <h4>Ajouter un commentaire</h4>
             </div>
-            <div class="bloc-comments">
+            <div class="add-bloc-comments">
 
             </div>
-            <div class="btn-comments">
-                <h3>Commenter</h3>
+            <div class="box-btn">
+                <div class="btn-comments">
+                    <h3>Commenter</h3>
+                </div>
             </div>
         </div>
     </div>

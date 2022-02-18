@@ -173,7 +173,8 @@ class MEMBRE{
 		$this->create();
 	}
 
-	function login() {
+	function login($pseudoMemb, $passMemb) {
+		global $db;
 		// $query = 'SELECT * FROM MEMBRE WHERE numMemb = ?;';
 		// $result = $db->prepare($query);
 		// $result->execute([$_SESSION['numMemb']]);
@@ -183,19 +184,19 @@ class MEMBRE{
 		//     $your_name = $rowU['your_name'];
 		// }
 
-		
+		// requête pour savoir si l'id et le mdp son bon
 		$query = "SELECT * FROM MEMBRE WHERE pseudoMemb = ? AND passMemb = ?";
 		$result = $db->prepare($query);
 		$result->execute([$pseudoMemb, $passMemb]);
 		$rowCount = $result->rowCount();
 
 		if($rowCount < 1){
-			$_SESSION['message'] = "Erreur de Login. Veuillez réessayer.";
-			// header('location: connexion.php');
+			return false;
 		}else{
-			$row = $result->fetch();
-			$_SESSION['userid'] = $row['userid'];
-			header('location: index1.php');
+			$user = $result->fetch();
+			setcookie('session_token', customEncrypt('true.'.$user['numMemb'].'.'.$user['passMemb'].$user['dtCreaMemb']));
+			header('location: '.webSitePath('/index.php'));			
+			return true;
 		}
 	}
 }	// End of class

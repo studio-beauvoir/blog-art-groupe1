@@ -218,9 +218,7 @@ require_once __DIR__ . '/layouts/front/head.php';
             <div class="text-comments">
                 <h4>Ajouter un commentaire</h4>
             </div>
-            <textarea id="comments" name="comments" rows="3" class="add-bloc-comments">
-
-            </textarea>
+            <textarea id="comments" name="comments" rows="3" class="add-bloc-comments"></textarea>
             <div class="box-btn">
                 <div class="btn-comments">
                     <h3>Commenter</h3>

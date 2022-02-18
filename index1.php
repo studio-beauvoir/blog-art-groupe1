@@ -14,7 +14,7 @@ require_once __DIR__ . '/layouts/back/head.php';
 	</div>
 
 	<div class="list-crud">
-	<a class="btn btn-lg to-test" href="./BACK/angle/angle.php">Angle (*)</a>
+	<a class="btn btn-lg doing" href="./BACK/angle/angle.php">Angle (*)</a>
 
 	<a class="btn btn-lg to-test" href="./BACK/article/article.php">Article (*)</a>
 

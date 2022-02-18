@@ -97,9 +97,9 @@ $idThem = $article['numThem'];
         accept-charset="UTF-8"
     >   
         <input type="hidden" id="id" name="id" value="<?= $_GET['id'] ?>" />
- 
 
-        <div class="head-bg"> <img src="<?=$urlPhotArt?>" alt="Photo de l'article">
+
+        <div class="head-bg"> <img src="<?= webUploadPath($urlPhotArt) ?>" alt="Photo de l'article">
         <div class="head-h1"><h1><?=$libTitrArt?></h1></div>
         <div class="head-h2"><h2><span class="bleu"> <?=$libTitrArt?> </span></h2></div>
         <div class="head-h4"><h4><?=$libChapoArt?></h4></div>

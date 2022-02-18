@@ -8,7 +8,7 @@ require_once __DIR__ . '/CLASS_CRUD/membre.class.php';
 $monMembre = new MEMBRE();
 
 $validator = Validator::make();
-
+$loginState = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $validator->addRules([
         ValidationRule::required('pseudoMemb')->customError('isRequired', 'Le pseudo est requis'),
@@ -18,6 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if($validator->success()) {
         $pseudoMemb = $validator->verifiedField('pseudoMemb');
         $passMemb = $validator->verifiedField('passMemb');
+
+        $success = $monMembre->login($pseudoMemb, $passMemb);
+        if(!$success) {
+            $loginState = '<div class="errors"><div class="error">Le login ou le mot de passe est incorrect</div></div>';
+        }
     }
 }
 
@@ -39,6 +44,7 @@ require_once __DIR__ . '/layouts/front/head.php';
     <h1>Se connecter</h1>
 
     <?=$validator->echoErrors() ?>
+    <?=$loginState?>
     <form 
         class="user-form"
         method="POST" 

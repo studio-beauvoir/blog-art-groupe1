@@ -1,7 +1,6 @@
 <?php
 $submitBtn = "Supprimer";
 $pageCrud = "article";
-$pagePrecedent = "./$pageCrud.php";
 $pageTitle = "Supprimer un $pageCrud";
 $pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
 

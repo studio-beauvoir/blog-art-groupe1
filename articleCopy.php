@@ -1,9 +1,5 @@
 <?php
 
-// $pageCrud = "article";
-// $pageTitle = "Panel admin";
-// $pageNav = ['Home'];
-
 //Insertion fichiers utiles
 require_once __DIR__ . '/util/index.php';
 
@@ -31,6 +27,17 @@ require_once __DIR__ . '/CLASS_CRUD/langue.class.php';
 //Instanciation de la classe Langue
 $maLangue = new LANGUE(); 
 
+//Insertion classe Commentaire
+require_once __DIR__ . '/CLASS_CRUD/comment.class.php'; 
+
+//Instanciation de la classe Commment
+$monComment = new COMMENT(); 
+
+// //Insertion classe Membre
+// require_once __DIR__ . '/CLASS_CRUD/membre.class.php'; 
+
+// //Instanciation de la classe Membre
+// $monMembre = new MEMBRE();
 
 // Ctrl CIR
 
@@ -48,16 +55,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // delete effective de l'angle
 
     $validator = Validator::make([
-        ValidationRule::required('id')
+        ValidationRule::required('idArt'),
+        ValidationRule::required('idCom'),
     ])->bindValues($_POST);
 
     if($validator->success()) {
-        $numArt = $validator->verifiedField('id');
+        $numArt = $validator->verifiedField('idArt');
         $monArticle->delete($numArt);
-    } else {
-        $erreur = true;
-        $errSaisies =  "Erreur, l'article à supprimer n'existe pas !";
+
+        $numSeqCom = $validator->verifiedField('idCom');
+        $monComment->delete($numSeqCom, $numArt);
     }
+
+    // if($validator->success()) {
+    //     $numMemb = $validator->verifiedField('id');
+    //     $monMembre->delete($numMemb, $numSeqCom, $numArt);
+    // }
 
 }
 
@@ -66,9 +79,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 include __DIR__ . '/layouts/front/head.php';
 
 // controles
-if(!isset($_GET['id'])) header("Location: $pagePrecedent");
-$article = $monArticle->get_1Article($_GET['id']);
-if(!$article) header("Location: $pagePrecedent");
+if(!isset($_GET['idArt'])) header("Location: $pagePrecedent");
+$article = $monArticle->get_1Article($_GET['idArt']);
+
+$comment = $monComment->get_1Comment($_GET['idArt'], $_GET['idCom']);
+
+// $membre = $monMembre->get_1Membre($_GET['id'], ['id']);
+// if(!$article) header("Location: $pagePrecedent");
 
 
 $dtCreArt = $article['dtCreArt'];
@@ -82,8 +99,18 @@ $libSsTitr2Art = $article['libSsTitr2Art'];
 $parag3Art = $article['parag3Art'];
 $libConclArt = $article['libConclArt'];
 $urlPhotArt = $article['urlPhotArt'];
+
 $idAngl = $article['numAngl'];
 $idThem = $article['numThem'];
+
+// $numMemb = $membre['numMemb'];
+// $pseudoMemb = $membre['pseudoMemb'];
+
+$dtCreCom = $comment['dtCreCom'];
+$dtModCom = $comment['dtModCom'];
+$libCom = $comment['libCom'];
+
+
 
 ?>
     <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
@@ -92,12 +119,13 @@ $idThem = $article['numThem'];
     <form
         class="admin-form"
         method="POST" 
-        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id']?>" 
+        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?idArt=<?=$_GET['idArt']?>" 
+        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?idCom=<?=$_GET['idCom']?>" 
         enctype="multipart/form-data" 
         accept-charset="UTF-8"
     >   
-        <input type="hidden" id="id" name="id" value="<?= $_GET['id'] ?>" />
-
+        <input type="hidden" id="idArt" name="idArt" value="<?= $_GET['idArt'] ?>" />
+        <input type="hidden" id="idCom" name="idCom" value="<?= $_GET['idCom'] ?>" />
 
         <div class="head-bg"> <img src="<?= webUploadPath($urlPhotArt) ?>" alt="Photo de l'article">
         <div class="head-h1"><h1><?=$libTitrArt?></h1></div>
@@ -190,7 +218,8 @@ $idThem = $article['numThem'];
                         </div>
                     </div>
                     <div class="bloc-text-mid">
-                        <h4>Super article ! J’ai beaucoup appris. Au delà de mes connaissances, vous transmettez énormément d’informations.</h4>
+                        <h4><?=$libCom?></h4>
+                        <!-- Maintenant il faut afficher tous les commentaires les uns à la suite des autres -->
                     </div>
                     <div class="bloc-text-bot">
                         <div class="comments-svg">

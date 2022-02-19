@@ -15,8 +15,8 @@
             <div class="footer-box">
                 <ul>
                     <li><h4>Légal</h4></li>
-                    <li><p><a href="">Mentions légales</a></p></li>
-                    <li><p><a href="">Conditions générales d'utilisation</a></p></li>
+                    <li><p><a href="<?= webSitePath('/mentions-legales.php')?>">Mentions légales</a></p></li>
+                    <li><p><a href="<?= webSitePath('/cgu.php')?>">Conditions générales d'utilisation</a></p></li>
                     <li><p><a href="">Lien </a></p></li>
                 </ul>
             </div>
@@ -32,7 +32,7 @@
 
         <div class="container-section-law">
             <div class="footer-droits">
-                <p>© 2022-2024 BSA - Tous droits réservés</p>
+                <p>© 2022-<?=intval(date("Y"))+2; ?> BSA - Tous droits réservés</p>
             </div>
         </div>
 </footer>

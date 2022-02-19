@@ -60,7 +60,7 @@ require_once __DIR__ . '/layouts/front/head.php';
         <div class="field">
             <label> Mot de passe </label>
             <input value="<?=$validator->oldField('passMemb')?>" type="password" name="passMemb" id="passMemb">
-            <label><input type="checkbox" onclick="myFunction('passMemb')"><i>Afficher Mot de passe</i></label>
+            <label><input type="checkbox" onclick="myFunction('passMemb')"><i>Afficher le mot de passe</i></label>
             <p>
                 Le mot de passe doit comporter entre 6 et 15 caractères, 
                 <br/>et au moins une lettre, un chiffre et un caractère spécial parmi &@#$%_-.?!

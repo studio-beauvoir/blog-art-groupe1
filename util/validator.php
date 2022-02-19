@@ -30,6 +30,7 @@ class ValidationRule {
     private $shouldBeOfType = false;
     private $shouldBeEqualTo = false;
     private $shouldBeEqualToValue = false;
+    private $shouldBeUnique = false;
 
     private $minLength = false;
     private $maxLength = false;
@@ -44,6 +45,7 @@ class ValidationRule {
         'shouldBeOfType' => ":field doit être de type :shouldBeOfType",
         'shouldBeEqualTo' => ":field doit être identique au champ :shouldBeEqualTo",
         'shouldBeEqualToValue' => ":field doit être égal à :shouldBeEqualToValue",
+        'shouldBeUnique' => ":field existe déjà",
         'minLength' => ":field ne doit pas faire moins de :minLength",
         'maxLength' => ":field ne doit pas faire plus de :maxLength",
         'maxFileSize' => ":field dépasse la taille autorisée",
@@ -91,6 +93,15 @@ class ValidationRule {
 
     public function maxFileSize($max) {
         $this->maxFileSize = $max;
+        return $this;
+    }
+
+    public function unique($table, $column=false, $exceptSelf=false) {
+        $this->shouldBeUnique = [
+            'table'=>$table,
+            'column'=>$column?$column:$this->field,
+            'exceptSelf'=>$exceptSelf,
+        ];
         return $this;
     }
 
@@ -149,6 +160,14 @@ class ValidationRule {
         
         $this->isFilled = true;
         $this->validator->fieldsFilled[$this->field] = true;
+
+        if($this->shouldBeUnique) {
+            // isPseudo est une fonction utilitaire (/util/db.php)
+            if(!isUnique($this->shouldBeUnique['table'], $this->getValue(), $this->shouldBeUnique['column'], $this->shouldBeUnique['exceptSelf'])) {
+                $this->addError('shouldBeUnique');
+                $isValid = false;
+            }
+        }
 
         if($this->shouldBeOfType) {
             if(!isOfType($this->shouldBeOfType, $this->getValue())) {

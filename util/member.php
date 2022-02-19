@@ -13,7 +13,6 @@ function getLoggedMemberOrFalse() {
     
         if(count($data) > 2 AND $data[0] === "true") { // le token est valide
             $numMemb = intval($data[1]);
-            var_dump($numMemb);
     
             $potentialMember = $monMembre->get_1Membre($numMemb);
             if($potentialMember) {
@@ -24,6 +23,13 @@ function getLoggedMemberOrFalse() {
     }
 
     return $loggedMember;
+}
+
+function logout() {
+    if (isset($_COOKIE['session_token'])) {
+        unset($_COOKIE['session_token']); 
+        setcookie('session_token', null, time()-3600); 
+    }
 }
 
 ?>

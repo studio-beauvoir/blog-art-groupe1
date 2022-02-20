@@ -1,6 +1,6 @@
 <footer>
         <div class="container section-logo">
-            <img class="logo" src="<?= webSitePath() ?>/assets/img/logo.png" alt="logo du blog bordeaux street art">
+            <img class="logo-large" src="<?= webSitePath() ?>/assets/img/logo.png" alt="logo du blog bordeaux street art">
         </div>
 
         <div class="container section-list">

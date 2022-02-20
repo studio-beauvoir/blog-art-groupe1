@@ -13,7 +13,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 
@@ -46,8 +46,12 @@ main {
 }
 
 .logo {
-    width: 175px;
-    height: 80px;
+    width: 100px;
+    /* height: 80px; */
+}
+.logo-large {
+    width: 150px;
+    /* height: 80px; */
 }
 
 
@@ -155,9 +159,13 @@ textarea[disabled], select[disabled], input[disabled], .input[disabled] {
 main, .container {
     margin: 0 auto;
     max-width: 1280px;
+    padding: 0 1rem;
+    box-sizing: border-box;
 }
 .container-fluid {
+    margin: 0;
     max-width: 100%;
+    padding: 0;
 }
 
 h1, h2, h3, h4 {
@@ -204,10 +212,13 @@ label {
 
 /* -----------------------------------HEADER-----------------------------------*/
 header{
-    position: relative;
+    position: sticky;
+    z-index: 9999;
+    top: 0;
+    left: 0;
     display: flex;
     background-color: var(--bg2);
-    padding: 5px;
+    padding: 0.7rem;
     justify-content: center;
 }
 

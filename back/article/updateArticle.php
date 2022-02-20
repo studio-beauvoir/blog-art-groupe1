@@ -46,8 +46,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ValidationRule::required('numThem')
     ])->bindValues($_POST);
 
-    if( $fileValidator->success() AND $validator->success()) {
 
+    $fileValidator->test();
+    $validator->test();
+
+    if($fileValidator->hasSucceeded AND $validator->hasSucceeded) {
 
         $urlPhotArt = $validator->verifiedField('urlPhotArt');
 
@@ -118,6 +121,7 @@ $validator->echoErrors();
     $numAngl = $article['numAngl'];
     $numThem = $article['numThem'];
 
+    $numLang = $monAngle->get_1Angle($numAngl)['numLang'];
 ?>
 <form 
     class="admin-form"
@@ -194,6 +198,17 @@ $validator->echoErrors();
         <textarea name="libConclArt" id="libConclArt" rows="10" placeholder="Décrivez la conclusion. Sur 800 car."><?=$libConclArt ?></textarea>
     </div>
 
+
+    <div class="field">
+        <label for="numLang">Quelle langue</label>
+        <select disabled name="numLang" id="numLang">
+            <?php 
+                $langue = $maLangue->get_1Langue($numLang);                    
+            ?>
+            <option selected value="<?= $langue['numLang'] ?>" ><?=$langue['lib1Lang'] ?></option>
+        </select>
+    </div>
+
     <div class="field">
         <label for="numAngl">Quel angle</label>
         <select name="numAngl" id="numAngl">
@@ -227,11 +242,15 @@ $validator->echoErrors();
     </div>
 </form>
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
     <!-- --------------------------------------------------------------- -->
     <!-- Début Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
 <!-- --------------------------------------------------------------- -->
+
+<script>
+    const urlFetchAnglAndThem = "<?= webSitePath('/api/article/angle-and-them-by-lang.php') ?>";
+</script>
+<script src="<?= webAssetPath('js/ajaxArticle.js') ?>"></script>
 
     <!-- A faire dans un 3ème temps  -->
 

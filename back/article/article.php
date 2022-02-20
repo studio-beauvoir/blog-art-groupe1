@@ -41,8 +41,8 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <td> <?= $row['libTitrArt']; ?> </td>
                 <td> <?= $row['libChapoArt']; ?> </td>
                 <td> <?= $row['libAccrochArt']; ?> </td>
-                <td><a href="<?=crudPath('angle/updateAngle.php?id='.$row['numAngl'])?>"><?= $row['libAngl']; ?></a></td>
-                <td><a href="<?=crudPath('thematique/updateThematique.php?id='.$row['numThem'])?>"><?= $row['libThem']; ?></a></td>
+                <td><a href="<?=webCrudPath('angle/updateAngle.php?id='.$row['numAngl'])?>"><?= $row['libAngl']; ?></a></td>
+                <td><a href="<?=webCrudPath('thematique/updateThematique.php?id='.$row['numThem'])?>"><?= $row['libThem']; ?></a></td>
                 <td>
                     <a class="btn btn-md" href="./updateArticle.php?id=<?=$row['numArt']; ?>" title="Modifier l'article">Modifier</a>
                 </td>

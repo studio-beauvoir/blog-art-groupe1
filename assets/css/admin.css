@@ -81,9 +81,19 @@ table tbody {
 }
 
 .admin-form .field {
+    position: relative;
     width: 100%;
     display: flex;
+    flex: 1;
     flex-direction: column;
+    align-items: flex-start;
+}
+.admin-form .field > * {
+    display: block;
+    position: relative;
+    max-width: 100%;
+    flex: 1;
+    width: 100% !important;
 }
 
 .admin-form .field .field-imgContent {

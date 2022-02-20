@@ -1,8 +1,6 @@
 <?php
 require_once __DIR__ . '/util/index.php';
 
-
-
 $pageTitle = "Panel admin";
 $pageNav = ['Home'];
 require_once __DIR__ . '/layouts/front/head.php';

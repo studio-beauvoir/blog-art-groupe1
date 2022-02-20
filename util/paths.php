@@ -28,7 +28,7 @@ function webSitePath($morePath="") {
 /**
  * Retourne le lien vers un crud dans le navigateur
  */
-function crudPath($crud="") {
+function webCrudPath($crud="") {
     return webSitePath('/BACK/'.$crud);
 }
 

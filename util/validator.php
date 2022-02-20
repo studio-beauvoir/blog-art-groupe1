@@ -335,9 +335,9 @@ class Validator {
     /**
      * Effectue la validation
      * Si toutes les règles définies sont respectées, alors le validator est content
-     * @return bool
+     * @return this
      */
-    public function success() {
+    public function test() {
         $this->tested = true;
 
         $this->hasSucceeded = true;
@@ -347,7 +347,16 @@ class Validator {
                 $this->addErrors($rule->errors());
             }
         }
+        return $this;
+    }
 
+
+    /**
+     * Effectue la validation et retourne le résultat
+     * @return bool
+     */
+    public function success() {
+        $this->test();
         return $this->hasSucceeded;
     }
 

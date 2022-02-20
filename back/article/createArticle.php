@@ -46,7 +46,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ValidationRule::required('numThem')
     ])->bindValues($_POST);
 
-    if( $fileValidator->success() AND $validator->success()) {
+    $fileValidator->test();
+    $validator->test();
+
+    if($fileValidator->hasSucceeded AND $validator->hasSucceeded) {
 
         $img = uploadImage(
             $fileValidator->verifiedFile('photArt'),
@@ -202,11 +205,15 @@ $validator->echoErrors();
     </div>
 </form>
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
     <!-- --------------------------------------------------------------- -->
     <!-- Début Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
 <!-- --------------------------------------------------------------- -->
+
+<script>
+    const urlFetchAnglAndThem = "<?= webSitePath('/api/article/angle-and-them-by-lang.php') ?>";
+</script>
+<script src="<?= webAssetPath('js/ajaxArticle.js') ?>"></script>
 
     <!-- A faire dans un 3ème temps  -->
 

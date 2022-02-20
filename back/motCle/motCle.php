@@ -44,7 +44,7 @@ include __DIR__ . '/../../layouts/back/head.php';
             <tr>
                 <td><h4> <?= $row['numMotCle']; ?> </h4></td>
                 <td><?= $row['libMotCle']; ?></td>
-                <td><a href="<?=crudPath('langue/updateLangue.php?id='.$row['numLang'])?>"><?= $row['lib1Lang']; ?></a></td>
+                <td><a href="<?=webCrudPath('langue/updateLangue.php?id='.$row['numLang'])?>"><?= $row['lib1Lang']; ?></a></td>
                 
                 <!-- actions -->
                 <td>

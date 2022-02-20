@@ -55,5 +55,17 @@ function uploadImage($file, $filename=false) {
     return [
         'is_uploaded' => $isUploaded,
         'filename' => $nomImage
-    ];    /*-- --------------------------------------------------------------- --*/
+    ]; 
+}
+
+
+function deleteImage($filename) {
+
+
+    $isDeleted = unlink( uploadPath($filename) );
+
+    return [
+        'is_deleted' => $isDeleted,
+        'filename' => $filename
+    ];
 }

@@ -53,6 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // modification de l'image uniquement si on en a envoyé une
         if($fileValidator->isFilled('photArt')) {
+            // suppression de l'ancienne photo
+            deleteImage($urlPhotArt);
+
             $img = uploadImage(
                 $fileValidator->verifiedFile('photArt'),
                 'imgArt' . md5(uniqid())

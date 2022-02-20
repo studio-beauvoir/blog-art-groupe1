@@ -2,14 +2,18 @@
 body {
     background-color: var(--bg1);
     color: var(--p1);
+    position: relative;
+    width: 100%;
     /* font: var(--p); */
 }
 
 main {
+    position: relative;
     min-height: 90vh;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    overflow: hidden;
 }
 
 
@@ -200,6 +204,7 @@ label {
 
 /* -----------------------------------HEADER-----------------------------------*/
 header{
+    position: relative;
     display: flex;
     background-color: var(--bg2);
     padding: 5px;
@@ -574,6 +579,7 @@ footer {
     flex-direction: column;
     background-color: var(--bg2);
     padding-top: 50px;
+    width: 100%;
     margin-top: 50px;
 }
 
@@ -581,6 +587,7 @@ footer {
     display: flex;
     align-items: flex-start;
     width: 100%;
+    box-sizing: border-box;
     padding: 1%;
 }
 

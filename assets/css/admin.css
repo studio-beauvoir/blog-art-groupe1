@@ -5,11 +5,17 @@
 }
 
 table {
+    display: block;
+    position: relative;
     border-radius: 20px;
     padding: 0;
     overflow: hidden;
     border: none;
     font: var(--p);
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 80vh;
+    max-width: 100%;
 }
 table, th, td {
     border: hidden;
@@ -17,6 +23,8 @@ table, th, td {
 }
 
 table thead {
+    position: sticky;
+    top:0;
     border: none;
     padding: 1rem;
     color: var(--p3);

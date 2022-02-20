@@ -4,7 +4,7 @@ $submitBtn = "Supprimer";
 $pageCrud = "langue";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "$submitBtn: $pageCrud";
-$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
+$pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
 
 //Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';

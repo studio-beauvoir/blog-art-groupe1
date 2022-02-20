@@ -4,7 +4,7 @@ $submitBtn = "Créer";
 $pageCrud = "membre";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "Créer un $pageCrud";
-$pageNav = ['Home:/index1.php', 'Gestion des membres:'.$pagePrecedent, $pageTitle];
+$pageNav = ['Home:/admin.php', 'Gestion des membres:'.$pagePrecedent, $pageTitle];
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 

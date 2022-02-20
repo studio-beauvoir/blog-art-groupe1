@@ -9,7 +9,7 @@ require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
 $monAngle = new ANGLE(); 
 
 $pageTitle = "Gestion de l'Angle";
-$pageNav = ['Home:/index1.php', $pageTitle];
+$pageNav = ['Home:/admin.php', $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
 	<a class="btn btn-lg" href="./createAngle.php" title="Créer un Angle">Créer un angle</a>

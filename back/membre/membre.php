@@ -9,7 +9,7 @@ require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
 $monMembre = new MEMBRE(); 
 
 $pageTitle = "Gestion des Membres";
-$pageNav = ['Home:/index1.php', $pageTitle];
+$pageNav = ['Home:/admin.php', $pageTitle];
 require_once __DIR__ . '/../../layouts/back/head.php';
 
 ?>

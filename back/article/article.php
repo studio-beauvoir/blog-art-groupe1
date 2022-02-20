@@ -4,7 +4,7 @@ $submitBtn = "CRUD";
 $pageCrud = "article";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "$submitBtn - $pageCrud";
-$pageNav = ['Home:/index1.php', $pageTitle];
+$pageNav = ['Home:/admin.php', $pageTitle];
 
 require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../CLASS_CRUD/article.class.php'; 

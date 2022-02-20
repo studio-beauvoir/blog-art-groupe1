@@ -2,7 +2,7 @@
 $submitBtn = "Supprimer";
 $pageCrud = "article";
 $pageTitle = "Supprimer un $pageCrud";
-$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
+$pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
 
 //Insertion fichiers utiles
 require_once __DIR__ . '/../../util/index.php';

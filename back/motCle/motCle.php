@@ -16,7 +16,7 @@ $maLangue = new LANGUE();
 // BBCode
 
 $pageTitle = "Gestion des Mots Clés";
-$pageNav = ['Home:/index1.php', $pageTitle];
+$pageNav = ['Home:/admin.php', $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
 

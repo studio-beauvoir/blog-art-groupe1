@@ -5,6 +5,12 @@ $pageTitle = "$submitBtn";
 require_once __DIR__ . '/util/index.php';
 require_once __DIR__ . '/CLASS_CRUD/membre.class.php'; 
 
+
+require_once __DIR__ . '/middleware/getMember.php';
+if($loggedMember) {
+    header('location: '.webSitePath('/home.php'));
+}
+
 $monMembre = new MEMBRE();
 
 $validator = Validator::make();

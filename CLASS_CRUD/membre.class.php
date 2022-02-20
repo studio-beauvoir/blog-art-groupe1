@@ -209,12 +209,14 @@ class MEMBRE{
 
 			return false;
 		}else{
-			$user = $request->fetch();
+			$membre = $request->fetch();
 
 			$db->commit();
 			$request->closeCursor();
-
-			setcookie('session_token', customEncrypt('true.'.$user['numMemb'].'.'.$user['passMemb'].$user['dtCreaMemb']));
+			
+			session_start();
+			$_SESSION['member_id'] = $membre['numMemb'];
+			// setcookie('session_token', customEncrypt('true.'.$membre['numMemb'].'.'.$membre['passMemb'].$membre['dtCreaMemb']));
 			header('location: '.webSitePath('/profil.php'));			
 			return true;
 		}

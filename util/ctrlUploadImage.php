@@ -61,8 +61,11 @@ function uploadImage($file, $filename=false) {
 
 function deleteImage($filename) {
 
-
-    $isDeleted = unlink( uploadPath($filename) );
+    if(file_exists(uploadPath($filename))) {
+        $isDeleted = unlink( uploadPath($filename) );
+    } else {
+        $isDeleted = true;
+    }
 
     return [
         'is_deleted' => $isDeleted,

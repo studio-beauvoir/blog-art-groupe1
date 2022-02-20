@@ -47,11 +47,12 @@ class MOTCLE{
 		return($allMotCles);
 	}
 
-	function get_AllMotsClesByLang(){
+	function get_AllMotsClesByLang($numLang){
 		global $db;
 		$query = 'SELECT * FROM MOTCLE WHERE numLang=?;';
-		$result = $db->query($query);
-		$allMotsClesByLang = $result->fetchAll();
+		$request = $db->prepare($query);
+		$request->execute([$numLang]);
+		$allMotsClesByLang = $request->fetchAll();
 		return($allMotsClesByLang);
 	}
 

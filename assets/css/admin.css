@@ -130,3 +130,87 @@ table tbody {
     font: var(--p);
     color: var(--g3);
 }
+
+
+#keywords-control {
+    padding: 3rem 0;
+    display: flex;
+    flex-flow: column;
+    gap: 0.5rem;
+}
+#keywords-control .keywordChips {
+    cursor: pointer;
+    border: none;
+    font: var(--p);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--bg2);
+    border-radius: 0.7rem;
+    overflow: hidden;
+    position: relative;
+    transition: all .2s;
+    user-select: none;
+    --opactityAfterOnHover: 1;
+}
+#keywords-control .keywordChips:hover,
+#keywords-control .keywordChips:focus {
+    padding-right: 2.8rem;
+    padding-left: 1.2rem;
+}
+#keywords-control .keywordChips.selected:hover,
+#keywords-control .keywordChips.selected:focus {
+    background: var(--g3);
+}
+#keywords-control .keywordChips.available:hover,
+#keywords-control .keywordChips.available:focus{
+    color: var(--bg1);
+    background: var(--g5);
+}
+#keywords-control .keywordChips:active {
+    transform: scale(0.95);
+}
+
+#keywords-control .keywordChips::after {
+    position: absolute;
+    content: '';
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    top: -3%;
+    right: 1rem;
+    height: 100%;
+    width: 1.5rem;
+    opacity: 0;
+    transition: opacity .2s;
+    cursor: pointer;
+    font: var(--h3);
+}
+#keywords-control .keywordChips:hover::after,
+#keywords-control .keywordChips:focus::after {
+    opacity: var(--opactityAfterOnHover);
+}
+#keywords-control .keywordChips.selected:hover::after,
+#keywords-control .keywordChips.selected:focus::after {
+    content: '-';
+    /* background: var(--g3); */
+}
+#keywords-control .keywordChips.available:hover::after,
+#keywords-control .keywordChips.available:focus::after {
+    content: '+';
+    color: var(--bg1);
+    /* background: var(--g5); */
+}
+
+#keywords-selected, #keywords-availables {
+    min-height: 5rem;
+    padding-bottom: 1rem;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+

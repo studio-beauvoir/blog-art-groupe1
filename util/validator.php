@@ -396,7 +396,6 @@ class Validator {
      * Nécessite que le validator ait été validé via sa fonction success()
      */
     public function isFilled($fieldName) {
-        var_dump($this->fieldsFilled);
         try {
             if(!$this->hasSucceeded) {
                 throw new Error('Le validator n\'a pas été validée');

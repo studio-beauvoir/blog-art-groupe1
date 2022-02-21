@@ -153,15 +153,15 @@ class COMMENT{
 
 	// Moderation : TRUE si comment affiché, FALSE sinon
 	// et remarques possibles admin si non affiché
-	function update($libCom, $numSeqCom, $numArt, $attModOK, $notifComKOAff, $delLogiq){
+	function update($numSeqCom, $numArt, $attModOK, $notifComKOAff, $delLogiq){
 		global $db;
 
 		try {
 			$db->beginTransaction();
-			var_dump($numArt);
-			$query = 'UPDATE COMMENT SET libCom=?, attModOK=?, attModOK=?, dtModCom=NOW(), notifComKOAff=?, delLogiq=? WHERE numSeqCom=?, numArt=?';
+
+			$query = 'UPDATE COMMENT SET numSeqCom=?, numArt=?, attModOK=?, dtModCom=NOW(), notifComKOAff=?, delLogiq=? WHERE numSeqCom=? AND numArt=?';
 			$request = $db->prepare($query);
-			$request->execute([$libCom, $attModOK, $notifComKOAff, $delLogiq, $numSeqCom, $numArt]);
+			$request->execute([$attModOK, $notifComKOAff, $delLogiq, $numSeqCom, $numArt]);
 			$db->commit();
 			$request->closeCursor();
 		}

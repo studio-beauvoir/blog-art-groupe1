@@ -23,24 +23,21 @@ $validator = Validator::make();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $validator->addRules([
-        ValidationRule::required('idCom'),
-        ValidationRule::required('idArt'),
         ValidationRule::required('attModOK'),
-        ValidationRule::required('libCom'),
-        ValidationRule::required('numMemb'),
-        ValidationRule::required('numSeqCom'),
+        ValidationRule::required('dtModCom'),
+        ValidationRule::required('notifComKOAff'),
+        ValidationRule::required('delLogiq'),
     ])->bindValues($_POST);
 
     if($validator->success()) {
-
-        $numSeqCom = $validator->verifiedField('idCom');
-        $numArt = $validator->verifiedField('idArt');
+        $numSeqCom = $_GET['idCom'];
+        $numArt = $_GET['idArt'];
         $attModOK = $validator->verifiedField('attModOK');
-        $libCom = $validator->verifiedField('libCom');
-        $numMemb = $validator->verifiedField('numMemb');
-        $numSeqCom = $validator->verifiedField('numSeqCom');
+        $dtModCom = $validator->verifiedField('dtModCom');
+        $notifComKOAff = $validator->verifiedField('notifComKOAff');
+        $delLogiq = $validator->verifiedField('delLogiq');
         
-        $monComment->update($libCom, $numSeqCom, $numArt, $attModOK, $notifComKOAff, $delLogiq);
+        $monComment->update($numSeqCom, $numArt, $attModOK, $notifComKOAff, $delLogiq);
 
         header("Location: $pagePrecedent");
         die();
@@ -62,21 +59,14 @@ $validator->echoErrors();
     }
     $comment = $monComment->get_1Comment($_GET['idCom'],$_GET['idArt']);
     $numMemb = $comment['numMemb'];
+    $idSeqCom = $comment['numSeqCom'];
+    $attModOK = $comment['attModOK'];
+    $numSeqCom = $comment['numSeqCom'];
     $numArt = $comment['numArt'];
     $libCom = $comment['libCom'];
 
     $membre = $monMembre->get_1Membre($numMemb);
     $article = $monArticle->get_1Article($numArt);
-
-    // $numSeqCom = $comment['numSeqCom'];
-    // $numArt = $comment['numArt'];
-    // $dtCreCom = $comment['dtCreCom'];
-    // $libCom = $comment['libCom'];
-    // $attModOK = $comment['attModOK'];
-    // $dtModCom = $comment['dtModCom'];
-    // $notifComKOAff = $comment['notifComKOAff'];
-    // $delLogiq = $comment['delLogiq'];
-    // $numMemb = $comment['numMemb'];
 
 ?>
 <form 
@@ -108,8 +98,8 @@ $validator->echoErrors();
         <label for="attModOK">En tant que modérateur, je valide le post :</label>
         <div class="controls">
             <fieldset>
-                <input type="radio" name="attModOK" value="on" />Oui
-                <input type="radio" name="attModOK" value="off" />Non
+                <input type="radio" name="attModOK" value="1" />Oui
+                <input type="radio" name="attModOK" value="0" />Non
             </fieldset>
         </div>
     </div>
@@ -136,7 +126,7 @@ $validator->echoErrors();
     <!-- mot cle a rajouter -->
 
     <div class="controls">
-        <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
+        <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?idCom=<?=$_GET['idCom']?>&idArt=<?=$_GET['idArt']; ?>">Réinitialiser</a>
         <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
         <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
     </div>

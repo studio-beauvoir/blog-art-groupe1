@@ -4,7 +4,7 @@ $submitBtn = "Modifier";
 $pageCrud = "langue";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "$submitBtn: $pageCrud";
-$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
+$pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 include __DIR__ . '/initLangue.php';
 
 $pageTitle = "Modifier une Langue";
-$pageNav = ['Home:/index1.php', 'Gestion de la Langue:./langue.php', $pageTitle];
+$pageNav = ['Home:/admin.php', 'Gestion de la Langue:./langue.php', $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
 
     // Modif : récup id à modifier

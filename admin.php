@@ -33,7 +33,7 @@ require_once __DIR__ . '/layouts/back/head.php';
 
 	<a class="btn btn-lg done" href="./BACK/motcle/motcle.php">Mot-clé (*)</a>
 
-	<a class="btn btn-lg " href="#">Mot-clé Article => dans Article</a>
+	<a class="btn btn-lg to-test" href="#">Mot-clé Article => dans Article</a>
 
 	<a class="btn btn-lg done" href="./BACK/statut/statut.php">Statut (*)</a>
 

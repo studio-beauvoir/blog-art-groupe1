@@ -5,6 +5,12 @@ $pageTitle = "$submitBtn";
 require_once __DIR__ . '/util/index.php';
 require_once __DIR__ . '/CLASS_CRUD/membre.class.php'; 
 
+
+require_once __DIR__ . '/middleware/getMember.php';
+if($loggedMember) {
+    header('location: '.webSitePath('/home.php'));
+}
+
 $monMembre = new MEMBRE();
 
 $validator = Validator::make();
@@ -60,7 +66,7 @@ require_once __DIR__ . '/layouts/front/head.php';
         <div class="field">
             <label> Mot de passe </label>
             <input value="<?=$validator->oldField('passMemb')?>" type="password" name="passMemb" id="passMemb">
-            <label><input type="checkbox" onclick="myFunction('passMemb')"><i>Afficher Mot de passe</i></label>
+            <label><input type="checkbox" onclick="myFunction('passMemb')"><i>Afficher le mot de passe</i></label>
             <p>
                 Le mot de passe doit comporter entre 6 et 15 caractères, 
                 <br/>et au moins une lettre, un chiffre et un caractère spécial parmi &@#$%_-.?!

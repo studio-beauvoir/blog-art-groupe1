@@ -9,7 +9,7 @@ require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
 $monMembre = new MEMBRE(); 
 
 $pageTitle = "Gestion des Membres";
-$pageNav = ['Home:/index1.php', $pageTitle];
+$pageNav = ['Home:/admin.php', $pageTitle];
 require_once __DIR__ . '/../../layouts/back/head.php';
 
 ?>
@@ -47,7 +47,7 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <td> <?= dateChangeFormat($row['dtCreaMemb'], $from, $to); ?> </td>
                 <td> <?= $row['passMemb']; ?> </td>
                 <td> <?= $row['accordMemb']==true?"Oui":"Non"; ?> </td>
-                <td><a href="<?=crudPath('statut/updateStatut.php?id='.$row['idStat'])?>"><?= $row['libStat']; ?></a></td>
+                <td><a href="<?=webCrudPath('statut/updateStatut.php?id='.$row['idStat'])?>"><?= $row['libStat']; ?></a></td>
                 <td>
                     <a class="btn btn-md" href="./updateMembre.php?id=<?=$row['numMemb']; ?>" title="Modifier le membre">Modifier</a>
                 </td>

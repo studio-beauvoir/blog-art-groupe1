@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 include __DIR__ . '/initAngle.php';
 
 $pageTitle = "Modifier un Angle";
-$pageNav = ['Home:/index1.php', 'Gestion Angle:./angle.php', $pageTitle];
+$pageNav = ['Home:/admin.php', 'Gestion Angle:./angle.php', $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
 <?php

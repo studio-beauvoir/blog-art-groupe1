@@ -18,7 +18,7 @@ $maLangue = new LANGUE();
 // BBCode
 
 $pageTitle = "Gestion des thématiques";
-$pageNav = ['Home:/index1.php', $pageTitle];
+$pageNav = ['Home:/admin.php', $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
     <a class="btn btn-lg" href="./createThematique.php" title="Créer un statut">Créer une thematique</a>
@@ -45,7 +45,7 @@ include __DIR__ . '/../../layouts/back/head.php';
             <tr>
                 <td><h4> <?= $row['numThem']; ?> </h4></td>
                 <td><?= $row['libThem']; ?></td>
-                <td><a href="<?=crudPath('langue/updateLangue.php?id='.$row['numLang'])?>"><?= $row['lib1Lang']; ?></a></td>
+                <td><a href="<?=webCrudPath('langue/updateLangue.php?id='.$row['numLang'])?>"><?= $row['lib1Lang']; ?></a></td>
 
                 <!-- actions -->
                 <td>

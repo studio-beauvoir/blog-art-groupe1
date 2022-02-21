@@ -48,7 +48,7 @@ include __DIR__ . '/initThematique.php';
 $submitBtn = "Créer";
 $pagePrecedent = "./thematique.php";
 $pageTitle = "Créer une Thématique";
-$pageNav = ['Home:/index1.php', 'Gestion des thématiques:'.$pagePrecedent, $pageTitle];
+$pageNav = ['Home:/admin.php', 'Gestion des thématiques:'.$pagePrecedent, $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
     <form 

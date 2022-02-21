@@ -4,7 +4,7 @@ $submitBtn = "Créer";
 $pageCrud = "article";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "$submitBtn un $pageCrud";
-$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.':'.$pagePrecedent, $pageTitle];
+$pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.':'.$pagePrecedent, $pageTitle];
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
@@ -43,10 +43,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ValidationRule::required('libConclArt'),
         ValidationRule::required('numLang'),
         ValidationRule::required('numAngl'),
-        ValidationRule::required('numThem')
+        ValidationRule::required('numThem'),
+        ValidationRule::required('oldKeywords'),
+        ValidationRule::required('keywords')
     ])->bindValues($_POST);
 
-    if( $fileValidator->success() AND $validator->success()) {
+    $fileValidator->test();
+    $validator->test();
+
+    if($fileValidator->hasSucceeded AND $validator->hasSucceeded) {
 
         $img = uploadImage(
             $fileValidator->verifiedFile('photArt'),
@@ -69,6 +74,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numThem = $validator->verifiedField('numThem');
         
         $monArticle->create($dtCreArt, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numAngl, $numThem);
+
+
+        // le nouvel article possède le plus grand id comme c'est un auto-increment
+        // on récupère ainsi le numArt
+        $numArt = $monArticle->get_LastNumArt();
+
+        // on peut alors gérer les mots-clés
+        $keywords = json_decode($validator->verifiedField('keywords'), true); 
+        
+        foreach($keywords as $numMotCle) {
+            $monMotcleArticle->create($numArt, $numMotCle);
+        }
 
         header("Location: $pagePrecedent");
         die();
@@ -193,7 +210,14 @@ $validator->echoErrors();
         </select>
     </div>
 
-    <!-- mot cle a rajouter -->
+    <input type="hidden" name="oldKeywords" id="oldKeywords" value="[]">
+    <input type="hidden" name="keywords" id="keywords">
+    <div id="keywords-control">
+        <p>Mots clés sélectionnés</p>
+        <div id="keywords-selected"></div>
+        <p>Mots clés disponibles</p>
+        <div id="keywords-availables"></div>
+    </div>
 
     <div class="controls">
         <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
@@ -202,16 +226,24 @@ $validator->echoErrors();
     </div>
 </form>
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-    <!-- --------------------------------------------------------------- -->
-    <!-- Début Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
-<!-- --------------------------------------------------------------- -->
+<!-- Ajax them et angles par langue, et Mot cle  -->
+<script src="<?= webAssetPath('js/ajaxArticle.js') ?>"></script>
+<script>
+    const langueSelect = document.getElementById('numLang');
+    const angleSelect = document.getElementById('numAngl');
+    const thematiqueSelect = document.getElementById('numThem');
 
-    <!-- A faire dans un 3ème temps  -->
+    const urlFetchAnglAndThem = "<?= webSitePath('/api/article/angle-and-them-by-lang.php') ?>";
+    const urlFetchMotsCles = "<?= webSitePath('/api/motcle/motcle-by-lang.php') ?>";
 
-<!-- --------------------------------------------------------------- -->
-    <!-- Fin Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
-<!-- --------------------------------------------------------------- -->
+    fetchLangAnglesAndKeywords();
+    fetchMotsCles();
+    langueSelect.addEventListener('change', function() {
+        fetchLangAnglesAndKeywords();
+        fetchMotsCles();
+    });
+</script>
+
 
 <?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

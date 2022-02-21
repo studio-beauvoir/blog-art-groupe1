@@ -8,14 +8,17 @@ class MEMBRE{
 	function get_1Membre($numMemb){
 		global $db;
 
+		$db->beginTransaction();
 		try {
-			$query = 'SELECT * FROM MEMBRE WHERE numMemb=?;';
+			$query = 'SELECT * FROM MEMBRE INNER JOIN STATUT ON MEMBRE.idStat=STATUT.idStat WHERE numMemb=?;';
 			$request = $db->prepare($query);
 			
 			$request->execute([$numMemb]);
 
 			$result = $request->fetch();
 
+			$db->commit();
+			$request->closeCursor();
 			if(isset($request)) {
 				return($result);
 			} else {
@@ -32,19 +35,27 @@ class MEMBRE{
 	function get_1MembreByEmail($eMailMemb){
 		global $db;
 
+		$db->beginTransaction();
 		$query = 'SELECT * FROM THEMATIQUE WHERE eMailMemb=?;';
 		$request = $db->prepare($query);
 		$request->execute([$eMailMemb]);
 		$result = $request->fetch();
+
+		$db->commit();
+		$request->closeCursor();
 		return($result->fetch());
 	}
 
 	function get_AllMembres(){
 		global $db;
 
+		$db->beginTransaction();
 		$query = 'SELECT * FROM MEMBRE INNER JOIN STATUT ON MEMBRE.idStat=STATUT.idStat;';
 		$request = $db->query($query);
 		$allMembres = $request->fetchAll();
+
+		$db->commit();
+		$request->closeCursor();
 		return($allMembres);
 	}
 
@@ -58,6 +69,9 @@ class MEMBRE{
 		$request = $db->prepare($query);
 		$request->execute([$pseudoMemb]);
 		$result = $request->fetch();
+
+		$db->commit();
+		$request->closeCursor();
 		return($result->rowCount());
 	}
 
@@ -93,6 +107,8 @@ class MEMBRE{
 
 	function get_AllMembresByEmail($eMailMemb){
 		global $db;
+
+		$db->beginTransaction();
 		$query = 'SELECT * FROM ANGLE WHERE eMailMemb=?;';
 		$result = $db->query($query);
 		$allMembresByEmail = $result->fetchAll();
@@ -166,13 +182,6 @@ class MEMBRE{
 		}
 	}
 
-
-	function register($prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb){
-		die('pas encore fait');
-		$idStat = 3; // Membre niveau 1
-		$this->create();
-	}
-
 	function login($pseudoMemb, $passMemb) {
 		global $db;
 		// $query = 'SELECT * FROM MEMBRE WHERE numMemb = ?;';
@@ -185,17 +194,30 @@ class MEMBRE{
 		// }
 
 		// requête pour savoir si l'id et le mdp son bon
+		$db->beginTransaction();
 		$query = "SELECT * FROM MEMBRE WHERE pseudoMemb = ? AND passMemb = ?";
-		$result = $db->prepare($query);
-		$result->execute([$pseudoMemb, $passMemb]);
-		$rowCount = $result->rowCount();
+		$request = $db->prepare($query);
+		$request->execute([$pseudoMemb, $passMemb]);
+		$rowCount = $request->rowCount();
+
+
+
 
 		if($rowCount < 1){
+			$db->commit();
+			$request->closeCursor();
+
 			return false;
 		}else{
-			$user = $result->fetch();
-			setcookie('session_token', customEncrypt('true.'.$user['numMemb'].'.'.$user['passMemb'].$user['dtCreaMemb']));
-			header('location: '.webSitePath('/index.php'));			
+			$membre = $request->fetch();
+
+			$db->commit();
+			$request->closeCursor();
+			
+			session_start();
+			$_SESSION['member_id'] = $membre['numMemb'];
+			// setcookie('session_token', customEncrypt('true.'.$membre['numMemb'].'.'.$membre['passMemb'].$membre['dtCreaMemb']));
+			header('location: '.webSitePath('/profil.php'));			
 			return true;
 		}
 	}

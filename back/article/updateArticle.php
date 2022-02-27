@@ -34,14 +34,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $validator->addRules([
         ValidationRule::required('id'),
-        ValidationRule::required('urlPhotArt'),
-        ValidationRule::required('libTitrArt'),
+        ValidationRule::required('urlPhotArt')->maxLength(70),
+        ValidationRule::required('libTitrArt')->maxLength(100),
         ValidationRule::required('libChapoArt'),
-        ValidationRule::required('libAccrochArt'),
+        ValidationRule::required('libAccrochArt')->maxLength(100),
         ValidationRule::required('parag1Art'),
-        ValidationRule::required('libSsTitr1Art'),
+        ValidationRule::required('libSsTitr1Art')->maxLength(100),
         ValidationRule::required('parag2Art'),
-        ValidationRule::required('libSsTitr2Art'),
+        ValidationRule::required('libSsTitr2Art')->maxLength(100),
         ValidationRule::required('parag3Art'),
         ValidationRule::required('libConclArt'),
         ValidationRule::required('numAngl'),
@@ -199,7 +199,8 @@ $validator->echoErrors();
 
     <div class="field">
         <label for="parag1Art">Paragraphe 1</label>
-        <textarea name="parag1Art" id="parag1Art" rows="10" placeholder="Décrivez le premier paragraphe. Sur 1200 car."><?=$parag1Art ?></textarea>
+        <!-- <textarea name="parag1Art" id="parag1Art" rows="10" placeholder="Décrivez le premier paragraphe. Sur 1200 car."><?=$parag1Art ?></textarea> -->
+        <input bbeditor type="hidden" name="parag1Art" id="parag1Art" placeholder="Décrivez le premier paragraphe. Sur 1200 car." value="<?=$parag1Art?>" />
     </div>
 
     <div class="field">
@@ -209,7 +210,8 @@ $validator->echoErrors();
 
     <div class="field">
         <label for="parag2Art">Paragraphe 2</label>
-        <textarea name="parag2Art" id="parag2Art" rows="10" placeholder="Décrivez le deuxième paragraphe. Sur 1200 car."><?=$parag2Art ?></textarea>
+        <!-- <textarea name="parag2Art" id="parag2Art" rows="10" placeholder="Décrivez le deuxième paragraphe. Sur 1200 car."><?=$parag2Art ?></textarea> -->
+        <input bbeditor type="hidden" name="parag2Art" id="parag2Art" placeholder="Décrivez le premier paragraphe. Sur 1200 car." value="<?=$parag2Art?>" />
     </div>
 
     <div class="field">
@@ -219,12 +221,14 @@ $validator->echoErrors();
 
     <div class="field">
         <label for="parag3Art">Paragraphe 3</label>
-        <textarea name="parag3Art" id="parag3Art" rows="10" placeholder="Décrivez le troisième paragraphe. Sur 1200 car."><?=$parag3Art ?></textarea>
+        <!-- <textarea name="parag3Art" id="parag3Art" rows="10" placeholder="Décrivez le troisième paragraphe. Sur 1200 car."><?=$parag3Art ?></textarea> -->
+        <input bbeditor type="hidden" name="parag3Art" id="parag3Art" placeholder="Décrivez le premier paragraphe. Sur 1200 car." value="<?=$parag3Art?>" />
     </div>
 
     <div class="field">
         <label for="libConclArt">Conclusion</label>
-        <textarea name="libConclArt" id="libConclArt" rows="10" placeholder="Décrivez la conclusion. Sur 800 car."><?=$libConclArt ?></textarea>
+        <!-- <textarea name="libConclArt" id="libConclArt" rows="10" placeholder="Décrivez la conclusion. Sur 800 car."><?=$libConclArt ?></textarea> -->
+        <input bbeditor type="hidden" name="libConclArt" id="libConclArt" placeholder="Décrivez le premier paragraphe. Sur 1200 car." value="<?=$libConclArt?>" />
     </div>
 
 
@@ -280,9 +284,11 @@ $validator->echoErrors();
 </form>
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
 
+<script src="<?= webAssetPath('js/bbEditor.js') ?>"></script>
 
 <!-- Ajax them et angles par langue, et Mot cle  -->
 <script src="<?= webAssetPath('js/ajaxArticle.js') ?>"></script>
+
 <script>
     const langueSelect = document.getElementById('numLang');
     const angleSelect = document.getElementById('numAngl');

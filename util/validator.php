@@ -35,6 +35,8 @@ class ValidationRule {
     private $minLength = false;
     private $maxLength = false;
     private $maxFileSize = false;
+    
+    private $verifyWithSafeMethod = true;
 
     private $errorMessage = [
         'isRequired' => ":field est requis",
@@ -46,8 +48,8 @@ class ValidationRule {
         'shouldBeEqualTo' => ":field doit être identique au champ :shouldBeEqualTo",
         'shouldBeEqualToValue' => ":field doit être égal à :shouldBeEqualToValue",
         'shouldBeUnique' => ":field existe déjà",
-        'minLength' => ":field ne doit pas faire moins de :minLength",
-        'maxLength' => ":field ne doit pas faire plus de :maxLength",
+        'minLength' => ":field ne doit pas faire moins de :minLength caractères",
+        'maxLength' => ":field ne doit pas faire plus de :maxLength caractères",
         'maxFileSize' => ":field dépasse la taille autorisée",
     ];
     private $errorsArray = [];
@@ -78,7 +80,10 @@ class ValidationRule {
         return static::make($field)->setIsRequired(false);
     }
 
- 
+    public function unsafe() { 
+        $this->verifyWithSafeMethod = false; 
+        return $this;
+    }
     
     public function minLength($min) { 
         $this->string();
@@ -266,7 +271,13 @@ class ValidationRule {
 
     public function getValue($field=false) {
         $field = $field?$field:$this->field;
-        if(isset($this->validator->fieldsValues[$field])) return $this->validator->fieldsValues[$field];
+        if(isset($this->validator->fieldsValues[$field])) {
+            if($this->verifyWithSafeMethod && !$this->shouldBeImage) {
+                return ctrlSaisies($this->validator->fieldsValues[$field]);
+            } else {
+                return $this->validator->fieldsValues[$field];
+            }
+        }
         return NULL;
     }
 

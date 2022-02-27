@@ -31,14 +31,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
     $validator->addRules([
-        ValidationRule::required('libTitrArt'),
+        ValidationRule::required('libTitrArt')->maxLength(100),
         ValidationRule::required('dtCreArt'),
         ValidationRule::required('libChapoArt'),
-        ValidationRule::required('libAccrochArt'),
+        ValidationRule::required('libAccrochArt')->maxLength(100),
         ValidationRule::required('parag1Art'),
-        ValidationRule::required('libSsTitr1Art'),
+        ValidationRule::required('libSsTitr1Art')->maxLength(100),
         ValidationRule::required('parag2Art'),
-        ValidationRule::required('libSsTitr2Art'),
+        ValidationRule::required('libSsTitr2Art')->maxLength(100),
         ValidationRule::required('parag3Art'),
         ValidationRule::required('libConclArt'),
         ValidationRule::required('numLang'),
@@ -146,7 +146,8 @@ $validator->echoErrors();
 
     <div class="field">
         <label for="parag1Art">Paragraphe 1</label>
-        <textarea name="parag1Art" id="parag1Art" rows="10" placeholder="Décrivez le premier paragraphe. Sur 1200 car."><?=$validator->oldField('parag1Art') ?></textarea>
+        <!-- <textarea name="parag1Art" id="parag1Art" rows="10" placeholder="Décrivez le premier paragraphe. Sur 1200 car."><?=$validator->oldField('parag1Art') ?></textarea> -->
+        <input bbeditor type="hidden" name="parag1Art" id="parag1Art" placeholder="Décrivez le premier paragraphe. Sur 1200 car." />
     </div>
 
     <div class="field">
@@ -156,7 +157,8 @@ $validator->echoErrors();
 
     <div class="field">
         <label for="parag2Art">Paragraphe 2</label>
-        <textarea name="parag2Art" id="parag2Art" rows="10" placeholder="Décrivez le deuxième paragraphe. Sur 1200 car."><?=$validator->oldField('parag2Art') ?></textarea>
+        <!-- <textarea name="parag2Art" id="parag2Art" rows="10" placeholder="Décrivez le deuxième paragraphe. Sur 1200 car."><?=$validator->oldField('parag2Art') ?></textarea> -->
+        <input bbeditor type="hidden" name="parag2Art" id="parag2Art" placeholder="Décrivez le premier paragraphe. Sur 1200 car." />
     </div>
 
     <div class="field">
@@ -166,12 +168,14 @@ $validator->echoErrors();
 
     <div class="field">
         <label for="parag3Art">Paragraphe 3</label>
-        <textarea name="parag3Art" id="parag3Art" rows="10" placeholder="Décrivez le troisième paragraphe. Sur 1200 car."><?=$validator->oldField('parag3Art') ?></textarea>
+        <!-- <textarea name="parag3Art" id="parag3Art" rows="10" placeholder="Décrivez le troisième paragraphe. Sur 1200 car."><?=$validator->oldField('parag3Art') ?></textarea> -->
+        <input bbeditor type="hidden" name="parag3Art" id="parag3Art" placeholder="Décrivez le premier paragraphe. Sur 1200 car." />
     </div>
 
     <div class="field">
         <label for="libConclArt">Conclusion</label>
-        <textarea name="libConclArt" id="libConclArt" rows="10" placeholder="Décrivez la conclusion. Sur 800 car."><?=$validator->oldField('libConclArt') ?></textarea>
+        <!-- <textarea name="libConclArt" id="libConclArt" rows="10" placeholder="Décrivez la conclusion. Sur 800 car."><?=$validator->oldField('libConclArt') ?></textarea> -->
+        <input bbeditor type="hidden" name="libConclArt" id="libConclArt" placeholder="Décrivez le premier paragraphe. Sur 1200 car." />
     </div>
 
     <div class="field">

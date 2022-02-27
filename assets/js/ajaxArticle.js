@@ -98,7 +98,6 @@ function fetchMotsCles() {
                 removeChilds(keywordSelectedEl);
                 // removeChilds(angleSelect);
                 const motscles = data.result.motscles;
-                console.log(motscles);
                 for(let motcle of motscles) {
                     let el = getNewKeywordEl(motcle);
                     el.addEventListener('click', e=>{

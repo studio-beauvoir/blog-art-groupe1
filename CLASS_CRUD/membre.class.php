@@ -184,41 +184,56 @@ class MEMBRE{
 
 	function login($pseudoMemb, $passMemb) {
 		global $db;
-		// $query = 'SELECT * FROM MEMBRE WHERE numMemb = ?;';
-		// $result = $db->prepare($query);
-		// $result->execute([$_SESSION['numMemb']]);
-		// $rowU = $result->fetch();
-		// if($rowU){
-		//     $numMemb = $rowU['numMemb'];
-		//     $your_name = $rowU['your_name'];
-		// }
 
-		// requête pour savoir si l'id et le mdp son bon
+		// // requête pour savoir si l'id et le mdp son bon
+		// $db->beginTransaction();
+		// $query = "SELECT * FROM MEMBRE WHERE pseudoMemb = ? AND passMemb = ?";
+		// $request = $db->prepare($query);
+		// $request->execute([$pseudoMemb, $passMemb]);
+		// $rowCount = $request->rowCount();
+
+
+		// on commence par chercher le membre
 		$db->beginTransaction();
-		$query = "SELECT * FROM MEMBRE WHERE pseudoMemb = ? AND passMemb = ?";
+		$query = "SELECT * FROM MEMBRE WHERE pseudoMemb = ?";
 		$request = $db->prepare($query);
-		$request->execute([$pseudoMemb, $passMemb]);
+		$request->execute([$pseudoMemb]);
 		$rowCount = $request->rowCount();
 
 
-
-
 		if($rowCount < 1){
+			// pas de correspondance dan la bdd
+
 			$db->commit();
 			$request->closeCursor();
 
-			return false;
+			return [
+				"error"=>true,
+				"message"=>"Ce pseudo n'est lié à aucun compte"
+			];
 		}else{
 			$membre = $request->fetch();
 
 			$db->commit();
 			$request->closeCursor();
+
+			// ensuite on check que les mdp soient bon
+			if (password_verify($passMemb, $membre['passMemb']))
+			{
+
+				session_start();
+				$_SESSION['member_id'] = $membre['numMemb'];
+				// setcookie('session_token', customEncrypt('true.'.$membre['numMemb'].'.'.$membre['passMemb'].$membre['dtCreaMemb']));
+				header('location: '.webSitePath('/profil.php'));			
+				return [
+					"error"=>false
+				];
+			}
 			
-			session_start();
-			$_SESSION['member_id'] = $membre['numMemb'];
-			// setcookie('session_token', customEncrypt('true.'.$membre['numMemb'].'.'.$membre['passMemb'].$membre['dtCreaMemb']));
-			header('location: '.webSitePath('/profil.php'));			
-			return true;
+			return [
+				"error"=>true,
+				"message"=>"Le mot de passe est incorrect"
+			];
 		}
 	}
 }	// End of class

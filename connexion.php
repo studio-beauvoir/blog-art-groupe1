@@ -23,11 +23,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if($validator->success()) {
         $pseudoMemb = $validator->verifiedField('pseudoMemb');
-        $passMemb = $validator->verifiedField('passMemb');
 
-        $success = $monMembre->login($pseudoMemb, $passMemb);
-        if(!$success) {
-            $loginState = '<div class="errors"><div class="error">Le login ou le mot de passe est incorrect</div></div>';
+        // on conserve les caractères spéciaux (d'ou le false)
+        $passMemb = $validator->verifiedField('passMemb', false);
+
+        $loginAttempt = $monMembre->login($pseudoMemb, $passMemb);
+        if($loginAttempt["error"]) {
+            $loginState = '<div class="errors"><div class="error">'.$loginAttempt['message'].'</div></div>';
         }
     }
 }
@@ -76,4 +78,8 @@ require_once __DIR__ . '/layouts/front/head.php';
         <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
     </form>
 </div>
+<script>
+    document.querySelectorAll(`input:not([type="file"], [type="submit"], [type="hidden"], [type="password"], [type="radio"])`).forEach(el=>el.value="lorem_ipsum_input");
+    document.querySelectorAll(`input[type="password"]`).forEach(el=>el.value='qdqsd43&ds');
+</script>
 <?php require_once __DIR__ . '/layouts/front/foot.php';?>

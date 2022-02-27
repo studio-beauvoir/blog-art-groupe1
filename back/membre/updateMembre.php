@@ -53,7 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $nomMemb = $validator->verifiedField('nomMemb');
         
         $passMemb = $validator->verifiedField('pass2Memb');
-        // check que pass1 == pass2
+        // hashage du mot de passe
+        $passMemb = password_hash($passMemb, PASSWORD_BCRYPT);
+
 
         $eMailMemb = $validator->verifiedField('eMail2Memb');
 

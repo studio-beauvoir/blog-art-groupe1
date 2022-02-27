@@ -23,7 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $prenomMemb = $validator->verifiedField('prenomMemb');
         $nomMemb = $validator->verifiedField('nomMemb');
         $pseudoMemb = $validator->verifiedField('pseudoMemb');
-        $passMemb = $validator->verifiedField('passMemb');
+
+        $passMemb = $validator->verifiedField('passMemb', false);
+        // hashage du mot de passe
+        $passMemb = password_hash($passMemb, PASSWORD_BCRYPT);
+
         $eMailMemb = $validator->verifiedField('eMailMemb');
 
         date_default_timezone_set("Europe/Paris");

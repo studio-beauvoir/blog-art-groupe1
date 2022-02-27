@@ -364,12 +364,12 @@ class Validator {
      * Retourne la valeur vérifiée, passé dans la fonction ctrlSaisies()
      * Nécessite que le validator ait été validé via sa fonction success()
      */
-    public function verifiedField($fieldName) {
+    public function verifiedField($fieldName, $ctrlSaisie=true) {
         try {
             if(!$this->hasSucceeded) {
                 throw new Error('Le validator n\'a pas été validée');
             }
-            return ctrlSaisies($this->fieldsValues[$fieldName]);
+            return $ctrlSaisie?ctrlSaisies($this->fieldsValues[$fieldName]) : $this->fieldsValues[$fieldName];
         } catch(Error $e) {
 			die('Erreur validator : ' . $e->getMessage());
         }

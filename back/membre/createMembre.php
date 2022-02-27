@@ -37,7 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $prenomMemb = $validator->verifiedField('prenomMemb');
         $nomMemb = $validator->verifiedField('nomMemb');
         $pseudoMemb = $validator->verifiedField('pseudoMemb');
-        $passMemb = $validator->verifiedField('passMemb');
+        
+        $passMemb = $validator->verifiedField('passMemb', false);
+        // hashage du mot de passe
+        $passMemb = password_hash($passMemb, PASSWORD_BCRYPT);
+        
         $eMailMemb = $validator->verifiedField('eMailMemb');
 
         date_default_timezone_set("Europe/Paris");
@@ -92,7 +96,7 @@ include __DIR__ . '/../../layouts/back/head.php';
 
         <div class="field">
             <label for="pseudoMemb">Pseudonyme<span class="error">(*)</span> :</label>
-            <input name="pseudoMemb" id="pseudoMemb" size="80" maxlength="70" value="<?= $pseudoMemb; ?>" />
+            <input name="pseudoMemb" id="pseudoMemb" size="80" maxlength="80" value="<?= $pseudoMemb; ?>" />
         </div>
 
         <div class="field">

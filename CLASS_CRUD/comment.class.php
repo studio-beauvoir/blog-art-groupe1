@@ -42,9 +42,10 @@ class COMMENT{
 	function get_AllCommentsByNumArt($numArt){
 		global $db;
 
-		$query = 'SELECT * FROM COMMENT WHERE numArt=?;';
-		$result = $db->query($query);
-		$allCommentsByArt = $result->fetchAll();
+		$query = 'SELECT * FROM COMMENT INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb WHERE numArt=? ;';
+		$request = $db->prepare($query);
+		$request->execute([$numArt]);
+		$allCommentsByArt = $request->fetchAll();
 		return($allCommentsByArt);
 	}
 	//FIN DE LA PARTIE CHELOUE--------------------------------------

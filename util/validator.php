@@ -117,18 +117,19 @@ class ValidationRule {
 
     public function image() {
         $this->shouldBeImage = true;
+        $this->unsafe();
         $this->maxFileSize(MAX_IMG_SIZE);
         return $this;
     }
 
     public function pseudo() {
         $this->shouldBePseudo = true;
-        $this->unsafe();
         return $this;
     }
 
     public function password() {
         $this->shouldBePassword = true;
+        $this->unsafe();
         return $this;
     }
 
@@ -273,7 +274,7 @@ class ValidationRule {
     public function getValue($field=false) {
         $field = $field?$field:$this->field;
         if(isset($this->validator->fieldsValues[$field])) {
-            if($this->verifyWithSafeMethod && !$this->shouldBeImage) {
+            if($this->verifyWithSafeMethod) {
                 return ctrlSaisies($this->validator->fieldsValues[$field]);
             } else {
                 return $this->validator->fieldsValues[$field];

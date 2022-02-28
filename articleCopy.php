@@ -3,6 +3,8 @@
 //Insertion fichiers utiles
 require_once __DIR__ . '/util/index.php';
 
+require_once __DIR__ . '/middleware/getMember.php';
+
 //Insertion classe Article.class
 require_once __DIR__ . '/CLASS_CRUD/article.class.php';
 
@@ -200,7 +202,9 @@ include __DIR__ . '/layouts/front/head.php';
         </template>
     </div>
 
-    <div id="form-comment">   
+
+    <h3 id="login-cta" <?=$loggedMember?'style="display:none;"':''?>><a href="<?= webSitePath('/connexion.php') ?>">Connectez-vous</a> pour réagir à l'article</h3>
+    <div id="form-comment" <?=$loggedMember?'':'style="display:none;"'?>>   
         <h4>Ajouter un commentaire</h4>
         <textarea rows="3" class="form-comment-textarea"></textarea>
         <button class="form-comment-submit btn btn-lg">Commenter</button>

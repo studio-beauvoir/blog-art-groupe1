@@ -76,6 +76,7 @@ require_once __DIR__ . '/layouts/front/head.php';
         </div>
 
         <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
+        <p>Pas de compte? <a href="<?= webSitePath('/inscription.php') ?>">Inscrivez-vous</a></p>
     </form>
 </div>
 <script>

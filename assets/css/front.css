@@ -72,8 +72,8 @@
     overflow: hidden;
 }
 .comment.answer {
-    width: 66%;
-    margin-left: 25.3%;
+    width: 75%;
+    margin-left: 25%;
 }
 
 .comment::before {

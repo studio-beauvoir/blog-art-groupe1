@@ -32,7 +32,7 @@ class COMMENT{
 	function get_AllComments() {
 		global $db;
 
-		$query = 'SELECT * FROM COMMENT INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb;';
+		$query = 'SELECT *, "" as passMemb FROM COMMENT INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb;';
 		$result = $db->query($query);
 		$allComments = $result->fetchAll();
 
@@ -42,7 +42,7 @@ class COMMENT{
 	function get_AllCommentsByNumArt($numArt){
 		global $db;
 
-		$query = 'SELECT * FROM COMMENT INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb WHERE numArt=? ;';
+		$query = 'SELECT *, "" as passMemb FROM COMMENT INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb WHERE numArt=? ;';
 		$request = $db->prepare($query);
 		$request->execute([$numArt]);
 		$allCommentsByArt = $request->fetchAll();

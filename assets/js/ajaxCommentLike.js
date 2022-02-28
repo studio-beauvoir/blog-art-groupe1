@@ -4,6 +4,11 @@ function removeChilds(node) {
     }
 }
 
+function findCommentEl(comment) {
+    const commentElData = document.querySelector(`data[value="comment-${comment.numSeqCom}-${comment.numArt}"`);
+    return commentElData?commentElData.parentElement:false;
+}
+
 function addComment(comment) {
     const template = document.getElementById("template-comment");
     const commentEl = document.importNode(template.content, true);
@@ -16,6 +21,22 @@ function addComment(comment) {
     commentEl.querySelector('.comment-content').innerText = comment.libCom;
 
     commentsEl.appendChild(commentEl);
+}
+
+function addCommentPlus(commentPlus) {
+    const template = document.getElementById("template-commentplus");
+    const commentPlusEl = document.importNode(template.content, true);
+
+    const commentEl = findCommentEl(commentPlus);
+    if(!commentEl) return;
+
+    commentPlusEl.querySelector('.comment-id').value = `commentplus-${commentPlus.numSeqCom}-${commentPlus.numArt}`;
+    commentPlusEl.querySelector('.comment-author').innerText = commentPlus.pseudoMemb;
+    commentPlusEl.querySelector('.comment-created-at').innerText = `Créé le ${commentPlus.dtCreCom}`;
+    commentPlusEl.querySelector('.comment-modified-at').innerText = `Modifié le ${commentPlus.dtModCom}`;
+    commentPlusEl.querySelector('.comment-content').innerText = commentPlus.libCom;
+
+    commentEl.after(commentPlusEl);
 }
 
 function updateComment(comment) {
@@ -69,3 +90,24 @@ function postComment() {
 
 }
 
+
+
+function fetchCommentsPlus() {
+    const data = { 
+        numArt,
+    };
+
+    $.get( 
+        urlFetchCommentPlus,
+        data,
+        function(data) {
+            if(data.errors || !data.result) return;            
+            
+            if(data.result.commentsplus) {
+                for(const commentPlus of data.result.commentsplus) {
+                    addCommentPlus(commentPlus);
+                }
+            }
+        } 
+    );
+}

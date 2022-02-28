@@ -202,15 +202,18 @@ include __DIR__ . '/layouts/front/head.php';
                 </div>
             </div>
         </template>
-            <!-- <div class="comment answer topbar-darkblue">
+
+        <template id="template-commentplus">
+            <div class="comment answer topbar-darkblue">
+                <data class="comment-id" value="">
                 <div class="comment-infos">
-                    <h4 class="comment-author">Babal_01</h4>
+                    <h4 class="comment-author"></h4>
                     <div class="comment-dates">
-                        <p class="comment-created-at">Créé le 15/02/2022</p>
-                        <p class="comment-modified-at">Modifié le 15/02/2022</p>
+                        <p class="comment-created-at"></p>
+                        <p class="comment-modified-at"></p>
                     </div>
                 </div>
-                <h4 class="comment-content">qsdqsdqsdd</h4>
+                <h4 class="comment-content"></h4>
                 <div class="comment-actions">
                     <div class="comment-action">
                         <img src="<?=webAssetPath('svg/comment.svg') ?>" alt=" ">
@@ -221,8 +224,8 @@ include __DIR__ . '/layouts/front/head.php';
                         <p>18 personnes aiment</p>
                     </div>
                 </div>
-            </div> -->
-            
+            </div>
+        </template>
     </div>
 
     <form
@@ -254,8 +257,11 @@ include __DIR__ . '/layouts/front/head.php';
 
     const urlFetchComment = "<?= webSitePath('/api/comment/fetch.php') ?>";
     const urlPostComment = "<?= webSitePath('/api/comment/post.php') ?>";
+    
+    const urlFetchCommentPlus = "<?= webSitePath('/api/commentplus/fetch.php') ?>";
 
     fetchComments();
+    fetchCommentsPlus();
 </script>
 
 

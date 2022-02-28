@@ -139,7 +139,7 @@ class COMMENT{
 		try {
 			$db->beginTransaction();
 
-			$query = 'INSERT INTO COMMENT (numSeqCom, numArt, dtCreCom, libCom, attModOK, numMemb) VALUES (?, ?, NOW(), ?, 0, ?);';
+			$query = 'INSERT INTO COMMENT (numSeqCom, numArt, dtCreCom, dtModCom, libCom, attModOK, numMemb) VALUES (?, ?, NOW(), NOW(), ?, 0, ?);';
 			$request = $db->prepare($query);
 			$request->execute( [$numSeqCom, $numArt, $libCom, $numMemb]);
 			$db->commit();

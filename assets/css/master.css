@@ -123,6 +123,8 @@ textarea[disabled], select[disabled], input[disabled], .input[disabled] {
     font: var(--p);
     display: inline-block;
     text-align: center;
+    cursor: pointer;
+    border: none;
     transition: transform .2s, outline .2s;
 }
 

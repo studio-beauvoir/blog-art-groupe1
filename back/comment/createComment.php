@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numArt = $validator->verifiedField('numArt');
         $numSeqArt = $monComment->getNextNumCom($numArt);
         
-        $monComment->create($numSeqArt, $numMemb, $libCom, $numMemb);
+        $monComment->create($numSeqArt, $numArt, $libCom, $numMemb);
 
         header("Location: $pagePrecedent");
         die();

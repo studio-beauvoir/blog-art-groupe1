@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . '/../../middleware/logged.php';
 require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php'; 
 
@@ -11,17 +12,20 @@ $errors = false;
 $validator = Validator::make([
     ValidationRule::required('numArt'),
     ValidationRule::required('libCom'),
-])->bindValues($_GET);
+])->bindValues($_POST);
 
 header('Content-type:application/json;charset=utf-8');
 if($validator->success()) {
+    $libCom = $validator->verifiedField('libCom');
+    // $numMemb = $validator->verifiedField('numMemb'); 
+    $numMemb = $loggedMember['numMemb'];
     $numArt = $validator->verifiedField('numArt');
+    $numSeqArt = $monComment->getNextNumCom($numArt);
     
-    $comments = $monComment->get_AllCommentsByNumArt($numArt);
 
-    $result = [
-        'comments' => $comments
-    ];
+    $monComment->create($numSeqArt, $numArt, $libCom, $numMemb);
+
+    $result = [];
 } else {
     $errors = $validator->errors();
 }

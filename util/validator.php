@@ -123,6 +123,7 @@ class ValidationRule {
 
     public function pseudo() {
         $this->shouldBePseudo = true;
+        $this->unsafe();
         return $this;
     }
 

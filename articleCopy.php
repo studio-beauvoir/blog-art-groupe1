@@ -109,7 +109,7 @@ include __DIR__ . '/layouts/front/head.php';
 <div class="head-bg">
     <img src="<?= webUploadPath($urlPhotArt) ?>" alt="Photo de l'article">
 </div>
-<div class="head-h1"><h1><?=$libTitrArt?></h1></div>
+<h1 class="head-h1"><?=$libTitrArt?></h1>
 <div class="head-h2"><h2><span class="bleu"> <?=$libTitrArt?> </span></h2></div>
 <div class="head-h4"><h4><?=$libChapoArt?></h4></div>
 </div>
@@ -137,9 +137,7 @@ include __DIR__ . '/layouts/front/head.php';
         <p><?=$libConclArt?></p>
     </div>
     <div class="articles-end">
-        <div class="auteur">
-            <p>Publié le <?= simpleDate($dtCreArt) ?> </p>
-        </div>
+        <p class="auteur">Publié le <?= simpleDate($dtCreArt) ?> </p>
 
         <div class="likes">
             <p>NbtrucGetLikes personnes aiment cette article<br>On vous invite à faire de même si vous l’avez apprécié !</p>
@@ -170,7 +168,7 @@ include __DIR__ . '/layouts/front/head.php';
                         <p>Répondre</p>
                     </div>
                     <div class="comment-action">
-                        <img src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
+                        <img class="comment-action-like" src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
                         <p>18 personnes aiment</p>
                     </div>
                 </div>
@@ -202,21 +200,20 @@ include __DIR__ . '/layouts/front/head.php';
         </template>
     </div>
 
-    <form
-        class="add-comments"
-        method="POST" 
-        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?idArt=<?=$_GET['idArt']?>" 
-        enctype="multipart/form-data" 
-        accept-charset="UTF-8"
-    >   
-        <h4 class="text-comments">Ajouter un commentaire</h4>
-        <textarea id="libComment" name="libComment" rows="3" class="add-bloc-comments"></textarea>
-        <div class="box-btn">
-            <div class="btn-comments">
-                <h3>Commenter</h3>
-            </div>
+    <div id="form-comment">   
+        <h4>Ajouter un commentaire</h4>
+        <textarea rows="3" class="form-comment-textarea"></textarea>
+        <button class="form-comment-submit btn btn-lg">Commenter</button>
+    </div>
+
+    <template id="form-comment-answer-template">
+        <div id="form-comment-answer">
+            <h4>Ajouter un commentaire</h4>
+            <textarea rows="3" class="form-comment-textarea"></textarea>
+            <button class="form-comment-submit btn btn-lg">Commenter</button>
         </div>
-    </form>
+    </template>
+
 </div>
 
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
@@ -230,14 +227,18 @@ include __DIR__ . '/layouts/front/head.php';
 <script>
     const numArt = <?=htmlspecialchars($numArt) ?>;
 
-    const commentTextArea = document.getElementById()
+    const formCommentTextArea = document.querySelector('#form-comment .form-comment-textarea');
+    const formCommentSubmit = document.querySelector('#form-comment .form-comment-submit');
+
+    formCommentSubmit.addEventListener('click', postComment);
 
     const commentsEl = document.getElementById('comments');
 
     const urlFetchComment = "<?= webSitePath('/api/comment/fetch.php') ?>";
-    const urlPostComment = "<?= webSitePath('/api/comment/post.php') ?>";
+    const urlPostComment = "<?= webSitePath('/api/comment/create.php') ?>";
     
     const urlFetchCommentPlus = "<?= webSitePath('/api/commentplus/fetch.php') ?>";
+    const urlPostCommentPlus = "<?= webSitePath('/api/commentplus/create.php') ?>";
 
     fetchComments();
     fetchCommentsPlus();

@@ -114,45 +114,31 @@ include __DIR__ . '/layouts/front/head.php';
 <div class="head-h4"><h4><?=$libChapoArt?></h4></div>
 </div>
 <div class="discover">
-    <div class="discover-title">
-        <h2><?=$libAccrochArt?></h2>
-    </div>
+    <h2 class="discover-title"><?=$libAccrochArt?></h2>
 </div>
 <div class="container articles">
     <div class="artist-box">
         <div class="artist-text">
-            <p><?=$parag1Art ?></p>
+            <p bbtext><?=$parag1Art ?></p>
         </div>
-        <div class="artist-title">
-            <h2><span class="purple">Regardez j'ai réussi genre</span></h2>
-        </div>
+        <h2 class="artist-title"><span class="purple" id="heading-text">Regardez j'ai réussi genre</span></h2>
     </div>
     <div class="oeuvre">
-        <div class="oeuvre-title">
-            <h2><span class="green"><?=$libSsTitr1Art ?></span></h2>
-        </div>
-        <div class="oeuvre-text">
-            <p><?=$parag2Art?></p>
-        </div>
+        <h2 class="oeuvre-title"><span class="green"><?=$libSsTitr1Art ?></span></h2>
+        <p class="oeuvre-text">
+            <?=$parag2Art?>
+        </p>
     </div>
     <div class="expo">
-        <div class="expo-title">
-            <h2><span class="orange"><?=$libSsTitr2Art ?></span></h2>
-        </div>
-        <div class="expo-text">
-            <p><?=$parag3Art ?></p>           
-        </div>
+        <h2 class="expo-title"><span class="orange"><?=$libSsTitr2Art ?></span></h2>
+        <p class="expo-text"><?=$parag3Art ?></p>           
     </div>
     <div class="conclusion">
         <p><?=$libConclArt?></p>
     </div>
-    <?php 
-        $from = 'Y-m-d H:i:s';
-        $to = 'd/m/Y H:i:s';
-    ?>
     <div class="articles-end">
         <div class="auteur">
-            <p>Publié le <?= dateChangeFormat($dtCreArt, $from, $to); ?> </p>
+            <p>Publié le <?= simpleDate($dtCreArt) ?> </p>
         </div>
 
         <div class="likes">
@@ -223,10 +209,8 @@ include __DIR__ . '/layouts/front/head.php';
         enctype="multipart/form-data" 
         accept-charset="UTF-8"
     >   
-        <div class="text-comments">
-            <h4>Ajouter un commentaire</h4>
-        </div>
-        <textarea id="comments" name="comments" rows="3" class="add-bloc-comments"></textarea>
+        <h4 class="text-comments">Ajouter un commentaire</h4>
+        <textarea id="libComment" name="libComment" rows="3" class="add-bloc-comments"></textarea>
         <div class="box-btn">
             <div class="btn-comments">
                 <h3>Commenter</h3>
@@ -237,10 +221,17 @@ include __DIR__ . '/layouts/front/head.php';
 
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
 
+<!-- Editeur bbcode -->
+<script src="<?= webAssetPath('js/utils.js') ?>"></script>
+<script src="<?= webAssetPath('js/bbEditor.js') ?>"></script>
+
 <!-- Ajax like & comment  -->
 <script src="<?= webAssetPath('js/ajaxCommentLike.js') ?>"></script>
 <script>
     const numArt = <?=htmlspecialchars($numArt) ?>;
+
+    const commentTextArea = document.getElementById()
+
     const commentsEl = document.getElementById('comments');
 
     const urlFetchComment = "<?= webSitePath('/api/comment/fetch.php') ?>";
@@ -250,6 +241,18 @@ include __DIR__ . '/layouts/front/head.php';
 
     fetchComments();
     fetchCommentsPlus();
+
+    const editorEls = document.querySelectorAll('p[bbtext]');
+    const editors = [];
+    for(let editorEl of editorEls) {
+        let editor = new bbEditor(editorEl);
+        editors.push(
+            editor.createDOMText()
+        );
+    }
+
+    const headingText = document.querySelector('.bb-element-heading');
+    document.getElementById('heading-text').innerText = headingText.innerText;
 </script>
 
 

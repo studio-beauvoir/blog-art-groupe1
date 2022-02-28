@@ -83,16 +83,17 @@ class bbEditor {
     }
 
     createDOMText() {
-        this.DOM.container = document.createElement('div');
-        this.DOM.container.classList.add('bbeditor');
-        this.DOM.container.classList.add('bb-container');
-        this.DOM.input.after(this.DOM.container);
-        this.DOM.container.appendChild(this.DOM.input);
-
         this.DOM.text = document.createElement('p');
         this.DOM.text.classList.add('bbeditor');
         this.DOM.text.classList.add('bb-text');
-        this.DOM.container.appendChild(this.DOM.text);
+        this.DOM.text.innerText = this.DOM.input.innerText;
+        this.DOM.input.after(this.DOM.text);
+
+        this.DOM.input.remove();
+        this.DOM.input = document.createElement('input');
+        this.DOM.input.type = 'hidden';
+        this.DOM.input.value = this.DOM.text.innerText;
+        this.DOM.input.after(this.DOM.text);
 
         this.renderText();
     }
@@ -260,18 +261,6 @@ class bbEditor {
     }
 
     renderText() {
-        this.DOM.text = this.getParsedValue();
+        this.DOM.text.innerHTML = this.getParsedValue();
     }
 }
-
-
-window.addEventListener('DOMContentLoaded', function() {
-    const editorEls = document.querySelectorAll('input[type="hidden"][bbeditor]');
-    const editors = [];
-    for(let editorEl of editorEls) {
-        let editor = new bbEditor(editorEl);
-        editors.push(
-            editor.createDOM()
-        );
-    }
-});

@@ -231,6 +231,8 @@ $validator->echoErrors();
 </form>
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
 
+<script src="<?= webAssetPath('js/bbEditor.js') ?>"></script>
+
 <!-- Ajax them et angles par langue, et Mot cle  -->
 <script src="<?= webAssetPath('js/ajaxArticle.js') ?>"></script>
 <script>
@@ -247,6 +249,15 @@ $validator->echoErrors();
         fetchLangAnglesAndKeywords();
         fetchMotsCles();
     });
+
+    const editorEls = document.querySelectorAll('input[type="hidden"][bbeditor]');
+    const editors = [];
+    for(let editorEl of editorEls) {
+        let editor = new bbEditor(editorEl);
+        editors.push(
+            editor.createDOM()
+        );
+    }
 </script>
 
 

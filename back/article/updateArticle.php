@@ -303,6 +303,15 @@ $validator->echoErrors();
         fetchLangAnglesAndKeywords();
         fetchMotsCles();
     });
+
+    const editorEls = document.querySelectorAll('input[type="hidden"][bbeditor]');
+    const editors = [];
+    for(let editorEl of editorEls) {
+        let editor = new bbEditor(editorEl);
+        editors.push(
+            editor.createDOM()
+        );
+    }
 </script>
 
 <?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

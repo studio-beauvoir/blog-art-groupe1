@@ -16,8 +16,8 @@ function addComment(comment) {
 
     commentEl.querySelector('.comment-id').value = `comment-${comment.numSeqCom}-${comment.numArt}`;
     commentEl.querySelector('.comment-author').innerText = comment.pseudoMemb;
-    commentEl.querySelector('.comment-created-at').innerText = `Créé le ${comment.dtCreCom}`;
-    commentEl.querySelector('.comment-modified-at').innerText = `Modifié le ${comment.dtModCom}`;
+    commentEl.querySelector('.comment-created-at').innerText = `Créé le ${simpleDate(comment.dtCreCom)}`;
+    commentEl.querySelector('.comment-modified-at').innerText = `Modifié le ${simpleDate(comment.dtModCom)}`;
     commentEl.querySelector('.comment-content').innerText = comment.libCom;
 
     commentsEl.appendChild(commentEl);
@@ -32,8 +32,8 @@ function addCommentPlus(commentPlus) {
 
     commentPlusEl.querySelector('.comment-id').value = `commentplus-${commentPlus.numSeqCom}-${commentPlus.numArt}`;
     commentPlusEl.querySelector('.comment-author').innerText = commentPlus.pseudoMemb;
-    commentPlusEl.querySelector('.comment-created-at').innerText = `Créé le ${commentPlus.dtCreCom}`;
-    commentPlusEl.querySelector('.comment-modified-at').innerText = `Modifié le ${commentPlus.dtModCom}`;
+    commentPlusEl.querySelector('.comment-created-at').innerText = `Créé le ${simpleDate(commentPlus.dtCreCom)}`;
+    commentPlusEl.querySelector('.comment-modified-at').innerText = `Modifié le ${simpleDate(commentPlus.dtModCom)}`;
     commentPlusEl.querySelector('.comment-content').innerText = commentPlus.libCom;
 
     commentEl.after(commentPlusEl);

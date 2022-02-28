@@ -82,6 +82,21 @@ class bbEditor {
         return this;
     }
 
+    createDOMText() {
+        this.DOM.container = document.createElement('div');
+        this.DOM.container.classList.add('bbeditor');
+        this.DOM.container.classList.add('bb-container');
+        this.DOM.input.after(this.DOM.container);
+        this.DOM.container.appendChild(this.DOM.input);
+
+        this.DOM.text = document.createElement('p');
+        this.DOM.text.classList.add('bbeditor');
+        this.DOM.text.classList.add('bb-text');
+        this.DOM.container.appendChild(this.DOM.text);
+
+        this.renderText();
+    }
+
     createDOMActions() {
         this.DOM.actions = document.createElement('div');
         this.DOM.actions.classList.add('bb-actions');
@@ -226,7 +241,7 @@ class bbEditor {
         this.DOM.input.value = content;
     }
 
-    parseValue() {
+    getParsedValue() {
         let value = `<span>${this.DOM.input.value}</span>`;
         for(let action of this.actions) {
             if(action.element) {
@@ -237,7 +252,15 @@ class bbEditor {
                 value = value.replace(new RegExp(`\\[\\/${action.bbElement}\\]`), `</${action.element}><span>`);
             }
         }
-        this.DOM.editor.innerHTML = value;
+        return value;
+    }
+
+    parseValue() {
+        this.DOM.editor.innerHTML = this.getParsedValue();
+    }
+
+    renderText() {
+        this.DOM.text = this.getParsedValue();
     }
 }
 

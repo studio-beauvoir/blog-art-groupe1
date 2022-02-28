@@ -103,18 +103,6 @@ $idAngl = $article['numAngl'];
 $idThem = $article['numThem'];
 
 
-
-
-$comments = $monComment->get_AllCommentsByNumArt($numArt);
-var_dump($comments);
-// $numMemb = $membre['numMemb'];
-// $pseudoMemb = $membre['pseudoMemb'];
-
-// $dtCreCom = $comment['dtCreCom'];
-// $dtModCom = $comment['dtModCom'];
-// $libCom = $comment['libCom'];
-
-
 include __DIR__ . '/layouts/front/head.php';
 ?>
 

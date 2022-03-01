@@ -88,9 +88,9 @@ class LIKEART{
 		try {
 			$db->beginTransaction();
 
-			// insert
-			// prepare
-			// execute
+			$query = 'INSERT INTO LIKEART (numMemb, numArt, likeA) VALUES (?, ?, ?);';
+			$request = $db->prepare($query);
+			$request->execute( [$numMemb, $numArt, $likeA]);
 			$db->commit();
 			$request->closeCursor();
 		}

@@ -9,13 +9,13 @@ $pageNav = ['Home:/admin.php', 'Gestion des angles:'.$pagePrecedent, $pageTitle]
 require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Statut
-require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php'; 
+require_once __DIR__ . '/../../class_crud/angle.class.php'; 
 
 
 // Instanciation de la classe Statut
 $monAngle = new ANGLE(); 
 
-require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+require_once __DIR__ . '/../../class_crud/langue.class.php';
 $maLangue = new LANGUE();
 
 // Gestion des erreurs de saisie

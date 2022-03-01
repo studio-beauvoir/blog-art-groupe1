@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Langue
-require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php'; 
+require_once __DIR__ . '/../../class_crud/membre.class.php'; 
 
 // Instanciation de la classe langue
 $monMembre = new MEMBRE(); 

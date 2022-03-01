@@ -9,10 +9,10 @@ $pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pa
 //Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
-require_once __DIR__ . '/../../CLASS_CRUD/motcle.class.php'; 
+require_once __DIR__ . '/../../class_crud/motcle.class.php'; 
 $monMotCle = new MOTCLE(); 
 
-require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+require_once __DIR__ . '/../../class_crud/langue.class.php';
 $maLangue = new LANGUE();
 
 

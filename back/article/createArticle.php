@@ -8,10 +8,10 @@ $pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.':'.$pagePrecedent, $pag
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
-require_once __DIR__ . '/../../CLASS_CRUD/article.class.php'; 
-require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php'; 
-require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php'; 
-require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php'; 
+require_once __DIR__ . '/../../class_crud/article.class.php'; 
+require_once __DIR__ . '/../../class_crud/langue.class.php'; 
+require_once __DIR__ . '/../../class_crud/angle.class.php'; 
+require_once __DIR__ . '/../../class_crud/thematique.class.php'; 
 
 // Instanciation de la classe Membre
 $monArticle = new ARTICLE(); 

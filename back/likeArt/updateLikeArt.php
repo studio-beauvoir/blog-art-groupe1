@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Angle
-require_once __DIR__ . '/../../CLASS_CRUD/likeart.class.php'; 
+require_once __DIR__ . '/../../class_crud/likeart.class.php'; 
 
 // Instanciation de la classe Angle
 $monLikeArt = new LIKEART(); 

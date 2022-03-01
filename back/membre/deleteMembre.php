@@ -8,10 +8,10 @@ $pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pa
 
 require_once __DIR__ . '/../../util/index.php';
 
-require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
+require_once __DIR__ . '/../../class_crud/membre.class.php';
 $monMembre = new MEMBRE(); 
 
-require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php';
+require_once __DIR__ . '/../../class_crud/statut.class.php';
 $monStatut = new STATUT(); 
 
 // Ctrl CIR

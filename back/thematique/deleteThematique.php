@@ -2,17 +2,17 @@
 require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Thematique
-require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
+require_once __DIR__ . '/../../class_crud/thematique.class.php';
 // Instanciation de la classe thématique
 $maThematique = new THEMATIQUE(); 
 
-require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+require_once __DIR__ . '/../../class_crud/langue.class.php';
 // Instanciation de la classe thématique
 $maLangue = new LANGUE(); 
 
 // Ctrl CIR
 // Insertion classe Article
-require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
+require_once __DIR__ . '/../../class_crud/article.class.php';
 // Instanciation de la classe Article
 $monArticle = new ARTICLE();
 

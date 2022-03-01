@@ -181,9 +181,9 @@ include __DIR__ . '/layouts/front/head.php';
                             <img src="<?=webAssetPath('svg/comment.svg') ?>" alt=" ">
                             <p>Répondre</p>
                         </div>
-                        <div class="comment-action">
-                            <img class="comment-action-like" src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
-                            <p class="comment-action-likesCount"></p>
+                        <div class="comment-action comment-action-like">
+                            <img class="comment-action-like-btn" src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
+                            <p class="comment-action-like-count"></p>
                         </div>
                     </div>
                 </div>
@@ -228,6 +228,9 @@ include __DIR__ . '/layouts/front/head.php';
     
     const urlFetchCommentPlus = "<?= webSitePath('/api/commentplus/fetch.php') ?>";
     const urlPostCommentPlus = "<?= webSitePath('/api/commentplus/create.php') ?>";
+
+    const urlToggleLike = "<?= webSitePath('/api/likecom/toggle.php') ?>";
+
 
     fetchComments();
 

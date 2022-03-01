@@ -381,17 +381,6 @@ span.bleu {
     transform: scale(1.15) rotate(-10deg);
 }
 
-/* .comment-action-like {
-    filter: grayscale(1);
-}
-.comment-action-like:hover {
-    filter: grayscale(0.5);
-}
-.comment-action-like.liked {
-    filter: none;
-} */
-
-
 #form-comment,
 #login-cta {
     /* margin-left: 8.3%; */

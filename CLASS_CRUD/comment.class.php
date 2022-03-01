@@ -47,9 +47,9 @@ class COMMENT{
 		global $db;
 
 		// $query = 'SELECT *, "" as passMemb FROM COMMENT INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb WHERE numArt=?;';
-		$query = 	'SELECT comment.*, membre.pseudoMemb, COUNT(likecom.numSeqCom) AS nblike FROM comment
+		$query = 	'SELECT comment.*, membre.pseudoMemb, SUM(likecom.likeC) AS nblike FROM comment
 					JOIN membre ON comment.numMemb=membre.numMemb
-					LEFT JOIN likecom ON likecom.numSeqCom=comment.numSeqCom WHERE (likecom.numArt=comment.numArt OR comment.numArt=?)
+					LEFT JOIN likecom ON likecom.numSeqCom=comment.numSeqCom WHERE (likecom.numArt=comment.numArt OR comment.numArt=1)
 					GROUP BY comment.numSeqCom;';
 		$request = $db->prepare($query);
 		$request->execute([$numArt]);

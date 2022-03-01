@@ -7,64 +7,89 @@ class LIKECOM{
 	function get_1LikeCom($numMemb, $numSeqCom, $numArt){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetch());
+		$query = 'SELECT * FROM LIKECOM WHERE numMemb=?, numSeqCom=?, numArt=?;';
+		$request = $db->prepare($query);
+		$request->execute([$numMemb, $numSeqCom, $numArt]);
+		$result = $request->fetch();
+
+		return($result);
 	}
 
 	function get_1LikeComPlusMemb($numMemb, $numSeqCom, $numArt){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetch());
+		$query = 'SELECT *, "" as passMemb FROM LIKECOM INNER JOIN MEMBRE ON LIKECOM.numMemb=MEMBRE.numMemb WHERE numMemb=?, numSeqCom=?, numArt=?;';
+		$request = $db->prepare($query);
+		$request->execute([$numMemb, $numSeqCom, $numArt]);
+		$result = $request->fetch();
+
+		return($result);
 	}
 
 	function get_1LikeComPlusCom($numMemb, $numSeqCom, $numArt){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetch());
+		$query = 'SELECT * FROM LIKECOM INNER JOIN COMMENT ON LIKECOM.numSeqCom=COMMENT.numSeqCom, LIKECOM.numArt=COMMENT.numArt, WHERE numMemb=?, numSeqCom=?, numArt=?;';
+		$request = $db->prepare($query);
+		$request->execute([$numMemb, $numSeqCom, $numArt]);
+		$result = $request->fetch();
+
+		return($result);
 	}
 
 	function get_1LikeComPlusArt($numSeqCom, $numArt){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetch());
+		$query = 'SELECT * FROM LIKECOM INNER JOIN ARTICLE ON LIKECOM.numArt=ARTICLE.numArt, WHERE numMemb=?, numSeqCom=?, numArt=?;';
+		$request = $db->prepare($query);
+		$request->execute([$numMemb, $numSeqCom, $numArt]);
+		$result = $request->fetch();
+
+		return($result);
 	}
 
 	function get_AllLikesCom(){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM LIKECOM';
+		$request = $db->query($query);
+		$allLikesCom = $request->fetchAll();
+
 		return($allLikesCom);
 	}
 
 	function get_AllLikesComByComment($numSeqCom, $numArt){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetchAll());
+		$query = 'SELECT * FROM LIKECOM WHERE numSeqCom=?, numArt=?;';
+		$request = $db->prepare($query);
+		$request->execute([$numSeqCom, $numArt]);
+		$result = $request->fetchAll();
+
+		return($result);
+
+	}
+
+	function get_nbLikesComByComment($numSeqCom, $numArt){
+		global $db;
+
+		$query = 'SELECT * FROM LIKECOM WHERE numSeqCom=?, numArt=?;';
+		$request = $db->prepare($query);
+		$request->execute([$numSeqCom, $numArt]);
+		$result = $request->rowCount();
+
+		return($result);
 	}
 
 	function get_AllLikesComByMembre($numMemb){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetchAll());
+		$query = 'SELECT * FROM LIKECOM WHERE numMemb=?;';
+		$request = $db->prepare($query);
+		$request->execute([$numMemb]);
+		$result = $request->fetchAll();
+
+		return($result);
 	}
 
 	function create($numMemb, $numSeqCom, $numArt, $likeC){

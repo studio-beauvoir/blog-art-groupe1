@@ -154,26 +154,29 @@ include __DIR__ . '/layouts/front/head.php';
 
         <!-- template pour le chargement des commentaires via js -->
         <template id="template-comment">
-            <div class="comment topbar-blue">
-                <data class="comment-id" value="">
-                <div class="comment-infos">
-                    <h4 class="comment-author"></h4>
-                    <div class="comment-dates">
-                        <p class="comment-created-at"></p>
-                        <p class="comment-modified-at"></p>
+            <div class="comment-container">
+                <data class="comment-id" value=""></data>
+                <div class="comment topbar-blue">
+                    <div class="comment-infos">
+                        <h4 class="comment-author"></h4>
+                        <div class="comment-dates">
+                            <p class="comment-created-at"></p>
+                            <p class="comment-modified-at"></p>
+                        </div>
+                    </div>
+                    <h4 class="comment-content"></h4>
+                    <div class="comment-actions">
+                        <div class="comment-action">
+                            <img src="<?=webAssetPath('svg/comment.svg') ?>" alt=" ">
+                            <p>Répondre</p>
+                        </div>
+                        <div class="comment-action">
+                            <img class="comment-action-like" src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
+                            <p class="comment-action-likesCount"></p>
+                        </div>
                     </div>
                 </div>
-                <h4 class="comment-content"></h4>
-                <div class="comment-actions">
-                    <div class="comment-action">
-                        <img src="<?=webAssetPath('svg/comment.svg') ?>" alt=" ">
-                        <p>Répondre</p>
-                    </div>
-                    <div class="comment-action">
-                        <img class="comment-action-like" src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
-                        <p>18 personnes aiment</p>
-                    </div>
-                </div>
+                <div class="comment-answers"></div>
             </div>
         </template>
 
@@ -194,8 +197,8 @@ include __DIR__ . '/layouts/front/head.php';
                         <p>Répondre</p>
                     </div>
                     <div class="comment-action">
-                        <img src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
-                        <p>18 personnes aiment</p>
+                        <img class="comment-action-like" src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
+                        <p class="comment-action-likesCount"></p>
                     </div>
                 </div>
             </div>
@@ -245,7 +248,6 @@ include __DIR__ . '/layouts/front/head.php';
     const urlPostCommentPlus = "<?= webSitePath('/api/commentplus/create.php') ?>";
 
     fetchComments();
-    fetchCommentsPlus();
 
     const editorEls = document.querySelectorAll('p[bbtext]');
     const editors = [];

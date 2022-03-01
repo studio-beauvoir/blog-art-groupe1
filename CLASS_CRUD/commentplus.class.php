@@ -8,7 +8,14 @@ class COMMENTPLUS{
 		global $db;
 
 	
-		$query = 'SELECT *, "" as passMemb FROM COMMENTPLUS INNER JOIN COMMENT ON COMMENTPLUS.numSeqCom=COMMENT.numSeqCom INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb WHERE COMMENTPLUS.numArt=? ;';
+		// $query = 'SELECT comment.*, commentplus.*, membre.pseudoMemb FROM COMMENTPLUS INNER JOIN COMMENT ON COMMENTPLUS.numSeqCom=COMMENT.numSeqCom INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb WHERE COMMENTPLUS.numArt=? ;';
+		// $query = 	'SELECT comment.*, membre.pseudoMemb, COUNT(likecom.numSeqCom) AS nblike FROM comment
+		// 			JOIN membre ON comment.numMemb=membre.numMemb
+		// 			LEFT JOIN likecom ON likecom.numSeqCom=comment.numSeqCom WHERE (likecom.numArt=comment.numArt OR comment.numArt=?)
+		// 			GROUP BY comment.numSeqCom;';
+
+		$query = 'SELECT * FROM COMMENTPLUS WHERE numArt=? ;';
+
 		$request = $db->prepare($query);
 		$request->execute([$numArt]);
 		$allCommentsByArt = $request->fetchAll();

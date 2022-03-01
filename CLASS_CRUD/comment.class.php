@@ -3,6 +3,10 @@
 // ETUD
 require_once __DIR__ . '../../CONNECT/database.php';
 
+require_once __DIR__ . './likecom.class.php';
+
+$monLikecom = new LIKECOM();
+
 class COMMENT{
 	function get_1Comment($numSeqCom, $numArt){
 		global $db;
@@ -42,10 +46,15 @@ class COMMENT{
 	function get_AllCommentsByNumArt($numArt){
 		global $db;
 
-		$query = 'SELECT *, "" as passMemb FROM COMMENT INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb WHERE numArt=? ;';
+		// $query = 'SELECT *, "" as passMemb FROM COMMENT INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb WHERE numArt=?;';
+		$query = 	'SELECT comment.*, membre.pseudoMemb, COUNT(likecom.numSeqCom) AS nblike FROM comment
+					JOIN membre ON comment.numMemb=membre.numMemb
+					LEFT JOIN likecom ON likecom.numSeqCom=comment.numSeqCom WHERE (likecom.numArt=comment.numArt OR comment.numArt=?)
+					GROUP BY comment.numSeqCom;';
 		$request = $db->prepare($query);
 		$request->execute([$numArt]);
 		$allCommentsByArt = $request->fetchAll();
+
 		return($allCommentsByArt);
 	}
 	//FIN DE LA PARTIE CHELOUE--------------------------------------

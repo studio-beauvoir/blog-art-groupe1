@@ -13,10 +13,15 @@ class COMMENT{
 		
 		try {
 			$db->beginTransaction();
-			$query = 'SELECT * FROM COMMENT WHERE numSeqCom=? AND numArt=?;';
+			// $query = 'SELECT * FROM COMMENT WHERE numArt=? AND numSeqCom=?;';
+			$query = 	'SELECT comment.*, membre.pseudoMemb, SUM(likecom.likeC) AS nblike FROM comment
+						JOIN membre ON comment.numMemb=membre.numMemb
+						LEFT JOIN likecom ON likecom.numSeqCom=comment.numSeqCom WHERE (likecom.numArt=comment.numArt OR comment.numArt=?) AND comment.numSeqCom=?
+						GROUP BY comment.numSeqCom;';
+
 			$request = $db->prepare($query);
 			
-			$request->execute([$numSeqCom, $numArt]);
+			$request->execute([$numArt, $numSeqCom]);
 
 			$result = $request->fetch();
 
@@ -47,7 +52,7 @@ class COMMENT{
 		global $db;
 
 		// $query = 'SELECT *, "" as passMemb FROM COMMENT INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb WHERE numArt=?;';
-		$query = 	'SELECT comment.*, membre.pseudoMemb, COUNT(likecom.numSeqCom) AS nblike FROM comment
+		$query = 	'SELECT comment.*, membre.pseudoMemb, SUM(likecom.likeC) AS nblike FROM comment
 					JOIN membre ON comment.numMemb=membre.numMemb
 					LEFT JOIN likecom ON likecom.numSeqCom=comment.numSeqCom WHERE (likecom.numArt=comment.numArt OR comment.numArt=?)
 					GROUP BY comment.numSeqCom;';

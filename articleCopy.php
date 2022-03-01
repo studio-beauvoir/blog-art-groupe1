@@ -78,8 +78,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 // controles
-if(!isset($_GET['idArt'])) header("Location: ".webSitePath('/home.php'));
-$numArt = $_GET['idArt'];
+if(!isset($_GET['numArt'])) header("Location: ".webSitePath('/home.php'));
+$numArt = $_GET['numArt'];
 
 $article = $monArticle->get_1Article($numArt);
 
@@ -181,9 +181,10 @@ include __DIR__ . '/layouts/front/head.php';
                             <img src="<?=webAssetPath('svg/comment.svg') ?>" alt=" ">
                             <p>Répondre</p>
                         </div>
-                        <div class="comment-action">
-                            <img class="comment-action-like" src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
-                            <p class="comment-action-likesCount"></p>
+                        <div class="comment-action comment-action-like">
+                            <img class="comment-action-like-btn liked" src="<?=webAssetPath('svg/liked.svg') ?>" alt=" ">
+                            <img class="comment-action-like-btn like" src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
+                            <p class="comment-action-like-count"></p>
                         </div>
                     </div>
                 </div>
@@ -209,10 +210,10 @@ include __DIR__ . '/layouts/front/head.php';
 
 <!-- Editeur bbcode -->
 <script src="<?= webAssetPath('js/utils.js') ?>"></script>
-<script src="<?= webAssetPath('js/bbEditor.js') ?>"></script>
+<script src="<?= webAssetPath('js/bb-editor.js') ?>"></script>
 
 <!-- Ajax like & comment  -->
-<script src="<?= webAssetPath('js/ajaxCommentLike.js') ?>"></script>
+<script src="<?= webAssetPath('js/ajax-comment-like.js') ?>"></script>
 <script>
     const numArt = <?=htmlspecialchars($numArt) ?>;
 
@@ -229,8 +230,11 @@ include __DIR__ . '/layouts/front/head.php';
     const urlFetchCommentPlus = "<?= webSitePath('/api/commentplus/fetch.php') ?>";
     const urlPostCommentPlus = "<?= webSitePath('/api/commentplus/create.php') ?>";
 
-    fetchComments();
+    const urlToggleLike = "<?= webSitePath('/api/likecom/toggle.php') ?>";
+    const urlFetchLikesMember = "<?= webSitePath('/api/likecom/fetch-member.php') ?>";
 
+    fetchComments();
+    
     const editorEls = document.querySelectorAll('p[bbtext]');
     const editors = [];
     for(let editorEl of editorEls) {

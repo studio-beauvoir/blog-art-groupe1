@@ -258,11 +258,6 @@ span.bleu {
 .right {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 10px;
-}
-
-.left {
-    margin-bottom: 20px;
 }
 
 .home-box-text-btn-h4 {
@@ -367,7 +362,7 @@ span.bleu {
     justify-content: flex-end;
 }
 .comment-action {
-    gap: 0.7rem;
+    gap: 1rem;
     cursor: pointer;
     user-select: none;
 }
@@ -376,26 +371,19 @@ span.bleu {
 }
 
 .comment-action img {
-    height: 3rem;
+    width: 3.5rem;
     transition: transform .15s;
 }
+.comment-action img.hidden {
+    display: none;
+}
+
 .comment-action:hover img {
     transform: scale(1.3) rotate(-10deg);
 }
 .comment-action:active img {
     transform: scale(1.15) rotate(-10deg);
 }
-
-/* .comment-action-like {
-    filter: grayscale(1);
-}
-.comment-action-like:hover {
-    filter: grayscale(0.5);
-}
-.comment-action-like.liked {
-    filter: none;
-} */
-
 
 #form-comment,
 #login-cta {

@@ -2,8 +2,10 @@
 
 require_once __DIR__ . '/../../middleware/logged.php';
 require_once __DIR__ . '/../../util/index.php';
-require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php'; 
+require_once __DIR__ . '/../../CLASS_CRUD/LIKECOM.class.php'; 
+require_once __DIR__ . '/../../CLASS_CRUD/COMMENT.class.php'; 
 
+$monLikeCom = new LIKECOM(); 
 $monComment = new COMMENT(); 
 
 $result = false;
@@ -11,21 +13,21 @@ $errors = false;
 
 $validator = Validator::make([
     ValidationRule::required('numArt'),
-    ValidationRule::required('libCom'),
+    ValidationRule::required('numSeqCom'),
 ])->bindValues($_POST);
 
 header('Content-type:application/json;charset=utf-8');
 if($validator->success()) {
-    $libCom = $validator->verifiedField('libCom');
-    // $numMemb = $validator->verifiedField('numMemb'); 
-    $numMemb = $loggedMember['numMemb'];
     $numArt = $validator->verifiedField('numArt');
-    $numSeqCom = $monComment->getNextNumCom($numArt);
+    $numSeqCom = $validator->verifiedField('numSeqCom');
+    $numMemb = $loggedMember['numMemb'];
     
 
-    $monComment->create($numSeqCom, $numArt, $libCom, $numMemb);
+    $monLikeCom->createOrtoggle($numMemb, $numSeqCom, $numArt);
 
-    $result = [];
+    $result = [
+        'comment' => $monComment->get_1Comment($numSeqCom, $numArt)
+    ];
 } else {
     $errors = $validator->errors();
 }

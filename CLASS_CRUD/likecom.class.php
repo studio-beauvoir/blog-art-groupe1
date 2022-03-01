@@ -50,8 +50,7 @@ class LIKECOM{
 
 	function get_AllLikesCom(){
 		global $db;
-
-		$query = 'SELECT * FROM LIKECOM';
+		$query = 'SELECT * FROM LIKECOM INNER JOIN MEMBRE ON LIKECOM.numMemb=MEMBRE.numMemb;';
 		$request = $db->query($query);
 		$allLikesCom = $request->fetchAll();
 
@@ -98,9 +97,9 @@ class LIKECOM{
 		try {
 			$db->beginTransaction();
 
-			// insert
-			// prepare
-			// execute
+			$query = 'INSERT INTO LIKECOM (numMemb, numSeqCom, numArt, likeC) VALUES (?, ?, ?, ?);';
+			$request = $db->prepare($query);
+			$request->execute( [$numMemb, $numSeqCom, $numArt, $likeC]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -117,9 +116,9 @@ class LIKECOM{
 		try {
 			$db->beginTransaction();
 
-			// update
-			// prepare
-			// execute
+			$query = 'UPDATE LIKECOM SET numMemb=?, numSeqCom=?, numArt=? WHERE likeCom=?;';
+			$request = $db->prepare($query);
+			$request->execute([$numMemb, $numSeqCom, $numArt, $likeC]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -157,13 +156,13 @@ class LIKECOM{
 		try {
 			$db->beginTransaction();
 
-			// delete
-			// prepare
-			// execute
-			//$count = $request->rowCount();
+			$query = 'DELETE FROM LIKECOM SET numMemb=?, numSeqCom=?, numArt=? WHERE likeArt=?;';
+			$request = $db->prepare($query);
+			$request->execute([$numMemb], [$numSeqCom], [$numArt]);
+			$count = $request->rowCount();
 			$db->commit();
 			$request->closeCursor();
-			//return($count);
+			return($count);
 		}
 		catch (PDOException $e) {
 			$db->rollBack();

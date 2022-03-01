@@ -45,7 +45,7 @@ include __DIR__ . '/../../layouts/back/head.php';
                 </td>
                 <td>  
                     <!-- lien : test ternaire super admin -->
-                    <a class="btn btn-md btn-danger" href="<?= $row['likeA']!=1?'./deleteLikeArt.php?id='.$row['likeA']:'#'; ?>" title="Supprimer le like">Supprimer</a>
+                    <a class="btn btn-md btn-danger" href="./deleteLikeArt.php?numMemb=<?=$row['numMemb'];?>&numArt=<?=$row['numArt'];?>" title="Supprimer le like">Supprimer</a>
                 </td>
             </tr>
         <?php }	// End of foreach ?>

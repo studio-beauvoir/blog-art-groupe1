@@ -254,7 +254,7 @@ input.research-bar{
 }
 
 .header-box-logo{
-    display: flex;
+    display: flex;  
     align-items: center;
 }
 
@@ -313,3 +313,13 @@ ul li{
     margin-bottom: 20px;
 }
 /* -----------------------------------FIN FOOTER-----------------------------------*/
+/* -----------------------------------CGU-----------------------------------*/
+
+.patate{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color:yellow;
+}
+
+/* -----------------------------------FIN CGU-----------------------------------*/

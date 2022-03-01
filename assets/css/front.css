@@ -311,14 +311,16 @@ span.bleu {
     --topbar-height: 1.5rem;
     position: relative;
     display: flex;  
+    flex-direction: column;
     width: 100%;
     background-color: var(--bg2);
     border-radius: 15px;
-    flex-direction: column;
     padding: calc(1rem + var(--topbar-height) ) 2rem 1.5rem 2rem;
     overflow: hidden;
 }
-.comment.answer {
+.comment-answers {
+    display: flex;
+    flex-direction: column;
     width: 75%;
     margin-left: 25%;
 }
@@ -331,11 +333,16 @@ span.bleu {
     display: block;
     height: var(--topbar-height);
     width: 100%;
+    background-color: var(--g2);
 }
 .comment.topbar-blue::before {
     background-color: var(--g2);
 }
-.comment.topbar-darkblue::before {
+
+.comment-answers {
+    margin-top: 2rem;
+}
+.comment-answers .comment::before {
     background-color: var(--g1);
 }
 

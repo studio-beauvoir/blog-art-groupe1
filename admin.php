@@ -24,9 +24,9 @@ require_once __DIR__ . '/layouts/back/head.php';
 
 	<a class="btn btn-lg done" href="./BACK/langue/langue.php">Langue (*)</a>
 
-	<a class="btn btn-lg" href="./BACK/likeart/likeart.php">Like Article (*)</a>
+	<a class="btn btn-lg doing" href="./BACK/likeart/likeart.php">Like Article (*)</a>
 
-	<a class="btn btn-lg" href="./BACK/likecom/likecom.php">Like Commentaire (*)</a>
+	<a class="btn btn-lg doing" href="./BACK/likecom/likecom.php">Like Commentaire (*)</a>
 
 <!-- Membre (*) - reCaptcha à ajouter -->
 	<a class="btn btn-lg to-test" href="./BACK/membre/membre.php">Membre (*)</a>

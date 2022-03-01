@@ -41,7 +41,7 @@ include __DIR__ . '/../../layouts/back/head.php';
 
                 <!-- actions -->
                 <td>
-                    <a class="btn btn-md" href="./updateLikeArt.php?id=<?=$row['likeA']; ?>" title="Modifier le like">Modifier</a>
+                    <a class="btn btn-md" href="./updateLikeArt.php?numMemb=<?=$row['numMemb'];?>&numArt=<?=$row['numArt'];?>" title="Modifier le like">Modifier</a>
                 </td>
                 <td>  
                     <!-- lien : test ternaire super admin -->

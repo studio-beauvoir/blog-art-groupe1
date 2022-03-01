@@ -10,3 +10,19 @@ function simpleDate(date) {
 
     return `${day}/${month}/${year} à ${hours}:${minutes}`;
 }
+
+function removeChilds(node) {
+    while (node.firstChild) {
+        node.removeChild(node.lastChild);
+    }
+}
+
+String.prototype.singularise = function(n) {
+    var parsedN = this.replace(/\:n/, n);
+    if(n==1 || n==-1) {
+        parsedN = parsedN.replace(/\(\w+\)/gm, "");
+    } else {
+        parsedN = parsedN.replace(/\((\w+)\)/gm, "$1");
+    }
+    return parsedN;
+}

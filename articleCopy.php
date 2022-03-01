@@ -147,68 +147,53 @@ include __DIR__ . '/layouts/front/head.php';
         </div>
     </div>
     
+
+
+
     <div class="comments-container">
         <h3>Commentaires</h3>
+
+        <h3 id="login-cta" <?=$loggedMember?'style="display:none;"':''?>><a href="<?= webSitePath('/connexion.php') ?>">Connectez-vous</a> pour réagir à l'article</h3>
+        <div id="form-comment" <?=$loggedMember?'':'style="display:none;"'?>>   
+            <h4>Ajouter un commentaire</h4>
+            <textarea rows="3" class="form-comment-textarea"></textarea>
+            <button class="form-comment-submit btn btn-lg">Commenter</button>
+        </div>
+
         <div class="comments" id="comments"></div>
 
 
         <!-- template pour le chargement des commentaires via js -->
         <template id="template-comment">
-            <div class="comment topbar-blue">
-                <data class="comment-id" value="">
-                <div class="comment-infos">
-                    <h4 class="comment-author"></h4>
-                    <div class="comment-dates">
-                        <p class="comment-created-at"></p>
-                        <p class="comment-modified-at"></p>
+            <div class="comment-container">
+                <data class="comment-id" value=""></data>
+                <div class="comment topbar-blue">
+                    <div class="comment-infos">
+                        <h4 class="comment-author"></h4>
+                        <div class="comment-dates">
+                            <p class="comment-created-at"></p>
+                            <p class="comment-modified-at"></p>
+                        </div>
+                    </div>
+                    <h4 class="comment-content"></h4>
+                    <div class="comment-actions">
+                        <div class="comment-action">
+                            <img src="<?=webAssetPath('svg/comment.svg') ?>" alt=" ">
+                            <p>Répondre</p>
+                        </div>
+                        <div class="comment-action">
+                            <img class="comment-action-like" src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
+                            <p class="comment-action-likesCount"></p>
+                        </div>
                     </div>
                 </div>
-                <h4 class="comment-content"></h4>
-                <div class="comment-actions">
-                    <div class="comment-action">
-                        <img src="<?=webAssetPath('svg/comment.svg') ?>" alt=" ">
-                        <p>Répondre</p>
-                    </div>
-                    <div class="comment-action">
-                        <img class="comment-action-like" src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
-                        <p>18 personnes aiment</p>
-                    </div>
-                </div>
-            </div>
-        </template>
-
-        <template id="template-commentplus">
-            <div class="comment answer topbar-darkblue">
-                <data class="comment-id" value="">
-                <div class="comment-infos">
-                    <h4 class="comment-author"></h4>
-                    <div class="comment-dates">
-                        <p class="comment-created-at"></p>
-                        <p class="comment-modified-at"></p>
-                    </div>
-                </div>
-                <h4 class="comment-content"></h4>
-                <div class="comment-actions">
-                    <div class="comment-action">
-                        <img src="<?=webAssetPath('svg/comment.svg') ?>" alt=" ">
-                        <p>Répondre</p>
-                    </div>
-                    <div class="comment-action">
-                        <img src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
-                        <p>18 personnes aiment</p>
-                    </div>
-                </div>
+                <div class="comment-answers"></div>
             </div>
         </template>
     </div>
 
 
-    <h3 id="login-cta" <?=$loggedMember?'style="display:none;"':''?>><a href="<?= webSitePath('/connexion.php') ?>">Connectez-vous</a> pour réagir à l'article</h3>
-    <div id="form-comment" <?=$loggedMember?'':'style="display:none;"'?>>   
-        <h4>Ajouter un commentaire</h4>
-        <textarea rows="3" class="form-comment-textarea"></textarea>
-        <button class="form-comment-submit btn btn-lg">Commenter</button>
-    </div>
+    
 
     <template id="form-comment-answer-template">
         <div id="form-comment-answer">
@@ -245,7 +230,6 @@ include __DIR__ . '/layouts/front/head.php';
     const urlPostCommentPlus = "<?= webSitePath('/api/commentplus/create.php') ?>";
 
     fetchComments();
-    fetchCommentsPlus();
 
     const editorEls = document.querySelectorAll('p[bbtext]');
     const editors = [];

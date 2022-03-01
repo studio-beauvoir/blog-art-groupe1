@@ -306,14 +306,16 @@ span.bleu {
     --topbar-height: 1.5rem;
     position: relative;
     display: flex;  
+    flex-direction: column;
     width: 100%;
     background-color: var(--bg2);
     border-radius: 15px;
-    flex-direction: column;
     padding: calc(1rem + var(--topbar-height) ) 2rem 1.5rem 2rem;
     overflow: hidden;
 }
-.comment.answer {
+.comment-answers {
+    display: flex;
+    flex-direction: column;
     width: 75%;
     margin-left: 25%;
 }
@@ -326,11 +328,16 @@ span.bleu {
     display: block;
     height: var(--topbar-height);
     width: 100%;
+    background-color: var(--g2);
 }
 .comment.topbar-blue::before {
     background-color: var(--g2);
 }
-.comment.topbar-darkblue::before {
+
+.comment-answers {
+    margin-top: 2rem;
+}
+.comment-answers .comment::before {
     background-color: var(--g1);
 }
 
@@ -374,23 +381,22 @@ span.bleu {
     transform: scale(1.15) rotate(-10deg);
 }
 
-.comment-action-like {
+/* .comment-action-like {
     filter: grayscale(1);
 }
 .comment-action-like:hover {
     filter: grayscale(0.5);
 }
-
 .comment-action-like.liked {
     filter: none;
-}
+} */
 
 
 #form-comment,
 #login-cta {
-    margin-left: 8.3%;
-    margin-right: 8.3%;
-    margin-top: 80px;
+    /* margin-left: 8.3%; */
+    /* margin-right: 8.3%; */
+    margin-bottom: 3rem;
 }
 #form-comment {
     color: var(--p1);
@@ -401,7 +407,6 @@ span.bleu {
 .form-comment-textarea {
     display: flex;
     justify-content: center;
-    height: 180px;
     background-color: white;
     border-radius: 15px;
     color: black;

@@ -210,10 +210,10 @@ include __DIR__ . '/layouts/front/head.php';
 
 <!-- Editeur bbcode -->
 <script src="<?= webAssetPath('js/utils.js') ?>"></script>
-<script src="<?= webAssetPath('js/bbEditor.js') ?>"></script>
+<script src="<?= webAssetPath('js/bb-editor.js') ?>"></script>
 
 <!-- Ajax like & comment  -->
-<script src="<?= webAssetPath('js/ajaxCommentLike.js') ?>"></script>
+<script src="<?= webAssetPath('js/ajax-comment-like.js') ?>"></script>
 <script>
     const numArt = <?=htmlspecialchars($numArt) ?>;
 

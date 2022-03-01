@@ -34,8 +34,8 @@ if (isset($erreur) && $erreur && isset($errSaisies)) {
         <link href="<?= webAssetPath('css/bbeditor.css') ?>" rel="stylesheet" type="text/css" />
 
 
-        <script src="<?= webAssetPath('js/imgInputPreview.js') ?>"></script>
-        <script src="<?= webAssetPath('js/cancelBtn.js') ?>"></script>
+        <script src="<?= webAssetPath('js/img-input-preview.js') ?>"></script>
+        <script src="<?= webAssetPath('js/cancel-btn.js') ?>"></script>
         
         <!-- <link href="<?= webAssetPath('css/style.css') ?>" rel="stylesheet" type="text/css" /> -->
     </head>

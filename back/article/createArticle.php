@@ -231,10 +231,10 @@ $validator->echoErrors();
 </form>
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
 
-<script src="<?= webAssetPath('js/bbEditor.js') ?>"></script>
+<script src="<?= webAssetPath('js/bb-editor.js') ?>"></script>
 
 <!-- Ajax them et angles par langue, et Mot cle  -->
-<script src="<?= webAssetPath('js/ajaxArticle.js') ?>"></script>
+<script src="<?= webAssetPath('js/ajax-article.js') ?>"></script>
 <script>
     const langueSelect = document.getElementById('numLang');
     const angleSelect = document.getElementById('numAngl');

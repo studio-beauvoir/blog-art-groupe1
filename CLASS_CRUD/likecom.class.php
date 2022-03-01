@@ -98,9 +98,10 @@ class LIKECOM{
 		try {
 			$db->beginTransaction();
 
-			// insert
-			// prepare
-			// execute
+			$query = 'INSERT INTO LIKECOM (numMemb, numSeqCom, numArt, likeC) VALUES (?, ?, ?, ?);';
+			$request = $db->prepare($query);
+			$request->execute([$numMemb, $numSeqCom, $numArt, $likeC]);
+
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -117,9 +118,10 @@ class LIKECOM{
 		try {
 			$db->beginTransaction();
 
-			// update
-			// prepare
-			// execute
+			$query = 'UPDATE LIKECOM SET likeC=? WHERE numMemb=?, numSeqCom=?, numArt=?;';
+			$request = $db->prepare($query);
+			$request->execute([$likeC, $numMemb, $numSeqCom, $numArt]);
+
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -130,16 +132,18 @@ class LIKECOM{
 		}
 	}
 
-	// Create et Update en même temps
-	function createOrUpdate($numMemb, $numSeqCom, $numArt){
+	// Create
+	function createOrtoggle($numMemb, $numSeqCom, $numArt, $likeC=true){
 		global $db;
 
 		try {
 			$db->beginTransaction();
 
-			// insert / update
-			// prepare
-			// execute
+
+			$query = 'INSERT INTO LIKECOM (numMemb, numSeqCom, numArt, likeC) VALUES (:numMemb, :numSeqCom, :numArt, :likeC) ON DUPLICATE KEY UPDATE likeC = NOT likeC;';
+			$request = $db->prepare($query);
+			$request->execute([':numMemb'=>$numMemb, ':numSeqCom'=>$numSeqCom, ':numArt'=>$numArt, ':likeC'=>$likeC]);
+
 			$db->commit();
 			$request->closeCursor();
 		}

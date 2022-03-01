@@ -1,5 +1,5 @@
 function findCommentEl(numSeqCom, numArt) {
-    const commentElData = document.querySelector(`data[value="comment-${numSeqCom}-${numArt}"`);
+    const commentElData = document.querySelector(`data[value="comment-${numArt}-${numSeqCom}"`);
     return commentElData?commentElData.parentElement:false;
 }
 
@@ -8,18 +8,22 @@ function addComment(comment) {
     const commentEl = document.importNode(template.content, true);
 
 
-    commentEl.querySelector('.comment-id').value = `comment-${comment.numSeqCom}-${comment.numArt}`;
+    commentEl.querySelector('.comment-id').value = `comment-${comment.numArt}-${comment.numSeqCom}`;
     commentEl.querySelector('.comment-author').innerHTML = comment.pseudoMemb;
-    commentEl.querySelector('.comment-action-likesCount').innerText = ':n personne(s) aime(nt)'.singularise(comment.nblike);
     commentEl.querySelector('.comment-created-at').innerText = `Créé le ${simpleDate(comment.dtCreCom)}`;
     commentEl.querySelector('.comment-modified-at').innerText = `Modifié le ${simpleDate(comment.dtModCom)}`;
     commentEl.querySelector('.comment-content').innerHTML = comment.libCom;
+
+    commentEl.querySelector('.comment-action-like-count').innerText = ':n personne(s) aime(nt)'.singularise(comment.nblike);
+    commentEl.querySelector('.comment-action-like').addEventListener('click', 
+        ()=>toggleLike(comment.numArt, comment.numSeqCom)
+    );
 
     commentsEl.appendChild(commentEl);
 }
 
 function updateComment(comment) {
-    const commentElData = document.querySelector(`data[value="comment-${comment.numSeqCom}-${comment.numArt}"`);
+    const commentElData = document.querySelector(`data[value="comment-${comment.numArt}-${comment.numSeqCom}"`);
     const commentEl = commentElData.parentElement;
 
     commentEl.querySelector('.comment-author').innerHTML = comment.pseudoMemb;
@@ -100,6 +104,23 @@ function postComment() {
                 
             formCommentTextArea.value = "";
             fetchComments();
+        } 
+    );
+}
+
+
+function toggleLike(numArt, numSeqCom) {
+    const data = { 
+        numArt,
+        numSeqCom
+    };
+
+    $.post( 
+        urlToggleLike,
+        data,
+        function(data) {
+            if(data.errors || !data.result) return;            
+                
         } 
     );
 }

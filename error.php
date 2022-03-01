@@ -30,6 +30,4 @@ require_once __DIR__ . '/layouts/front/head.php';
         </div>
     </div>
 
-
-
 <?php require_once __DIR__ . '/layouts/front/foot.php';?>

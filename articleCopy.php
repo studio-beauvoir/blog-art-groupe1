@@ -182,7 +182,8 @@ include __DIR__ . '/layouts/front/head.php';
                             <p>Répondre</p>
                         </div>
                         <div class="comment-action comment-action-like">
-                            <img class="comment-action-like-btn" src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
+                            <img class="comment-action-like-btn liked" src="<?=webAssetPath('svg/liked.svg') ?>" alt=" ">
+                            <img class="comment-action-like-btn like" src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
                             <p class="comment-action-like-count"></p>
                         </div>
                     </div>
@@ -230,10 +231,10 @@ include __DIR__ . '/layouts/front/head.php';
     const urlPostCommentPlus = "<?= webSitePath('/api/commentplus/create.php') ?>";
 
     const urlToggleLike = "<?= webSitePath('/api/likecom/toggle.php') ?>";
-
+    const urlFetchLikesMember = "<?= webSitePath('/api/likecom/fetch-member.php') ?>";
 
     fetchComments();
-
+    
     const editorEls = document.querySelectorAll('p[bbtext]');
     const editors = [];
     for(let editorEl of editorEls) {

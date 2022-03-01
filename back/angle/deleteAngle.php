@@ -3,7 +3,7 @@ $submitBtn = "Supprimer";
 $pageCrud = "angle";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "Supprimer un $pageCrud";
-$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
+$pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
 
 
 require_once __DIR__ . '/../../util/index.php';

@@ -4,7 +4,7 @@ $submitBtn = "Créer";
 $pageCrud = "article";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "$submitBtn un $pageCrud";
-$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.':'.$pagePrecedent, $pageTitle];
+$pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.':'.$pagePrecedent, $pageTitle];
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
@@ -31,22 +31,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
     $validator->addRules([
-        ValidationRule::required('libTitrArt'),
+        ValidationRule::required('libTitrArt')->maxLength(100),
         ValidationRule::required('dtCreArt'),
         ValidationRule::required('libChapoArt'),
-        ValidationRule::required('libAccrochArt'),
+        ValidationRule::required('libAccrochArt')->maxLength(100),
         ValidationRule::required('parag1Art'),
-        ValidationRule::required('libSsTitr1Art'),
+        ValidationRule::required('libSsTitr1Art')->maxLength(100),
         ValidationRule::required('parag2Art'),
-        ValidationRule::required('libSsTitr2Art'),
+        ValidationRule::required('libSsTitr2Art')->maxLength(100),
         ValidationRule::required('parag3Art'),
         ValidationRule::required('libConclArt'),
         ValidationRule::required('numLang'),
         ValidationRule::required('numAngl'),
-        ValidationRule::required('numThem')
+        ValidationRule::required('numThem'),
+        ValidationRule::required('oldKeywords'),
+        ValidationRule::required('keywords')
     ])->bindValues($_POST);
 
-    if( $fileValidator->success() AND $validator->success()) {
+    $fileValidator->test();
+    $validator->test();
+
+    if($fileValidator->hasSucceeded AND $validator->hasSucceeded) {
 
         $img = uploadImage(
             $fileValidator->verifiedFile('photArt'),
@@ -69,6 +74,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numThem = $validator->verifiedField('numThem');
         
         $monArticle->create($dtCreArt, $libTitrArt, $libChapoArt, $libAccrochArt, $parag1Art, $libSsTitr1Art, $parag2Art, $libSsTitr2Art, $parag3Art, $libConclArt, $urlPhotArt, $numAngl, $numThem);
+
+
+        // le nouvel article possède le plus grand id comme c'est un auto-increment
+        // on récupère ainsi le numArt
+        $numArt = $monArticle->get_LastNumArt();
+
+        // on peut alors gérer les mots-clés
+        $keywords = json_decode($validator->verifiedField('keywords'), true); 
+        
+        foreach($keywords as $numMotCle) {
+            $monMotcleArticle->create($numArt, $numMotCle);
+        }
 
         header("Location: $pagePrecedent");
         die();
@@ -129,7 +146,8 @@ $validator->echoErrors();
 
     <div class="field">
         <label for="parag1Art">Paragraphe 1</label>
-        <textarea name="parag1Art" id="parag1Art" rows="10" placeholder="Décrivez le premier paragraphe. Sur 1200 car."><?=$validator->oldField('parag1Art') ?></textarea>
+        <!-- <textarea name="parag1Art" id="parag1Art" rows="10" placeholder="Décrivez le premier paragraphe. Sur 1200 car."><?=$validator->oldField('parag1Art') ?></textarea> -->
+        <input bbeditor type="hidden" name="parag1Art" id="parag1Art" placeholder="Décrivez le premier paragraphe. Sur 1200 car." />
     </div>
 
     <div class="field">
@@ -139,7 +157,8 @@ $validator->echoErrors();
 
     <div class="field">
         <label for="parag2Art">Paragraphe 2</label>
-        <textarea name="parag2Art" id="parag2Art" rows="10" placeholder="Décrivez le deuxième paragraphe. Sur 1200 car."><?=$validator->oldField('parag2Art') ?></textarea>
+        <!-- <textarea name="parag2Art" id="parag2Art" rows="10" placeholder="Décrivez le deuxième paragraphe. Sur 1200 car."><?=$validator->oldField('parag2Art') ?></textarea> -->
+        <input bbeditor type="hidden" name="parag2Art" id="parag2Art" placeholder="Décrivez le premier paragraphe. Sur 1200 car." />
     </div>
 
     <div class="field">
@@ -149,12 +168,14 @@ $validator->echoErrors();
 
     <div class="field">
         <label for="parag3Art">Paragraphe 3</label>
-        <textarea name="parag3Art" id="parag3Art" rows="10" placeholder="Décrivez le troisième paragraphe. Sur 1200 car."><?=$validator->oldField('parag3Art') ?></textarea>
+        <!-- <textarea name="parag3Art" id="parag3Art" rows="10" placeholder="Décrivez le troisième paragraphe. Sur 1200 car."><?=$validator->oldField('parag3Art') ?></textarea> -->
+        <input bbeditor type="hidden" name="parag3Art" id="parag3Art" placeholder="Décrivez le premier paragraphe. Sur 1200 car." />
     </div>
 
     <div class="field">
         <label for="libConclArt">Conclusion</label>
-        <textarea name="libConclArt" id="libConclArt" rows="10" placeholder="Décrivez la conclusion. Sur 800 car."><?=$validator->oldField('libConclArt') ?></textarea>
+        <!-- <textarea name="libConclArt" id="libConclArt" rows="10" placeholder="Décrivez la conclusion. Sur 800 car."><?=$validator->oldField('libConclArt') ?></textarea> -->
+        <input bbeditor type="hidden" name="libConclArt" id="libConclArt" placeholder="Décrivez le premier paragraphe. Sur 1200 car." />
     </div>
 
     <div class="field">
@@ -193,7 +214,14 @@ $validator->echoErrors();
         </select>
     </div>
 
-    <!-- mot cle a rajouter -->
+    <input type="hidden" name="oldKeywords" id="oldKeywords" value="[]">
+    <input type="hidden" name="keywords" id="keywords">
+    <div id="keywords-control">
+        <p>Mots clés sélectionnés</p>
+        <div id="keywords-selected"></div>
+        <p>Mots clés disponibles</p>
+        <div id="keywords-availables"></div>
+    </div>
 
     <div class="controls">
         <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
@@ -202,16 +230,35 @@ $validator->echoErrors();
     </div>
 </form>
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-    <!-- --------------------------------------------------------------- -->
-    <!-- Début Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
-<!-- --------------------------------------------------------------- -->
+<script src="<?= webAssetPath('js/bbEditor.js') ?>"></script>
 
-    <!-- A faire dans un 3ème temps  -->
+<!-- Ajax them et angles par langue, et Mot cle  -->
+<script src="<?= webAssetPath('js/ajaxArticle.js') ?>"></script>
+<script>
+    const langueSelect = document.getElementById('numLang');
+    const angleSelect = document.getElementById('numAngl');
+    const thematiqueSelect = document.getElementById('numThem');
 
-<!-- --------------------------------------------------------------- -->
-    <!-- Fin Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
-<!-- --------------------------------------------------------------- -->
+    const urlFetchAnglAndThem = "<?= webSitePath('/api/article/angle-and-them-by-lang.php') ?>";
+    const urlFetchMotsCles = "<?= webSitePath('/api/motcle/motcle-by-lang.php') ?>";
+
+    fetchLangAnglesAndKeywords();
+    fetchMotsCles();
+    langueSelect.addEventListener('change', function() {
+        fetchLangAnglesAndKeywords();
+        fetchMotsCles();
+    });
+
+    const editorEls = document.querySelectorAll('input[type="hidden"][bbeditor]');
+    const editors = [];
+    for(let editorEl of editorEls) {
+        let editor = new bbEditor(editorEl);
+        editors.push(
+            editor.createDOM()
+        );
+    }
+</script>
+
 
 <?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

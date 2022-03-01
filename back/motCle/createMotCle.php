@@ -48,7 +48,7 @@ include __DIR__ . '/initMotCle.php';
 $submitBtn = "Créer";
 $pagePrecedent = "./motCle.php";
 $pageTitle = "Créer un Mot Clé";
-$pageNav = ['Home:/index1.php', 'Gestion des mots clés:'.$pagePrecedent, $pageTitle];
+$pageNav = ['Home:/admin.php', 'Gestion des mots clés:'.$pagePrecedent, $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
 <form 

@@ -25,9 +25,14 @@ if (isset($erreur) && $erreur && isset($errSaisies)) {
         <title><?= isset($pageTitle)?$pageTitle:'Title' ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+
         <link href="<?= webAssetPath('css/var.css') ?>" rel="stylesheet" type="text/css" />
         <link href="<?= webAssetPath('css/master.css') ?>" rel="stylesheet" type="text/css" />
         <link href="<?= webAssetPath('css/admin.css') ?>" rel="stylesheet" type="text/css" />
+
+        <!-- editeur bbcode -->
+        <link href="<?= webAssetPath('css/bbeditor.css') ?>" rel="stylesheet" type="text/css" />
+
 
         <script src="<?= webAssetPath('js/imgInputPreview.js') ?>"></script>
         <script src="<?= webAssetPath('js/cancelBtn.js') ?>"></script>

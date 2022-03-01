@@ -4,7 +4,7 @@ $submitBtn = "Éditer";
 $pageCrud = "membre";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "$submitBtn un $pageCrud";
-$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.':'.$pagePrecedent, $pageTitle];
+$pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.':'.$pagePrecedent, $pageTitle];
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
@@ -53,7 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $nomMemb = $validator->verifiedField('nomMemb');
         
         $passMemb = $validator->verifiedField('pass2Memb');
-        // check que pass1 == pass2
+        // hashage du mot de passe
+        $passMemb = password_hash($passMemb, PASSWORD_BCRYPT);
+
 
         $eMailMemb = $validator->verifiedField('eMail2Memb');
 

@@ -30,10 +30,13 @@ class ValidationRule {
     private $shouldBeOfType = false;
     private $shouldBeEqualTo = false;
     private $shouldBeEqualToValue = false;
+    private $shouldBeUnique = false;
 
     private $minLength = false;
     private $maxLength = false;
     private $maxFileSize = false;
+    
+    private $verifyWithSafeMethod = true;
 
     private $errorMessage = [
         'isRequired' => ":field est requis",
@@ -44,8 +47,9 @@ class ValidationRule {
         'shouldBeOfType' => ":field doit être de type :shouldBeOfType",
         'shouldBeEqualTo' => ":field doit être identique au champ :shouldBeEqualTo",
         'shouldBeEqualToValue' => ":field doit être égal à :shouldBeEqualToValue",
-        'minLength' => ":field ne doit pas faire moins de :minLength",
-        'maxLength' => ":field ne doit pas faire plus de :maxLength",
+        'shouldBeUnique' => ":field existe déjà",
+        'minLength' => ":field ne doit pas faire moins de :minLength caractères",
+        'maxLength' => ":field ne doit pas faire plus de :maxLength caractères",
         'maxFileSize' => ":field dépasse la taille autorisée",
     ];
     private $errorsArray = [];
@@ -76,7 +80,10 @@ class ValidationRule {
         return static::make($field)->setIsRequired(false);
     }
 
- 
+    public function unsafe() { 
+        $this->verifyWithSafeMethod = false; 
+        return $this;
+    }
     
     public function minLength($min) { 
         $this->string();
@@ -94,6 +101,15 @@ class ValidationRule {
         return $this;
     }
 
+    public function unique($table, $column=false, $exceptSelf=false) {
+        $this->shouldBeUnique = [
+            'table'=>$table,
+            'column'=>$column?$column:$this->field,
+            'exceptSelf'=>$exceptSelf,
+        ];
+        return $this;
+    }
+
     public function string() {
         $this->shouldBeOfType = "string";
         return $this;
@@ -101,6 +117,7 @@ class ValidationRule {
 
     public function image() {
         $this->shouldBeImage = true;
+        $this->unsafe();
         $this->maxFileSize(MAX_IMG_SIZE);
         return $this;
     }
@@ -112,6 +129,7 @@ class ValidationRule {
 
     public function password() {
         $this->shouldBePassword = true;
+        $this->unsafe();
         return $this;
     }
 
@@ -149,6 +167,14 @@ class ValidationRule {
         
         $this->isFilled = true;
         $this->validator->fieldsFilled[$this->field] = true;
+
+        if($this->shouldBeUnique) {
+            // isPseudo est une fonction utilitaire (/util/db.php)
+            if(!isUnique($this->shouldBeUnique['table'], $this->getValue(), $this->shouldBeUnique['column'], $this->shouldBeUnique['exceptSelf'])) {
+                $this->addError('shouldBeUnique');
+                $isValid = false;
+            }
+        }
 
         if($this->shouldBeOfType) {
             if(!isOfType($this->shouldBeOfType, $this->getValue())) {
@@ -247,7 +273,13 @@ class ValidationRule {
 
     public function getValue($field=false) {
         $field = $field?$field:$this->field;
-        if(isset($this->validator->fieldsValues[$field])) return $this->validator->fieldsValues[$field];
+        if(isset($this->validator->fieldsValues[$field])) {
+            if($this->verifyWithSafeMethod) {
+                return ctrlSaisies($this->validator->fieldsValues[$field]);
+            } else {
+                return $this->validator->fieldsValues[$field];
+            }
+        }
         return NULL;
     }
 
@@ -316,9 +348,9 @@ class Validator {
     /**
      * Effectue la validation
      * Si toutes les règles définies sont respectées, alors le validator est content
-     * @return bool
+     * @return this
      */
-    public function success() {
+    public function test() {
         $this->tested = true;
 
         $this->hasSucceeded = true;
@@ -328,7 +360,16 @@ class Validator {
                 $this->addErrors($rule->errors());
             }
         }
+        return $this;
+    }
 
+
+    /**
+     * Effectue la validation et retourne le résultat
+     * @return bool
+     */
+    public function success() {
+        $this->test();
         return $this->hasSucceeded;
     }
 
@@ -336,12 +377,12 @@ class Validator {
      * Retourne la valeur vérifiée, passé dans la fonction ctrlSaisies()
      * Nécessite que le validator ait été validé via sa fonction success()
      */
-    public function verifiedField($fieldName) {
+    public function verifiedField($fieldName, $ctrlSaisie=true) {
         try {
             if(!$this->hasSucceeded) {
                 throw new Error('Le validator n\'a pas été validée');
             }
-            return ctrlSaisies($this->fieldsValues[$fieldName]);
+            return $ctrlSaisie?ctrlSaisies($this->fieldsValues[$fieldName]) : $this->fieldsValues[$fieldName];
         } catch(Error $e) {
 			die('Erreur validator : ' . $e->getMessage());
         }
@@ -368,7 +409,6 @@ class Validator {
      * Nécessite que le validator ait été validé via sa fonction success()
      */
     public function isFilled($fieldName) {
-        var_dump($this->fieldsFilled);
         try {
             if(!$this->hasSucceeded) {
                 throw new Error('Le validator n\'a pas été validée');

@@ -4,7 +4,7 @@ $submitBtn = "CRUD";
 $pageCrud = "commentaire";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "$submitBtn - $pageCrud";
-$pageNav = ['Home:/index1.php', $pageTitle];
+$pageNav = ['Home:/admin.php', $pageTitle];
 
 require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php'; 
@@ -51,10 +51,10 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <td> <?= $row['notifComKOAff']; ?> </td> 
                 <td> <?= $row['delLogiq']; ?> </td> 
                 <td>
-                    <a class="btn btn-md" href="./updateComment.php?idCom=<?=$row['numArt'];?>&idArt=<?=$row['numSeqCom']?>" title="Modifier l'article">Modifier</a>
+                    <a class="btn btn-md" href="./updateComment.php?idCom=<?=$row['numSeqCom'];?>&idArt=<?=$row['numArt']?>" title="Modifier l'article">Modifier</a>
                 </td>
                 <td>
-                    <a class="btn btn-md btn-danger" href="./deleteComment.php?idCom=<?=$row['numArt'];?>&idArt=<?=$row['numSeqCom']?>" title="Supprimer l'article">Supprimer</a>
+                    <a class="btn btn-md btn-danger" href="./deleteComment.php?idCom=<?=$row['numSeqCom'];?>&idArt=<?=$row['numArt']?>" title="Supprimer l'article">Supprimer</a>
                 </td>
             </tr>
             <?php }	?>

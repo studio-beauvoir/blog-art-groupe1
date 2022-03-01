@@ -8,7 +8,8 @@ class COMMENT{
 		global $db;
 		
 		try {
-			$query = 'SELECT * FROM COMMENT WHERE numSeqCom=?, numArt=?;';
+			$db->beginTransaction();
+			$query = 'SELECT * FROM COMMENT WHERE numSeqCom=? AND numArt=?;';
 			$request = $db->prepare($query);
 			
 			$request->execute([$numSeqCom, $numArt]);
@@ -31,7 +32,7 @@ class COMMENT{
 	function get_AllComments() {
 		global $db;
 
-		$query = 'SELECT * FROM COMMENT INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb;';
+		$query = 'SELECT *, "" as passMemb FROM COMMENT INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb;';
 		$result = $db->query($query);
 		$allComments = $result->fetchAll();
 
@@ -41,9 +42,10 @@ class COMMENT{
 	function get_AllCommentsByNumArt($numArt){
 		global $db;
 
-		$query = 'SELECT * FROM COMMENT WHERE numArt=?;';
-		$result = $db->query($query);
-		$allCommentsByArt = $result->fetchAll();
+		$query = 'SELECT *, "" as passMemb FROM COMMENT INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb WHERE numArt=? ;';
+		$request = $db->prepare($query);
+		$request->execute([$numArt]);
+		$allCommentsByArt = $request->fetchAll();
 		return($allCommentsByArt);
 	}
 	//FIN DE LA PARTIE CHELOUE--------------------------------------
@@ -137,7 +139,7 @@ class COMMENT{
 		try {
 			$db->beginTransaction();
 
-			$query = 'INSERT INTO COMMENT (numSeqCom, numArt, dtCreCom, libCom, attModOK, numMemb) VALUES (?, ?, NOW(), ?, 0, ?);';
+			$query = 'INSERT INTO COMMENT (numSeqCom, numArt, dtCreCom, dtModCom, libCom, attModOK, numMemb) VALUES (?, ?, NOW(), NOW(), ?, 0, ?);';
 			$request = $db->prepare($query);
 			$request->execute( [$numSeqCom, $numArt, $libCom, $numMemb]);
 			$db->commit();
@@ -158,7 +160,7 @@ class COMMENT{
 		try {
 			$db->beginTransaction();
 
-			$query = 'UPDATE COMMENT SET ttModOK=?, attModOK=?, dtModCom=NOW(), notifComKOAff=?, delLogiq=? WHERE numSeqCom=?, numArt=?';
+			$query = 'UPDATE COMMENT SET numSeqCom=?, numArt=?, attModOK=?, dtModCom=NOW(), notifComKOAff=?, delLogiq=? WHERE numSeqCom=? AND numArt=?';
 			$request = $db->prepare($query);
 			$request->execute([$attModOK, $notifComKOAff, $delLogiq, $numSeqCom, $numArt]);
 			$db->commit();

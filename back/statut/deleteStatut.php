@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 include __DIR__ . '/initStatut.php';
 
 $pageTitle = "Supprimer un Statut";
-$pageNav = ['Home:/index1.php', 'Gestion du Statut:./statut.php', $pageTitle];
+$pageNav = ['Home:/admin.php', 'Gestion du Statut:./statut.php', $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
 
 

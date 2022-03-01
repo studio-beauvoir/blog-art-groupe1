@@ -4,7 +4,7 @@ $submitBtn = "Créer";
 $pageCrud = "comment";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "$submitBtn un $pageCrud";
-$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.':'.$pagePrecedent, $pageTitle];
+$pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.':'.$pagePrecedent, $pageTitle];
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numArt = $validator->verifiedField('numArt');
         $numSeqArt = $monComment->getNextNumCom($numArt);
         
-        $monComment->create($numSeqArt, $numMemb, $libCom, $numMemb);
+        $monComment->create($numSeqArt, $numArt, $libCom, $numMemb);
 
         header("Location: $pagePrecedent");
         die();

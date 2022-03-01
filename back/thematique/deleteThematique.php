@@ -46,7 +46,7 @@ include __DIR__ . '/initThematique.php';
 $submitBtn = "Supprimer";
 $pagePrecedent = "./thematique.php";
 $pageTitle = "Supprimer une Thématique";
-$pageNav = ['Home:/index1.php', 'Gestion des thématiques:'.$pagePrecedent, $pageTitle];
+$pageNav = ['Home:/admin.php', 'Gestion des thématiques:'.$pagePrecedent, $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
 
 // Supp : récup id à supprimer

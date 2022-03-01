@@ -39,3 +39,8 @@ function dateChangeFormat($dateIn, $from, $to) {
         return "";	// Si aucune date en entrée
     }
 }	// End of dateChangeFormat()
+
+
+function simpleDate($date) {
+    return date_format(date_create($date), 'd/m/Y à H:i');
+}

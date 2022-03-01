@@ -3,7 +3,7 @@ $submitBtn = "Supprimer";
 $pageCrud = "article";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "Supprimer un $pageCrud";
-$pageNav = ['Home:/index1.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
+$pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
 
 //Insertion fichiers utiles
 require_once __DIR__ . '/../../util/index.php';
@@ -47,11 +47,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // delete effective de l'angle
 
     $validator = Validator::make([
-        ValidationRule::required('id')
+        ValidationRule::required('id'),
+        ValidationRule::required('urlPhotArt')
     ])->bindValues($_POST);
 
     if($validator->success()) {
         $numArt = $validator->verifiedField('id');
+        $urlPhotArt = $validator->verifiedField('urlPhotArt');
+        
+        // suppression de la photo
+        deleteImage($urlPhotArt);
+
         $monArticle->delete($numArt);
 
         header("Location: $pagePrecedent");
@@ -99,6 +105,7 @@ $idThem = $article['numThem'];
     <input type="hidden" id="id" name="id" value="<?=$_GET['id'] ?>" />
 
     <div class="field">
+        <input type="hidden" id="urlPhotArt" name="urlPhotArt" value="<?=$urlPhotArt ?>" />
         <label for="photArt">Image</label>
         <label for="photArt" class="field-imgContent">
             <img id="previewPhotoArt" class="img-thumbnail"  src="<?= webUploadPath($urlPhotArt) ?>" />

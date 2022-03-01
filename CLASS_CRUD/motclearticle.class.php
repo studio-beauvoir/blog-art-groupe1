@@ -7,19 +7,22 @@ class MOTCLEARTICLE{
 	function get_AllMotClesByNumArt($numArt){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($allCommentsByArt);
+		$query = 'SELECT * FROM MOTCLEARTICLE INNER JOIN MOTCLE ON MOTCLEARTICLE.numMotCle=MOTCLE.numMotCle WHERE numArt=?;';
+		$request = $db->prepare($query);
+		$request->execute([$numArt]);
+		$result = $request->fetchAll();
+		return($result);
 	}
 
 	function get_AllMotClesByLibTitrArt($libTitrArt){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($allCommentsByArt);
+		// fonctionne à merveille
+		$query = 'SELECT MOTCLE.numMotCle, MOTCLE.libMotCle, MOTCLE.numLang, ARTICLE.numArt FROM ARTICLE INNER JOIN MOTCLEARTICLE ON ARTICLE.numArt=MOTCLEARTICLE.numArt INNER JOIN MOTCLE ON MOTCLEARTICLE.numMotCle=MOTCLE.numMotCle  WHERE libTitrArt=?;';
+		$request = $db->prepare($query);
+		$request->execute([$libTitrArt]);
+		$result = $request->fetch();
+		return($result);
 	}
 
 	function get_AllArtsByNumMotCle($numMotCle){
@@ -46,9 +49,10 @@ class MOTCLEARTICLE{
 		try {
 			$db->beginTransaction();
 
-			// insert
-			// prepare
-			// execute
+			$query = 'INSERT INTO MOTCLEARTICLE (numArt, numMotCle) VALUES (?, ?);';
+			$request = $db->prepare($query);
+			$request->execute( [$numArt, $numMotCle]);
+
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -65,9 +69,11 @@ class MOTCLEARTICLE{
 		try {
 			$db->beginTransaction();
 
-			// delete
-			// prepare
-			// execute
+			$query = 'DELETE FROM MOTCLEARTICLE WHERE `numArt` = ? AND `numMotCle` = ?;';
+			$request = $db->prepare($query);
+			$request->execute([$numArt, $numMotCle]);
+			$count = $request->rowCount();
+
 			$db->commit();
 			$request->closeCursor();
 		}

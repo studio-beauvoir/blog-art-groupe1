@@ -48,11 +48,13 @@ class ANGLE{
 		return($allAngles);
 	}
 
-	function get_AllAnglesByLang() {
+	function get_AllAnglesByLang($numLang) {
 		global $db;
+
 		$query = 'SELECT * FROM ANGLE WHERE numLang=?;';
-		$result = $db->query($query);
-		$allAnglesByLang = $result->fetchAll();
+		$request = $db->prepare($query);
+		$request->execute([$numLang]);
+		$allAnglesByLang = $request->fetchAll();
 		return($allAnglesByLang);
 	}
 

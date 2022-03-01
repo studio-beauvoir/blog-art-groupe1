@@ -9,7 +9,7 @@ require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
 $maLangue = new LANGUE(); 
 
 $pageTitle = "Gestion des Langues";
-$pageNav = ['Home:/index1.php', $pageTitle];
+$pageNav = ['Home:/admin.php', $pageTitle];
 require_once __DIR__ . '/../../layouts/back/head.php';
 ?>
 	<a class="btn btn-lg" href="./createLangue.php" title="Créer une langue">Créer une langue</a>

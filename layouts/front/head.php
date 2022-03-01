@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/../../util/index.php';
+?>
 <!DOCTYPE html>
 <html lang="fr-FR">
     <head>

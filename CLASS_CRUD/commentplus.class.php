@@ -7,10 +7,12 @@ class COMMENTPLUS{
 	function get_AllCommentPlusByArticle($numArt){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetchAll());
+	
+		$query = 'SELECT *, "" as passMemb FROM COMMENTPLUS INNER JOIN COMMENT ON COMMENTPLUS.numSeqCom=COMMENT.numSeqCom INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb WHERE COMMENTPLUS.numArt=? ;';
+		$request = $db->prepare($query);
+		$request->execute([$numArt]);
+		$allCommentsByArt = $request->fetchAll();
+		return($allCommentsByArt);
 	}
 
 	function get_AllCommentPlusR(){

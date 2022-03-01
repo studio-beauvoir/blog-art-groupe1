@@ -78,8 +78,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 // controles
-if(!isset($_GET['idArt'])) header("Location: ".webSitePath('/home.php'));
-$numArt = $_GET['idArt'];
+if(!isset($_GET['numArt'])) header("Location: ".webSitePath('/home.php'));
+$numArt = $_GET['numArt'];
 
 $article = $monArticle->get_1Article($numArt);
 

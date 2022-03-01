@@ -22,7 +22,7 @@ class LIKEART{
 			}
 		}
 		catch (PDOException $e) {
-			$db->rollBack();
+			// $db->rollBack();
 			$request->closeCursor();
 			die('Erreur insert LIKEART : ' . $e->getMessage());
 		}

@@ -258,11 +258,6 @@ span.bleu {
 .right {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 10px;
-}
-
-.left {
-    margin-bottom: 20px;
 }
 
 .home-box-text-btn-h4 {

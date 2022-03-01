@@ -45,7 +45,10 @@ main {
     transform: scaleX(1);
 }
 
+
+
 .logo {
+
     width: 100px;
     /* height: 80px; */
 }
@@ -235,6 +238,23 @@ header{
 , .header-box-liste ul{
     display: flex;
     flex-direction: row;
+    align-items: center;
+}
+
+input.research-bar{
+    border: 2px solid var(--i);
+    background-color: var(--bg1);
+    padding: 10px 15px;
+    margin-right: 20px;
+}
+
+.header-box-liste ul li.joe{
+    display: flex;
+    align-items: center;
+}
+
+.header-box-logo{
+    display: flex;
     align-items: center;
 }
 

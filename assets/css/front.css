@@ -400,9 +400,9 @@ span.bleu {
 
 #form-comment,
 #login-cta {
-    margin-left: 8.3%;
-    margin-right: 8.3%;
-    margin-top: 80px;
+    /* margin-left: 8.3%; */
+    /* margin-right: 8.3%; */
+    margin-bottom: 3rem;
 }
 #form-comment {
     color: var(--p1);
@@ -413,7 +413,6 @@ span.bleu {
 .form-comment-textarea {
     display: flex;
     justify-content: center;
-    height: 180px;
     background-color: white;
     border-radius: 15px;
     color: black;

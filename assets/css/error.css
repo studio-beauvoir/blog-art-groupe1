@@ -1,0 +1,22 @@
+.error-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-paragraph h1{
+    text-align: center;
+}
+
+.section-paragraph p{
+    text-align: center;
+}
+
+.interactif{
+    text-decoration: none;
+    list-style: none;
+    color: var(--i);
+    font: var(--p);
+    font-size:1.50rem ;
+}

@@ -7,18 +7,34 @@ class LIKEART{
 	function get_1LikeArt($numMemb, $numArt){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetch());
+		try {
+			$query = 'SELECT * FROM LIKEART WHERE numMemb=?, numArt=?;';
+			$request = $db->prepare($query);
+			
+			$request->execute([$numMemb, $numArt]);
+
+			$result = $request->fetch();
+
+			if(isset($request)) {
+				return($result);
+			} else {
+				throw new ErrorException('LikeArt not found');
+			}
+		}
+		catch (PDOException $e) {
+			$db->rollBack();
+			$request->closeCursor();
+			die('Erreur insert LIKEART : ' . $e->getMessage());
+		}
 	}
+	
 
 	function get_AllLikesArt(){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM LIKEART INNER JOIN MEMBRE ON LIKEART.numMemb=MEMBRE.numMemb;';
+		$request = $db->query($query);
+		$allLikesArt = $request->fetchAll();
 		return($allLikesArt);
 	}
 
@@ -43,18 +59,26 @@ class LIKEART{
 	function get_nbLikesArtByArticle($numArt){
 		global $db;
 
-		// select
-		// prepare
-		// execute
-		return($result->fetchAll());
+		$db->beginTransaction();
+
+		$query = 'SELECT COUNT (*) FROM ARTICLE WHERE numArt=?;';
+		$request = $db->prepare($query);
+		$request->execute([$numArt]);
+		$allNbLikesArtByArticle = $request->fetchAll();
+
+		$db->commit();
+		$request->closeCursor();
+
+		return($allNbLikesArtByArticle);
 	}
 
 	function get_nbLikesArtByMembre($numMemb){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$query = 'SELECT * FROM LIKEART WHERE numMemb=?;';
+		$request = $db->prepare($query);
+		$request->execute([$numMemb]);
+		$allLikesArtByMembre = $request->fetchAll();
 		return($result->fetchAll());
 	}
 
@@ -64,9 +88,9 @@ class LIKEART{
 		try {
 			$db->beginTransaction();
 
-			// insert
-			// prepare
-			// execute
+			$query = 'INSERT INTO LIKEART (numMemb, numArt, likeA) VALUES (?, ?, ?);';
+			$request = $db->prepare($query);
+			$request->execute( [$numMemb, $numArt, $likeA]);
 			$db->commit();
 			$request->closeCursor();
 		}

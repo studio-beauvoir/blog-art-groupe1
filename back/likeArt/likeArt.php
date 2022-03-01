@@ -2,10 +2,10 @@
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
-// Insertion classe Statut
+// Insertion classe LikeArt
 require_once __DIR__ . '/../../CLASS_CRUD/likeart.class.php'; 
 
-// Instanciation de la classe Statut
+// Instanciation de la classe LikeArt
 $monLikeArt = new LIKEART(); 
 
 $pageTitle = "Gestion du Like";

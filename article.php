@@ -176,17 +176,19 @@ include __DIR__ . '/layouts/front/head.php';
                         </div>
                     </div>
                     <h4 class="comment-content"></h4>
+                    <?php if($loggedMember): ?>
                     <div class="comment-actions">
-                        <div class="comment-action">
-                            <img src="<?=webAssetPath('svg/comment.svg') ?>" alt=" ">
-                            <p>Répondre</p>
+                        <div class="comment-action comment-action-answer">
+                            <img class="c-icon comment-action-answer-icon" src="<?=webAssetPath('svg/comment.svg') ?>" alt=" ">
+                            <p class="comment-action-answer-label">Répondre</p>
                         </div>
                         <div class="comment-action comment-action-like">
-                            <img class="comment-action-like-btn liked" src="<?=webAssetPath('svg/liked.svg') ?>" alt=" ">
-                            <img class="comment-action-like-btn like" src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
+                            <span class="c-icon comment-action-like-icon liked"><img src="<?=webAssetPath('svg/liked.svg') ?>" alt=" "></span>
+                            <span class="c-icon comment-action-like-icon like"><img src="<?=webAssetPath('svg/like.svg') ?>" alt=" "></span>
                             <p class="comment-action-like-count"></p>
                         </div>
                     </div>
+                    <?php endif ?>
                 </div>
                 <div class="comment-answers"></div>
             </div>
@@ -196,13 +198,14 @@ include __DIR__ . '/layouts/front/head.php';
 
     
 
-    <template id="form-comment-answer-template">
-        <div id="form-comment-answer">
-            <h4>Ajouter un commentaire</h4>
-            <textarea rows="3" class="form-comment-textarea"></textarea>
-            <button class="form-comment-submit btn btn-lg">Commenter</button>
+    <div id="form-comment-answer" class="hidden">
+        <h4>Répondre au commentaire</h4>
+        <textarea rows="3" class="form-comment-textarea"></textarea>
+        <div>
+            <button class="form-comment-submit btn btn-lg">Répondre ça</button>
+            <button class="form-comment-cancel btn btn-text btn-lg">Annuler</button>
         </div>
-    </template>
+    </div>
 
 </div>
 
@@ -220,6 +223,15 @@ include __DIR__ . '/layouts/front/head.php';
     const formCommentTextArea = document.querySelector('#form-comment .form-comment-textarea');
     const formCommentSubmit = document.querySelector('#form-comment .form-comment-submit');
 
+    const formCommentAnswer = document.querySelector('#form-comment-answer');
+    const formCommentAnswerTextArea = document.querySelector('#form-comment-answer .form-comment-textarea');
+    const formCommentAnswerSubmit = document.querySelector('#form-comment-answer .form-comment-submit');
+    const formCommentAnswerCancel = document.querySelector('#form-comment-answer .form-comment-cancel');
+    
+
+    formCommentAnswerCancel.addEventListener('click', hideFormCommentAnswer);
+    formCommentAnswerSubmit.addEventListener('click', postCommentAnswer);
+    
     formCommentSubmit.addEventListener('click', postComment);
 
     const commentsEl = document.getElementById('comments');

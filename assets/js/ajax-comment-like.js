@@ -10,13 +10,17 @@ function setCommentData(commentEl, comment) {
     commentEl.querySelector('.comment-modified-at').innerText = `Modifié le ${simpleDate(comment.dtModCom)}`;
     commentEl.querySelector('.comment-content').innerHTML = comment.libCom;
 
-    commentEl.querySelector('.comment-action-like-count').innerText = ':n personne(s) aime(nt)'.singularise(comment.nblike || 0);
+    let likeCount = commentEl.querySelector('.comment-action-like-count');
+    if(likeCount) likeCount.innerText = ':n personne(s) aime(nt)'.singularise(comment.nblike || 0);
     setCommentLiked(commentEl, false);
 }
 
 function setCommentLiked(commentEl, liked) {
-    commentEl.querySelector('.comment-action-like-btn.liked').classList.toggle('hidden', !liked);
-    commentEl.querySelector('.comment-action-like-btn.like').classList.toggle('hidden', liked);
+    let commentActions = commentEl.querySelector('.comment-actions');
+    if(commentActions) {
+        commentEl.querySelector('.comment-action-like-icon.liked').classList.toggle('hidden', !liked);
+        commentEl.querySelector('.comment-action-like-icon.like').classList.toggle('hidden', liked);
+    }
 }
 
 function addComment(comment) {
@@ -27,8 +31,12 @@ function addComment(comment) {
     setCommentData(commentEl, comment);
 
     // actions
-    commentEl.querySelector('.comment-action-like')
-        .addEventListener('click', ()=>toggleLike(comment.numArt, comment.numSeqCom) );
+    let commentActions = commentEl.querySelector('.comment-actions');
+    if(commentActions) {
+        console.log(commentEl.querySelector('.comment-action-answer'));
+        commentEl.querySelector('.comment-action-answer').addEventListener('click', ()=>openFormAnswer(comment.numArt, comment.numSeqCom) );
+        commentEl.querySelector('.comment-action-like').addEventListener('click', ()=>toggleLike(comment.numArt, comment.numSeqCom) );
+    }
 
     commentsEl.appendChild(commentEl);
 }
@@ -54,7 +62,29 @@ function setCommentPlus(commentPlus) {
     commentEl.querySelector('.comment-answers').appendChild(commentPlusEl);
 }
 
+function openFormAnswer(numArt, numSeqCom) {
+    if(!formCommentAnswer.classList.contains('hidden')) {
+        hideFormCommentAnswer();
+        return;
+    }
+    const commentEl = findCommentEl(numArt, numSeqCom);
+    commentEl.querySelector('.comment-actions').after(formCommentAnswer);
+
+    formCommentAnswer.querySelector('.form-comment-textarea').dataset.numArt = numArt;
+    formCommentAnswer.querySelector('.form-comment-textarea').dataset.numSeqCom = numSeqCom;
+
+    formCommentAnswer.classList.remove('hidden');
+}
+
+function hideFormCommentAnswer() {
+    formCommentAnswer.classList.add('hidden');
+    document.querySelector('.comments-container').appendChild(formCommentAnswer);
+}
+
+// api functions --------------
+
 function fetchComments() {
+    hideFormCommentAnswer();
     const data = { 
         numArt,
     };
@@ -102,6 +132,7 @@ function fetchCommentsPlus() {
 
 
 function postComment() {
+    hideFormCommentAnswer();
     const data = { 
         numArt,
         libCom: formCommentTextArea.value
@@ -123,13 +154,38 @@ function postComment() {
     );
 }
 
+function postCommentAnswer() {
+    hideFormCommentAnswer();
+    const data = { 
+        numArt,
+        libCom: formCommentAnswerTextArea.value,
+        numSeqComR: formCommentAnswer.querySelector('.form-comment-textarea').dataset.numSeqCom,
+        numArtR: formCommentAnswer.querySelector('.form-comment-textarea').dataset.numArt
+    };
+    if(data.libCom.trim().length === 0) {
+        formCommentAnswerTextArea.value = "";
+        return;
+    }
+
+    $.post( 
+        urlPostCommentPlus,
+        data,
+        function(data) {
+            if(data.errors || !data.result) return;            
+                
+            formCommentAnswerTextArea.value = "";
+            fetchComments();
+        } 
+    );
+}
+
 
 function fetchLikesMember() {
+    hideFormCommentAnswer();
     $.get( 
         urlFetchLikesMember,
         {},
         function(data) {
-            console.log('e');
             if(!data.errors && data.result && data.result.likes) {
                 for(const commentEl of document.querySelectorAll('.comment')) {
                     setCommentLiked(commentEl, false);

@@ -37,9 +37,9 @@ class COMMENTPLUS{
 		try {
 			$db->beginTransaction();
 
-			// insert
-			// prepare
-			// execute
+			$query = 'INSERT INTO COMMENTPLUS (numSeqCom, numArt, numSeqComR, numArtR) VALUES (?, ?, ?, ?);';
+			$request = $db->prepare($query);
+			$request->execute( [$numSeqCom, $numArt, $numSeqComR, $numArtR]);
 			$db->commit();
 			$request->closeCursor();
 		}

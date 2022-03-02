@@ -70,10 +70,16 @@ function openFormAnswer(numArt, numSeqCom) {
     const commentEl = findCommentEl(numArt, numSeqCom);
     commentEl.querySelector('.comment-actions').after(formCommentAnswer);
 
+    // pseudo de l'auteur du commentaire auquel on répond
+    const pseudoMemberOfCommentEl = commentEl.querySelector('.comment-author').innerText;
+
+    formCommentAnswer.querySelector('.form-comment-title').innerText = `Répondre à ${pseudoMemberOfCommentEl}`;
+    formCommentAnswer.querySelector('.form-comment-textarea').value = `@${pseudoMemberOfCommentEl} `;
     formCommentAnswer.querySelector('.form-comment-textarea').dataset.numArt = numArt;
     formCommentAnswer.querySelector('.form-comment-textarea').dataset.numSeqCom = numSeqCom;
 
     formCommentAnswer.classList.remove('hidden');
+    formCommentAnswer.querySelector('.form-comment-textarea').focus();
 }
 
 function hideFormCommentAnswer() {
@@ -133,7 +139,7 @@ function fetchCommentsPlus() {
 
 function postComment() {
     hideFormCommentAnswer();
-    const data = { 
+    const data = {
         numArt,
         libCom: formCommentTextArea.value
     };

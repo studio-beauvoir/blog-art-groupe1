@@ -329,22 +329,18 @@ span.bleu {
     background-color: var(--g2);
 }
 
-.comments > .comment-container > .comment-answers,
-.comments > .comment-container > .comment-answers > .comment-container > .comment-answers {
+.comments > .comment-container > .comment-answers {
     margin-left: 25%;
     width: 75%;
 }
-.comment-answers {
-    /* margin-left: 10%;
-    width: 90%; */
+.comments > .comment-container > .comment-answers .comment::before {
+    background-color: var(--g1);
 }
+
 .comment-answers {
     margin-top: 2rem;
     display: flex;
     flex-direction: column;
-}
-.comment-answers .comment::before {
-    background-color: var(--g1);
 }
 
 .comment-infos,

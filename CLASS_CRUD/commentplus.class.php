@@ -4,7 +4,7 @@
 require_once __DIR__ . '../../connect/database.php';
 
 class COMMENTPLUS{
-	function get_1CommentPlus($numSeqCom, $numArt, $numSeqComR, $numArtR){
+	function get_1CommentPlus($numSeqCom){
 		global $db;
 
 		$query = 'SELECT * FROM COMMENTPLUS WHERE numSeqCom=?;';

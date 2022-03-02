@@ -20,6 +20,12 @@ require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
 // Instanciation de la classe Article
 $monArticle = new ARTICLE(); 
 
+// Insertion classe Comment
+require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php'; 
+
+// Instanciation de la classe Comment
+$monComment = new COMMENT();
+
 // Gestion des erreurs de saisie
 $erreur = false;
 
@@ -75,22 +81,50 @@ include __DIR__ . '/../../layouts/back/head.php';
 
         <div class="field">
             <label for="numSeqCom">Numéro de Seq Commentaire :</label>
-            <input name="numSeqCom" id="numSeqCom" size="80" maxlength="80" value="<?= $validator->oldField('numSeqCom') ?>" />
+            <select name="numSeqCom" id="numSeqCom">
+                <?php
+                    $allCommentPlus = $monCommentPlus->get_AllCommentPlus();
+                    foreach($allCommentPlus as $commentPlus) {
+                ?>
+                    <option <?=$commentPlus['numSeqCom']==$validator->oldField('numSeqCom')?'selected': '' ?> value="<?= $commentPlus['numSeqCom'] ?> "><?=$commentPlus['numSeqCom'] ?></option>
+                <?php } ?>
+            </select>
         </div>
 
         <div class="field">
             <label for="numArt">Numéro de l'article :</label>
-            <input name="numArt" id="numArt" size="80" maxlength="80" value="<?= $validator->oldField('numArt') ?>" />
+            <select name="numArt" id="numArt">
+                <?php
+                    $allCommentPlus = $monCommentPlus->get_AllCommentPlus();
+                    foreach($allCommentPlus as $commentPlus) {
+                ?>
+                <option <?=$commentPlus['numArt']==$validator->oldField('numArt')?'selected': '' ?> value="<?= $commentPlus['numArt'] ?> "><?=$commentPlus['numArt'] ?></option>
+                <?php } ?>
+            </select>
         </div>
 
         <div class="field">
             <label for="numSeqComR">Numéro de Seq Commentaire R :</label>
-            <input name="numSeqComR" id="numSeqComR" size="80" maxlength="80" value="<?= $validator->oldField('numSeqComR') ?>" />
+            <select name="numSeqComR" id="numSeqComR">
+                <?php
+                    $allCommentPlus = $monCommentPlus->get_AllCommentPlus();
+                    foreach($allCommentPlus as $commentPlus) {
+                ?>
+                <option <?=$commentPlus['numSeqComR']==$validator->oldField('numSeqComR')?'selected': '' ?> value="<?= $commentPlus['numSeqComR'] ?> "><?=$commentPlus['numSeqComR'] ?></option>
+                <?php } ?>
+            </select>
         </div>
 
         <div class="field">
             <label for="numArtR">Numéro de l'article R :</label>
-            <input name="numArtR" id="numArtR" size="80" maxlength="80" value="<?= $validator->oldField('numArtR') ?>" />
+            <select name="numArtR" id="numArtR">
+                <?php
+                    $allCommentPlus = $monCommentPlus->get_AllCommentPlus();
+                    foreach($allCommentPlus as $commentPlus) {
+                ?>
+                <option <?=$commentPlus['numArtR']==$validator->oldField('numArtR')?'selected': '' ?> value="<?= $commentPlus['numArtR'] ?> "><?=$commentPlus['numArtR'] ?></option>
+                <?php } ?>
+            </select>
         </div>
 
         <div class="controls">

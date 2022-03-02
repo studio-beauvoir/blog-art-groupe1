@@ -35,11 +35,11 @@ $erreur = false;
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $validator = Validator::make([
-        ValidationRule::required('numSeqCom', 'numArt', 'numSeqComR', 'numArtR')
+        ValidationRule::required('numSeqCom')
     ])->bindValues($_POST);
 
     if($validator->success()) {
-        $numSeqCom = $validator->verifiedField('numSeqCom', 'numArt', 'numSeqComR', 'numArtR');
+        $numSeqCom = $validator->verifiedField('numSeqCom');
         $monCommentPlus->delete($numSeqCom);
 
         header("Location: $pagePrecedent");
@@ -60,7 +60,7 @@ include __DIR__ . '/../../layouts/back/head.php';
 
 // Supp : récup id à supprimer
 // id passé en GET
-$commentPlus = $monCommentPlus->get_1CommentPlus($_GET['numSeqCom'], ['numArt'], ['numSeqComR'], ['numArtR']);
+$commentPlus = $monCommentPlus->get_1CommentPlus($_GET['numSeqCom']);
 
 $numSeqCom = $commentPlus['numSeqCom'];
 $numArt = $commentPlus['numArt'];

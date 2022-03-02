@@ -111,11 +111,13 @@ include __DIR__ . '/layouts/front/head.php';
 ?>
 
 <div class="head-bg">
-    <img src="<?= webUploadPath($urlPhotArt) ?>" alt="Photo de l'article">
+    <img class=img-bg src="<?= webUploadPath($urlPhotArt) ?>" alt="Photo de l'article">
+    <h1 class="head-h1"><?=$libTitrArt?></h1>
+    <div class="head-h2"><h2><span class="bleu"> <?=$libTitrArt?> </span></h2></div>
+    <div class="head-h4"><h4><?=$libChapoArt?></h4></div>
 </div>
-<h1 class="head-h1"><?=$libTitrArt?></h1>
-<div class="head-h2"><h2><span class="bleu"> <?=$libTitrArt?> </span></h2></div>
-<div class="head-h4"><h4><?=$libChapoArt?></h4></div>
+
+
 </div>
 <div class="discover">
     <h2 class="discover-title"><?=$libAccrochArt?></h2>

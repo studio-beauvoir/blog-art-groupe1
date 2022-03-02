@@ -4,21 +4,42 @@
 require_once __DIR__ . '../../connect/database.php';
 
 class USER{
-	function get_1User($pseudoUser, $passUser){
+	function get_1User($pseudoUser){
 		global $db;
+		$db->beginTransaction();
+		try {
+			$query = 'SELECT * FROM USER INNER JOIN STATUT ON USER.idStat=STATUT.idStat WHERE pseudoUser=?;';
+			$request = $db->prepare($query);
+			
+			$request->execute([$pseudoUser]);
 
-		// select
-		// prepare
-		// execute
-		return($result->fetch());
+			$result = $request->fetch();
+
+			$db->commit();
+			$request->closeCursor();
+			if(isset($request)) {
+				return($result);
+			} else {
+				throw new ErrorException('User not found');
+			}
+		}
+		catch (PDOException $e) {
+			$db->rollBack();
+			$request->closeCursor();
+			die('Erreur insert USER : ' . $e->getMessage());
+		}
 	}
 
 	function get_AllUsers(){
 		global $db;
 
-		// select
-		// prepare
-		// execute
+		$db->beginTransaction();
+		$query = 'SELECT * FROM USER INNER JOIN STATUT ON USER.idStat=STATUT.idStat;';
+		$request = $db->query($query);
+		$allUsers = $request->fetchAll();
+
+		$db->commit();
+		$request->closeCursor();
 		return($allUsers);
 	}
 
@@ -61,15 +82,15 @@ class USER{
 		return($allNbUsersByStat);
 	}
 
-	function create($pseudoUser, $passUser, $nomUser, $prenomUser, $emailUser, $idStat){
+	function create($pseudoUser, $nomUser, $prenomUser, $eMailUser, $passUser, $idStat){
 		global $db;
 
 		try {
 			$db->beginTransaction();
 
-			// insert
-			// prepare
-			// execute
+			$query = 'INSERT INTO USER (pseudoUser, nomUser, prenomUser, eMailUser, passUser, idStat) VALUES (?, ?, ?, ?, ?, ?);';
+			$request = $db->prepare($query);
+			$request->execute([$pseudoUser, $nomUser, $prenomUser, $eMailUser, $passUser, $idStat]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -80,15 +101,15 @@ class USER{
 		}
 	}
 
-	function update($pseudoUser, $passUser, $nomUser, $prenomUser, $emailUser, $idStat){
+	function update($pseudoUser, $nomUser, $prenomUser, $eMailUser, $passUser, $idStat){
 		global $db;
 
 		try {
 			$db->beginTransaction();
 
-			// update
-			// prepare
-			// execute
+			$query = 'UPDATE USER SET nomUser=?, prenomUser=?, eMailUser=?, passUser=?, idStat=? WHERE pseudoUser=?;';
+			$request = $db->prepare($query);
+			$request->execute([$nomUser, $prenomUser, $eMailUser, $passUser, $idStat, $pseudoUser]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -99,17 +120,19 @@ class USER{
 		}
 	}
 
-	function delete($pseudoUser, $passUser){
+	function delete($pseudoUser){
 		global $db;
 		
 		try {
 			$db->beginTransaction();
 
-			// delete
-			// prepare
-			// execute
+			$query = 'DELETE FROM USER WHERE `pseudoUser` = ?;';
+			$request = $db->prepare($query);
+			$request->execute([$pseudoUser]);
+			$count = $request->rowCount();
 			$db->commit();
 			$request->closeCursor();
+			return($count);
 		}
 		catch (PDOException $e) {
 			$db->rollBack();

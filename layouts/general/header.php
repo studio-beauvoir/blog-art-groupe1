@@ -8,9 +8,9 @@ require_once __DIR__ . '/../../middleware/getMember.php';
         </div>
         <nav class="header-box-liste">
             <ul>
-                <li class="joe"> 
-                    <input type="text" class="research-bar">
-                    <img src="<?= webAssetPath('svg/search.svg') ?>" alt=" ">
+                <li class="searchbar"> 
+                    <input class="searchbar-input" placeholder="Rechercher...">
+                    <img class="searchbar-icon" src="<?= webAssetPath('svg/search.svg') ?>" alt=" ">
                 </li>
                 <li><a href="<?= webSitePath('/')?>" class="interactive-lien-text">Accueil</a></li>
                 <?php if(!$loggedMember): ?>

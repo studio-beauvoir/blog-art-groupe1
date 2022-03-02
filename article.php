@@ -199,7 +199,7 @@ include __DIR__ . '/layouts/front/head.php';
     
 
     <div id="form-comment-answer" class="hidden">
-        <h4>Répondre au commentaire</h4>
+        <h4 class="form-comment-title">Répondre au commentaire</h4>
         <textarea rows="3" class="form-comment-textarea"></textarea>
         <div>
             <button class="form-comment-submit btn btn-lg">Répondre ça</button>
@@ -209,7 +209,7 @@ include __DIR__ . '/layouts/front/head.php';
 
 </div>
 
-<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
+<script src="<?= webAssetPath('js/ajax.jquery.min.js') ?>"></script>
 
 <!-- Editeur bbcode -->
 <script src="<?= webAssetPath('js/utils.js') ?>"></script>

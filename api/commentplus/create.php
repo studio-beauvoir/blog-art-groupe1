@@ -20,24 +20,31 @@ $validator = Validator::make([
 
 header('Content-type:application/json;charset=utf-8');
 if($validator->success()) {
+    if($loggedMember) {
+        $numSeqComR = $validator->verifiedField('numSeqComR');
+        $numArtR = $validator->verifiedField('numArtR');
 
-    $numSeqComR = $validator->verifiedField('numSeqComR');
-    $numArtR = $validator->verifiedField('numArtR');
+        $libCom = $validator->verifiedField('libCom');
+        
+        $numArt = $validator->verifiedField('numArt');
+        $numSeqCom = $monComment->getNextNumCom($numArt);
+        
+        $numMemb = $loggedMember['numMemb'];
 
-    $libCom = $validator->verifiedField('libCom');
-    
-    $numArt = $validator->verifiedField('numArt');
-    $numSeqCom = $monComment->getNextNumCom($numArt);
-    
-    $numMemb = $loggedMember['numMemb'];
+        $commentPlus = $monComment->get_1Comment($numSeqComR, $numArtR);
 
+        $pseudoMembAnswered = $commentPlus['pseudoMemb'];
 
+        $libCom = "@$pseudoMembAnswered: $libCom";
 
-    $monComment->create($numSeqCom, $numArt, $libCom, $numMemb);
+        $monComment->create($numSeqCom, $numArt, $libCom, $numMemb);
 
-    $monCommentPlus->create($numSeqCom, $numArt, $numSeqComR, $numArtR);
+        $monCommentPlus->create($numSeqCom, $numArt, $numSeqComR, $numArtR);
 
-    $result = [];
+        $result = [];
+    } else {
+        $errors = ['Vous devez être connecté'];
+    }
 } else {
     $errors = $validator->errors();
 }

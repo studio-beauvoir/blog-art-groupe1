@@ -11,30 +11,22 @@ class COMMENT{
 	function get_1Comment($numSeqCom, $numArt){
 		global $db;
 		
-		try {
-			$db->beginTransaction();
-			// $query = 'SELECT * FROM COMMENT WHERE numArt=? AND numSeqCom=?;';
-			$query = 	'SELECT comment.*, membre.pseudoMemb, SUM(likecom.likeC) AS nblike FROM comment
-						JOIN membre ON comment.numMemb=membre.numMemb
-						LEFT JOIN likecom ON likecom.numSeqCom=comment.numSeqCom WHERE (likecom.numArt=comment.numArt OR comment.numArt=?) AND comment.numSeqCom=?
-						GROUP BY comment.numSeqCom;';
+		// $query = 'SELECT * FROM COMMENT WHERE numArt=? AND numSeqCom=?;';
+		$query = 	'SELECT comment.*, membre.pseudoMemb, SUM(likecom.likeC) AS nblike FROM comment
+					JOIN membre ON comment.numMemb=membre.numMemb
+					LEFT JOIN likecom ON likecom.numSeqCom=comment.numSeqCom WHERE (likecom.numArt=comment.numArt OR comment.numArt=?) AND comment.numSeqCom=?
+					GROUP BY comment.numSeqCom;';
 
-			$request = $db->prepare($query);
-			
-			$request->execute([$numArt, $numSeqCom]);
+		$request = $db->prepare($query);
+		
+		$request->execute([$numArt, $numSeqCom]);
 
-			$result = $request->fetch();
+		$result = $request->fetch();
 
-			if(isset($request)) {
-				return($result);
-			} else {
-				throw new ErrorException('Comment not found');
-			}
-		}
-		catch (PDOException $e) {
-			$db->rollBack();
-			$request->closeCursor();
-			die('Erreur get 1 COMMENT : ' . $e->getMessage());
+		if(isset($request)) {
+			return($result);
+		} else {
+			throw new ErrorException('Comment not found');
 		}
 	}
 
@@ -98,15 +90,11 @@ class COMMENT{
 	function get_NbAllCommentsBynumMemb($numMemb){
 		global $db;
 
-		$db->beginTransaction();
-
 		$query = 'SELECT COUNT (*) FROM COMMENT WHERE numMemb=?;';
 		$request = $db->prepare($query);
 		$request->execute([$numMemb]);
 		$allNbAllCommentsBynumMemb = $request->fetch();
 
-		$db->commit();
-		$request->closeCursor();
 		
 		return($allNbAllCommentsBynumMemb);
 	}

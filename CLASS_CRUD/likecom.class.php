@@ -138,9 +138,9 @@ class LIKECOM{
 			$db->beginTransaction();
 
 
-			$query = 'INSERT INTO LIKECOM (numMemb, numSeqCom, numArt, likeC) VALUES (:numMemb, :numSeqCom, :numArt, :likeC) ON DUPLICATE KEY UPDATE likeC = NOT likeC;';
+			$query = 'INSERT INTO LIKECOM (numMemb, numSeqCom, numArt, likeC) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE likeC = NOT likeC;';
 			$request = $db->prepare($query);
-			$request->execute([':numMemb'=>$numMemb, ':numSeqCom'=>$numSeqCom, ':numArt'=>$numArt, ':likeC'=>$likeC]);
+			$request->execute([$numMemb, $numSeqCom, $numArt, $likeC]);
 
 			$db->commit();
 			$request->closeCursor();

@@ -2,39 +2,32 @@
 
 require_once __DIR__ . '/../../middleware/logged.php';
 require_once __DIR__ . '/../../util/index.php';
-require_once __DIR__ . '/../../class_crud/comment.class.php'; 
+require_once __DIR__ . '/../../class_crud/LIKEART.class.php'; 
 
-$monComment = new COMMENT(); 
+$monLikeArt = new LIKEART(); 
 
 $result = false;
 $errors = false;
 
 $validator = Validator::make([
-    ValidationRule::required('numArt'),
-    ValidationRule::required('libCom'),
+    ValidationRule::required('numArt')
 ])->bindValues($_POST);
 
 header('Content-type:application/json;charset=utf-8');
 if($validator->success()) {
     if($loggedMember) {
-
-        $libCom = $validator->verifiedField('libCom');
-        // $numMemb = $validator->verifiedField('numMemb'); 
-        $numMemb = $loggedMember['numMemb'];
         $numArt = $validator->verifiedField('numArt');
-        $numSeqCom = $monComment->getNextNumCom($numArt);
-        
+        $numMemb = $loggedMember['numMemb'];
 
-        $monComment->create($numSeqCom, $numArt, $libCom, $numMemb);
+        $monLikeArt->createOrtoggle($numMemb, $numArt);
 
-        $result = [];
+        $result = $monLikeArt->get_nbLikesArtByArticle($numArt)[0];
     } else {
         $errors = ['Vous devez être connecté'];
     }
 } else {
     $errors = $validator->errors();
 }
-    
     
 echo json_encode([
     'result' => $result,

@@ -88,6 +88,8 @@ $article = $monArticle->get_1Article($numArt);
 // $membre = $monMembre->get_1Membre($_GET['id'], ['id']);
 // if(!$article) header("Location: $pagePrecedent");
 
+$nbLikesArt = $article['nbLikes']!==NULL?$article['nbLikes']:0;
+
 
 $dtCreArt = $article['dtCreArt'];
 $libTitrArt = $article['libTitrArt'];
@@ -141,9 +143,13 @@ include __DIR__ . '/layouts/front/head.php';
     <div class="articles-end">
         <p class="auteur">Publié le <?= simpleDate($dtCreArt) ?> </p>
 
-        <div class="likes">
-            <p>NbtrucGetLikes personnes aiment cette article<br>On vous invite à faire de même si vous l’avez apprécié !</p>
-            <img src="<?=webAssetPath('svg/like.svg') ?>" alt=" ">
+        <div class="article-like">
+            <span class="a-icon article-like-icon liked hidden"><img src="<?=webAssetPath('svg/liked.svg') ?>" alt=" "></span>
+            <span class="a-icon article-like-icon like"><img src="<?=webAssetPath('svg/like.svg') ?>" alt=" "></span>
+            <div>
+                <p class="article-like-count"></p>
+                <p>On vous invite à faire de même si vous l’avez apprécié !</p>
+            </div>
         </div>
     </div>
     
@@ -242,11 +248,20 @@ include __DIR__ . '/layouts/front/head.php';
     const urlFetchCommentPlus = "<?= webSitePath('/api/commentplus/fetch.php') ?>";
     const urlPostCommentPlus = "<?= webSitePath('/api/commentplus/create.php') ?>";
 
-    const urlToggleLike = "<?= webSitePath('/api/likecom/toggle.php') ?>";
-    const urlFetchLikesMember = "<?= webSitePath('/api/likecom/fetch-member.php') ?>";
+    const urlToggleLikeCom = "<?= webSitePath('/api/likecom/toggle.php') ?>";
+    const urlFetchLikesComMember = "<?= webSitePath('/api/likecom/fetch-member.php') ?>";
+
+    const urlToggleLikeArt = "<?= webSitePath('/api/likeart/toggle.php') ?>";
+    const urlFetchArticleLikedByMember = "<?= webSitePath('/api/likeart/member-has-liked.php') ?>";
+
+
+    document.querySelector('.article-like').addEventListener('click', ()=>toggleLikeArt(numArt));
+    
 
     fetchComments();
-    
+    fetchArticleLikedByMember();
+    updateLikeArt(<?=$nbLikesArt?>);
+
     const editorEls = document.querySelectorAll('p[bbtext]');
     const editors = [];
     for(let editorEl of editorEls) {

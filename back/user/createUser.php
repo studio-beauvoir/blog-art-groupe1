@@ -1,95 +1,62 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD USER (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : createUser.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
 
-// Algorithme de hachage fort et irréversible
-// password_hash()
-// https://www.php.net/manual/fr/function.password-hash.php
-//
+$submitBtn = "Créer";
+$pageCrud = "user";
+$pagePrecedent = "./$pageCrud.php";
+$pageTitle = "Créer un $pageCrud";
+$pageNav = ['Home:/admin.php', 'Gestion des users:'.$pagePrecedent, $pageTitle];
+// Insertion des fonctions utilitaires
+require_once __DIR__ . '/../../util/index.php';
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
-
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
-
-// Insertion classe User
+// Insertion classe Statut
+require_once __DIR__ . '/../../class_crud/user.class.php'; 
+require_once __DIR__ . '/../../class_crud/statut.class.php'; 
 
 // Instanciation de la classe User
-
-
+$monUser = new USER(); 
+$monStatut = new STATUT();
 
 // Gestion des erreurs de saisie
-$erreur = false;
-// init msg erreur
-
+$validator = Validator::make();
 
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    $validator->addRules([
+        ValidationRule::required('pseudoUser')->pseudo(),
+        ValidationRule::required('nomUser'),
+        ValidationRule::required('prenomUser'),
+        ValidationRule::required('eMailUser')->email(),
+        ValidationRule::required('passUser')->password(),
+        ValidationRule::required('idStat')
+    ])->bindValues($_POST);
 
+    if($validator->success()) {
 
+        $pseudoUser = $validator->verifiedField('pseudoUser');
+        $nomUser = $validator->verifiedField('nomUser');
+        $prenomUser = $validator->verifiedField('prenomUser');
+        $eMailUser = $validator->verifiedField('eMailUser');
+        $passUser = $validator->verifiedField('passUser', false);
+        // hashage du mot de passe
+        $passUser = password_hash($passUser, PASSWORD_BCRYPT);
+        $idStat = $validator->verifiedField('idStat');
+        
+        $monUser->create($pseudoUser, $nomUser, $prenomUser, $eMailUser, $passUser, $idStat);
 
-    // controle des saisies du formulaire
-
-    // création effective du user
-
-
-
-    // Gestion des erreurs => msg si saisies ko
-
-
-
-
-        // CTRL saisies
-        // PSEUDO : valide, longueur: 6 mini, 70 maxi
-
-
-
-        // VALIDITÉ MAIL
-        // 1ère mail == valide
-        // 2ème mail == valide
-        // 2 mails identiques
-
-
-
-
-        // PASS VALIDE
-        // majuscules, minuscules, chiffres, car. spéciaux
-        // 2 mails identiques
-
-
+        header("Location: ./user.php");
+        die();
+    }   // Fin if ((isset($_POST['libStat'])) ...
 
 }   // Fin if ($_SERVER["REQUEST_METHOD"] == "POST")
 // Init variables form
 include __DIR__ . '/initUser.php';
-?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-    <meta charset="utf-8" />
-    <title>Admin - CRUD User</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
-    <link href="../css/style.css" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-        .error {
-            padding: 2px;
-            border: solid 0px black;
-            color: red;
-            font-style: italic;
-            border-radius: 5px;
-        }
-    </style>
-    <script>
-        // Afficher pass
+include __DIR__ . '/../../layouts/back/head.php';
+?>
+
+<script>
+        // Affichage pass
         function myFunction(myInputPass) {
             var x = document.getElementById(myInputPass);
             if (x.type === "password") {
@@ -98,135 +65,75 @@ include __DIR__ . '/initUser.php';
               x.type = "password";
             }
         }
-    </script>
-</head>
-<body>
-    <h1>BLOGART22 Admin - CRUD User</h1>
-    <h2>Ajout d'un user : Inscription</h2>
+</script>
 
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" accept-charset="UTF-8">
+<?=$validator->echoErrors()?>
+    <form
+        class="admin-form"
+        method="POST" 
+        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" 
+        enctype="multipart/form-data" 
+        accept-charset="UTF-8"
+    >
 
-      <fieldset>
-        <legend class="legend1">Formulaire User...</legend>
-
-        <input type="hidden" id="id" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>" />
-
-        <div class="control-group">
-            <label class="control-label" for="pseudoUser"><b>Pseudonyme<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="pseudoUser" id="pseudoUser" size="80" maxlength="80" value="<?= $pseudoUser; ?>" placeholder="6 car. minimum" autocomplete="on" autofocus="autofocus" />
+        <div class="field">
+            <label for="pseudoUser">Pseudo<span class="error">(*)</span> :</label>
+            <input name="pseudoUser" id="pseudoUser" size="80" maxlength="80" value="<?= $pseudoUser;?>" />
         </div>
 
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="pass1User"><b>Mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="password" name="pass1User" id="myInput1" size="80" maxlength="80" value="<?= $pass1User; ?>" autocomplete="on" />
-            <br>
-            <input type="checkbox" onclick="myFunction('myInput1')">
-            &nbsp;&nbsp;
-            <label><i>Afficher mot de passe</i></label>
+        <div class="field">
+            <label for="nomUser">Nom<span class="error">(*)</span> :</label>
+            <input name="nomUser" id="nomUser" size="80" maxlength="80" value="<?= $nomUser?>" />
         </div>
 
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="pass2User"><b>Confirmez la Mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="password" name="pass2User" id="myInput2" size="80" maxlength="80" value="<?= $pass2User; ?>" autocomplete="on" />
-            <br>
-            <input type="checkbox" onclick="myFunction('myInput2')">
-            &nbsp;&nbsp;
-            <label><i>Afficher mot de passe</i></label>
+        <div class="field">
+            <label for="prenomUser">Prénom<span class="error">(*)</span> :</label>
+            <input name="prenomUser" id="prenomUser" size="80" maxlength="80" value="<?= $prenomUser; ?>" />
         </div>
 
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="prenomUser"><b>Prénom<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="prenomUser" id="prenomUser" size="80" maxlength="80" value="<?= $prenomUser; ?>" autocomplete="on" />
+        </div><div class="field">
+            <label for="eMailUser">Email<span class="error">(*)</span></label>
+            <input name="eMailUser" id="eMailUser" size="80" maxlength="80"/>
         </div>
 
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="nomUser"><b>Nom<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="text" name="nomUser" id="nomUser" size="80" maxlength="80" value="<?= $nomUser; ?>" autocomplete="on" />
+        <div class="field">
+            <label for="eMail1User">Confirmez l'email<span class="error">(*)</span></label>
+            <input name="eMail1User" id="eMail1User" size="80" maxlength="80" />
         </div>
 
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="eMail1User"><b>eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="email" name="eMail1User" id="eMail1User" size="80" maxlength="80" value="<?= $eMail1User; ?>" autocomplete="on" />
+        <div class="field">
+            <label for="passUser">Mot de passe<span class="error">(*)</span></label>
+            <input type="password" name="passUser" id="passUser" size="80" maxlength="80" />
+            <label><input type="checkbox" onclick="myFunction('passUser')"><i>Afficher Mot de passe</i></label>
+            <p>
+                Le mot de passe doit comporter entre 6 et 15 caractères, et au moins une lettre, un chiffre et un caractère spécial parmi &@#$%_-.?!
+            </p>
         </div>
 
-        <br>
-        <div class="control-group">
-            <label class="control-label" for="eMail2User"><b>Confirmez l'eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="email" name="eMail2User" id="eMail2User" size="80" maxlength="80" value="<?= $eMail2User; ?>" autocomplete="on" />
+        <div class="field">
+            <label for="pass2User">Confirmez le mot de passe<span class="error">(*)</span></label>
+            <input type="password" name="pass2User" id="pass2User" size="80" maxlength="80"/>
+            <label><input type="checkbox" onclick="myFunction('pass2User')"><i>Afficher Mot de passe</i></label>
         </div>
+
         <i><div class="error"><br>*&nbsp;Champs obligatoires</div></i>
 
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-    <!-- FK : Statut -->
-<!-- --------------------------------------------------------------- -->
-    <!-- Listbox statut -->
-        <br><br>
-        <div class="control-group">
-            <label class="control-label" for="LibTypStat"><b>Statut :&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="hidden" id="idStat" name="idStat" value="<?= isset($_GET['idStat']) ? $_GET['idStat'] : '' ?>" />
-
-            <input type="text" name="idStat" id="idStat" size="5" maxlength="5" value="<?= $idStat; ?>" autocomplete="on" />
-
-            <!-- Listbox statut => 2ème temps -->
-
-        </div>
-    <!-- FIN Listbox statut -->
-<!-- --------------------------------------------------------------- -->
-    <!-- FK : Statut -->
-<!-- --------------------------------------------------------------- -->
-<!-- --------------------------------------------------------------- -->
-
-        <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response" />
-
-        <div class="control-group">
-            <div class="error">
-<?php
-            if ($erreur) {
-                echo ($errSaisies);
-            }
-            else {
-                $errSaisies = "";
-                echo ($errSaisies);
-            }
-?>
-            </div>
+        <div class="field">
+            <label for="idStat">Statut :</label>
+            <select name="idStat" id="idStat">
+            <?php 
+                $allStatuts = $monStatut->get_AllStatuts();                    
+                foreach($allStatuts as $statut) { 
+            ?>
+                <option <?=$statut['idStat']==$idStat?'selected':'' ?> value="<?= $statut['idStat'] ?>" ><?=$statut['libStat'] ?></option>
+            <?php } ?>
+            </select>
         </div>
 
-        <div class="control-group">
-            <div class="controls">
-                <br><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Initialiser" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="Valider" style="cursor:pointer; padding:5px 20px; background-color:lightsteelblue; border:dotted 2px grey; border-radius:5px;" name="Submit" />
-                <br>
-            </div>
+        <div class="controls">
+            <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-secondary" title="Annuler" href="<?=$pagePrecedent ?>">Annuler</a>
+            <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
         </div>
-      </fieldset>
     </form>
-<?php
-require_once __DIR__ . '/footerUser.php';
-
-require_once __DIR__ . '/footer.php';
-?>
-    <!-- ================================================== -->
-    <!-- Le javascript                                      -->
-    <!-- ================================================== -->
-    <script type="text/javascript">
-
-        grecaptcha.ready(function(){
-            grecaptcha.execute('<?= SITE_KEY ?>', {action: 'homepage'})
-            .then(function(token){
-                //console.log(token);
-                document.getElementById('g-recaptcha-response').value=token;
-            });
-        });
-    </script>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

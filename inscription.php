@@ -129,6 +129,8 @@ require_once __DIR__ . '/layouts/front/head.php';
             </div>
         </div>
 
+        
+
         <input class="btn btn-lg" title="Inscription" type="submit" value="Inscription" />
         <p>Déjà inscrit? <a href="<?= webSitePath('/connexion.php') ?>">Connectez-vous</a></p>
 

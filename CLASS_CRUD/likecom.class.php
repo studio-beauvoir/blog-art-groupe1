@@ -118,7 +118,7 @@ class LIKECOM{
 		try {
 			$db->beginTransaction();
 
-			$query = 'UPDATE LIKECOM SET likeC=? WHERE numMemb=?, numSeqCom=?, numArt=?;';
+			$query = 'UPDATE LIKECOM SET likeC=? WHERE numMemb=? AND numSeqCom=? AND numArt=?;';
 			$request = $db->prepare($query);
 			$request->execute([$likeC, $numMemb, $numSeqCom, $numArt]);
 

@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numArt = $validator->verifiedField('numArt');
         $likeC = $validator->verifiedField('likeC') == "true"?1:0;
         
-        $monLikeCom->create($numMemb, $numSeqCom, $numArt, $likeC);
+        $monLikeCom->update($numMemb, $numSeqCom, $numArt, $likeC);
 
         header("Location: ./likeCom.php");
         die();
@@ -82,7 +82,7 @@ $likeC = $likeCom['likeC'];
 
         <div class="field">
             <label for="numMemb">Quel membre</label>
-            <select name="numMemb" id="numMemb">
+            <select disabled name="numMemb" id="numMemb">
                 <?php 
                     $allMembres = $monMembre->get_AllMembres();                    
                     foreach($allMembres as $membre) { 
@@ -95,7 +95,7 @@ $likeC = $likeCom['likeC'];
 
         <div class="field">
             <label for="numSeqCom">Quel commentaire</label>
-            <select name="numSeqCom" id="numSeqCom">
+            <select disabled name="numSeqCom" id="numSeqCom">
                 <?php 
                     $allComm = $monComm->get_AllComments();                    
                     foreach($allComm as $comm) { 
@@ -107,7 +107,7 @@ $likeC = $likeCom['likeC'];
 
         <div class="field">
             <label for="numArt">Quel article</label>
-            <select name="numArt" id="numArt">
+            <select disabled name="numArt" id="numArt">
                 <?php 
                     $allArticles = $monArticle->get_AllArticles();                    
                     foreach($allArticles as $article) { 

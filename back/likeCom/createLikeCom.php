@@ -1,7 +1,7 @@
 <?php
 
 $submitBtn = "Créer";
-$pageCrud = "like de commentaire";
+$pageCrud = "likeCom";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "Créer un $pageCrud";
 $pageNav = ['Home:/admin.php', 'Gestion des likes de commentaires:'.$pagePrecedent, $pageTitle];
@@ -10,11 +10,15 @@ require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe LikeArt
 require_once __DIR__ . '/../../CLASS_CRUD/likecom.class.php'; 
-
+require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php'; 
+require_once __DIR__ . '/../../class_crud/membre.class.php'; 
+require_once __DIR__ . '/../../class_crud/article.class.php'; 
 
 // Instanciation de la classe LikeArt
 $monLikeCom = new LIKECOM(); 
-
+$monComm = new COMMENT(); 
+$monMembre = new MEMBRE();
+$monArticle = new ARTICLE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -38,10 +42,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $numMemb = $validator->verifiedField('numMemb');
         $numSeqCom = $validator->verifiedField('numSeqCom');
         $numArt = $validator->verifiedField('numArt');
-        $likeC = $validator->verifiedField('likeC');
+        $likeC = $validator->verifiedField('likeC') == "true"?1:0;
         
-        var_dump($numSeqCom);
-
         $monLikeCom->create($numMemb, $numSeqCom, $numArt, $likeC);
 
         header("Location: ./likeCom.php");
@@ -70,23 +72,48 @@ include __DIR__ . '/../../layouts/back/head.php';
     >
 
         <div class="field">
-            <label for="numMemb">Numéro du membre :</label>
-            <input name="numMemb" id="numMemb" size="80" maxlength="80" value="<?= $validator->oldField('numMemb') ?>" />
+            <label for="numMemb">Quel membre</label>
+            <select name="numMemb" id="numMemb">
+                <?php 
+                    $allMembres = $monMembre->get_AllMembres();                    
+                    foreach($allMembres as $membre) { 
+                ?>
+                    <option <?=$membre['numMemb']==$validator->oldField('numMemb')?'selected':'' ?> value="<?= $membre['numMemb'] ?>" ><?=$membre['pseudoMemb'] ?></option>
+                <?php } ?>
+            </select>
+        </div>
+
+
+        <div class="field">
+            <label for="numSeqCom">Quel commentaire</label>
+            <select name="numSeqCom" id="numSeqCom">
+                <?php 
+                    $allComm = $monComm->get_AllComments();                    
+                    foreach($allComm as $comm) { 
+                ?>
+                    <option <?=$comm['numSeqCom']==$validator->oldField('numSeqCom')?'selected':'' ?> value="<?= $comm['numSeqCom'] ?>" ><?=$comm['pseudoMemb'] ?>: <?=$comm['libCom'] ?></option>
+                <?php } ?>
+            </select>
         </div>
 
         <div class="field">
-            <label for="numSeqCom">Numéro Seq du Commentaire :</label>
-            <input name="numSeqCom" id="numSeqCom" size="80" maxlength="80" value="<?= $validator->oldField('numSeqCom') ?>" />
+            <label for="numArt">Quel article</label>
+            <select name="numArt" id="numArt">
+                <?php 
+                    $allArticles = $monArticle->get_AllArticles();                    
+                    foreach($allArticles as $article) { 
+                ?>
+                    <option <?=$article['numArt']==$validator->oldField('numArt')?'selected':'' ?> value="<?= $article['numArt'] ?>" ><?=$article['libTitrArt'] ?></option>
+                <?php } ?>
+            </select>
         </div>
 
         <div class="field">
-            <label for="numArt">Numéro de l'article :</label>
-            <input name="numArt" id="numArt" size="80" maxlength="80" value="<?= $validator->oldField('numArt') ?>" />
-        </div>
-
-        <div class="field">
-            <label for="likeC">Like de l'article (1->like, 0-> pas de like) :</label>
-            <input name="likeC" id="likeC" size="80" maxlength="80" value="<?= $validator->oldField('likeC') ?>" />
+            <label for="likeC">Like?</label>
+            <select name="likeC" id="likeC">
+                <option <?=$likeC?'selected':'' ?> value="true">Oui</option>
+                <option <?=$likeC?'':'selected' ?> value="false">Non</option>
+            </select>
         </div>
 
         <div class="controls">

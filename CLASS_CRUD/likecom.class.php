@@ -7,7 +7,7 @@ class LIKECOM{
 	function get_1LikeCom($numMemb, $numSeqCom, $numArt){
 		global $db;
 
-		$query = 'SELECT * FROM LIKECOM WHERE numMemb=?, numSeqCom=?, numArt=?;';
+		$query = 'SELECT * FROM LIKECOM WHERE numMemb=? AND numSeqCom=? AND numArt=?;';
 		$request = $db->prepare($query);
 		$request->execute([$numMemb, $numSeqCom, $numArt]);
 		$result = $request->fetch();
@@ -50,7 +50,9 @@ class LIKECOM{
 
 	function get_AllLikesCom(){
 		global $db;
-		$query = 'SELECT * FROM LIKECOM INNER JOIN MEMBRE ON LIKECOM.numMemb=MEMBRE.numMemb;';
+		$query = 'SELECT LIKECOM.*, MEMBRE.pseudoMemb, ARTICLE.*  FROM LIKECOM 
+				INNER JOIN MEMBRE ON LIKECOM.numMemb=MEMBRE.numMemb
+				INNER JOIN ARTICLE ON LIKECOM.numArt=ARTICLE.numArt;';
 		$request = $db->query($query);
 		$allLikesCom = $request->fetchAll();
 

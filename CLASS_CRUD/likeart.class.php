@@ -9,9 +9,8 @@ class LIKEART{
 
 		try {
 			$db->beginTransaction();
-			$query = 'SELECT * FROM LIKEART WHERE numMemb=?, numArt=?;';
+			$query = 'SELECT * FROM LIKEART WHERE numMemb=? AND numArt=?;';
 			$request = $db->prepare($query);
-			var_dump([$numMemb, $numArt]);
 			$request->execute([$numMemb, $numArt]);
 
 			$result = $request->fetch();
@@ -33,7 +32,9 @@ class LIKEART{
 	function get_AllLikesArt(){
 		global $db;
 
-		$query = 'SELECT * FROM LIKEART INNER JOIN MEMBRE ON LIKEART.numMemb=MEMBRE.numMemb;';
+		$query = 'SELECT LIKEART.*, MEMBRE.pseudoMemb, ARTICLE.libTitrArt FROM LIKEART 
+				INNER JOIN MEMBRE ON LIKEART.numMemb=MEMBRE.numMemb
+				INNER JOIN ARTICLE ON LIKEART.numArt=ARTICLE.numArt;';
 		$request = $db->query($query);
 		$allLikesArt = $request->fetchAll();
 		return($allLikesArt);
@@ -118,9 +119,9 @@ class LIKEART{
 		try {
 			$db->beginTransaction();
 
-			$query = 'UPDATE LIKEART SET numMemb=?,numArt=? WHERE likeArt=?;';
+			$query = 'UPDATE LIKEART SET likeA=? WHERE numMemb=? AND numArt=?;';
 			$request = $db->prepare($query);
-			$request->execute([$numMemb, $numArt, $likeA]);
+			$request->execute([$likeA, $numMemb, $numArt]);
 			$db->commit();
 			$request->closeCursor();
 		}

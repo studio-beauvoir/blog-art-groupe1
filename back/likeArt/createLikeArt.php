@@ -1,7 +1,7 @@
 <?php
 
 $submitBtn = "Créer";
-$pageCrud = "like d'article";
+$pageCrud = "likeArt";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "Créer un $pageCrud";
 $pageNav = ['Home:/admin.php', 'Gestion des likes d articles:'.$pagePrecedent, $pageTitle];
@@ -10,11 +10,13 @@ require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe LikeArt
 require_once __DIR__ . '/../../class_crud/likeart.class.php'; 
-
+require_once __DIR__ . '/../../class_crud/membre.class.php'; 
+require_once __DIR__ . '/../../class_crud/article.class.php'; 
 
 // Instanciation de la classe LikeArt
 $monLikeArt = new LIKEART(); 
-
+$monMembre = new MEMBRE();
+$monArticle = new ARTICLE();
 
 // Gestion des erreurs de saisie
 $erreur = false;
@@ -36,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $numMemb = $validator->verifiedField('numMemb');
         $numArt = $validator->verifiedField('numArt');
-        $likeA = $validator->verifiedField('likeA');
+        $likeA = $validator->verifiedField('likeA') == "true"?1:0;
         
         $monLikeArt->create($numMemb, $numArt, $likeA);
 
@@ -66,18 +68,35 @@ include __DIR__ . '/../../layouts/back/head.php';
     >
 
         <div class="field">
-            <label for="numMemb">Numéro du membre :</label>
-            <input name="numMemb" id="numMemb" size="80" maxlength="80" value="<?= $validator->oldField('numMemb') ?>" />
+            <label for="numMemb">Quel membre</label>
+            <select name="numMemb" id="numMemb">
+                <?php 
+                    $allMembres = $monMembre->get_AllMembres();                    
+                    foreach($allMembres as $membre) { 
+                ?>
+                    <option <?=$membre['numMemb']==$validator->oldField('numMemb')?'selected':'' ?> value="<?= $membre['numMemb'] ?>" ><?=$membre['pseudoMemb'] ?></option>
+                <?php } ?>
+            </select>
         </div>
 
         <div class="field">
-            <label for="numArt">Numéro de l'article :</label>
-            <input name="numArt" id="numArt" size="80" maxlength="80" value="<?= $validator->oldField('numArt') ?>" />
+            <label for="numArt">Quel article</label>
+            <select name="numArt" id="numArt">
+                <?php 
+                    $allArticles = $monArticle->get_AllArticles();                    
+                    foreach($allArticles as $article) { 
+                ?>
+                    <option <?=$article['numArt']==$validator->oldField('numArt')?'selected':'' ?> value="<?= $article['numArt'] ?>" ><?=$article['libTitrArt'] ?></option>
+                <?php } ?>
+            </select>
         </div>
 
         <div class="field">
-            <label for="likeA">Like de l'article (1->like, 0-> pas de like) :</label>
-            <input name="likeA" id="likeA" size="80" maxlength="80" value="<?= $validator->oldField('likeA') ?>" />
+            <label for="likeA">Like?</label>
+            <select name="likeA" id="likeA">
+                <option <?=$likeA?'selected':'' ?> value="true">Oui</option>
+                <option <?=$likeA?'':'selected' ?> value="false">Non</option>
+            </select>
         </div>
 
         <div class="controls">

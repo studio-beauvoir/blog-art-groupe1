@@ -18,10 +18,10 @@ include __DIR__ . '/../../layouts/back/head.php';
 	<table >
         <thead>
             <tr>
-                <th>Numéro du membre</th>
-                <th>Numéro de Seq commentaire</th>
-                <th>Numéro de l'article</th>
-                <th>Like du commentaire</th>
+                <th>Membre</th>
+                <th>Commentaire</th>
+                <th>Article</th>
+                <th>Like?</th>
                 <th colspan="2">Action</th>
             </tr>
         </thead>
@@ -35,19 +35,21 @@ include __DIR__ . '/../../layouts/back/head.php';
             // on ferme la boucle quelques lignes plus tard
         ?>
             <tr>
-                <td><h4> <?= $row['numMemb']; ?> </h4></td>
-                <td><?= $row['numSeqCom']; ?></td>
-                <td><?= $row['numArt']; ?></td>
-                <td><?= $row['likeC']; ?></td>
+                <td><?= $row['pseudoMemb']; ?></td>
+                <td><a href="<?=webCrudPath('comment/updateComment.php?idCom='.$row['numSeqCom'].'&idArt='.$row['numArt']) ?>">Voir</a></td>
+                <td><?= $row['libTitrArt']; ?></td>
+                <td>
+                    <?php if($row['likeC']) { ?>
+                        <img width=40 src="<?=webAssetPath('svg/liked.svg') ?>" alt=" ">
+                    <?php } else { ?>
+                        Non
+                    <?php } ?>
+                </td>
                 <!--<td><a href=" <?= webCrudPath('langue/updateLangue.php?id='.$row['numLang']) ?>"><?= $row['lib1Lang']; ?> </a></td>-->
 
                 <!-- actions -->
                 <td>
-                    <a class="btn btn-md" href="./updateLikeCom.php?numMemb=<?=$row['numMemb'];?>&numArt=<?=$row['numArt'];?>" title="Modifier le like">Modifier</a>
-                </td>
-                <td>  
-                    <!-- lien : test ternaire super admin -->
-                    <a class="btn btn-md btn-danger" href="./deleteLikeArt.php?numMemb=<?=$row['numMemb'];?>&numArt=<?=$row['numArt'];?>" title="Supprimer le like">Supprimer</a>
+                    <a class="btn btn-md" href="./updateLikeCom.php?numMemb=<?=$row['numMemb'];?>&numArt=<?=$row['numArt'];?>&numSeqCom=<?=$row['numSeqCom']?>" title="Modifier le like">Modifier</a>
                 </td>
             </tr>
         <?php }	// End of foreach ?>

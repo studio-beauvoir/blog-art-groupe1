@@ -11,17 +11,11 @@ $monLikeArt = new LIKEART();
 // Gestion des erreurs de saisie
 $erreur = false;
 
+$validator = Validator::make();
 // Gestion du $_SERVER["REQUEST_METHOD"] => En POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-
-    if(isset($_POST['Submit'])){
-        $Submit = $_POST['Submit'];
-    } else {
-        $Submit = "";
-    }
-
-    $validator = Validator::make([
+    $validator->addRules([
         ValidationRule::required('numMemb'),
         ValidationRule::required('numArt'),
         ValidationRule::required('likeA')
@@ -33,7 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $numMemb = $validator->verifiedField('numMemb');
         $numArt = $validator->verifiedField('numArt');
-        $likeA = $validator->verifiedField('likeA');
+        $likeA = $validator->verifiedField('likeA') == "true"?1:0;
+
         $monLikeArt->update($numMemb, $numArt, $likeA);
 
 
@@ -64,29 +59,41 @@ include __DIR__ . '/../../layouts/back/head.php';
     $likeArt = $monLikeArt->get_1LikeArt($_GET['numMemb'], $_GET['numArt']);
     $numMemb = $likeArt['numMemb'];
     $numArt = $likeArt['numArt'];
+    $likeA = $likeArt['likeA'];
 
 ?>
+
+    <?=$validator->echoErrors() ?>
     <form 
         class="admin-form"
         method="POST" 
-        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>" 
+        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?numMemb=<?=$_GET['numMemb'];?>&numArt=<?=$_GET['numArt'];?>" 
         enctype="multipart/form-data" 
         accept-charset="UTF-8"
     >
-        <input type="hidden" id="id" name="id" value="<?=$_GET['id'] ?>" />
+        <input type="hidden" id="numMemb" name="numMemb" value="<?=$_GET['numMemb'] ?>" />
+        <input type="hidden" id="numArt" name="numArt" value="<?=$_GET['numArt'] ?>" />
 
         <div class="field">
             <label for="numMemb">Numéro du membre</label>
-            <input name="numMemb" id="numMemb" size="80" maxlength="80" value="<?= $numMemb; ?>" />
+            <input disabled name="numMemb" id="numMemb" size="80" maxlength="80" value="<?= $numMemb; ?>" />
         </div>
 
         <div class="field">
             <label for="numArt">Numéro de l'article :</label>
-            <input name="numArt" id="numArt" size="80" maxlength="80" value="<?= $numArt; ?>" />
+            <input disabled name="numArt" id="numArt" size="80" maxlength="80" value="<?= $numArt; ?>" />
+        </div>
+
+        <div class="field">
+            <label for="likeA">Like?</label>
+            <select name="likeA" id="likeA">
+                <option <?=$likeA?'selected':'' ?> value="true">Oui</option>
+                <option <?=$likeA?'':'selected' ?> value="false">Non</option>
+            </select>
         </div>
 
         <div class="controls">
-            <a class="btn btn-lg btn-text" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?id=<?=$_GET['id'] ?>">Réinitialiser</a>
+            <a class="btn btn-lg btn-text" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?numMemb=<?=$_GET['numMemb'];?>&numArt=<?=$_GET['numArt'];?>">Réinitialiser</a>
             <a class="btn btn-lg btn-secondary" href="./angle.php">Annuler</a>
             <input class="btn btn-lg" type="submit" value="Valider" />
         </div>

@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe LikeArt
-require_once __DIR__ . '/../../CLASS_CRUD/likeart.class.php'; 
+require_once __DIR__ . '/../../class_crud/likeart.class.php'; 
 
 // Instanciation de la classe LikeArt
 $monLikeArt = new LIKEART(); 
@@ -45,7 +45,7 @@ include __DIR__ . '/../../layouts/back/head.php';
                 </td>
                 <td>  
                     <!-- lien : test ternaire super admin -->
-                    <a class="btn btn-md btn-danger" href="<?= $row['likeA']!=1?'./deleteLikeArt.php?id='.$row['likeA']:'#'; ?>" title="Supprimer le like">Supprimer</a>
+                    <a class="btn btn-md btn-danger" href="./deleteLikeArt.php?numMemb=<?=$row['numMemb'];?>&numArt=<?=$row['numArt'];?>" title="Supprimer le like">Supprimer</a>
                 </td>
             </tr>
         <?php }	// End of foreach ?>

@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../middleware/logged.php';
 require_once __DIR__ . '/../../util/index.php';
-require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php'; 
+require_once __DIR__ . '/../../class_crud/comment.class.php'; 
 
 $monComment = new COMMENT(); 
 
@@ -16,16 +16,21 @@ $validator = Validator::make([
 
 header('Content-type:application/json;charset=utf-8');
 if($validator->success()) {
-    $libCom = $validator->verifiedField('libCom');
-    // $numMemb = $validator->verifiedField('numMemb'); 
-    $numMemb = $loggedMember['numMemb'];
-    $numArt = $validator->verifiedField('numArt');
-    $numSeqArt = $monComment->getNextNumCom($numArt);
-    
+    if($loggedMember) {
 
-    $monComment->create($numSeqArt, $numArt, $libCom, $numMemb);
+        $libCom = $validator->verifiedField('libCom');
+        // $numMemb = $validator->verifiedField('numMemb'); 
+        $numMemb = $loggedMember['numMemb'];
+        $numArt = $validator->verifiedField('numArt');
+        $numSeqCom = $monComment->getNextNumCom($numArt);
+        
 
-    $result = [];
+        $monComment->create($numSeqCom, $numArt, $libCom, $numMemb);
+
+        $result = [];
+    } else {
+        $errors = ['Vous devez être connecté'];
+    }
 } else {
     $errors = $validator->errors();
 }

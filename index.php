@@ -4,13 +4,12 @@
 require_once __DIR__ . '/util/index.php';
 
 //Insertion classe Article.class
-require_once __DIR__ . '/CLASS_CRUD/article.class.php';
+require_once __DIR__ . '/class_crud/article.class.php';
 
 //Instanciation de la classe Article
 $monArticle = new ARTICLE(); 
 
-// Gestion des erreurs de saisie
-$erreur = false;
+$allArticles = $monArticle->get_AllArticles();
 
 
 
@@ -57,11 +56,11 @@ require_once __DIR__ . '/layouts/front/head.php';
     <div>
         <div class="home-box">
             <div class="home-box-img left">
-                <img src="<?= webUploadPath($row['urlPhotArt']) ?>" alt="Image de l'oeuvre nommée : <?= $row['libTitrArt']; ?>">
+                <img src="<?= webUploadPath($article['urlPhotArt']) ?>" alt="Image de l'oeuvre nommée : <?= $article['libTitrArt']; ?>">
             </div>
             <div class="home-box-text right">
-                <div class="home-box-text-title yellow"><h2><?= $row['libTitrArt']; ?></h2></div>
-                <div class="home-box-text-p"><p><?= $row['libChapoArt']; ?></p></div>
+                <div class="home-box-text-title yellow"><h2><?= $article['libTitrArt']; ?></h2></div>
+                <div class="home-box-text-p"><p><?= $article['libChapoArt']; ?></p></div>
                 <div class="home-box-text-btn right">
                     <a class="home-box-text-btn-h4" href="<?=webSitePath('/articleCopy.php?numArt='.$row['numArt']); ?>"><h4>Lire plus</h4></a>
                 </div>

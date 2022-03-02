@@ -1,7 +1,7 @@
 <?php
 // CRUD COMMENTPLUS
 // ETUD
-require_once __DIR__ . '../../CONNECT/database.php';
+require_once __DIR__ . '../../connect/database.php';
 
 class COMMENTPLUS{
 	function get_AllCommentPlusByArticle($numArt){
@@ -37,9 +37,9 @@ class COMMENTPLUS{
 		try {
 			$db->beginTransaction();
 
-			// insert
-			// prepare
-			// execute
+			$query = 'INSERT INTO COMMENTPLUS (numSeqCom, numArt, numSeqComR, numArtR) VALUES (?, ?, ?, ?);';
+			$request = $db->prepare($query);
+			$request->execute( [$numSeqCom, $numArt, $numSeqComR, $numArtR]);
 			$db->commit();
 			$request->closeCursor();
 		}

@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Statut
-require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php'; 
+require_once __DIR__ . '/../../class_crud/statut.class.php'; 
 
 // Instanciation de la classe Statut
 $monStatut = new STATUT(); 

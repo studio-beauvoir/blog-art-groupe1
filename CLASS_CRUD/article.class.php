@@ -1,14 +1,17 @@
 <?php
 // CRUD ARTICLE
 // ETUD
-require_once __DIR__ . '/../CONNECT/database.php';
+require_once __DIR__ . '/../connect/database.php';
 
 class ARTICLE{
 	function get_1Article($numArt){
 		global $db;
 		
 		try {
-			$query = 'SELECT * FROM ARTICLE WHERE numArt=?;';
+			// $query = 'SELECT * FROM ARTICLE WHERE numArt=?;';
+			$query = 'SELECT article.*, SUM(likeart.likeA) AS nbLikes FROM article
+					LEFT JOIN likeart ON likeart.numArt=article.numArt WHERE article.numArt=?
+					GROUP BY article.numArt';
 			$request = $db->prepare($query);
 			
 			$request->execute([$numArt]);

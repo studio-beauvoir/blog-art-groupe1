@@ -7,7 +7,7 @@ $pageTitle = "$submitBtn - $pageCrud";
 $pageNav = ['Home:/admin.php', $pageTitle];
 
 require_once __DIR__ . '/../../util/index.php';
-require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php'; 
+require_once __DIR__ . '/../../class_crud/comment.class.php'; 
 
 $monComment = new COMMENT(); 
 

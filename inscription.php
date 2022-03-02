@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/util/index.php';
 
-require_once __DIR__ . './CLASS_CRUD/membre.class.php';
+require_once __DIR__ . './class_crud/membre.class.php';
 $monMembre = new MEMBRE();
 
 $validator = Validator::make();
@@ -128,6 +128,8 @@ require_once __DIR__ . '/layouts/front/head.php';
                 <label class="font-h4"><input type="radio" name="accordMemb" value="off" checked="checked" /> Non</label>
             </div>
         </div>
+
+        
 
         <input class="btn btn-lg" title="Inscription" type="submit" value="Inscription" />
         <p>Déjà inscrit? <a href="<?= webSitePath('/connexion.php') ?>">Connectez-vous</a></p>

@@ -1,109 +1,57 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD LIKEART (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : likeCom.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
+// Insertion des fonctions utilitaires
+require_once __DIR__ . '/../../util/index.php';
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
+// Insertion classe LikeArt
+require_once __DIR__ . '/../../CLASS_CRUD/likecom.class.php'; 
 
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
+// Instanciation de la classe LikeArt
+$monLikeCom = new LIKECOM(); 
 
-// Insertion classe Likecom
-
-// Instanciation de la classe Likecom
-
-
-
+$pageTitle = "Gestion du Like Commentaire";
+$pageNav = ['Home:/admin.php', $pageTitle];
+include __DIR__ . '/../../layouts/back/head.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-    <meta charset="utf-8" />
-    <title>Admin - CRUD Like sur Commentaire</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <style type="text/css">
-        .error {
-            padding: 2px;
-            border: solid 0px black;
-            color: red;
-            font-style: italic;
-            border-radius: 5px;
-        }
-        .OK {
-            padding: 2px;
-            border: solid 0px black;
-            color: deeppink;
-            font-style: italic;
-            border-radius: 5px;
-        }
-        .KO {
-            padding: 2px;
-            border: solid 0px black;
-            color: darkgoldenrod;
-            font-style: italic;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
-    <h1>BLOGART22 Admin - CRUD Like sur Commentaire</h1>
+	<a class="btn btn-lg" href="./createLikeCom.php" title="Créer un Like Commentaire">Créer un like de commentaire</a>
+	<h3>Tous les likes de commentaires</h3>
 
-    <hr />
-    <h2>Nouveau like sur Commentaire :&nbsp;<a href="./createLikeCom.php"><i>Créer un like</i></a></h2>
-    <hr />
-    <h2>Tous les likes par membre, par commentaire et par article</h2>
+	<table >
+        <thead>
+            <tr>
+                <th>Numéro du membre</th>
+                <th>Numéro de Seq commentaire</th>
+                <th>Numéro de l'article</th>
+                <th>Like du commentaire</th>
+                <th colspan="2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        // Appel méthode : Get tous les statuts en BDD
+        $all = $monLikeCom->get_AllLikesCom();
+        // Boucle pour afficher
+        foreach($all as $row) {
+            // la boucle va écrire le code html juste en dessous
+            // on ferme la boucle quelques lignes plus tard
+        ?>
+            <tr>
+                <td><h4> <?= $row['numMemb']; ?> </h4></td>
+                <td><?= $row['numSeqCom']; ?></td>
+                <td><?= $row['numArt']; ?></td>
+                <td><?= $row['likeC']; ?></td>
+                <!--<td><a href=" <?= webCrudPath('langue/updateLangue.php?id='.$row['numLang']) ?>"><?= $row['lib1Lang']; ?> </a></td>-->
 
-    <table border="3" bgcolor="aliceblue">
-    <thead>
-        <tr>
-            <th>&nbsp;Membre&nbsp;</th>
-            <th>&nbsp;Article&nbsp;</th>
-            <th>&nbsp;Commentaire&nbsp;</th>
-            <th>&nbsp;Statut&nbsp;</th>
-            <th colspan="2">&nbsp;Action&nbsp;</th>
-        </tr>
-    </thead>
-    <tbody>
-<?php
-    // Appel méthode : Get tous les users en BDD
-
-    // Boucle pour afficher
-    //foreach($all as $row) {
-
-
-
-?>
-        <tr>
-        <td><h4>&nbsp; <?= "ici pseudoMemb"; ?> &nbsp;</h4></td>
-
-        <td>&nbsp; <?= "ici libTitrArt"; ?> &nbsp;</td>
-
-        <td>&nbsp; <?= "ici libCom"; ?> &nbsp;</td>
-
-        <td>&nbsp;<span class="OK">&nbsp; <?= "ici (un)like"; ?> &nbsp;</span></td>
-
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><i><img src="./../../img/valider-png.png" width="20" height="20" alt="Modifier like commentaire" title="Modifier like commentaire" /></i></a><br>&nbsp;&nbsp;<span class="error">(Un)like</span>&nbsp;
-        <br /></td>
-
-        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><i><img src="./../../img/supprimer-png.png" width="20" height="20" alt="Supprimer like commentaire" title="Supprimer like commentaire" /></i></a><br>&nbsp;&nbsp;<span class="error">(S/Admin)</span>&nbsp;
-        <br /></td>
-        </tr>
-<?php
-    // }   // End of foreach
-?>
-    </tbody>
+                <!-- actions -->
+                <td>
+                    <a class="btn btn-md" href="./updateLikeCom.php?numMemb=<?=$row['numMemb'];?>&numArt=<?=$row['numArt'];?>" title="Modifier le like">Modifier</a>
+                </td>
+                <td>  
+                    <!-- lien : test ternaire super admin -->
+                    <a class="btn btn-md btn-danger" href="./deleteLikeArt.php?numMemb=<?=$row['numMemb'];?>&numArt=<?=$row['numArt'];?>" title="Supprimer le like">Supprimer</a>
+                </td>
+            </tr>
+        <?php }	// End of foreach ?>
+        </tbody>
     </table>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>
 
-    <p>&nbsp;</p>
-<?php
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>

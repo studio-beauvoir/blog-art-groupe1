@@ -3,19 +3,19 @@
 require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Statut
-require_once __DIR__ . '/../../CLASS_CRUD/statut.class.php'; 
+require_once __DIR__ . '/../../class_crud/statut.class.php'; 
 
 // Instanciation de la classe Statut
 $monStatut = new STATUT(); 
 
 // Ctrl CIR
 // Insertion classe User
-require_once __DIR__ . '/../../CLASS_CRUD/user.class.php';
+require_once __DIR__ . '/../../class_crud/user.class.php';
 // Instanciation de la classe User
 $monUser = new USER();
 
 // Insertion classe Membre
-require_once __DIR__ . '/../../CLASS_CRUD/membre.class.php';
+require_once __DIR__ . '/../../class_crud/membre.class.php';
 // Instanciation de la classe Membre
 $monMembre = new MEMBRE();
 

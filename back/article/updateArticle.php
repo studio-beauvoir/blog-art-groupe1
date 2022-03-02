@@ -8,11 +8,11 @@ $pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.':'.$pagePrecedent, $pag
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
 
-require_once __DIR__ . '/../../CLASS_CRUD/article.class.php'; 
-require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php'; 
-require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php'; 
-require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php'; 
-require_once __DIR__ . '/../../CLASS_CRUD/motclearticle.class.php'; 
+require_once __DIR__ . '/../../class_crud/article.class.php'; 
+require_once __DIR__ . '/../../class_crud/langue.class.php'; 
+require_once __DIR__ . '/../../class_crud/angle.class.php'; 
+require_once __DIR__ . '/../../class_crud/thematique.class.php'; 
+require_once __DIR__ . '/../../class_crud/motclearticle.class.php'; 
 
 $monMotcleArticle = new MOTCLEARTICLE();
 $monArticle = new ARTICLE(); 
@@ -284,10 +284,10 @@ $validator->echoErrors();
 </form>
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
 
-<script src="<?= webAssetPath('js/bbEditor.js') ?>"></script>
+<script src="<?= webAssetPath('js/bb-editor.js') ?>"></script>
 
 <!-- Ajax them et angles par langue, et Mot cle  -->
-<script src="<?= webAssetPath('js/ajaxArticle.js') ?>"></script>
+<script src="<?= webAssetPath('js/ajax-article.js') ?>"></script>
 
 <script>
     const langueSelect = document.getElementById('numLang');

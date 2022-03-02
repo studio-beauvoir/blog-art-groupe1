@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../../util/index.php';
-require_once __DIR__ . '/../../CLASS_CRUD/commentplus.class.php'; 
+require_once __DIR__ . '/../../class_crud/commentplus.class.php'; 
 
 $monComment = new COMMENTPLUS(); 
 

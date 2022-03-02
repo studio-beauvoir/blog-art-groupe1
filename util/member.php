@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../CLASS_CRUD/membre.class.php';
+require_once __DIR__ . '/../class_crud/membre.class.php';
 
 function getLoggedMemberOrFalse() {
     $monMembre = new MEMBRE();

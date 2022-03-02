@@ -1,7 +1,7 @@
 <?php
 // CRUD COMMENT
 // ETUD
-require_once __DIR__ . '../../CONNECT/database.php';
+require_once __DIR__ . '../../connect/database.php';
 
 require_once __DIR__ . './likecom.class.php';
 
@@ -11,25 +11,22 @@ class COMMENT{
 	function get_1Comment($numSeqCom, $numArt){
 		global $db;
 		
-		try {
-			$db->beginTransaction();
-			$query = 'SELECT * FROM COMMENT WHERE numSeqCom=? AND numArt=?;';
-			$request = $db->prepare($query);
-			
-			$request->execute([$numSeqCom, $numArt]);
+		// $query = 'SELECT * FROM COMMENT WHERE numArt=? AND numSeqCom=?;';
+		$query = 	'SELECT comment.*, membre.pseudoMemb, SUM(likecom.likeC) AS nblike FROM comment
+					JOIN membre ON comment.numMemb=membre.numMemb
+					LEFT JOIN likecom ON likecom.numSeqCom=comment.numSeqCom WHERE (likecom.numArt=comment.numArt OR comment.numArt=?) AND comment.numSeqCom=?
+					GROUP BY comment.numSeqCom;';
 
-			$result = $request->fetch();
+		$request = $db->prepare($query);
+		
+		$request->execute([$numArt, $numSeqCom]);
 
-			if(isset($request)) {
-				return($result);
-			} else {
-				throw new ErrorException('Comment not found');
-			}
-		}
-		catch (PDOException $e) {
-			$db->rollBack();
-			$request->closeCursor();
-			die('Erreur get 1 COMMENT : ' . $e->getMessage());
+		$result = $request->fetch();
+
+		if(isset($request)) {
+			return($result);
+		} else {
+			throw new ErrorException('Comment not found');
 		}
 	}
 
@@ -47,7 +44,7 @@ class COMMENT{
 		global $db;
 
 		// $query = 'SELECT *, "" as passMemb FROM COMMENT INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb WHERE numArt=?;';
-		$query = 	'SELECT comment.*, membre.pseudoMemb, COUNT(likecom.numSeqCom) AS nblike FROM comment
+		$query = 	'SELECT comment.*, membre.pseudoMemb, SUM(likecom.likeC) AS nblike FROM comment
 					JOIN membre ON comment.numMemb=membre.numMemb
 					LEFT JOIN likecom ON likecom.numSeqCom=comment.numSeqCom WHERE (likecom.numArt=comment.numArt OR comment.numArt=?)
 					GROUP BY comment.numSeqCom;';
@@ -93,15 +90,11 @@ class COMMENT{
 	function get_NbAllCommentsBynumMemb($numMemb){
 		global $db;
 
-		$db->beginTransaction();
-
 		$query = 'SELECT COUNT (*) FROM COMMENT WHERE numMemb=?;';
 		$request = $db->prepare($query);
 		$request->execute([$numMemb]);
 		$allNbAllCommentsBynumMemb = $request->fetch();
 
-		$db->commit();
-		$request->closeCursor();
 		
 		return($allNbAllCommentsBynumMemb);
 	}

@@ -106,12 +106,14 @@ class USER{
 
 		try {
 			$db->beginTransaction();
-
+				
 			$query = 'UPDATE USER SET nomUser=?, prenomUser=?, eMailUser=?, passUser=?, idStat=? WHERE pseudoUser=?;';
 			$request = $db->prepare($query);
 			$request->execute([$nomUser, $prenomUser, $eMailUser, $passUser, $idStat, $pseudoUser]);
 			$db->commit();
 			$request->closeCursor();
+
+			//De Queutin mais thanks to Arthaud, merci Arthaud
 		}
 		catch (PDOException $e) {
 			$db->rollBack();

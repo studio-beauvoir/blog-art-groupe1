@@ -142,9 +142,8 @@ include __DIR__ . '/../../layouts/back/head.php';
             <label class="control-label" for="pass1Memb"><b>Mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <input type="password" name="pass1Memb" id="myInput1" size="80" maxlength="80" value="<?= $passMemb; ?>" autocomplete="on" />
             <br>
-            <input type="checkbox" onclick="myFunction('myInput1')">
+            <label><input type="checkbox" onclick="myFunction('myInput1')"><i>Afficher mot de passe</i></label>
             &nbsp;&nbsp;
-            <label><i>Afficher mot de passe</i></label>
         </div>
 
         <br>
@@ -152,20 +151,15 @@ include __DIR__ . '/../../layouts/back/head.php';
             <label class="control-label" for="pass2Memb"><b>Confirmez le mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <input type="password" name="pass2Memb" id="myInput2" size="80" maxlength="80" value="<?= $passMemb; ?>" autocomplete="on" />
             <br>
-            <input type="checkbox" onclick="myFunction('myInput2')">
+            <label><input type="checkbox" onclick="myFunction('myInput2')"><i>Afficher mot de passe</i></label>
             &nbsp;&nbsp;
-            <label><i>Afficher mot de passe</i></label>
+            
         </div>
         <small class="error">*Champ obligatoire si nouveau passe</small><br>
         
         <div class="field">
             <label for="eMail1Memb">Email</label>
             <input name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" />
-        </div>
-
-        <div class="field">
-            <label for="eMail2Memb">Confirmer l'email</label>
-            <input name="eMail2Memb" id="eMail2Memb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" />
         </div>
 
         <br>

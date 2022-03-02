@@ -39,8 +39,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ValidationRule::required('prenomUser'),
         ValidationRule::required('eMail1User')->email(),
         ValidationRule::required('eMail2User')->email()->equalTo('eMail1User'),
-        ValidationRule::required('pass1User'),
-        ValidationRule::required('pass2User')->equalTo('pass1User'),
+        ValidationRule::required('oldHashPassUser'),
+        ValidationRule::optionnal('pass1User')->password(),
+        ValidationRule::optionnal('pass2User')->password()->equalTo('pass1User'),
         ValidationRule::required('idStat')
     ])->bindValues($_POST);
 
@@ -53,16 +54,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $prenomUser = $validator->verifiedField('prenomUser');
         
         $passUser = $validator->verifiedField('pass2User');
-        // hashage du mot de passe
-        $passUser = password_hash($passUser, PASSWORD_BCRYPT);
-
-
+        if($passUser == NULL OR $passUser==""){
+            $passUser = $validator->verifiedField('oldHashPassUser');
+        } else {
+            
+            // hashage du mot de passe
+            $passUser = password_hash($passUser, PASSWORD_BCRYPT);
+        }
+        
+        
         $eMailUser = $validator->verifiedField('eMail2User');
-
+        
         $idStat = $validator->verifiedField('idStat');
         $monUser->update($pseudoUser, $nomUser, $prenomUser, $eMailUser, $passUser, $idStat);
-
-
+        
+        
         header("Location: $pagePrecedent");
     } else {
         // Saisies invalides
@@ -117,6 +123,7 @@ include __DIR__ . '/../../layouts/back/head.php';
         accept-charset="UTF-8"
     >
         <input type="hidden" id="pseudoUser" name="pseudoUser" value="<?=$_GET['pseudoUser'] ?>" />
+        <input type="hidden" id="oldHashPassUser" name="oldHashPassUser" value="<?=$passUser ?>" />
 
         <div class="field">
             <label for="pseudoUser">Pseudo</label>
@@ -138,32 +145,25 @@ include __DIR__ . '/../../layouts/back/head.php';
 
         <div class="field">
             <label class="control-label" for="pass1User"><b>Mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="password" name="pass1User" id="myInput1" size="80" maxlength="80" value="<?= $passUser; ?>" autocomplete="on" />
+            <input type="password" name="pass1User" id="myInput1" size="80" maxlength="80" value="" autocomplete="on" />
             <br>
-            <input type="checkbox" onclick="myFunction('myInput1')">
-            &nbsp;&nbsp;
-            <label><i>Afficher mot de passe</i></label>
+            <label><input type="checkbox" onclick="myFunction('myInput1')"><i>Afficher mot de passe</i></label>
+            
+            
         </div>
 
         <br>
         <div class="field">
             <label class="control-label" for="pass2User"><b>Confirmez le mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="password" name="pass2User" id="myInput2" size="80" maxlength="80" value="<?= $passUser; ?>" autocomplete="on" />
+            <input type="password" name="pass2User" id="myInput2" size="80" maxlength="80" value="" autocomplete="on" />
             <br>
-            <input type="checkbox" onclick="myFunction('myInput2')">
-            &nbsp;&nbsp;
-            <label><i>Afficher mot de passe</i></label>
+            <label><input type="checkbox" onclick="myFunction('myInput2')"><i>Afficher mot de passe</i></label>
         </div>
         <small class="error">*Champ obligatoire si nouveau passe</small><br>
         
         <div class="field">
             <label for="eMail1User">Email</label>
             <input name="eMail1User" id="eMail1User" size="80" maxlength="80" value="<?= $eMailUser; ?>" />
-        </div>
-
-        <div class="field">
-            <label for="eMail2User">Confirmer l'email</label>
-            <input name="eMail2User" id="eMail2User" size="80" maxlength="80" value="<?= $eMailUser; ?>" />
         </div>
 
         <br>

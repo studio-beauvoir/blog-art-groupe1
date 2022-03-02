@@ -137,9 +137,7 @@ $idStat = $user['idStat'];
             <label class="control-label" for="pass1User"><b>Mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <input type="password" disabled name="pass1User" id="myInput1" size="80" maxlength="80" value="<?= $passUser; ?>" autocomplete="on" />
             <br>
-            <input type="checkbox" onclick="myFunction('myInput1')">
-            &nbsp;&nbsp;
-            <label><i>Afficher mot de passe</i></label>
+            <label><input type="checkbox" onclick="myFunction('myInput1')"><i>Afficher mot de passe</i></label>
         </div>
 
         <br>
@@ -147,9 +145,9 @@ $idStat = $user['idStat'];
             <label class="control-label" for="pass2User"><b>Confirmez le mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <input type="password" disabled name="pass2User" id="myInput2" size="80" maxlength="80" value="<?= $passUser; ?>" autocomplete="on" />
             <br>
-            <input type="checkbox" onclick="myFunction('myInput2')">
+            <label><input type="checkbox" onclick="myFunction('myInput2')"><i>Afficher mot de passe</i></label>
             &nbsp;&nbsp;
-            <label><i>Afficher mot de passe</i></label>
+            
         </div>
         <small class="error">*Champ obligatoire si nouveau mot de passe</small><br>
 

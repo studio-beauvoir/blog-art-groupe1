@@ -1,128 +1,69 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  CRUD COMMENTPLUS (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : commentPlus.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
+// Insertion des fonctions utilitaires
+require_once __DIR__ . '/../../util/index.php';
 
-// Mode DEV
-require_once __DIR__ . '/../../util/utilErrOn.php';
+// Insertion classe commentPlus
+require_once __DIR__ . '/../../CLASS_CRUD/commentplus.class.php'; 
 
-// controle des saisies du formulaire
-require_once __DIR__ . '/../../util/ctrlSaisies.php';
-// Mise en forme date
-require_once __DIR__ . '/../../util/dateChangeFormat.php';
-
-// Insertion classe Comment
-
-// Instanciation de la classe Comment
-
-
-
-// Insertion classe CommentPlus
-
-// Instanciation de la classe CommentPlus
-
-
+// Instanciation de la classe commentPlus
+$monCommentPlus = new COMMENTPLUS(); 
 
 // Insertion classe Article
+require_once __DIR__ . '/../../CLASS_CRUD/article.class.php'; 
 
 // Instanciation de la classe Article
+$monArticle = new ARTICLE(); 
 
+// Insertion classe comment
+require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php'; 
 
+// Instanciation de la classe comment
+$monComment = new COMMENT(); 
 
+$pageTitle = "Gestion du Commentaire Plus";
+$pageNav = ['Home:/admin.php', $pageTitle];
+include __DIR__ . '/../../layouts/back/head.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr-FR">
-<head>
-    <title>Gestion des Commentaires & Réponses</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <style type="text/css">
-        .error {
-            padding: 2px;
-            border: solid 0px black;
-            color: red;
-            font-style: italic;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
-  <h1>BLOGART22 Admin - Gestion du CRUD Commentaires & Réponses</h1>
+	<a class="btn btn-lg" href="./createCommentPlus.php" title="Créer un Commentaire Plus">Créer un Commentaire Plus</a>
+	<h3>Tous les commentaires plus</h3>
 
-  <hr /><br />
-  <h2>Nouveau commentaire sur un commentaire :&nbsp;<a href="#"><i>Créer une réponse à commentaire</i></a></h2>
-  <br />
-    <hr />
-  <h2>Toutes les commentaires & commentaires</h2>
+	<table >
+        <thead>
+            <tr>
+                <th>Numéro de Seq Commentaire</th>
+                <th>Numéro de l'article</th>
+                <th>Numéro de Seq Commentaire Réponse</th>
+                <th>Like de l'article Réponse</th>
+                <th colspan="2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        // Appel méthode : Get tous les statuts en BDD
+        $all = $monCommentPlus->get_AllCommentPlus();
+        // Boucle pour afficher
+        foreach($all as $row) {
+            // la boucle va écrire le code html juste en dessous
+            // on ferme la boucle quelques lignes plus tard
+        ?>
+            <tr>
+                <td><h4> <?= $row['numSeqCom']; ?> </h4></td>
+                <td><?= $row['numArt']; ?></td>
+                <td><?= $row['numSeqComR']; ?></td>
+                <td><?= $row['numArtR']; ?></td>
 
-  <table border="3" bgcolor="aliceblue">
-    <thead>
-        <tr>
-            <th>&nbsp;Numéro <br>Article&nbsp;</th>
-            <th>&nbsp;Date <br>Article&nbsp;</th>
-            <th>&nbsp;Numéro <br>Comment&nbsp;</th>
-            <th>&nbsp;Commentaire&nbsp;</th>
-            <th>&nbsp;Date <br>Comment&nbsp;</th>
-
-            <th>&nbsp;Pseudo&nbsp;</th>
-            <th>&nbsp;Visa modération&nbsp;</th>
-            <th>&nbsp;Visible après modération&nbsp;</th>
-            <th>&nbsp;Commentaire <br>si non visible&nbsp;</th>
-            <th>&nbsp;Commentaire <br>affiché&nbsp;</th>
-            <th colspan="2">&nbsp;Action&nbsp;</th>
-        </tr>
-    </thead>
-    <tbody>
-<?php
-    // Format date en FR
-    $from = 'Y-m-d H:i:s';
-    $to = 'd/m/Y H:i:s';
-
-    // Appel méthode : Get tous les articles en BDD
-
-    // Boucle pour afficher
-    //foreach($all as $row) {
-
-?>
-        <tr>
-        <td><h4>&nbsp; <?= "ici numSeqCom"; ?> &nbsp;</h4></td>
-
-        <td><h4>&nbsp; <?= "ici numArt"; ?> &nbsp;</h4></td>
-
-        <td>&nbsp; <?= "ici pseudoMemb"; ?> &nbsp;</td>
-
-        <td>&nbsp; <?= "ici dtCreCom"; ?> &nbsp;</td>
-
-        <td>&nbsp; <?= "ici libCom"; ?> &nbsp;</td>
-
-        <td>&nbsp; <?= "ici attModOK"; ?> &nbsp;</td>
-
-        <td>&nbsp; <?= "ici affComOK"; ?> &nbsp;</td>
-
-        <td>&nbsp; <?= "ici notifComKOAff"; ?> &nbsp;</td>
-
-        <td>&nbsp; <?= "ici delLogiq"; ?> &nbsp;</td>
-<!-- F1 aff Comments (Modérateur / Admin / Super-admin) -->
-        <td>&nbsp;<a href="#"><i>Modifier</i></a>&nbsp;
-        <br /></td>
-<!-- Del logique (Modérateur / Admin / Super-admin) -->
-        <td>&nbsp;<a href="#" title="Suppression logique..."><i>Supprimer</i></a><br>&nbsp;&nbsp;<span class="error">(Logique)</span>&nbsp;
-        <br /></td>
-        </tr>
-<?php
-    // } // End of foreach
-?>
-    </tbody>
+                <!-- actions -->
+                <td>
+                    <a class="btn btn-md" href="./updateCommentPlus.php?numSeqCom=<?=$row['numSeqCom'];?>&numArt=<?=$row['numArt'];?>" title="Modifier le Comment Plus">Modifier</a>
+                </td>
+                <td>  
+                     <!--lien : test ternaire super admin-->
+                    <a class="btn btn-md btn-danger" href="./deleteCommentPlus.php?numSeqCom=<?=$row['numSeqCom'];?>&numArt=<?=$row['numArt'];?>" title="Supprimer le Comment Plus">Supprimer</a>
+                </td>
+        
+            </tr>
+        <?php }	// End of foreach ?>
+        </tbody>
     </table>
-    <p>&nbsp;</p>
-<?php
-require_once __DIR__ . '/footer.php';
-?>
-</body>
-</html>
+<?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>
+

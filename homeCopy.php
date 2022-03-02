@@ -32,9 +32,9 @@ $pageTitle = "$submitBtn - $pageCrud";
 $pageNav = ['Home:/admin.php', $pageTitle];
 
 
-$libTitrArt = $article['libTitrArt'];
-$libChapoArt = $article['libChapoArt'];
-$urlPhotArt = $article['urlPhotArt'];
+// $libTitrArt = $article['libTitrArt'];
+// $libChapoArt = $article['libChapoArt'];
+// $urlPhotArt = $article['urlPhotArt'];
 
 $pageTitle = "Panel admin";
 $pageNav = ['Home'];
@@ -51,7 +51,8 @@ require_once __DIR__ . '/layouts/front/head.php';
     <?php
         $all = $monArticle->get_AllArticles();
 
-        foreach($all as $row) {
+   
+    foreach($all as $row) {
     ?>
     <div>
         <div class="home-box">
@@ -62,11 +63,30 @@ require_once __DIR__ . '/layouts/front/head.php';
                 <div class="home-box-text-title yellow"><h2><?= $row['libTitrArt']; ?></h2></div>
                 <div class="home-box-text-p"><p><?= $row['libChapoArt']; ?></p></div>
                 <div class="home-box-text-btn right">
-                        <a class="home-box-text-btn-h4" href="<?=webSitePath('/articleCopy.php?numArt='.$row['numArt']); ?>"><h4>Lire plus</h4></a>
+                    <a class="home-box-text-btn-h4" href="<?=webSitePath('/articleCopy.php?numArt='.$row['numArt']); ?>"><h4>Lire plus</h4></a>
                 </div>
             </div>
         </div>
     <?php }	?>
+<!--
+    <?php
+    foreach($all as $row) {
+    ?>
+    <div class="home-box">
+            <div class="home-box-text left">
+                <div class="home-box-text-title yellow"><h2><?= $row['libTitrArt']; ?></h2></div>
+                <div class="home-box-text-p"><p><?= $row['libChapoArt']; ?></p></div>
+                <div class="home-box-text-btn left">
+                    <div class="home-box-text-btn-h4">
+                    <a class="home-box-text-btn-h4" href="<?=webSitePath('/articleCopy.php?numArt='.$row['numArt']); ?>"><h4>Lire plus</h4></a>
+                    </div>
+                </div>
+            </div>
+            <div class="home-box-img right">
+            <img src="<?= webUploadPath($row['urlPhotArt']) ?>" alt="Image de l'oeuvre nommée : <?= $row['libTitrArt']; ?>">        </div>
+    </div>
+    <?php }	?>
+    -->
         <!--
         <div class="home-box">
             <div class="home-box-text left">

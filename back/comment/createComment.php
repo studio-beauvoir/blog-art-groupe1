@@ -50,7 +50,7 @@ $validator->echoErrors();
 
 ?>
 <form 
-    class="post-form"
+    class="admin-form"
     method="POST" 
     action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" 
     enctype="multipart/form-data" 

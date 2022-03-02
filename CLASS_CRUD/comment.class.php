@@ -182,7 +182,7 @@ class COMMENT{
 		try {
 			$db->beginTransaction();
 
-			$query = 'DELETE FROM COMMENT WHERE `numSeqCom`=?, `numArt`=?;';
+			$query = 'DELETE FROM COMMENT WHERE numSeqCom=? AND numArt=?;';
 			$request = $db->prepare($query);
 			$request->execute([$numSeqCom, $numArt]);
 			$count = $request->rowCount();

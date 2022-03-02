@@ -70,14 +70,12 @@ $validator->echoErrors();
 
 ?>
 <form 
-    class="user-form"
+    class="admin-form"
     method="POST" 
     action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?idCom=<?=$_GET['idCom']?>&idArt=<?=$_GET['idArt']?>" 
     enctype="multipart/form-data" 
     accept-charset="UTF-8"
 >
-
-    <legend class="legend1">Modération : validez un commentaire...</legend>
 
     <div class="field">
         <label for="pseudoMemb">Quel membre</label>
@@ -97,10 +95,8 @@ $validator->echoErrors();
     <div class="field">
         <label for="attModOK">En tant que modérateur, je valide le post :</label>
         <div class="controls">
-            <fieldset>
-                <input type="radio" name="attModOK" value="1" />Oui
-                <input type="radio" name="attModOK" value="0" />Non
-            </fieldset>
+            <label><input type="radio" name="attModOK" value="1" />Oui</label>
+            <label><input type="radio" name="attModOK" value="0" />Non</label>
         </div>
     </div>
 
@@ -116,14 +112,10 @@ $validator->echoErrors();
     <div>
         <label for="delLogiq">En tant que modérateur, je veux que le post soit supprimé :</label>
         <div class="controls">
-            <fieldset>
-                <input type="radio" name="delLogiq" value="on" />Oui
-                <input type="radio" name="delLogiq" value="off" />Non
-            </fieldset>
+            <label><input type="radio" name="delLogiq" value="on" />Oui</label>
+            <label><input type="radio" name="delLogiq" value="off" />Non</label>
         </div>
     </div>
-
-    <!-- mot cle a rajouter -->
 
     <div class="controls">
         <a class="btn btn-lg btn-text" title="Réinitialiser" href="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?idCom=<?=$_GET['idCom']?>&idArt=<?=$_GET['idArt']; ?>">Réinitialiser</a>
@@ -131,17 +123,4 @@ $validator->echoErrors();
         <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
     </div>
 </form>
-<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-    <!-- --------------------------------------------------------------- -->
-    <!-- Début Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
-<!-- --------------------------------------------------------------- -->
-
-    <!-- A faire dans un 3ème temps  -->
-
-<!-- --------------------------------------------------------------- -->
-    <!-- Fin Ajax : Langue => Angle, Thématique + TJ Mots Clés -->
-<!-- --------------------------------------------------------------- -->
-
 <?php require_once __DIR__ . '/../../layouts/back/foot.php'; ?>

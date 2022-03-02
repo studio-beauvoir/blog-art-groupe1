@@ -54,8 +54,9 @@
 /* ----------------- Page Article ----------------- */
 
 .head-bg {
+    position:relative;
     width: 100%;
-    height: 846px;
+    /* height: 846px; */
     background:linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.65)) /*url(https://www.francetvinfo.fr/pictures/y7EaVw9xAB21V6QiVl3zmxXz6HQ/752x423/2019/04/12/selor7.png)*/;
     background-size:cover;
     display: flex;
@@ -64,19 +65,38 @@
     text-align: center;
 }
 
+.img-bg{
+    z-index: 0;
+    position:absolute;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    filter:brightness(40%) /*contrast(60%);*/
+}
+
 .head-h1 {
-    width: 70%;
-    margin-top: 136px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-top:5%;
+    width: 80%;
 }
 
 .head-h2 {
+    z-index: 1;
+    /* display: flex;
+    align-items: center;
+    text-align: center; */
     width: 70%;
-    margin-top: 20px;
+    margin-top: 5%;
 }
 
 .head-h4 {
+    z-index: 1;
+    text-align: left;
     width: 63%;
-    margin-top: 100px;
+    margin-top: 5%;
 }
 
 .discover {
@@ -172,10 +192,36 @@ span.bleu {
     margin-top: 100px;
 }
 
-.likes {
+.article-like {
+    gap: 2.5rem;
+    cursor: pointer;
     width: 40%;
     display: flex;
-    text-align: end;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    user-select: none;
+}
+.article-like:hover .article-like-count {
+    color: var(--i);
+}
+.article-like:hover .a-icon {
+    transform: scale(1.3) rotate(-10deg);
+}
+.article-like:active .a-icon {
+    transform: scale(1.15) rotate(-10deg);
+}
+
+.a-icon {
+    height: 7.5rem;
+    width: 8rem;
+    transition: transform .15s;
+}
+.a-icon img{
+    margin-left: auto;
+    display: block;
+    max-height: 100%;
+    width: auto;
 }
 
 .likes > svg {
@@ -220,55 +266,59 @@ span.bleu {
     margin-bottom: 160px;
 }
 
-.home-box{
-    width: 100%;
-    height: 290px;
+.home-articles {
     display: flex;
-    margin-bottom: 160px;
+    flex-direction: column;
+    gap: 10rem;
+}
+.home-article{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    gap: 2rem;
 }
 
-.home-box-img {
+.home-article:nth-child(2n){
+    flex-flow: row-reverse nowrap;
+}
+
+
+.home-article-img {
     width: 40%;
+    height: auto;
+}
+
+.home-article-img > img {
+    width: 100%;
+    height: auto;
     border: 5px solid white;
-    height: 100%;
     border-radius: 15px;
 }
 
-.home-box-img > img {
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-}
-
-.home-box-text {
+.home-article-text {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
     width: 60%;
-    height: 100%;
-    margin-left: 10px;
-    padding: 20px;
+    gap: 1rem;
 }
 
-.home-box-text-p {
-    height: 52%;
+
+.home-article-title {
+    /* margin-top: 0; */
+}
+
+
+.home-article-p {
+    /* height: 52%; */
     max-width: 100%;
 }
-
-.right {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.home-box-text-btn-h4 {
-    height: 46px;
-    background-color: var(--i);
-    width: 22%;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: black;
+.home-article-link {
+    align-self: flex-end;
+    margin-right: 1rem;
 }
 
 .page-change {
@@ -276,6 +326,12 @@ span.bleu {
     justify-content: center;
     margin-top: 30px;
     margin-bottom: 80px;
+}
+
+.error-icon {
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    width: 85%;
 }
 
 
@@ -329,6 +385,11 @@ span.bleu {
     background-color: var(--g2);
 }
 
+.comment-content .mention {
+    color: var(--g2);
+    font: var(--label);
+    font-weight: normal;
+}
 .comments > .comment-container > .comment-answers {
     margin-left: 25%;
     width: 75%;
@@ -352,6 +413,14 @@ span.bleu {
     gap: 2rem;
     align-items: center;
 }
+.comment-dates,
+.comment-infos {
+    gap: 0.5rem 2rem;
+}
+.comment-infos { 
+    flex-flow: row wrap-reverse;
+}
+
 .comment-infos {
     justify-content: space-between;
 }
@@ -360,6 +429,7 @@ span.bleu {
 }
 
 .comment-actions {
+    user-select: none;
     padding-top: 2rem;
     justify-content: flex-end;
 }

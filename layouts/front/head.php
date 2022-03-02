@@ -13,6 +13,7 @@ require_once __DIR__ . '/../../util/index.php';
         <link href="<?= webSitePath() ?>/assets/css/front.css" rel="stylesheet" type="text/css" />
         <link href="<?= webSitePath() ?>/assets/css/error.css" rel="stylesheet" type="text/css" />
         <!-- <link href="<?= webSitePath() ?>/assets/css/style.css" rel="stylesheet" type="text/css" /> -->
+
     </head>
     <body>
         <?php require_once __DIR__ . './../general/header.php'; ?>

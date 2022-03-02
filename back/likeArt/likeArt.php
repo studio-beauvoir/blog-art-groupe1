@@ -18,9 +18,9 @@ include __DIR__ . '/../../layouts/back/head.php';
 	<table >
         <thead>
             <tr>
-                <th>Numéro du membre</th>
-                <th>Numéro de l'article</th>
-                <th>Like Article</th>
+                <th>Membre</th>
+                <th>Article</th>
+                <th>Liké?</th>
                 <th colspan="2">Action</th>
             </tr>
         </thead>
@@ -34,18 +34,18 @@ include __DIR__ . '/../../layouts/back/head.php';
             // on ferme la boucle quelques lignes plus tard
         ?>
             <tr>
-                <td><h4> <?= $row['numMemb']; ?> </h4></td>
-                <td><?= $row['numArt']; ?></td>
-                <td><?= $row['likeA']; ?></td>
-                <!--<td><a href=" <?= webCrudPath('langue/updateLangue.php?id='.$row['numLang']) ?>"><?= $row['lib1Lang']; ?> </a></td>-->
-
+                <td><?= $row['pseudoMemb'] ?></td>
+                <td><?= $row['libTitrArt'] ?></td>
+                <td>
+                    <?php if($row['likeA']) { ?>
+                        <img width=40 src="<?=webAssetPath('svg/liked.svg') ?>" alt=" ">
+                    <?php } else { ?>
+                        Non
+                    <?php } ?>
+                </td>
                 <!-- actions -->
                 <td>
-                    <a class="btn btn-md" href="./updateLikeArt.php?numMemb=<?=$row['numMemb'];?>&numArt=<?=$row['numArt'];?>" title="Modifier le like">Modifier</a>
-                </td>
-                <td>  
-                    <!-- lien : test ternaire super admin -->
-                    <a class="btn btn-md btn-danger" href="./deleteLikeArt.php?numMemb=<?=$row['numMemb'];?>&numArt=<?=$row['numArt'];?>" title="Supprimer le like">Supprimer</a>
+                    <a class="btn btn-md" href="./updateLikeArt.php?numMemb=<?=$row['numMemb']?>&numArt=<?=$row['numArt']?>" title="Modifier le like">Modifier</a>
                 </td>
             </tr>
         <?php }	// End of foreach ?>

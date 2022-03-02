@@ -7,7 +7,7 @@ class LIKECOM{
 	function get_1LikeCom($numMemb, $numSeqCom, $numArt){
 		global $db;
 
-		$query = 'SELECT * FROM LIKECOM WHERE numMemb=?, numSeqCom=?, numArt=?;';
+		$query = 'SELECT * FROM LIKECOM WHERE numMemb=? AND numSeqCom=? AND numArt=?;';
 		$request = $db->prepare($query);
 		$request->execute([$numMemb, $numSeqCom, $numArt]);
 		$result = $request->fetch();
@@ -50,7 +50,9 @@ class LIKECOM{
 
 	function get_AllLikesCom(){
 		global $db;
-		$query = 'SELECT * FROM LIKECOM INNER JOIN MEMBRE ON LIKECOM.numMemb=MEMBRE.numMemb;';
+		$query = 'SELECT LIKECOM.*, MEMBRE.pseudoMemb, ARTICLE.*  FROM LIKECOM 
+				INNER JOIN MEMBRE ON LIKECOM.numMemb=MEMBRE.numMemb
+				INNER JOIN ARTICLE ON LIKECOM.numArt=ARTICLE.numArt;';
 		$request = $db->query($query);
 		$allLikesCom = $request->fetchAll();
 
@@ -116,7 +118,7 @@ class LIKECOM{
 		try {
 			$db->beginTransaction();
 
-			$query = 'UPDATE LIKECOM SET likeC=? WHERE numMemb=?, numSeqCom=?, numArt=?;';
+			$query = 'UPDATE LIKECOM SET likeC=? WHERE numMemb=? AND numSeqCom=? AND numArt=?;';
 			$request = $db->prepare($query);
 			$request->execute([$likeC, $numMemb, $numSeqCom, $numArt]);
 
@@ -138,9 +140,9 @@ class LIKECOM{
 			$db->beginTransaction();
 
 
-			$query = 'INSERT INTO LIKECOM (numMemb, numSeqCom, numArt, likeC) VALUES (:numMemb, :numSeqCom, :numArt, :likeC) ON DUPLICATE KEY UPDATE likeC = NOT likeC;';
+			$query = 'INSERT INTO LIKECOM (numMemb, numSeqCom, numArt, likeC) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE likeC = NOT likeC;';
 			$request = $db->prepare($query);
-			$request->execute([':numMemb'=>$numMemb, ':numSeqCom'=>$numSeqCom, ':numArt'=>$numArt, ':likeC'=>$likeC]);
+			$request->execute([$numMemb, $numSeqCom, $numArt, $likeC]);
 
 			$db->commit();
 			$request->closeCursor();

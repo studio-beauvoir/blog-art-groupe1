@@ -18,13 +18,13 @@ require_once __DIR__ . '/layouts/back/head.php';
 
 	<a class="btn btn-lg done" href="./BACK/article/article.php">Article (*)</a>
 
-	<a class="btn btn-lg doing" href="./BACK/comment/comment.php">Commentaire (*)</a>
+	<a class="btn btn-lg done" href="./BACK/comment/comment.php">Commentaire (*)</a>
 
 	<a class="btn btn-lg doing" href="./BACK/commentplus/commentplus.php">Réponse sur Commentaire</a>
 
 	<a class="btn btn-lg done" href="./BACK/langue/langue.php">Langue (*)</a>
 
-	<a class="btn btn-lg doing" href="./BACK/likeart/likeart.php">Like Article (*)</a>
+	<a class="btn btn-lg to-test" href="./BACK/likeart/likeart.php">Like Article (*)</a>
 
 	<a class="btn btn-lg doing" href="./BACK/likecom/likecom.php">Like Commentaire (*)</a>
 
@@ -39,7 +39,7 @@ require_once __DIR__ . '/layouts/back/head.php';
 
 	<a class="btn btn-lg done" href="./BACK/thematique/thematique.php">Thématique (*)</a>
 
-	<a class="btn btn-lg doing" href="./BACK/user/user.php">CRUD : User (*)</a>
+	<a class="btn btn-lg to-test" href="./BACK/user/user.php">CRUD : User (*)</a>
 	</div>
 	
 	

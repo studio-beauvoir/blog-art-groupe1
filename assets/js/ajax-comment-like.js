@@ -8,7 +8,7 @@ function setCommentData(commentEl, comment) {
     commentEl.querySelector('.comment-author').innerHTML = comment.pseudoMemb;
     commentEl.querySelector('.comment-created-at').innerText = `Créé le ${simpleDate(comment.dtCreCom)}`;
     commentEl.querySelector('.comment-modified-at').innerText = `Modifié le ${simpleDate(comment.dtModCom)}`;
-    commentEl.querySelector('.comment-content').innerHTML = comment.libCom;
+    commentEl.querySelector('.comment-content').innerHTML = comment.libCom.replace(/^(@\S+):/, '<span class="mention">Réponse à  $1</span><br/>');
 
     let likeCount = commentEl.querySelector('.comment-action-like-count');
     if(likeCount) likeCount.innerText = ':n personne(s) aime(nt)'.singularise(comment.nblike || 0);
@@ -35,7 +35,7 @@ function addComment(comment) {
     if(commentActions) {
         console.log(commentEl.querySelector('.comment-action-answer'));
         commentEl.querySelector('.comment-action-answer').addEventListener('click', ()=>openFormAnswer(comment.numArt, comment.numSeqCom) );
-        commentEl.querySelector('.comment-action-like').addEventListener('click', ()=>toggleLike(comment.numArt, comment.numSeqCom) );
+        commentEl.querySelector('.comment-action-like').addEventListener('click', ()=>toggleLikeCom(comment.numArt, comment.numSeqCom) );
     }
 
     commentsEl.appendChild(commentEl);
@@ -74,7 +74,7 @@ function openFormAnswer(numArt, numSeqCom) {
     const pseudoMemberOfCommentEl = commentEl.querySelector('.comment-author').innerText;
 
     formCommentAnswer.querySelector('.form-comment-title').innerText = `Répondre à ${pseudoMemberOfCommentEl}`;
-    formCommentAnswer.querySelector('.form-comment-textarea').value = `@${pseudoMemberOfCommentEl} `;
+    // formCommentAnswer.querySelector('.form-comment-textarea').value = `@${pseudoMemberOfCommentEl} `;
     formCommentAnswer.querySelector('.form-comment-textarea').dataset.numArt = numArt;
     formCommentAnswer.querySelector('.form-comment-textarea').dataset.numSeqCom = numSeqCom;
 
@@ -85,6 +85,14 @@ function openFormAnswer(numArt, numSeqCom) {
 function hideFormCommentAnswer() {
     formCommentAnswer.classList.add('hidden');
     document.querySelector('.comments-container').appendChild(formCommentAnswer);
+}
+
+function updateLikeArt(nbLikes) {
+    document.querySelector('.article-like-count').innerText = ':n personne(s) aime(nt) cet article'.singularise(nbLikes || 0);
+}
+function setArticleLiked(liked) {
+    document.querySelector('.article-like-icon.liked').classList.toggle('hidden', !liked);
+    document.querySelector('.article-like-icon.like').classList.toggle('hidden', liked);
 }
 
 // api functions --------------
@@ -107,7 +115,7 @@ function fetchComments() {
                 }
 
                 fetchCommentsPlus();
-                fetchLikesMember();
+                fetchLikesComMember();
             }
         } 
     );
@@ -186,10 +194,10 @@ function postCommentAnswer() {
 }
 
 
-function fetchLikesMember() {
+function fetchLikesComMember() {
     hideFormCommentAnswer();
     $.get( 
-        urlFetchLikesMember,
+        urlFetchLikesComMember,
         {},
         function(data) {
             if(!data.errors && data.result && data.result.likes) {
@@ -205,19 +213,52 @@ function fetchLikesMember() {
     );
 }
 
-function toggleLike(numArt, numSeqCom) {
+function fetchArticleLikedByMember() {
+    const data = {
+        numArt
+    };
+    $.get( 
+        urlFetchArticleLikedByMember,
+        data,
+        function(data) {
+            if(!data.errors && data.result) {
+                console.log(data.result);
+                setArticleLiked(data.result.hasLiked);
+            }
+        } 
+    );
+}
+
+function toggleLikeCom(numArt, numSeqCom) {
     const data = { 
         numArt,
         numSeqCom
     };
 
     $.post( 
-        urlToggleLike,
+        urlToggleLikeCom,
         data,
         function(data) {
             if(!data.errors && data.result && data.result.comment) {                
                 updateComment(data.result.comment);
-                fetchLikesMember();
+                fetchLikesComMember();
+            }
+        } 
+    );
+}
+
+function toggleLikeArt(numArt) {
+    const data = { 
+        numArt
+    };
+
+    $.post( 
+        urlToggleLikeArt,
+        data,
+        function(data) {
+            if(!data.errors && data.result && data.result.nbLikes) {
+                updateLikeArt(data.result.nbLikes);
+                fetchArticleLikedByMember();
             }
         } 
     );

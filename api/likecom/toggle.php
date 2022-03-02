@@ -18,16 +18,20 @@ $validator = Validator::make([
 
 header('Content-type:application/json;charset=utf-8');
 if($validator->success()) {
-    $numArt = $validator->verifiedField('numArt');
-    $numSeqCom = $validator->verifiedField('numSeqCom');
-    $numMemb = $loggedMember['numMemb'];
-    
+    if($loggedMember) {
+        $numArt = $validator->verifiedField('numArt');
+        $numSeqCom = $validator->verifiedField('numSeqCom');
+        $numMemb = $loggedMember['numMemb'];
+        
 
-    $monLikeCom->createOrtoggle($numMemb, $numSeqCom, $numArt);
+        $monLikeCom->createOrtoggle($numMemb, $numSeqCom, $numArt);
 
-    $result = [
-        'comment' => $monComment->get_1Comment($numSeqCom, $numArt)
-    ];
+        $result = [
+            'comment' => $monComment->get_1Comment($numSeqCom, $numArt)
+        ];
+    } else {
+        $errors = ['Vous devez être connecté'];
+    }
 } else {
     $errors = $validator->errors();
 }

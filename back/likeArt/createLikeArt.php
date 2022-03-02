@@ -9,7 +9,7 @@ $pageNav = ['Home:/admin.php', 'Gestion des likes d articles:'.$pagePrecedent, $
 require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe LikeArt
-require_once __DIR__ . '/../../CLASS_CRUD/likeart.class.php'; 
+require_once __DIR__ . '/../../class_crud/likeart.class.php'; 
 
 
 // Instanciation de la classe LikeArt

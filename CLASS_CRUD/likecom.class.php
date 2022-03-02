@@ -1,7 +1,7 @@
 <?php
 // CRUD LIKECOM
 // ETUD
-require_once __DIR__ . '../../CONNECT/database.php';
+require_once __DIR__ . '../../connect/database.php';
 
 class LIKECOM{
 	function get_1LikeCom($numMemb, $numSeqCom, $numArt){
@@ -37,7 +37,7 @@ class LIKECOM{
 		return($result);
 	}
 
-	function get_1LikeComPlusArt($numSeqCom, $numArt){
+	function get_1LikeComPlusArt($numMemb, $numSeqCom, $numArt){
 		global $db;
 
 		$query = 'SELECT * FROM LIKECOM INNER JOIN ARTICLE ON LIKECOM.numArt=ARTICLE.numArt, WHERE numMemb=?, numSeqCom=?, numArt=?;';
@@ -50,8 +50,7 @@ class LIKECOM{
 
 	function get_AllLikesCom(){
 		global $db;
-
-		$query = 'SELECT * FROM LIKECOM';
+		$query = 'SELECT * FROM LIKECOM INNER JOIN MEMBRE ON LIKECOM.numMemb=MEMBRE.numMemb;';
 		$request = $db->query($query);
 		$allLikesCom = $request->fetchAll();
 
@@ -100,8 +99,7 @@ class LIKECOM{
 
 			$query = 'INSERT INTO LIKECOM (numMemb, numSeqCom, numArt, likeC) VALUES (?, ?, ?, ?);';
 			$request = $db->prepare($query);
-			$request->execute([$numMemb, $numSeqCom, $numArt, $likeC]);
-
+			$request->execute( [$numMemb, $numSeqCom, $numArt, $likeC]);
 			$db->commit();
 			$request->closeCursor();
 		}
@@ -161,13 +159,13 @@ class LIKECOM{
 		try {
 			$db->beginTransaction();
 
-			// delete
-			// prepare
-			// execute
-			//$count = $request->rowCount();
+			$query = 'DELETE FROM LIKECOM SET numMemb=?, numSeqCom=?, numArt=? WHERE likeArt=?;';
+			$request = $db->prepare($query);
+			$request->execute([$numMemb], [$numSeqCom], [$numArt]);
+			$count = $request->rowCount();
 			$db->commit();
 			$request->closeCursor();
-			//return($count);
+			return($count);
 		}
 		catch (PDOException $e) {
 			$db->rollBack();

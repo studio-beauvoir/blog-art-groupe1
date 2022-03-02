@@ -9,25 +9,25 @@ $pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pa
 require_once __DIR__ . '/../../util/index.php';
 
 //Insertion classe Article.class
-require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
+require_once __DIR__ . '/../../class_crud/article.class.php';
 
 //Instanciation de la classe Article
 $monArticle = new ARTICLE(); 
 
 //Insertion classe Angle
-require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php';
+require_once __DIR__ . '/../../class_crud/angle.class.php';
 
 //Instanciation de la classe Angle
 $monAngle = new ANGLE(); 
 
 //Insertion classe Thématique
-require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php';
+require_once __DIR__ . '/../../class_crud/thematique.class.php';
 
 //Instanciation de la classe Thématique
 $maThematique = new THEMATIQUE();
 
 //Insertion classe Langue
-require_once __DIR__ . '/../../CLASS_CRUD/langue.class.php';
+require_once __DIR__ . '/../../class_crud/langue.class.php';
 
 //Instanciation de la classe Langue
 $maLangue = new LANGUE(); 

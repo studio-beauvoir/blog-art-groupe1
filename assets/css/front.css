@@ -313,12 +313,7 @@ span.bleu {
     padding: calc(1rem + var(--topbar-height) ) 2rem 1.5rem 2rem;
     overflow: hidden;
 }
-.comment-answers {
-    display: flex;
-    flex-direction: column;
-    width: 75%;
-    margin-left: 25%;
-}
+
 
 .comment::before {
     top: 0;
@@ -334,8 +329,19 @@ span.bleu {
     background-color: var(--g2);
 }
 
+.comments > .comment-container > .comment-answers,
+.comments > .comment-container > .comment-answers > .comment-container > .comment-answers {
+    margin-left: 25%;
+    width: 75%;
+}
+.comment-answers {
+    /* margin-left: 10%;
+    width: 90%; */
+}
 .comment-answers {
     margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
 }
 .comment-answers .comment::before {
     background-color: var(--g1);
@@ -362,7 +368,7 @@ span.bleu {
     justify-content: flex-end;
 }
 .comment-action {
-    gap: 0.7rem;
+    gap: 1rem;
     cursor: pointer;
     user-select: none;
 }
@@ -370,16 +376,38 @@ span.bleu {
     color: var(--i);
 }
 
-.comment-action img {
-    height: 3rem;
+.c-icon {
+    height: 3.5rem;
+    width: 4rem;
     transition: transform .15s;
 }
-.comment-action:hover img {
+.c-icon img{
+    margin-left: auto;
+    display: block;
+    max-height: 100%;
+    width: auto;
+}
+
+
+.comment-action:hover .c-icon {
     transform: scale(1.3) rotate(-10deg);
 }
-.comment-action:active img {
+.comment-action:active .c-icon {
     transform: scale(1.15) rotate(-10deg);
 }
+/* .comment-action-like-btn.liked:not(.hidden) {
+    animation: spin 2s;
+    animation-timing-function: cubic-bezier(.3,.22,.32,1.02);
+}
+
+@keyframes spin {
+    from {
+        transform: rotateY(0);
+    }
+    to {
+        transform: rotateY(1800deg);
+    }
+} */
 
 #form-comment,
 #login-cta {

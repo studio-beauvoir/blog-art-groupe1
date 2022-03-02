@@ -1,8 +1,8 @@
 <?php
 
 require_once __DIR__ . '/../../util/index.php';
-require_once __DIR__ . '/../../CLASS_CRUD/angle.class.php'; 
-require_once __DIR__ . '/../../CLASS_CRUD/thematique.class.php'; 
+require_once __DIR__ . '/../../class_crud/angle.class.php'; 
+require_once __DIR__ . '/../../class_crud/thematique.class.php'; 
 
 $monAngle = new ANGLE();
 $maThematique = new THEMATIQUE();

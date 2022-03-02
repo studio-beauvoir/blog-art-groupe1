@@ -7,7 +7,7 @@ $pageTitle = "$submitBtn - $pageCrud";
 $pageNav = ['Home:/admin.php', $pageTitle];
 
 require_once __DIR__ . '/../../util/index.php';
-require_once __DIR__ . '/../../CLASS_CRUD/article.class.php'; 
+require_once __DIR__ . '/../../class_crud/article.class.php'; 
 
 $monArticle = new ARTICLE(); 
 

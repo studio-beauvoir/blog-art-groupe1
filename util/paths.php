@@ -1,5 +1,9 @@
 <?php
 
+//Technique de Gwendal pour créer un chemin absolu, je lâche ça là...
+    //define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/BLOGART22');
+    //include ROOT . 'img/monimage.png';
+
 /**
  * Retourne la racine du serveur, pour les scripts php
  */

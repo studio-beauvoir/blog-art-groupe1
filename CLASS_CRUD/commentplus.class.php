@@ -4,6 +4,17 @@
 require_once __DIR__ . '../../connect/database.php';
 
 class COMMENTPLUS{
+	function get_1CommentPlus($numSeqCom, $numArt, $numSeqComR, $numArtR){
+		global $db;
+
+		$query = 'SELECT * FROM COMMENTPLUS WHERE numSeqCom=?;';
+		$request = $db->prepare($query);
+		$request->execute([$numSeqCom]);
+		$result = $request->fetch();
+
+		return($result);
+	}
+
 	function get_AllCommentPlusByArticle($numArt){
 		global $db;
 
@@ -20,6 +31,15 @@ class COMMENTPLUS{
 		$request->execute([$numArt]);
 		$allCommentsByArt = $request->fetchAll();
 		return($allCommentsByArt);
+	}
+
+	function get_AllCommentPlus(){
+		global $db;
+		$query = 'SELECT * FROM COMMENTPLUS INNER JOIN ARTICLE ON COMMENTPLUS.numArt=ARTICLE.numArt;';
+		$request = $db->query($query);
+		$allCommentPlus = $request->fetchAll();
+
+		return($allCommentPlus);
 	}
 
 	function get_AllCommentPlusR(){
@@ -47,6 +67,30 @@ class COMMENTPLUS{
 			$db->rollBack();
 			$request->closeCursor();
 			die('Erreur insert COMMENTPLUS : ' . $e->getMessage());
+		}
+	}
+
+	function delete($numSeqCom){
+		global $db;
+
+		try {
+			$db->beginTransaction();
+
+			// delete
+			$query = 'DELETE FROM COMMENTPLUS WHERE `numSeqCom` = ?;';
+			// prepare
+			$request = $db->prepare($query);
+			// execute
+			$request->execute([$numSeqCom]);
+			$count = $request->rowCount();
+			$db->commit();
+			$request->closeCursor();
+			return($count);
+		}
+		catch (PDOException $e) {
+			$db->rollBack();
+			$request->closeCursor();
+			die('Erreur delete COMMENTPLUS : ' . $e->getMessage());
 		}
 	}
 }	// End of class

@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../middleware/logged.php';
+require_once __DIR__ . '/../../middleware/loggedMember';
 require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/comment.class.php'; 
 require_once __DIR__ . '/../../class_crud/commentplus.class.php'; 

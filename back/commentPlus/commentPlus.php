@@ -3,19 +3,19 @@
 require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe commentPlus
-require_once __DIR__ . '/../../CLASS_CRUD/commentplus.class.php'; 
+require_once __DIR__ . '/../../class_crud/commentplus.class.php'; 
 
 // Instanciation de la classe commentPlus
 $monCommentPlus = new commentplus(); 
 
 // Insertion classe Article
-require_once __DIR__ . '/../../CLASS_CRUD/article.class.php'; 
+require_once __DIR__ . '/../../class_crud/article.class.php'; 
 
 // Instanciation de la classe Article
 $monArticle = new article(); 
 
 // Insertion classe comment
-require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php'; 
+require_once __DIR__ . '/../../class_crud/comment.class.php'; 
 
 // Instanciation de la classe comment
 $monComment = new comment(); 

@@ -229,8 +229,8 @@ $validator->echoErrors();
         <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
     </div>
 </form>
-<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js"></script>
 
+<script src="<?= webAssetPath('js/ajax.jquery.min.js') ?>"></script>
 <script src="<?= webAssetPath('js/bb-editor.js') ?>"></script>
 
 <!-- Ajax them et angles par langue, et Mot cle  -->

@@ -221,6 +221,14 @@ class bbEditor {
         var content = "";
         const actionsWithBBEl = this.actions.filter(action=>action.bbElement!==undefined);
  
+        for(let node of this.DOM.editor.childNodes) {
+            if(node.nodeName == "#text") {
+                let span = document.createElement('span');
+                this.DOM.editor.insertBefore(span, node);
+                span.appendChild(node);
+            }
+        }
+        console.log(this.DOM.editor.childNodes);
         for(let part of this.DOM.editor.children) {
             // nettoyage des balises vides
             if(part.innerText=="") {
@@ -257,6 +265,7 @@ class bbEditor {
     }
 
     parseValue() {
+        console.log(this.getParsedValue());
         this.DOM.editor.innerHTML = this.getParsedValue();
     }
 

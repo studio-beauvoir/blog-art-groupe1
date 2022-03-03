@@ -1,7 +1,7 @@
 <?php
 // CONNEXION BDD
 // Variables connexion
-define('IN_PROD', false);
+define('IN_PROD', true);
 if(IN_PROD) {
   require_once __DIR__.'/config.php';
 } else {

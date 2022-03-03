@@ -55,21 +55,9 @@ $pageNav = ['Inscription'];
 require_once __DIR__ . '/layouts/front/head.php';
 ?>
 
-<script>
-        // Affichage pass
-        function myFunction(myInputPass) {
-            var x = document.getElementById(myInputPass);
-            if (x.type === "password") {
-              x.type = "text";
-            } else {
-              x.type = "password";
-            }
-        }
-</script>
+<script src="<?= webAssetPath('js/password.js') ?>"></script>
 
-
-
-<div class="container">
+<div class="container container-spaced">
     <h1>S'inscrire</h1>
     <?=$validator->echoErrors()?>
     <form
@@ -108,7 +96,7 @@ require_once __DIR__ . '/layouts/front/head.php';
         <div class="field">
             <label>Mot de passe</label>
             <input value="<?=$validator->oldField('passMemb')?>" type="password" name="passMemb" id="passMemb">
-            <label><input type="checkbox" onclick="myFunction('passMemb')"><i>Afficher le mot de passe</i></label>
+            <label><input type="checkbox" onclick="togglePassword('passMemb')"><i>Afficher le mot de passe</i></label>
             <p>
                 Le mot de passe doit comporter entre 6 et 15 caractères, 
                 <br/>et au moins une lettre, un chiffre et un caractère spécial parmi &@#$%_-.?!
@@ -118,7 +106,7 @@ require_once __DIR__ . '/layouts/front/head.php';
         <div class="field">
             <label>Confirmer le mot de passe</label>
             <input value="<?=$validator->oldField('passMemb_confirm')?>" type="password" name="passMemb_confirm" id="passMemb_confirm">
-            <label><input type="checkbox" onclick="myFunction('passMemb_confirm')"><i>Afficher le mot de passe</i></label>
+            <label><input type="checkbox" onclick="togglePassword('passMemb_confirm')"><i>Afficher le mot de passe</i></label>
         </div>
 
         <div class="field">
@@ -136,13 +124,7 @@ require_once __DIR__ . '/layouts/front/head.php';
 
     </form>
 </div>
+<script src="<?= webAssetPath('js/autofill-form.js') ?>"></script>
 
-<script>
-    document.querySelectorAll(`textarea`).forEach(el=>el.value="lorem_ipsum_textarea");
-    document.querySelectorAll(`input:not([type="file"], [type="submit"], [type="hidden"], [type="password"], [type="radio"])`).forEach(el=>el.value="lorem_ipsum_input");
-    document.querySelectorAll(`input[type="datetime-local"]`).forEach(el=>el.value='2022-02-19T22:21');
-    document.querySelectorAll(`input[type="password"]`).forEach(el=>el.value='qdqsd43&ds');
-    document.querySelectorAll(`input[name^="eMailMemb"]`).forEach(el=>el.value='qsdqd@gmail.com');
-</script>
 <?php require_once __DIR__ . '/layouts/front/foot.php';?>
 

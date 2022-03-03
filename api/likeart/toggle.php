@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../middleware/loggedMember.php';
+require_once __DIR__ . '/../../middleware/getMember.php';
 require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/likeart.class.php'; 
 
@@ -8,6 +8,7 @@ $monLikeArt = new likeart();
 
 $result = false;
 $errors = false;
+$code = 0;
 
 $validator = Validator::make([
     ValidationRule::required('numArt')
@@ -24,6 +25,7 @@ if($validator->success()) {
         $result = $monLikeArt->get_nbLikesArtByArticle($numArt)[0];
     } else {
         $errors = ['Vous devez être connecté'];
+        $code = 1;
     }
 } else {
     $errors = $validator->errors();
@@ -31,6 +33,7 @@ if($validator->success()) {
     
 echo json_encode([
     'result' => $result,
+    'code' => $code,
     'errors' => $errors,
 ]);
 ?>

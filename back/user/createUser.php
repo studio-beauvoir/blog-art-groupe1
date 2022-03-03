@@ -57,17 +57,7 @@ include __DIR__ . '/initUser.php';
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
 
-<script>
-        // Affichage pass
-        function myFunction(myInputPass) {
-            var x = document.getElementById(myInputPass);
-            if (x.type === "password") {
-              x.type = "text";
-            } else {
-              x.type = "password";
-            }
-        }
-</script>
+<script src="<?= webAssetPath('js/password.js') ?>"></script>
 
 <?=$validator->echoErrors()?>
     <form
@@ -106,7 +96,7 @@ include __DIR__ . '/../../layouts/back/head.php';
         <div class="field">
             <label for="passUser">Mot de passe</label>
             <input type="password" name="passUser" id="passUser" size="80" maxlength="80" />
-            <label><input type="checkbox" onclick="myFunction('passUser')"><i>Afficher Mot de passe</i></label>
+            <label><input type="checkbox" onclick="togglePassword('passUser')"><i>Afficher Mot de passe</i></label>
             <p>
                 Le mot de passe doit comporter entre 6 et 15 caractères, et au moins une lettre, un chiffre et un caractère spécial parmi &@#$%_-.?!
             </p>
@@ -115,7 +105,7 @@ include __DIR__ . '/../../layouts/back/head.php';
         <div class="field">
             <label for="passUser_confirm">Confirmez le mot de passe</label>
             <input type="password" name="passUser_confirm" id="passUser_confirm" size="80" maxlength="80"/>
-            <label><input type="checkbox" onclick="myFunction('passUser_confirm')"><i>Afficher Mot de passe</i></label>
+            <label><input type="checkbox" onclick="togglePassword('passUser_confirm')"><i>Afficher Mot de passe</i></label>
         </div>
 
         <div class="field">

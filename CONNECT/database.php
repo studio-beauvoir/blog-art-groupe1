@@ -1,7 +1,12 @@
 <?php
 // CONNEXION BDD
 // Variables connexion
-require_once __DIR__.'/config.php';
+define('IN_PROD', true);
+if(IN_PROD) {
+  require_once __DIR__.'/config.php';
+} else {
+  require_once __DIR__.'/configProd.php';
+}
 
 try {
   $db = new PDO($serverBD, $userBD, $passBD, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION ));

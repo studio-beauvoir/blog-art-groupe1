@@ -31,11 +31,30 @@ table thead {
     background: var(--bg2);
 }
 
+table th {
+    color: var(--p3);
+    background: var(--bg2);
+}
+table td {
+    color: var(--p3);
+    background: var(--bg3);
+}
+
 table th,
 table td {
     height: auto;
     padding: 1rem 1rem;
 }
+table .actions {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+}
+table .sticky-right {
+    position: sticky;
+    right: 0;
+}
+
 table h4 {
     margin: 0;
 }

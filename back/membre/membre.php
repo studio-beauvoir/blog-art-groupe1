@@ -24,10 +24,9 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <th>Pseudo</th>
                 <th>eMail</th>
                 <th>Date création</th>
-                <th>Mot de passe</th>
                 <th>Accord<br>RGPD</th>
                 <th>Statut</th>
-                <th colspan="2">Action</th>
+                <th class="sticky-right">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -45,13 +44,10 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <td> <?= $row['pseudoMemb']; ?> </td>
                 <td> <?= $row['eMailMemb']; ?> </td>
                 <td> <?= dateChangeFormat($row['dtCreaMemb'], $from, $to); ?> </td>
-                <td> <?= $row['passMemb']; ?> </td>
                 <td> <?= $row['accordMemb']==true?"Oui":"Non"; ?> </td>
                 <td><a href="<?=webCrudPath('statut/updateStatut.php?id='.$row['idStat'])?>"><?= $row['libStat']; ?></a></td>
-                <td>
+                <td class="actions sticky-right">
                     <a class="btn btn-md" href="./updateMembre.php?id=<?=$row['numMemb']; ?>" title="Modifier le membre">Modifier</a>
-                </td>
-                <td>
                     <a class="btn btn-md btn-danger" href="./deleteMembre.php?id=<?=$row['numMemb']?>" title="Supprimer le membre">Supprimer</a>
                 </td>
             </tr>

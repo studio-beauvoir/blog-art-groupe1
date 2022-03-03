@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/user.class.php'; 
 
 // Instanciation de la classe langue
-$monUser = new USER(); 
+$monUser = new USER();
 
 $pageTitle = "Gestion des Users";
 $pageNav = ['Home:/admin.php', $pageTitle];
@@ -28,10 +28,7 @@ require_once __DIR__ . '/../../layouts/back/head.php';
         </thead>
         <tbody>
             <?php
-                $all = $monUser->get_AllUsers();
-                $from = 'Y-m-d H:i:s';
-                $to = 'd/m/Y H:i:s';
-                
+                $all = $monUser->get_AllUsers();               
                 foreach($all as $row) {
             ?>
             <tr>
@@ -43,9 +40,11 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <td>
                     <a class="btn btn-md" href="./updateUser.php?pseudoUser=<?=$row['pseudoUser']; ?>" title="Modifier le user">Modifier</a>
                 </td>
+                <?php if($row['idStat']!=='1'): ?>
                 <td>
                     <a class="btn btn-md btn-danger" href="./deleteUser.php?pseudoUser=<?=$row['pseudoUser']?>" title="Supprimer le user">Supprimer</a>
                 </td>
+                <?php endif ?>
             </tr>
             <?php }	?>
         </tbody>

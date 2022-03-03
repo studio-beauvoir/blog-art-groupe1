@@ -54,6 +54,7 @@ class LIKECOM{
 				INNER JOIN MEMBRE ON LIKECOM.numMemb=MEMBRE.numMemb
 				INNER JOIN ARTICLE ON LIKECOM.numArt=ARTICLE.numArt;';
 		$request = $db->query($query);
+		
 		$allLikesCom = $request->fetchAll();
 
 		return($allLikesCom);

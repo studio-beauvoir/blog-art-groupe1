@@ -37,9 +37,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ValidationRule::required('id'),
         ValidationRule::required('prenomMemb'),
         ValidationRule::required('nomMemb'),
-        ValidationRule::required('passMemb')->password(),
-        ValidationRule::required('passMemb_confirm')->password()->equalTo('passMemb'),
-        ValidationRule::required('eMailMemb')->email()->unique('membre')->customError('shouldBeUnique', 'Cet email est déjà pris'),
+        ValidationRule::optionnal('passMemb')->password(),
+        ValidationRule::optionnal('passMemb_confirm')->password()->equalTo('passMemb'),
+        ValidationRule::required('eMailMemb')->email()->unique('membre', 'eMailMemb', true)->customError('shouldBeUnique', 'Cet email est déjà pris'),
         ValidationRule::required('eMailMemb_confirm')->email()->equalTo('eMailMemb'),
         ValidationRule::required('accordMemb')->equalToValue('on')->customError('shouldBeEqualToValue', 'Vous devez accepter les conditions d\'utilisation'),
         ValidationRule::required('oldHashPassMemb'),
@@ -54,14 +54,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $prenomMemb = $validator->verifiedField('prenomMemb');
         $nomMemb = $validator->verifiedField('nomMemb');
         
-        $passMemb = $validator->verifiedField('passMemb');
-        if($passMemb == NULL OR $passMemb==""){
-            $passMemb = $validator->verifiedField('oldHashPassMemb');
-        } else {
+        $passMemb = '';
+        if($validator->isFilled('passMemb')){
             // hashage du mot de passe
             $passMemb = password_hash($passMemb, PASSWORD_BCRYPT);
+        } else {
+            $passMemb = $validator->verifiedField('oldHashPassMemb');
         }
-
 
         $eMailMemb = $validator->verifiedField('eMailMemb');
 

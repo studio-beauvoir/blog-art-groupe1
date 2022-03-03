@@ -36,10 +36,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $validator->addRules([
         ValidationRule::required('nomUser'),
         ValidationRule::required('prenomUser'),
-        ValidationRule::required('pseudoUser')->pseudo()->unique('user')->customError('shouldBeUnique', 'Ce pseudo est déjà pris'),
-        ValidationRule::required('passUser')->password(),
-        ValidationRule::required('passUser_confirm')->password()->equalTo('passUser'),
-        ValidationRule::required('eMailUser')->email()->unique('user')->customError('shouldBeUnique', 'Cet email est déjà pris'),
+        ValidationRule::required('pseudoUser')->pseudo()->unique('user', 'pseudoUser', true)->customError('shouldBeUnique', 'Ce pseudo est déjà pris'),
+        ValidationRule::optionnal('passUser')->password(),
+        ValidationRule::optionnal('passUser_confirm')->password()->equalTo('passUser'),
+        ValidationRule::required('eMailUser')->email()->unique('user', 'eMailUser', true)->customError('shouldBeUnique', 'Cet email est déjà pris'),
         ValidationRule::required('eMailUser_confirm')->email()->equalTo('eMailUser'),
         ValidationRule::required('oldHashPassUser'),
         ValidationRule::required('idStat')
@@ -53,13 +53,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $nomUser = $validator->verifiedField('nomUser');
         $prenomUser = $validator->verifiedField('prenomUser');
         
-        $passUser = $validator->verifiedField('passUser');
-        if($passUser == NULL OR $passUser==""){
-            $passUser = $validator->verifiedField('oldHashPassUser');
-        } else {
-            
+        $passUser = '';
+        if($validator->isFilled('passUser')){
             // hashage du mot de passe
             $passUser = password_hash($passUser, PASSWORD_BCRYPT);
+        } else {
+            $passUser = $validator->verifiedField('oldHashPassUser');
         }
         
         
@@ -167,7 +166,7 @@ include __DIR__ . '/../../layouts/back/head.php';
             <label for="idStat">Quel statut :</label>
             <select name="idStat" id="idStat">
             <?php 
-                $allStatuts = $monStatut->get_AllStatutsExceptSuperAdmin();                    
+                $allStatuts = $monStatut->get_AllStatuts();                    
                 foreach($allStatuts as $statut) { 
             ?>
                 <option <?=$statut['idStat']==$idStat?'selected':'' ?> value="<?= $statut['idStat'] ?>" ><?=$statut['libStat'] ?></option>

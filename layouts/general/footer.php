@@ -9,7 +9,6 @@
                     <li><h4>Navigation</h4></li>
                     <li><p><a href="<?= webSitePath('/') ?>">Accueil</a></p></li> 
                     <li><p><a href="<?= webSitePath('/connexion.php') ?>">Se connecter</a></p></li> 
-                    <li><p><a href="<?= webSitePath('/inscription.php') ?>">Créer un compte</a></p></li> 
                     <li><p><a href="<?= webSitePath('/admin/connexion.php') ?>">Accès Admin</a></p></li> 
                 </ul>
             </div>
@@ -25,8 +24,6 @@
                 <ul>
                     <li><h4>Contact</h4></li>
                     <li><p><a href="https://www.instagram.com/studiobeauvoir/">Studio Beauvoir</a></p></li>
-                    <li><p><a href="">Lien </a></p></li>
-                    <li><p><a href="">Lien </a></p></li>
                 </ul>
             </div>
         </div>

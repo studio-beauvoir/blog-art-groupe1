@@ -111,7 +111,7 @@ include __DIR__ . '/layouts/front/head.php';
 ?>
 
 <div class="head-bg">
-    <img class=img-bg src="<?= webUploadPath($urlPhotArt) ?>" alt="Photo de l'article">
+    <img class=img-bg src="<?= webUploadPath($urlPhotArt) ?>" alt="Photo de l'article : <?= $article['libTitrArt']; ?>">
     <h1 class="head-h1"><?=$libTitrArt?></h1>
     <div class="head-h2"><h2><span class="bleu"> <?=$libTitrArt?> </span></h2></div>
     <div class="head-h4"><h4><?=$libChapoArt?></h4></div>
@@ -127,7 +127,7 @@ include __DIR__ . '/layouts/front/head.php';
         <div class="artist-text">
             <p bbtext><?=$parag1Art ?></p>
         </div>
-        <h2 class="artist-title"><span class="purple" id="heading-text">Regardez j'ai réussi genre</span></h2>
+        <h2 class="artist-title"><span class="purple" id="heading-text">Un article plus qu'incroyable</span></h2>
     </div>
 
     <div class="corps">

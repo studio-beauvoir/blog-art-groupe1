@@ -26,7 +26,7 @@ require_once __DIR__ . '/layouts/front/head.php';
         <?php foreach($allArticles as $article) :?>
             <div class="home-article">
                 <div class="home-article-img">
-                    <img src="<?= webUploadPath($article['urlPhotArt']) ?>" alt="Image de l'oeuvre nommée : <?= $article['libTitrArt']; ?>">
+                    <img src="<?= webUploadPath($article['urlPhotArt']) ?>" alt="Image de l'article nommé : <?= $article['libTitrArt']; ?>">
                 </div>
                 <div class="home-article-text">
                     <h2 class="home-article-title yellow"><?= $article['libTitrArt']; ?></h2>
@@ -36,72 +36,5 @@ require_once __DIR__ . '/layouts/front/head.php';
             </div>
         <?php endforeach ?>
     </div>
-<!--
-    <?php
-    foreach($allArticles as $article) {
-    ?>
-    <div class="home-box">
-            <div class="home-box-text left">
-                <div class="home-box-text-title yellow"><h2><?= $article['libTitrArt']; ?></h2></div>
-                <div class="home-box-text-p"><p><?= $article['libChapoArt']; ?></p></div>
-                <div class="home-box-text-btn left">
-                    <div class="home-box-text-btn-h4">
-                    <a class="home-box-text-btn-h4" href="<?=webSitePath('/articleCopy.php?numArt='.$article['numArt']); ?>"><h4>Lire plus</h4></a>
-                    </div>
-                </div>
-            </div>
-            <div class="home-box-img right">
-            <img src="<?= webUploadPath($article['urlPhotArt']) ?>" alt="Image de l'oeuvre nommée : <?= $article['libTitrArt']; ?>">        </div>
-    </div>
-    <?php }	?>
-    -->
-        <!--
-        <div class="home-box">
-            <div class="home-box-text left">
-                <div class="home-box-text-title yellow"><h2><?=$libTitrArt?></h2></div>
-                <div class="home-box-text-p"><p><?=$libChapoArt?></p></div>
-                <div class="home-box-text-btn left">
-                    <div class="home-box-text-btn-h4">
-                        <h4>Lire plus</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="home-box-img right">
-            <img src=<?=$urlPhotArt?> alt="Image de l'oeuvre nommée : <?=$libTitrArt?>">            </div>
-        </div>
-    </div>
-    <div>
-        <div class="home-box">
-            <div class="home-box-img left">
-            <img src=<?=$urlPhotArt?> alt="Image de l'oeuvre nommée : <?=$libTitrArt?>">            </div>
-            <div class="home-box-text right">
-                <div class="home-box-text-title yellow"><h2><?=$libTitrArt?></h2></div>
-                <div class="home-box-text-p"><p><?=$libChapoArt?></p></div>
-                <div class="home-box-text-btn right">
-                    <div class="home-box-text-btn-h4">
-                        <h4>Lire plus</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="home-box">
-            <div class="home-box-text left">
-                <div class="home-box-text-title yellow"><h2><?=$libTitrArt?></h2></div>
-                <div class="home-box-text-p"><p><?=$libChapoArt?></p></div>
-                <div class="home-box-text-btn left">
-                    <div class="home-box-text-btn-h4">
-                        <h4>Lire plus</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="home-box-img right">
-            <img src=<?=$urlPhotArt?> alt="Image de l'oeuvre nommée : <?=$libTitrArt?>">            </div>
-        </div>
-    </div>
-    -->
-    <div class="page-change">
-        <h3>1/1 ></h3>
-    </div>
 </div>
-
 <?php require_once __DIR__ . '/layouts/front/foot.php';?>

@@ -84,17 +84,7 @@ include __DIR__ . '/initMembre.php';
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
 
-<script>
-        // Affichage pass
-        function myFunction(myInputPass) {
-            var x = document.getElementById(myInputPass);
-            if (x.type === "password") {
-              x.type = "text";
-            } else {
-              x.type = "password";
-            }
-        }
-</script>
+<script src="<?= webAssetPath('js/password.js') ?>"></script>
 
 <?php
     // Modif : récup id à modifier
@@ -147,13 +137,13 @@ include __DIR__ . '/../../layouts/back/head.php';
         <div class="field">
             <label class="control-label" for="passMemb">Mot passe</label>
             <input type="password" name="passMemb" id="passMemb" size="80" maxlength="80" value="<?= $passMemb; ?>" autocomplete="on" />
-            <label><input type="checkbox" onclick="myFunction('passMemb')"><i>Afficher mot de passe</i></label>
+            <label><input type="checkbox" onclick="togglePassword('passMemb')"><i>Afficher mot de passe</i></label>
         </div>
 
         <div class="field">
             <label class="control-label" for="passMemb_confirm">Confirmez le mot passe</label>
             <input type="password" name="passMemb_confirm" id="passMemb_confirm" size="80" maxlength="80" value="<?= $passMemb; ?>" autocomplete="on" />
-            <label><input type="checkbox" onclick="myFunction('passMemb_confirm')"><i>Afficher mot de passe</i></label>
+            <label><input type="checkbox" onclick="togglePassword('passMemb_confirm')"><i>Afficher mot de passe</i></label>
         </div>
         
         <div class="field">

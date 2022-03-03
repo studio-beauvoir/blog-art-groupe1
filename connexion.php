@@ -37,18 +37,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 require_once __DIR__ . '/layouts/front/head.php';
 ?>
 
-<script>
-        // Affichage pass
-        function myFunction(myInputPass) {
-            var x = document.getElementById(myInputPass);
-            if (x.type === "password") {
-              x.type = "text";
-            } else {
-              x.type = "password";
-            }
-        }
-</script>
-<div class="container">
+<script src="<?= webAssetPath('js/password.js') ?>"></script>
+
+<div class="container container-spaced">
     <h1>Se connecter</h1>
 
     <?=$validator->echoErrors() ?>
@@ -68,19 +59,12 @@ require_once __DIR__ . '/layouts/front/head.php';
         <div class="field">
             <label> Mot de passe </label>
             <input value="<?=$validator->oldField('passMemb')?>" type="password" name="passMemb" id="passMemb">
-            <label><input type="checkbox" onclick="myFunction('passMemb')"><i>Afficher le mot de passe</i></label>
-            <p>
-                Le mot de passe doit comporter entre 6 et 15 caractères, 
-                <br/>et au moins une lettre, un chiffre et un caractère spécial parmi &@#$%_-.?!
-            </p>
+            <label><input type="checkbox" onclick="togglePassword('passMemb')"><i>Afficher le mot de passe</i></label>
         </div>
 
         <input class="btn btn-lg" title="<?=$submitBtn?>" type="submit" value="<?=$submitBtn?>" />
         <p>Pas de compte? <a href="<?= webSitePath('/inscription.php') ?>">Inscrivez-vous</a></p>
     </form>
 </div>
-<script>
-    document.querySelectorAll(`input:not([type="file"], [type="submit"], [type="hidden"], [type="password"], [type="radio"])`).forEach(el=>el.value="lorem_ipsum_input");
-    document.querySelectorAll(`input[type="password"]`).forEach(el=>el.value='qdqsd43&ds');
-</script>
+<script src="<?= webAssetPath('js/autofill-form.js') ?>"></script>
 <?php require_once __DIR__ . '/layouts/front/foot.php';?>

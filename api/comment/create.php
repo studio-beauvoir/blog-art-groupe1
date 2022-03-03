@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../../middleware/loggedMember.php';
+require_once __DIR__ . '/../../middleware/getMember.php';
 require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/comment.class.php'; 
 
@@ -8,6 +8,7 @@ $monComment = new comment();
 
 $result = false;
 $errors = false;
+$code = 0;
 
 $validator = Validator::make([
     ValidationRule::required('numArt'),
@@ -30,6 +31,7 @@ if($validator->success()) {
         $result = [];
     } else {
         $errors = ['Vous devez être connecté'];
+        $code = 1;
     }
 } else {
     $errors = $validator->errors();
@@ -37,6 +39,7 @@ if($validator->success()) {
     
     
 echo json_encode([
+    'code' => $code,
     'result' => $result,
     'errors' => $errors,
 ]);

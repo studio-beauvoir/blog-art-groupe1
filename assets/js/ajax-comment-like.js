@@ -160,6 +160,9 @@ function postComment() {
         urlPostComment,
         data,
         function(data) {
+            if(data.errors && data.code===1) {
+                window.location.href = urlConnexion;
+            }
             if(data.errors || !data.result) return;            
                 
             formCommentTextArea.value = "";
@@ -185,6 +188,9 @@ function postCommentAnswer() {
         urlPostCommentPlus,
         data,
         function(data) {
+            if(data.errors && data.code===1) {
+                window.location.href = urlConnexion;
+            }
             if(data.errors || !data.result) return;            
                 
             formCommentAnswerTextArea.value = "";
@@ -239,7 +245,9 @@ function toggleLikeCom(numArt, numSeqCom) {
         urlToggleLikeCom,
         data,
         function(data) {
-            if(!data.errors && data.result && data.result.comment) {                
+            if(data.errors && data.code===1) {
+                window.location.href = urlConnexion;
+            } else if(!data.errors && data.result && data.result.comment) {                
                 updateComment(data.result.comment);
                 fetchLikesComMember();
             }
@@ -256,7 +264,9 @@ function toggleLikeArt(numArt) {
         urlToggleLikeArt,
         data,
         function(data) {
-            if(!data.errors && data.result && data.result.nbLikes) {
+            if(data.errors && data.code===1) {
+                window.location.href = urlConnexion;
+            } else if(!data.errors && data.result && data.result.nbLikes) {
                 updateLikeArt(data.result.nbLikes);
                 fetchArticleLikedByMember();
             }

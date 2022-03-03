@@ -187,7 +187,6 @@ include __DIR__ . '/layouts/front/head.php';
                         </div>
                     </div>
                     <h4 class="comment-content"></h4>
-                    <?php if($loggedMember): ?>
                     <div class="comment-actions">
                         <div class="comment-action comment-action-answer">
                             <img class="c-icon comment-action-answer-icon" src="<?=webAssetPath('svg/comment.svg') ?>" alt=" ">
@@ -199,7 +198,6 @@ include __DIR__ . '/layouts/front/head.php';
                             <p class="comment-action-like-count"></p>
                         </div>
                     </div>
-                    <?php endif ?>
                 </div>
                 <div class="comment-answers"></div>
             </div>
@@ -246,6 +244,8 @@ include __DIR__ . '/layouts/front/head.php';
     formCommentSubmit.addEventListener('click', postComment);
 
     const commentsEl = document.getElementById('comments');
+
+    const urlConnexion = "<?= webSitePath('/connexion.php') ?>";
 
     const urlFetchComment = "<?= webSitePath('/api/comment/fetch.php') ?>";
     const urlPostComment = "<?= webSitePath('/api/comment/create.php') ?>";

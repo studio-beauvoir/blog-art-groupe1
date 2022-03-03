@@ -6,6 +6,12 @@
         <div class="container section-list">
             <div class="footer-box">
                 <ul>
+                    <li><h4>Contact</h4></li>
+                    <li><p><a href="https://www.instagram.com/studiobeauvoir/">Studio Beauvoir</a></p></li>
+                </ul>
+            </div>
+            <div class="footer-box">
+                <ul>
                     <li><h4>Navigation</h4></li>
                     <li><p><a href="<?= webSitePath('/') ?>">Accueil</a></p></li> 
                     <li><p><a href="<?= webSitePath('/connexion.php') ?>">Se connecter</a></p></li> 
@@ -17,15 +23,9 @@
                     <li><h4>Légal</h4></li>
                     <li><p><a href="<?= webSitePath('/mentions-legales.php')?>">Mentions légales</a></p></li>
                     <li><p><a href="<?= webSitePath('/cgu.php')?>">Conditions générales d'utilisation</a></p></li>
-                    <li><p><a href="">Lien </a></p></li>
                 </ul>
             </div>
-            <div class="footer-box">
-                <ul>
-                    <li><h4>Contact</h4></li>
-                    <li><p><a href="https://www.instagram.com/studiobeauvoir/">Studio Beauvoir</a></p></li>
-                </ul>
-            </div>
+
         </div>
 
         <div class="container-section-law">

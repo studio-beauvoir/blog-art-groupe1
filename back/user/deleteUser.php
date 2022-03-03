@@ -74,7 +74,7 @@ include __DIR__ . '/../../layouts/back/head.php';
 ?>
 <script>
         // Affichage pass
-        function myFunction(myInputPass) {
+        function togglePassword(myInputPass) {
             var x = document.getElementById(myInputPass);
             if (x.type === "password") {
               x.type = "text";
@@ -137,7 +137,7 @@ $idStat = $user['idStat'];
             <label class="control-label" for="pass1User"><b>Mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <input type="password" disabled name="pass1User" id="myInput1" size="80" maxlength="80" value="<?= $passUser; ?>" autocomplete="on" />
             <br>
-            <label><input type="checkbox" onclick="myFunction('myInput1')"><i>Afficher mot de passe</i></label>
+            <label><input type="checkbox" onclick="togglePassword('myInput1')"><i>Afficher mot de passe</i></label>
         </div>
 
         <br>
@@ -145,7 +145,7 @@ $idStat = $user['idStat'];
             <label class="control-label" for="pass2User"><b>Confirmez le mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
             <input type="password" disabled name="pass2User" id="myInput2" size="80" maxlength="80" value="<?= $passUser; ?>" autocomplete="on" />
             <br>
-            <label><input type="checkbox" onclick="myFunction('myInput2')"><i>Afficher mot de passe</i></label>
+            <label><input type="checkbox" onclick="togglePassword('myInput2')"><i>Afficher mot de passe</i></label>
             &nbsp;&nbsp;
             
         </div>

@@ -45,7 +45,7 @@ if (isset($erreur) && $erreur && isset($errSaisies)) {
         <main>
             <div class="page-header">
                 <div class="admin-statut">
-                    <label>Connecté en tant que</label>
+                    <label>Administration</label>
                     <h3><?=$loggedUser['pseudoUser'] ?></h3>
                     <a href="<?= webSitePath('/admin/deconnexion.php')?>" class="interactive-lien-text">Se déconnecter</a>
                 </div>

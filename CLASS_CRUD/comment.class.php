@@ -3,7 +3,7 @@
 // ETUD
 require_once __DIR__ . '../../connect/database.php';
 
-require_once __DIR__ . './likecom.class.php';
+require_once __DIR__ . '/likecom.class.php';
 
 $monLikecom = new likecom();
 

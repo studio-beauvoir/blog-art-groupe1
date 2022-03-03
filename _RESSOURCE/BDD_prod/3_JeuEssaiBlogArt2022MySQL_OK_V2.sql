@@ -31,12 +31,12 @@ USE db_mmi_01;
 -- --------------------------------------------------------------------
 /*
 --
--- Table PAYS
+-- Table pays
 --
 -- (<numPays char(4) not null, cdPays char(2),
 -- frPays varchar(255), enPays varchar(255),>)
 --
--- IMPORTER LE SCRIPT DE CREATION DES PAYS (en premier)
+-- IMPORTER LE SCRIPT DE CREATION DES pays (en premier)
 -- (JeuEssaiPays2022MySQL_OK.sql)
 --
 */
@@ -130,8 +130,8 @@ VALUES
 ----------------------------
 Décomposition de la PK :
 Table langue :
-Lettres du pays :	4 caractères du PAYS en FK dans langue => NumPays
-		=> Récupéré dans la table PAYS (numPays)
+Lettres du pays :	4 caractères du pays en FK dans langue => NumPays
+		=> Récupéré dans la table pays (numPays)
 01, 02, 03		:	concerne les 4 caractères suivants 5 à 8
 		S'il s'agit d'une nouvelle langue
 		=> no seq langue : no seq = 0 + 1

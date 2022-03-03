@@ -41,7 +41,7 @@ if (isset($erreur) && $erreur && isset($errSaisies)) {
         <!-- <link href="<?= webAssetPath('css/style.css') ?>" rel="stylesheet" type="text/css" /> -->
     </head>
     <body>
-        <?php require_once __DIR__ . './../general/header.php'; ?>
+        <?php require_once __DIR__ . '/../general/header.php'; ?>
         <main>
             <div class="page-header">
                 <div class="admin-statut">

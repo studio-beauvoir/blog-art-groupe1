@@ -129,18 +129,21 @@ include __DIR__ . '/layouts/front/head.php';
         </div>
         <h2 class="artist-title"><span class="purple" id="heading-text">Regardez j'ai réussi genre</span></h2>
     </div>
-    <div class="oeuvre">
-        <h2 class="oeuvre-title"><span class="green"><?=$libSsTitr1Art ?></span></h2>
-        <p class="oeuvre-text">
-            <?=$parag2Art?>
-        </p>
-    </div>
-    <div class="expo">
-        <h2 class="expo-title"><span class="orange"><?=$libSsTitr2Art ?></span></h2>
-        <p class="expo-text"><?=$parag3Art ?></p>           
-    </div>
-    <div class="conclusion">
-        <p><?=$libConclArt?></p>
+
+    <div class="corps">
+        <div class="oeuvre">
+            <h2 class="oeuvre-title"><span class="green"><?=$libSsTitr1Art ?></span></h2>
+            <p class="oeuvre-text">
+                <?=$parag2Art?>
+            </p>
+        </div>
+        <div class="expo">
+            <h2 class="expo-title"><span class="orange"><?=$libSsTitr2Art ?></span></h2>
+            <p class="expo-text"><?=$parag3Art ?></p>           
+        </div>
+        <div class="conclusion">
+            <p><?=$libConclArt?></p>
+        </div>
     </div>
     <div class="articles-end">
         <p class="auteur">Publié le <?= simpleDate($dtCreArt) ?> </p>

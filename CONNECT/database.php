@@ -3,9 +3,9 @@
 // Variables connexion
 define('IN_PROD', true);
 if(IN_PROD) {
-  require_once __DIR__.'/config.php';
-} else {
   require_once __DIR__.'/configProd.php';
+} else {
+  require_once __DIR__.'/config.php';
 }
 
 try {

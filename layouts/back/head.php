@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '../../../util/index.php';
+require_once __DIR__ . '../../../middleware/userShouldBeMoreThanUser.php';
 
 // Gestion des CIR => affichage erreur sinon
 $errCIR = isset($_GET['err_cir']) && $_GET['err_cir'] == true;

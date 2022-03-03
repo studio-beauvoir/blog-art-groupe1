@@ -8,7 +8,7 @@ require_once __DIR__ . '/../class_crud/user.class.php';
 
 require_once __DIR__ . '/../middleware/getUser.php';
 if($loggedUser) {
-    header('location: '.webSitePath('/home.php'));
+    header('location: '.webSitePath('/admin.php'));
 }
 
 $monUser = new user();
@@ -49,7 +49,8 @@ require_once __DIR__ . '/../layouts/front/head.php';
         }
 </script>
 <div class="container">
-    <h1>Administration</h1>
+    <h2>Se connecter</h2>
+    <h3>Accès admin</h3>
 
     <?=$validator->echoErrors() ?>
     <?=$loginState?>

@@ -35,7 +35,11 @@
 
 function isPseudo(string $pseudo) {
     // entre 6 et 70 caractères, sans whitespace
-    $pattern = "/^\S{6,70}$/";
+    // NON C'EST 60 DANS LA TABLE USERS DONC 60 MAX
+    // $pattern = "/^\S{6,60}$/";
+
+    // pas d'espaces ou de caractère spécial, à part _-.
+    $pattern = "/^(\w|-|_|\.){6,60}$/";
     return (preg_match ($pattern, $pseudo)) ? true : false;
 }
 

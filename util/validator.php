@@ -42,7 +42,7 @@ class ValidationRule {
         'isRequired' => ":field est requis",
         'shouldBePassword' => "Le mot de passe doit comporter entre 6 et 15 caractères, et au moins une lettre, un chiffre et un caractère spécial parmi &@#$%_-.?!",
         'shouldBeEmail' =>":field doit être un email",
-        'shouldBePseudo' =>":field doit comporter entre 6 et 70 caractères",
+        'shouldBePseudo' =>":field doit comporter entre 6 et 60 caractères, sans espaces, les caractères -_. sont autorisés",
         'shouldBeImage' =>":field doit être une image",
         'shouldBeOfType' => ":field doit être de type :shouldBeOfType",
         'shouldBeEqualTo' => ":field doit être identique au champ :shouldBeEqualTo",

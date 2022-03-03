@@ -460,7 +460,7 @@ class Validator {
      */
     private function ruleExist($ruleToCompare) {
         $searchResultCount = count(array_filter(
-            $this->rules, 
+            $this->rules,
             function($rule){return $rule->isSameFieldName($ruleToCompare);}
         ));
         // s'il y a au moins un résultat, la règle existe

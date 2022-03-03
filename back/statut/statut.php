@@ -37,10 +37,8 @@ include __DIR__ . '/../../layouts/back/head.php';
                 <td><?= $row['libStat']; ?></td>
 
                 <!-- actions -->
-                <td>
+                <td class="actions sticky-right">
                     <a class="btn btn-md" href="./updateStatut.php?id=<?=$row['idStat']; ?>" title="Modifier le statut">Modifier</a>
-                </td>
-                <td>  
                     <!-- lien : test ternaire super admin -->
                     <a class="btn btn-md btn-danger" href="<?= $row['idStat']!=1?'./deleteStatut.php?id='.$row['idStat']:'#'; ?>" title="Supprimer le statut">Supprimer</a>
                 </td>

@@ -47,10 +47,8 @@ include __DIR__ . '/../../layouts/back/head.php';
                 <td><a href="<?=webCrudPath('langue/updateLangue.php?id='.$row['numLang'])?>"><?= $row['lib1Lang']; ?></a></td>
                 
                 <!-- actions -->
-                <td>
+                <td class="actions sticky-right">
                     <a class="btn btn-md" href="./updateMotCle.php?id=<?=$row['numMotCle']; ?>" title="Modifier le mot clé">Modifier</a>
-                </td>
-                <td>  
                     <!-- lien : test ternaire super admin -->
                     <a class="btn btn-md btn-danger" href="./deleteMotCle.php?id=<?=$row['numMotCle'] ?>" title="Supprimer le mot clé">Supprimer</a>
                 </td>

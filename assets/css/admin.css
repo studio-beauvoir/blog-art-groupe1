@@ -29,6 +29,7 @@ table thead {
     padding: 1rem;
     color: var(--p3);
     background: var(--bg2);
+    z-index: 10;
 }
 
 table th {

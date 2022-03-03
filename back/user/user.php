@@ -37,14 +37,12 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <td> <?= $row['prenomUser']; ?> </td>
                 <td> <?= $row['eMailUser']; ?> </td>
                 <td><a href="<?=webCrudPath('statut/updateStatut.php?id='.$row['idStat'])?>"><?= $row['libStat']; ?></a></td>
-                <td>
+                <td class="actions sticky-right">
                     <a class="btn btn-md" href="./updateUser.php?pseudoUser=<?=$row['pseudoUser']; ?>" title="Modifier le user">Modifier</a>
+                    <?php if($row['idStat']!=='1'): ?>
+                        <a class="btn btn-md btn-danger" href="./deleteUser.php?pseudoUser=<?=$row['pseudoUser']?>" title="Supprimer le user">Supprimer</a>
+                    <?php endif ?>
                 </td>
-                <?php if($row['idStat']!=='1'): ?>
-                <td>
-                    <a class="btn btn-md btn-danger" href="./deleteUser.php?pseudoUser=<?=$row['pseudoUser']?>" title="Supprimer le user">Supprimer</a>
-                </td>
-                <?php endif ?>
             </tr>
             <?php }	?>
         </tbody>

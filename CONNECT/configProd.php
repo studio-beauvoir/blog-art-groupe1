@@ -1,6 +1,6 @@
 <?php
 // nom de votre serveur (ou 127.0.0.1)
-$hostBD = "localhost";
+$hostBD = "plateforme-mmi.iut.u-bordeaux-montaigne.fr";
 // nom BD
 $nomBD = "db_mmi_01";
 // Serveur

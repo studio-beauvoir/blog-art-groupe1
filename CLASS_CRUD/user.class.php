@@ -162,7 +162,6 @@ class user{
 		$request->execute([$pseudoUser]);
 		$rowCount = $request->rowCount();
 
-
 		if($rowCount < 1){
 			// pas de correspondance dan la bdd
 
@@ -184,9 +183,9 @@ class user{
 			{
 
 				session_start();
-				$_SESSION['member_id'] = $user['numUser'];
+				$_SESSION['user_id'] = $user['pseudoUser'];
 				// setcookie('session_token', customEncrypt('true.'.$user['numUser'].'.'.$user['passUser'].$user['dtCreaUser']));
-				header('location: '.webSitePath('/profil.php'));			
+				header('location: '.webSitePath('/admin.php'));			
 				return [
 					"error"=>false
 				];

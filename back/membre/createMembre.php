@@ -25,9 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $validator->addRules([
         ValidationRule::required('prenomMemb'),
         ValidationRule::required('nomMemb'),
-        ValidationRule::required('pseudoMemb')->pseudo(),
+        ValidationRule::required('pseudoMemb')->pseudo()->unique('membre')->customError('shouldBeUnique', 'Ce pseudo est déjà pris'),
         ValidationRule::required('passMemb')->password(),
-        ValidationRule::required('eMailMemb')->email(),
+        ValidationRule::required('passMemb_confirm')->password()->equalTo('passMemb'),
+        ValidationRule::required('eMailMemb')->email()->unique('membre')->customError('shouldBeUnique', 'Cet email est déjà pris'),
+        ValidationRule::required('eMailMemb_confirm')->email()->equalTo('eMailMemb'),
         ValidationRule::required('accordMemb')->equalToValue('on')->customError('shouldBeEqualToValue', 'Vous devez accepter les conditions d\'utilisation'),
         ValidationRule::required('idStat')
     ])->bindValues($_POST);
@@ -85,22 +87,22 @@ include __DIR__ . '/../../layouts/back/head.php';
     >
 
         <div class="field">
-            <label for="prenomMemb">Prénom<span class="error">(*)</span> :</label>
+            <label for="prenomMemb">Prénom</label>
             <input name="prenomMemb" id="prenomMemb" size="80" maxlength="80" value="<?= $prenomMemb;?>" />
         </div>
 
         <div class="field">
-            <label for="nomMemb">Nom<span class="error">(*)</span> :</label>
+            <label for="nomMemb">Nom</label>
             <input name="nomMemb" id="nomMemb" size="80" maxlength="80" value="<?= $nomMemb?>" />
         </div>
 
         <div class="field">
-            <label for="pseudoMemb">Pseudonyme<span class="error">(*)</span> :</label>
+            <label for="pseudoMemb">Pseudonyme</label>
             <input name="pseudoMemb" id="pseudoMemb" size="80" maxlength="80" value="<?= $pseudoMemb; ?>" />
         </div>
 
         <div class="field">
-            <label for="passMemb">Mot passe<span class="error">(*)</span></label>
+            <label for="passMemb">Mot passe</label>
             <input type="password" name="passMemb" id="passMemb" size="80" maxlength="80" />
             <label><input type="checkbox" onclick="myFunction('passMemb')"><i>Afficher Mot de passe</i></label>
             <p>
@@ -109,30 +111,28 @@ include __DIR__ . '/../../layouts/back/head.php';
         </div>
 
         <div class="field">
-            <label for="pass2Memb">Confirmez le mot de passe<span class="error">(*)</span></label>
-            <input type="password" name="pass2Memb" id="pass2Memb" size="80" maxlength="80"/>
-            <label><input type="checkbox" onclick="myFunction('pass2Memb')"><i>Afficher Mot de passe</i></label>
+            <label for="passMemb_confirm">Confirmez le mot de passe</label>
+            <input type="password" name="passMemb_confirm" id="passMemb_confirm" size="80" maxlength="80"/>
+            <label><input type="checkbox" onclick="myFunction('passMemb_confirm')"><i>Afficher Mot de passe</i></label>
         </div>
 
         </div><div class="field">
-            <label for="eMailMemb">Email<span class="error">(*)</span></label>
+            <label for="eMailMemb">Email</label>
             <input name="eMailMemb" id="eMailMemb" size="80" maxlength="80"/>
         </div>
 
         <div class="field">
-            <label for="eMail1Memb">Confirmez l'email<span class="error">(*)</span></label>
-            <input name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" />
+            <label for="eMailMemb_confirm">Confirmez l'email</label>
+            <input name="eMailMemb_confirm" id="eMailMemb_confirm" size="80" maxlength="80" />
         </div>
 
         <div class="field">
-            <label for="accordMemb"><b>J'accepte que mes données soient conservées :</b></label>
+            <label for="accordMemb"><b>J'accepte que mes données soient conservées</b></label>
             <div class="controls">
                   <label class="font-h4"><input type="radio" name="accordMemb" value="on" />Oui</label>
                   <label class="font-h4"><input type="radio" name="accordMemb" value="off" checked="checked" />Non</label>
             </div>
         </div>
-
-        <i><div class="error"><br>*&nbsp;Champs obligatoires</div></i>
 
         <div class="field">
             <label for="idStat">Statut :</label>

@@ -37,10 +37,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ValidationRule::required('id'),
         ValidationRule::required('prenomMemb'),
         ValidationRule::required('nomMemb'),
-        ValidationRule::required('pass1Memb'),
-        ValidationRule::required('pass2Memb')->equalTo('pass1Memb'),
-        ValidationRule::required('eMail1Memb')->email(),
-        ValidationRule::required('eMail2Memb')->email()->equalTo('eMail1Memb'),
+        ValidationRule::required('passMemb')->password(),
+        ValidationRule::required('passMemb_confirm')->password()->equalTo('passMemb'),
+        ValidationRule::required('eMailMemb')->email()->unique('membre')->customError('shouldBeUnique', 'Cet email est déjà pris'),
+        ValidationRule::required('eMailMemb_confirm')->email()->equalTo('eMailMemb'),
+        ValidationRule::required('accordMemb')->equalToValue('on')->customError('shouldBeEqualToValue', 'Vous devez accepter les conditions d\'utilisation'),
+        ValidationRule::required('oldHashPassMemb'),
         ValidationRule::required('idStat')
     ])->bindValues($_POST);
 
@@ -52,12 +54,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $prenomMemb = $validator->verifiedField('prenomMemb');
         $nomMemb = $validator->verifiedField('nomMemb');
         
-        $passMemb = $validator->verifiedField('pass2Memb');
-        // hashage du mot de passe
-        $passMemb = password_hash($passMemb, PASSWORD_BCRYPT);
+        $passMemb = $validator->verifiedField('passMemb');
+        if($passMemb == NULL OR $passMemb==""){
+            $passMemb = $validator->verifiedField('oldHashPassMemb');
+        } else {
+            // hashage du mot de passe
+            $passMemb = password_hash($passMemb, PASSWORD_BCRYPT);
+        }
 
 
-        $eMailMemb = $validator->verifiedField('eMail2Memb');
+        $eMailMemb = $validator->verifiedField('eMailMemb');
 
         $idStat = $validator->verifiedField('idStat');
         $monMembre->update($numMemb, $prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat);
@@ -119,6 +125,7 @@ include __DIR__ . '/../../layouts/back/head.php';
         accept-charset="UTF-8"
     >
         <input type="hidden" id="id" name="id" value="<?=$_GET['id'] ?>" />
+        <input type="hidden" id="oldHashPassMemb" name="oldHashPassMemb" value="<?=$passMemb ?>" />
 
         <div class="field">
             <label for="prenomMemb">Prénom</label>
@@ -139,36 +146,26 @@ include __DIR__ . '/../../layouts/back/head.php';
         </div>
 
         <div class="field">
-            <label class="control-label" for="pass1Memb"><b>Mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="password" name="pass1Memb" id="myInput1" size="80" maxlength="80" value="<?= $passMemb; ?>" autocomplete="on" />
-            <br>
-            <label><input type="checkbox" onclick="myFunction('myInput1')"><i>Afficher mot de passe</i></label>
-            &nbsp;&nbsp;
+            <label class="control-label" for="passMemb">Mot passe</label>
+            <input type="password" name="passMemb" id="passMemb" size="80" maxlength="80" value="<?= $passMemb; ?>" autocomplete="on" />
+            <label><input type="checkbox" onclick="myFunction('passMemb')"><i>Afficher mot de passe</i></label>
         </div>
 
-        <br>
         <div class="field">
-            <label class="control-label" for="pass2Memb"><b>Confirmez le mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="password" name="pass2Memb" id="myInput2" size="80" maxlength="80" value="<?= $passMemb; ?>" autocomplete="on" />
-            <br>
-            <label><input type="checkbox" onclick="myFunction('myInput2')"><i>Afficher mot de passe</i></label>
-            &nbsp;&nbsp;
-            
+            <label class="control-label" for="passMemb_confirm">Confirmez le mot passe</label>
+            <input type="password" name="passMemb_confirm" id="passMemb_confirm" size="80" maxlength="80" value="<?= $passMemb; ?>" autocomplete="on" />
+            <label><input type="checkbox" onclick="myFunction('passMemb_confirm')"><i>Afficher mot de passe</i></label>
         </div>
-        <small class="error">*Champ obligatoire si nouveau passe</small><br>
         
         <div class="field">
-            <label for="eMail1Memb">Email</label>
-            <input name="eMail1Memb" id="eMail1Memb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" />
+            <label for="eMailMemb">Email</label>
+            <input name="eMailMemb" id="eMailMemb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" />
         </div>
 
-        <br>
         <div class="field">
-            <label class="control-label" for="eMail2Memb"><b>Confirmez l'eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="email" name="eMail2Memb" id="eMail2Memb" size="80" maxlength="80" value="<?= $eMailMemb; ?>" autocomplete="on" />
+            <label class="control-label" for="eMailMemb_confirm">Confirmez l'eMail</label>
+            <input type="email" name="eMailMemb_confirm" id="eMailMemb_confirm" size="80" maxlength="80" value="<?= $eMailMemb; ?>" autocomplete="on" />
         </div>
-        <small class="error">*Champ obligatoire si nouveau eMail</small><br>
-
 
         <div class="field">
             <label for="dtCreaMemb">Date de création</label>

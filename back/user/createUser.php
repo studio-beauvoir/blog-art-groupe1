@@ -23,11 +23,13 @@ $validator = Validator::make();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $validator->addRules([
-        ValidationRule::required('pseudoUser')->pseudo(),
         ValidationRule::required('nomUser'),
         ValidationRule::required('prenomUser'),
-        ValidationRule::required('eMailUser')->email(),
+        ValidationRule::required('pseudoUser')->pseudo()->unique('user')->customError('shouldBeUnique', 'Ce pseudo est déjà pris'),
         ValidationRule::required('passUser')->password(),
+        ValidationRule::required('passUser_confirm')->password()->equalTo('passUser'),
+        ValidationRule::required('eMailUser')->email()->unique('user')->customError('shouldBeUnique', 'Cet email est déjà pris'),
+        ValidationRule::required('eMailUser_confirm')->email()->equalTo('eMailUser'),
         ValidationRule::required('idStat')
     ])->bindValues($_POST);
 
@@ -77,32 +79,32 @@ include __DIR__ . '/../../layouts/back/head.php';
     >
 
         <div class="field">
-            <label for="pseudoUser">Pseudo<span class="error">(*)</span> :</label>
+            <label for="pseudoUser">Pseudo</label>
             <input name="pseudoUser" id="pseudoUser" size="80" maxlength="80" value="<?= $pseudoUser;?>" />
         </div>
 
         <div class="field">
-            <label for="nomUser">Nom<span class="error">(*)</span> :</label>
+            <label for="nomUser">Nom</label>
             <input name="nomUser" id="nomUser" size="80" maxlength="80" value="<?= $nomUser?>" />
         </div>
 
         <div class="field">
-            <label for="prenomUser">Prénom<span class="error">(*)</span> :</label>
+            <label for="prenomUser">Prénom</label>
             <input name="prenomUser" id="prenomUser" size="80" maxlength="80" value="<?= $prenomUser; ?>" />
         </div>
 
         </div><div class="field">
-            <label for="eMailUser">Email<span class="error">(*)</span></label>
+            <label for="eMailUser">Email</label>
             <input name="eMailUser" id="eMailUser" size="80" maxlength="80"/>
         </div>
 
         <div class="field">
-            <label for="eMail1User">Confirmez l'email<span class="error">(*)</span></label>
-            <input name="eMail1User" id="eMail1User" size="80" maxlength="80" />
+            <label for="eMailUser_confirm">Confirmez l'email</label>
+            <input name="eMailUser_confirm" id="eMailUser_confirm" size="80" maxlength="80" />
         </div>
 
         <div class="field">
-            <label for="passUser">Mot de passe<span class="error">(*)</span></label>
+            <label for="passUser">Mot de passe</label>
             <input type="password" name="passUser" id="passUser" size="80" maxlength="80" />
             <label><input type="checkbox" onclick="myFunction('passUser')"><i>Afficher Mot de passe</i></label>
             <p>
@@ -111,15 +113,13 @@ include __DIR__ . '/../../layouts/back/head.php';
         </div>
 
         <div class="field">
-            <label for="pass2User">Confirmez le mot de passe<span class="error">(*)</span></label>
-            <input type="password" name="pass2User" id="pass2User" size="80" maxlength="80"/>
-            <label><input type="checkbox" onclick="myFunction('pass2User')"><i>Afficher Mot de passe</i></label>
+            <label for="passUser_confirm">Confirmez le mot de passe</label>
+            <input type="password" name="passUser_confirm" id="passUser_confirm" size="80" maxlength="80"/>
+            <label><input type="checkbox" onclick="myFunction('passUser_confirm')"><i>Afficher Mot de passe</i></label>
         </div>
 
-        <i><div class="error"><br>*&nbsp;Champs obligatoires</div></i>
-
         <div class="field">
-            <label for="idStat">Statut :</label>
+            <label for="idStat">Statut</label>
             <select name="idStat" id="idStat">
             <?php 
                 $allStatuts = $monStatut->get_AllStatuts();                    

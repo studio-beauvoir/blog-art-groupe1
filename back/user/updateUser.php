@@ -34,14 +34,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     $validator->addRules([
-        ValidationRule::required('pseudoUser'),
         ValidationRule::required('nomUser'),
         ValidationRule::required('prenomUser'),
-        ValidationRule::required('eMail1User')->email(),
-        ValidationRule::required('eMail2User')->email()->equalTo('eMail1User'),
+        ValidationRule::required('pseudoUser')->pseudo()->unique('user')->customError('shouldBeUnique', 'Ce pseudo est déjà pris'),
+        ValidationRule::required('passUser')->password(),
+        ValidationRule::required('passUser_confirm')->password()->equalTo('passUser'),
+        ValidationRule::required('eMailUser')->email()->unique('user')->customError('shouldBeUnique', 'Cet email est déjà pris'),
+        ValidationRule::required('eMailUser_confirm')->email()->equalTo('eMailUser'),
         ValidationRule::required('oldHashPassUser'),
-        ValidationRule::optionnal('pass1User')->password(),
-        ValidationRule::optionnal('pass2User')->password()->equalTo('pass1User'),
         ValidationRule::required('idStat')
     ])->bindValues($_POST);
 
@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $nomUser = $validator->verifiedField('nomUser');
         $prenomUser = $validator->verifiedField('prenomUser');
         
-        $passUser = $validator->verifiedField('pass2User');
+        $passUser = $validator->verifiedField('passUser');
         if($passUser == NULL OR $passUser==""){
             $passUser = $validator->verifiedField('oldHashPassUser');
         } else {
@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
         
         
-        $eMailUser = $validator->verifiedField('eMail2User');
+        $eMailUser = $validator->verifiedField('eMailUser');
         
         $idStat = $validator->verifiedField('idStat');
         $monUser->update($pseudoUser, $nomUser, $prenomUser, $eMailUser, $passUser, $idStat);
@@ -136,42 +136,32 @@ include __DIR__ . '/../../layouts/back/head.php';
             <input name="nomUser" id="nomUser" size="80" maxlength="80" value="<?= $nomUser; ?>" />
         </div>
 
-
-
         <div class="field">
             <label for="prenomUser">Prénom</label>
             <input name="prenomUser" id="prenomUser" size="80" maxlength="80" value="<?= $prenomUser; ?>" />
         </div>
 
         <div class="field">
-            <label class="control-label" for="pass1User"><b>Mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="password" name="pass1User" id="myInput1" size="80" maxlength="80" value="" autocomplete="on" />
-            <br>
-            <label><input type="checkbox" onclick="myFunction('myInput1')"><i>Afficher mot de passe</i></label>
-            
-            
+            <label class="control-label" for="passUser">Mot passe</label>
+            <input type="password" name="passUser" id="passUser" size="80" maxlength="80" value="" autocomplete="on" />
+            <label><input type="checkbox" onclick="myFunction('passUser')"><i>Afficher mot de passe</i></label>
         </div>
 
-        <br>
         <div class="field">
-            <label class="control-label" for="pass2User"><b>Confirmez le mot passe<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="password" name="pass2User" id="myInput2" size="80" maxlength="80" value="" autocomplete="on" />
-            <br>
-            <label><input type="checkbox" onclick="myFunction('myInput2')"><i>Afficher mot de passe</i></label>
+            <label class="control-label" for="passUser_confirm">Confirmez le mot passe</label>
+            <input type="password" name="passUser_confirm" id="passUser_confirm" size="80" maxlength="80" value="" autocomplete="on" />
+            <label><input type="checkbox" onclick="myFunction('passUser_confirm')"><i>Afficher mot de passe</i></label>
         </div>
-        <small class="error">*Champ obligatoire si nouveau passe</small><br>
         
         <div class="field">
-            <label for="eMail1User">Email</label>
-            <input name="eMail1User" id="eMail1User" size="80" maxlength="80" value="<?= $eMailUser; ?>" />
+            <label for="eMailUser">Email</label>
+            <input name="eMailUser" id="eMailUser" size="80" maxlength="80" value="<?= $eMailUser; ?>" />
         </div>
 
-        <br>
         <div class="field">
-            <label class="control-label" for="eMail2User"><b>Confirmez l'eMail<span class="error">(*)</span> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-            <input type="email" name="eMail2User" id="eMail2User" size="80" maxlength="80" value="<?= $eMailUser; ?>" autocomplete="on" />
+            <label class="control-label" for="eMailUser_confirm">Confirmez l'eMail</label>
+            <input type="email" name="eMailUser_confirm" id="eMailUser_confirm" size="80" maxlength="80" value="<?= $eMailUser; ?>" autocomplete="on" />
         </div>
-        <small class="error">*Champ obligatoire si nouveau eMail</small><br>
              
         <div class="field">
             <label for="idStat">Quel statut :</label>

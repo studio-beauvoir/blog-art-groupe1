@@ -12,7 +12,7 @@ $pageTitle = "Gestion du Like Commentaire";
 $pageNav = ['Home:/admin.php', $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';
 ?>
-	<a class="btn btn-lg" href="./createLikeCom.php" title="Créer un Like Commentaire">Créer un like de commentaire</a>
+	<!-- <a class="btn btn-lg" href="./createLikeCom.php" title="Créer un Like Commentaire">Créer un like de commentaire</a> -->
 	<h3>Tous les likes de commentaires</h3>
 
 	<table >

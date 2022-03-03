@@ -3,7 +3,7 @@
 $submitBtn = "Éditer";
 $pageCrud = "likeCom";
 $pagePrecedent = "./$pageCrud.php";
-$pageTitle = "Créer un $pageCrud";
+$pageTitle = "Modifier un $pageCrud";
 $pageNav = ['Home:/admin.php', 'Gestion des likes de commentaires:'.$pagePrecedent, $pageTitle];
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
@@ -118,7 +118,7 @@ $likeC = $likeCom['likeC'];
         </div>
 
         <div class="field">
-            <label for="likeC">Like?</label>
+            <label for="likeC">Like ?</label>
             <select name="likeC" id="likeC">
                 <option <?=$likeC?'selected':'' ?> value="true">Oui</option>
                 <option <?=$likeC?'':'selected' ?> value="false">Non</option>

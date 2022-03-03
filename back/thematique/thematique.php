@@ -48,10 +48,8 @@ include __DIR__ . '/../../layouts/back/head.php';
                 <td><a href="<?=webCrudPath('langue/updateLangue.php?id='.$row['numLang'])?>"><?= $row['lib1Lang']; ?></a></td>
 
                 <!-- actions -->
-                <td>
+                <td class="actions sticky-right">
                     <a class="btn btn-md" href="./updateThematique.php?id=<?=$row['numThem']; ?>" title="Modifier">Modifier</a>
-                </td>
-                <td>  
                     <a class="btn btn-md btn-danger" href="./deleteThematique.php?id=<?=$row['numThem'] ?>" title="Supprimer">Supprimer</a>
                 </td>
             </tr>

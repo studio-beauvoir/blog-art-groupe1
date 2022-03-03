@@ -48,7 +48,7 @@ include __DIR__ . '/../../layouts/back/head.php';
                 <!--<td><a href=" <?= webCrudPath('langue/updateLangue.php?id='.$row['numLang']) ?>"><?= $row['lib1Lang']; ?> </a></td>-->
 
                 <!-- actions -->
-                <td>
+                <td class="actions sticky-right">
                     <a class="btn btn-md" href="./updateLikeCom.php?numMemb=<?=$row['numMemb'];?>&numArt=<?=$row['numArt'];?>&numSeqCom=<?=$row['numSeqCom']?>" title="Modifier le like">Modifier</a>
                 </td>
             </tr>

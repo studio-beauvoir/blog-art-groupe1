@@ -12,19 +12,19 @@ require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../CLASS_CRUD/commentplus.class.php'; 
 
 // Instanciation de la classe Comment Plus
-$monCommentPlus = new COMMENTPLUS(); 
+$monCommentPlus = new commentplus(); 
 
 // Insertion classe Article
 require_once __DIR__ . '/../../CLASS_CRUD/article.class.php'; 
 
 // Instanciation de la classe Article
-$monArticle = new ARTICLE(); 
+$monArticle = new article(); 
 
 // Insertion classe Comment
 require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php'; 
 
 // Instanciation de la classe Comment
-$monComment = new COMMENT();
+$monComment = new comment();
 
 // Gestion des erreurs de saisie
 $erreur = false;

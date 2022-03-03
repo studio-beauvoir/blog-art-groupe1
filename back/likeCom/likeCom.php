@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../CLASS_CRUD/likecom.class.php'; 
 
 // Instanciation de la classe LikeArt
-$monLikeCom = new LIKECOM(); 
+$monLikeCom = new likecom(); 
 
 $pageTitle = "Gestion du Like Commentaire";
 $pageNav = ['Home:/admin.php', $pageTitle];

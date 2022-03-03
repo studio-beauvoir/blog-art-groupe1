@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/statut.class.php'; 
 
 // Instanciation de la classe Statut
-$monStatut = new STATUT(); 
+$monStatut = new statut(); 
 
 $pageTitle = "Gestion du Statut";
 $pageNav = ['Home:/admin.php', $pageTitle];

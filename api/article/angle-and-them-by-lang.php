@@ -4,8 +4,8 @@ require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/angle.class.php'; 
 require_once __DIR__ . '/../../class_crud/thematique.class.php'; 
 
-$monAngle = new ANGLE();
-$maThematique = new THEMATIQUE();
+$monAngle = new angle();
+$maThematique = new thematique();
 
 $result = false;
 $errors = false;

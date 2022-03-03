@@ -1,13 +1,13 @@
 <?php
-// CRUD MOTCLEARTICLE
+// CRUD motclearticle
 // ETUD
 require_once __DIR__ . '../../connect/database.php';
 
-class MOTCLEARTICLE{
+class motclearticle{
 	function get_AllMotClesByNumArt($numArt){
 		global $db;
 
-		$query = 'SELECT * FROM MOTCLEARTICLE INNER JOIN MOTCLE ON MOTCLEARTICLE.numMotCle=MOTCLE.numMotCle WHERE numArt=?;';
+		$query = 'SELECT * FROM motclearticle INNER JOIN motcle ON motclearticle.numMotCle=motcle.numMotCle WHERE numArt=?;';
 		$request = $db->prepare($query);
 		$request->execute([$numArt]);
 		$result = $request->fetchAll();
@@ -18,7 +18,7 @@ class MOTCLEARTICLE{
 		global $db;
 
 		// fonctionne à merveille
-		$query = 'SELECT MOTCLE.numMotCle, MOTCLE.libMotCle, MOTCLE.numLang, ARTICLE.numArt FROM ARTICLE INNER JOIN MOTCLEARTICLE ON ARTICLE.numArt=MOTCLEARTICLE.numArt INNER JOIN MOTCLE ON MOTCLEARTICLE.numMotCle=MOTCLE.numMotCle  WHERE libTitrArt=?;';
+		$query = 'SELECT motcle.numMotCle, motcle.libMotCle, motcle.numLang, article.numArt FROM article INNER JOIN motclearticle ON article.numArt=motclearticle.numArt INNER JOIN motcle ON motclearticle.numMotCle=motcle.numMotCle  WHERE libTitrArt=?;';
 		$request = $db->prepare($query);
 		$request->execute([$libTitrArt]);
 		$result = $request->fetch();
@@ -49,7 +49,7 @@ class MOTCLEARTICLE{
 		try {
 			$db->beginTransaction();
 
-			$query = 'INSERT INTO MOTCLEARTICLE (numArt, numMotCle) VALUES (?, ?);';
+			$query = 'INSERT INTO motclearticle (numArt, numMotCle) VALUES (?, ?);';
 			$request = $db->prepare($query);
 			$request->execute( [$numArt, $numMotCle]);
 
@@ -59,7 +59,7 @@ class MOTCLEARTICLE{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur insert MOTCLEARTICLE : ' . $e->getMessage());
+			die('Erreur insert motclearticle : ' . $e->getMessage());
 		}
 	}
 
@@ -69,7 +69,7 @@ class MOTCLEARTICLE{
 		try {
 			$db->beginTransaction();
 
-			$query = 'DELETE FROM MOTCLEARTICLE WHERE `numArt` = ? AND `numMotCle` = ?;';
+			$query = 'DELETE FROM motclearticle WHERE `numArt` = ? AND `numMotCle` = ?;';
 			$request = $db->prepare($query);
 			$request->execute([$numArt, $numMotCle]);
 			$count = $request->rowCount();
@@ -80,7 +80,7 @@ class MOTCLEARTICLE{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur delete MOTCLEARTICLE : ' . $e->getMessage());
+			die('Erreur delete motclearticle : ' . $e->getMessage());
 		}
 	}
 }	// End of class

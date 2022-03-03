@@ -12,13 +12,13 @@ require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/membre.class.php'; 
 
 // Instanciation de la classe Membre
-$monMembre = new MEMBRE(); 
+$monMembre = new membre(); 
 
 //Insertion de la classe Statut
 require_once __DIR__ . '/../../class_crud/statut.class.php';
 
 //Instanciation de le classe Statut
-$monStatut = new STATUT();
+$monStatut = new statut();
 
 // Gestion des erreurs de saisie
 $erreur = false;

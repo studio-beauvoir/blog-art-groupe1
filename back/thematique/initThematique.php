@@ -1,6 +1,6 @@
 <?php
 /*
-* Table THEMATIQUE
+* Table thematique
 * initThematique.php
 */
 // PK Thematique

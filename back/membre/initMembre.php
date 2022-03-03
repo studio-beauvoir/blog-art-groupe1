@@ -1,6 +1,6 @@
 <?php
 /*
-* Table MEMBRE
+* Table membre
 * initMembre.php
 */
 // PK membre

@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/langue.class.php'; 
 
 // Instanciation de la classe langue
-$maLangue = new LANGUE(); 
+$maLangue = new langue(); 
 
 $pageTitle = "Gestion des Langues";
 $pageNav = ['Home:/admin.php', $pageTitle];

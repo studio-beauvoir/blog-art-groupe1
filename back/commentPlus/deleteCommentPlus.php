@@ -13,20 +13,20 @@ require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/commentplus.class.php'; 
 
 // Instanciation de la classe langue
-$monCommentPlus = new COMMENTPLUS(); 
+$monCommentPlus = new commentplus(); 
 
 // Ctrl CIR
 // Insertion classe article
 require_once __DIR__ . '/../../class_crud/article.class.php';
 
 // Instanciation de la classe article
-$monArticle = new ARTICLE();
+$monArticle = new article();
 
 // Insertion classe Comment
 require_once __DIR__ . '/../../class_crud/comment.class.php';
 
 // Instanciation de la classe Comment
-$monComment = new COMMENT();
+$monComment = new comment();
 
 // Gestion des erreurs de saisie
 $erreur = false;

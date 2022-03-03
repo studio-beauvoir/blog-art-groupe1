@@ -1,16 +1,16 @@
 <?php
-// CRUD MEMBRE
+// CRUD membre
 // ETUD
 // A tester sur Blog'Art
 require_once __DIR__ . '../../connect/database.php';
 
-class MEMBRE{
+class membre{
 	function get_1Membre($numMemb){
 		global $db;
 
 		$db->beginTransaction();
 		try {
-			$query = 'SELECT * FROM MEMBRE INNER JOIN STATUT ON MEMBRE.idStat=STATUT.idStat WHERE numMemb=?;';
+			$query = 'SELECT * FROM membre INNER JOIN statut ON membre.idStat=statut.idStat WHERE numMemb=?;';
 			$request = $db->prepare($query);
 			
 			$request->execute([$numMemb]);
@@ -28,7 +28,7 @@ class MEMBRE{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur insert MEMBRE : ' . $e->getMessage());
+			die('Erreur insert membre : ' . $e->getMessage());
 		}
 	}
 
@@ -36,7 +36,7 @@ class MEMBRE{
 		global $db;
 
 		$db->beginTransaction();
-		$query = 'SELECT * FROM THEMATIQUE WHERE eMailMemb=?;';
+		$query = 'SELECT * FROM thematique WHERE eMailMemb=?;';
 		$request = $db->prepare($query);
 		$request->execute([$eMailMemb]);
 		$result = $request->fetch();
@@ -50,7 +50,7 @@ class MEMBRE{
 		global $db;
 
 		$db->beginTransaction();
-		$query = 'SELECT * FROM MEMBRE INNER JOIN STATUT ON MEMBRE.idStat=STATUT.idStat;';
+		$query = 'SELECT * FROM membre INNER JOIN statut ON membre.idStat=statut.idStat;';
 		$request = $db->query($query);
 		$allMembres = $request->fetchAll();
 
@@ -65,7 +65,7 @@ class MEMBRE{
 
 		$db->beginTransaction();
 
-		$query = 'SELECT * FROM MEMBRE WHERE idStat=?;';
+		$query = 'SELECT * FROM membre WHERE idStat=?;';
 		$request = $db->prepare($query);
 		$request->execute([$pseudoMemb]);
 		$result = $request->fetch();
@@ -78,7 +78,7 @@ class MEMBRE{
 	function get_AllMembersByStat(){
 		global $db;
 
-		$query = 'SELECT * FROM MEMBRE WHERE idStat=?;';
+		$query = 'SELECT * FROM membre WHERE idStat=?;';
 		$result = $db->query($query);
 		$allMembersByStat = $result->fetchAll();
 		return($allMembersByStat);
@@ -89,7 +89,7 @@ class MEMBRE{
 
 		$db->beginTransaction();
 
-		$query = 'SELECT * FROM MEMBRE WHERE idStat=?;';
+		$query = 'SELECT * FROM membre WHERE idStat=?;';
 		$request = $db->prepare($query);
 		
 		$request->execute([$idStat]);
@@ -109,7 +109,7 @@ class MEMBRE{
 		global $db;
 
 		$db->beginTransaction();
-		$query = 'SELECT * FROM ANGLE WHERE eMailMemb=?;';
+		$query = 'SELECT * FROM angle WHERE eMailMemb=?;';
 		$result = $db->query($query);
 		$allMembresByEmail = $result->fetchAll();
 		return($allMembresByEmail);
@@ -122,7 +122,7 @@ class MEMBRE{
 		try {
 			$db->beginTransaction();
 
-			$query = 'INSERT INTO MEMBRE (prenomMemb, nomMemb, pseudoMemb, passMemb, eMailMemb, dtCreaMemb, accordMemb, idStat) VALUES (?, ?, ?, ?, ?, ?, ?, ?);';
+			$query = 'INSERT INTO membre (prenomMemb, nomMemb, pseudoMemb, passMemb, eMailMemb, dtCreaMemb, accordMemb, idStat) VALUES (?, ?, ?, ?, ?, ?, ?, ?);';
 			$request = $db->prepare($query);
 			$request->execute([$prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb, $idStat]);
 			$db->commit();
@@ -131,7 +131,7 @@ class MEMBRE{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur insert MEMBRE : ' . $e->getMessage());
+			die('Erreur insert membre : ' . $e->getMessage());
 		}
 	}
 
@@ -143,7 +143,7 @@ class MEMBRE{
 		try {
 			$db->beginTransaction();
 			
-			$query = 'UPDATE MEMBRE SET prenomMemb=?, nomMemb=?, passMemb=?, eMailMemb=?, idStat=? WHERE numMemb=?;';
+			$query = 'UPDATE membre SET prenomMemb=?, nomMemb=?, passMemb=?, eMailMemb=?, idStat=? WHERE numMemb=?;';
 			$request = $db->prepare($query);
 			$request->execute([$prenomMemb, $nomMemb, $passMemb, $eMailMemb, $idStat, $numMemb]);
 			$db->commit();
@@ -156,18 +156,18 @@ class MEMBRE{
 			} else {
 				$request->closeCursor(); //request2
 			}
-			die('Erreur update MEMBRE : ' . $e->getMessage());
+			die('Erreur update membre : ' . $e->getMessage());
 		}
 	}
 
-	// Ctrl FK sur COMMENT avec del
+	// Ctrl FK sur comment avec del
 	function delete($numMemb){
 		global $db;
 		
 		try {
 			$db->beginTransaction();
 
-			$query = 'DELETE FROM MEMBRE WHERE `numMemb` = ?;';
+			$query = 'DELETE FROM membre WHERE `numMemb` = ?;';
 			$request = $db->prepare($query);
 			$request->execute([$numMemb]);
 			$count = $request->rowCount();
@@ -178,7 +178,7 @@ class MEMBRE{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur delete MEMBRE : ' . $e->getMessage());
+			die('Erreur delete membre : ' . $e->getMessage());
 		}
 	}
 
@@ -187,7 +187,7 @@ class MEMBRE{
 
 		// // requête pour savoir si l'id et le mdp son bon
 		// $db->beginTransaction();
-		// $query = "SELECT * FROM MEMBRE WHERE pseudoMemb = ? AND passMemb = ?";
+		// $query = "SELECT * FROM membre WHERE pseudoMemb = ? AND passMemb = ?";
 		// $request = $db->prepare($query);
 		// $request->execute([$pseudoMemb, $passMemb]);
 		// $rowCount = $request->rowCount();
@@ -195,7 +195,7 @@ class MEMBRE{
 
 		// on commence par chercher le membre
 		$db->beginTransaction();
-		$query = "SELECT * FROM MEMBRE WHERE pseudoMemb = ?";
+		$query = "SELECT * FROM membre WHERE pseudoMemb = ?";
 		$request = $db->prepare($query);
 		$request->execute([$pseudoMemb]);
 		$rowCount = $request->rowCount();

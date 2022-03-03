@@ -6,12 +6,12 @@ require_once __DIR__ . '/../../util/index.php';
 // Insertion classe MotCle
 require_once __DIR__ . '/../../class_crud/motcle.class.php';
 // Instanciation de la classe MotCle
-$monMotCle = new MOTCLE(); 
+$monMotCle = new motcle(); 
 
 require_once __DIR__ . '/../../class_crud/langue.class.php';
 
 // Instanciation de la classe Langue
-$maLangue = new LANGUE();
+$maLangue = new langue();
 
 // Gestion des erreurs de saisie
 $erreur = false;

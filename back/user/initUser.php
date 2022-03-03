@@ -1,9 +1,9 @@
 <?php
 /*
-* Table USER
+* Table user
 * initUser.php
 */
-// PK USER
+// PK user
 $pseudoUser = "";
 $pass1User = "";
 $pass2User = "";

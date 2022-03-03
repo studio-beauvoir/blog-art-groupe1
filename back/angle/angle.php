@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/angle.class.php'; 
 
 // Instanciation de la classe Statut
-$monAngle = new ANGLE(); 
+$monAngle = new angle(); 
 
 $pageTitle = "Gestion de l'Angle";
 $pageNav = ['Home:/admin.php', $pageTitle];

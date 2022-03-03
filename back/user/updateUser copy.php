@@ -1,7 +1,7 @@
 <?php
 ////////////////////////////////////////////////////////////
 //
-//  CRUD USER (PDO) - Modifié : 4 Juillet 2021
+//  CRUD user (PDO) - Modifié : 4 Juillet 2021
 //
 //  Script  : updateUser.php  -  (ETUd)  BLOGART22
 //

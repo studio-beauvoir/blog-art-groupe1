@@ -12,9 +12,9 @@ require_once __DIR__ . '/../../class_crud/comment.class.php';
 require_once __DIR__ . '/../../class_crud/article.class.php';  
 require_once __DIR__ . '/../../class_crud/membre.class.php';  
 
-$monComment = new COMMENT();
-$monArticle = new ARTICLE();
-$monMembre = new MEMBRE();
+$monComment = new comment();
+$monArticle = new article();
+$monMembre = new membre();
 
 $validator = Validator::make();
 

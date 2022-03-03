@@ -1,6 +1,6 @@
 <?php
 /*
-* Table LIKEART
+* Table likeart
 * initLikeArt.php
 */
 // FK PK LikeArt

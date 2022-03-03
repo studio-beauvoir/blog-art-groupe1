@@ -10,10 +10,10 @@ $pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pa
 require_once __DIR__ . '/../../util/index.php';
 
 require_once __DIR__ . '/../../class_crud/motcle.class.php'; 
-$monMotCle = new MOTCLE(); 
+$monMotCle = new motcle(); 
 
 require_once __DIR__ . '/../../class_crud/langue.class.php';
-$maLangue = new LANGUE();
+$maLangue = new langue();
 
 
 // Gestion des erreurs de saisie

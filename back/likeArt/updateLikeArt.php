@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/likeart.class.php'; 
 
 // Instanciation de la classe Angle
-$monLikeArt = new LIKEART(); 
+$monLikeArt = new likeart(); 
 
 // Gestion des erreurs de saisie
 $erreur = false;

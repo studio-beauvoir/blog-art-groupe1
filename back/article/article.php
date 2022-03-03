@@ -9,7 +9,7 @@ $pageNav = ['Home:/admin.php', $pageTitle];
 require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/article.class.php'; 
 
-$monArticle = new ARTICLE(); 
+$monArticle = new article(); 
 
 require_once __DIR__ . '/../../layouts/back/head.php';
 ?>

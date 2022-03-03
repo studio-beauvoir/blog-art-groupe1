@@ -1,6 +1,6 @@
 <?php
 /*
-* Table COMMENTPLUS
+* Table commentplus
 * initCommentPlus.php
 */
 // FK PK CommentPlus

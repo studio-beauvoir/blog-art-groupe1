@@ -15,11 +15,11 @@ require_once __DIR__ . '/../../class_crud/thematique.class.php';
 require_once __DIR__ . '/../../class_crud/motclearticle.class.php'; 
 
 // Instanciation de la classe Membre
-$monArticle = new ARTICLE(); 
-$maLangue = new LANGUE();
-$monAngle = new ANGLE();
-$maThematique = new THEMATIQUE();
-$monMotcleArticle = new MOTCLEARTICLE();
+$monArticle = new article(); 
+$maLangue = new langue();
+$monAngle = new angle();
+$maThematique = new thematique();
+$monMotcleArticle = new motclearticle();
 
 $validator = Validator::make();
 $fileValidator = Validator::make();

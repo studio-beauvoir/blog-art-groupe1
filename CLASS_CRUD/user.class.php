@@ -1,14 +1,14 @@
 <?php
-// CRUD USER
+// CRUD user
 // ETUD
 require_once __DIR__ . '../../connect/database.php';
 
-class USER{
+class user{
 	function get_1User($pseudoUser){
 		global $db;
 		$db->beginTransaction();
 		try {
-			$query = 'SELECT * FROM USER INNER JOIN STATUT ON USER.idStat=STATUT.idStat WHERE pseudoUser=?;';
+			$query = 'SELECT * FROM user INNER JOIN statut ON user.idStat=statut.idStat WHERE pseudoUser=?;';
 			$request = $db->prepare($query);
 			
 			$request->execute([$pseudoUser]);
@@ -26,7 +26,7 @@ class USER{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur insert USER : ' . $e->getMessage());
+			die('Erreur insert user : ' . $e->getMessage());
 		}
 	}
 
@@ -34,7 +34,7 @@ class USER{
 		global $db;
 
 		$db->beginTransaction();
-		$query = 'SELECT * FROM USER INNER JOIN STATUT ON USER.idStat=STATUT.idStat;';
+		$query = 'SELECT * FROM user INNER JOIN statut ON user.idStat=statut.idStat;';
 		$request = $db->query($query);
 		$allUsers = $request->fetchAll();
 
@@ -47,7 +47,7 @@ class USER{
 	function get_ExistPseudo($pseudoUser) {
 		global $db;
 
-		$query = 'SELECT * FROM USER WHERE pseudoUser = ?;';
+		$query = 'SELECT * FROM user WHERE pseudoUser = ?;';
 		$result = $db->prepare($query);
 		$result->execute(array($pseudoUser));
 		return($result->rowCount());
@@ -59,7 +59,7 @@ class USER{
 		// select
 		// prepare
 		// execute
-		return($allUsersByStat);
+		// return($allUsersByStat);
 	}
 
 	function get_NbAllUsersByidStat($idStat){
@@ -67,7 +67,7 @@ class USER{
 
 		$db->beginTransaction();
 
-		$query = 'SELECT * FROM USER WHERE idStat=?;';
+		$query = 'SELECT * FROM user WHERE idStat=?;';
 		$request = $db->prepare($query);
 		
 		$request->execute([$idStat]);
@@ -88,7 +88,7 @@ class USER{
 		try {
 			$db->beginTransaction();
 
-			$query = 'INSERT INTO USER (pseudoUser, nomUser, prenomUser, eMailUser, passUser, idStat) VALUES (?, ?, ?, ?, ?, ?);';
+			$query = 'INSERT INTO user (pseudoUser, nomUser, prenomUser, eMailUser, passUser, idStat) VALUES (?, ?, ?, ?, ?, ?);';
 			$request = $db->prepare($query);
 			$request->execute([$pseudoUser, $nomUser, $prenomUser, $eMailUser, $passUser, $idStat]);
 			$db->commit();
@@ -97,7 +97,7 @@ class USER{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur insert USER : ' . $e->getMessage());
+			die('Erreur insert user : ' . $e->getMessage());
 		}
 	}
 
@@ -107,7 +107,7 @@ class USER{
 		try {
 			$db->beginTransaction();
 				
-			$query = 'UPDATE USER SET nomUser=?, prenomUser=?, eMailUser=?, passUser=?, idStat=? WHERE pseudoUser=?;';
+			$query = 'UPDATE user SET nomUser=?, prenomUser=?, eMailUser=?, passUser=?, idStat=? WHERE pseudoUser=?;';
 			$request = $db->prepare($query);
 			$request->execute([$nomUser, $prenomUser, $eMailUser, $passUser, $idStat, $pseudoUser]);
 			$db->commit();
@@ -118,7 +118,7 @@ class USER{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur update USER : ' . $e->getMessage());
+			die('Erreur update user : ' . $e->getMessage());
 		}
 	}
 
@@ -128,7 +128,7 @@ class USER{
 		try {
 			$db->beginTransaction();
 
-			$query = 'DELETE FROM USER WHERE `pseudoUser` = ?;';
+			$query = 'DELETE FROM user WHERE `pseudoUser` = ?;';
 			$request = $db->prepare($query);
 			$request->execute([$pseudoUser]);
 			$count = $request->rowCount();
@@ -139,7 +139,63 @@ class USER{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur delete USER : ' . $e->getMessage());
+			die('Erreur delete user : ' . $e->getMessage());
+		}
+	}
+
+
+	function login($pseudoUser, $passUser) {
+		global $db;
+
+		// // requête pour savoir si l'id et le mdp son bon
+		// $db->beginTransaction();
+		// $query = "SELECT * FROM membre WHERE pseudoUser = ? AND passUser = ?";
+		// $request = $db->prepare($query);
+		// $request->execute([$pseudoUser, $passUser]);
+		// $rowCount = $request->rowCount();
+
+
+		// on commence par chercher le user
+		$db->beginTransaction();
+		$query = "SELECT * FROM user WHERE pseudoUser = ?";
+		$request = $db->prepare($query);
+		$request->execute([$pseudoUser]);
+		$rowCount = $request->rowCount();
+
+
+		if($rowCount < 1){
+			// pas de correspondance dan la bdd
+
+			$db->commit();
+			$request->closeCursor();
+
+			return [
+				"error"=>true,
+				"message"=>"Ce pseudo n'est lié à aucun compte"
+			];
+		}else{
+			$user = $request->fetch();
+
+			$db->commit();
+			$request->closeCursor();
+
+			// ensuite on check que les mdp soient bon
+			if (password_verify($passUser, $user['passUser']))
+			{
+
+				session_start();
+				$_SESSION['member_id'] = $user['numUser'];
+				// setcookie('session_token', customEncrypt('true.'.$user['numUser'].'.'.$user['passUser'].$user['dtCreaUser']));
+				header('location: '.webSitePath('/profil.php'));			
+				return [
+					"error"=>false
+				];
+			}
+			
+			return [
+				"error"=>true,
+				"message"=>"Le mot de passe est incorrect"
+			];
 		}
 	}
 }	// End of class

@@ -8,9 +8,13 @@ require_once __DIR__ . '/../../middleware/getMember.php';
         </div>
         <nav class="header-box-liste">
             <ul>
-                <li class="searchbar"> 
-                    <input class="searchbar-input" placeholder="Rechercher...">
-                    <img class="searchbar-icon" src="<?= webAssetPath('svg/search.svg') ?>" alt=" ">
+                <li class="searchbar">
+                    <form action="<?= webSitePath('/search.php')?>" method="GET" title="Recherche par mots clés">
+                    <!-- Pourquoi pas ajouter un menu déroulant pour ne pouvoir sélectionner que des mots clés enregistrés dans la base de données...-->
+                    <input name="motCle" class="searchbar-input" placeholder="Rechercher...">
+                    <button class="btn-none" type="submit" ><img class="searchbar-icon" src="<?= webAssetPath('svg/search.svg') ?>" title="Recherche par mots clés"></button>
+                    </form>
+                    
                 </li>
                 <li><a href="<?= webSitePath('/')?>" class="interactive-lien-text">Accueil</a></li>
                 <?php if(!$loggedMember): ?>

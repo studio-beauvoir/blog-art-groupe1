@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../class_crud/membre.class.php';
 
 function getLoggedMemberOrFalse() {
-    $monMembre = new MEMBRE();
+    $monMembre = new membre();
     $loggedMember = false;
 
     // if(isset($_COOKIE['session_token'])) {
@@ -36,7 +36,7 @@ function getLoggedMemberOrFalse() {
     return $loggedMember;
 }
 
-function logout() {
+function logoutMember() {
     // if (isset($_COOKIE['session_token'])) {
     //     unset($_COOKIE['session_token']); 
     //     setcookie('session_token', null, time()-3600); 

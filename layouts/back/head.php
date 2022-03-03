@@ -7,7 +7,7 @@ $errCIR = isset($_GET['err_cir']) && $_GET['err_cir'] == true;
 $listErrors = [];
 
 if (isset($errDel) && ($errDel == 99) ) { 
-    array_push($listErrors ,"Erreur delete LANGUE : la suppression s'est mal passée !");
+    array_push($listErrors ,"Erreur delete langue : la suppression s'est mal passée !");
 }
 
 if ($errCIR) {

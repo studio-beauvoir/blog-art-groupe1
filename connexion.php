@@ -11,7 +11,7 @@ if($loggedMember) {
     header('location: '.webSitePath('/home.php'));
 }
 
-$monMembre = new MEMBRE();
+$monMembre = new membre();
 
 $validator = Validator::make();
 $loginState = "";

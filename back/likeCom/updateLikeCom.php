@@ -15,10 +15,10 @@ require_once __DIR__ . '/../../class_crud/membre.class.php';
 require_once __DIR__ . '/../../class_crud/article.class.php'; 
 
 // Instanciation de la classe LikeArt
-$monLikeCom = new LIKECOM(); 
-$monComm = new COMMENT(); 
-$monMembre = new MEMBRE();
-$monArticle = new ARTICLE();
+$monLikeCom = new likecom(); 
+$monComm = new comment(); 
+$monMembre = new membre();
+$monArticle = new article();
 
 // Gestion des erreurs de saisie
 $erreur = false;

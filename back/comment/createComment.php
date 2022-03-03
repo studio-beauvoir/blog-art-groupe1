@@ -13,9 +13,9 @@ require_once __DIR__ . '/../../class_crud/membre.class.php';
 require_once __DIR__ . '/../../class_crud/article.class.php'; 
 
 // Instanciation de la classe Comment
-$monComment = new COMMENT();
-$monMembre = new MEMBRE();
-$monArticle = new ARTICLE();
+$monComment = new comment();
+$monMembre = new membre();
+$monArticle = new article();
 
 $validator = Validator::make();
 

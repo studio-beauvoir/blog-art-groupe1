@@ -4,17 +4,17 @@ require_once __DIR__ . '/../../util/index.php';
 // Insertion classe Thematique
 require_once __DIR__ . '/../../class_crud/thematique.class.php';
 // Instanciation de la classe thématique
-$maThematique = new THEMATIQUE(); 
+$maThematique = new thematique(); 
 
 require_once __DIR__ . '/../../class_crud/langue.class.php';
 // Instanciation de la classe thématique
-$maLangue = new LANGUE(); 
+$maLangue = new langue(); 
 
 // Ctrl CIR
 // Insertion classe Article
 require_once __DIR__ . '/../../class_crud/article.class.php';
 // Instanciation de la classe Article
-$monArticle = new ARTICLE();
+$monArticle = new article();
 
 // BBCode
 

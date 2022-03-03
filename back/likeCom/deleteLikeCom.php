@@ -1,7 +1,7 @@
 <?php
 ////////////////////////////////////////////////////////////
 //
-//  CRUD LIKECOM (PDO) - Modifié : 4 Juillet 2021
+//  CRUD likecom (PDO) - Modifié : 4 Juillet 2021
 //
 //  Script  : deleteLikeCom.php  -  (ETUD)  BLOGART22
 //

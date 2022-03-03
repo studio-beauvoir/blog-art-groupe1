@@ -1,5 +1,5 @@
 <?php
-//FRONT PAGE ARTICLE 
+//FRONT PAGE article 
 require_once __DIR__ . '/util/index.php';
 
 

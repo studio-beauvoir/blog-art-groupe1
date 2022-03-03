@@ -1,13 +1,13 @@
 <?php
-// CRUD LIKECOM
+// CRUD likecom
 // ETUD
 require_once __DIR__ . '../../connect/database.php';
 
-class LIKECOM{
+class likecom{
 	function get_1LikeCom($numMemb, $numSeqCom, $numArt){
 		global $db;
 
-		$query = 'SELECT * FROM LIKECOM WHERE numMemb=? AND numSeqCom=? AND numArt=?;';
+		$query = 'SELECT * FROM likecom WHERE numMemb=? AND numSeqCom=? AND numArt=?;';
 		$request = $db->prepare($query);
 		$request->execute([$numMemb, $numSeqCom, $numArt]);
 		$result = $request->fetch();
@@ -18,7 +18,7 @@ class LIKECOM{
 	function get_1LikeComPlusMemb($numMemb, $numSeqCom, $numArt){
 		global $db;
 
-		$query = 'SELECT *, "" as passMemb FROM LIKECOM INNER JOIN MEMBRE ON LIKECOM.numMemb=MEMBRE.numMemb WHERE numMemb=?, numSeqCom=?, numArt=?;';
+		$query = 'SELECT *, "" as passMemb FROM likecom INNER JOIN membre ON likecom.numMemb=membre.numMemb WHERE numMemb=?, numSeqCom=?, numArt=?;';
 		$request = $db->prepare($query);
 		$request->execute([$numMemb, $numSeqCom, $numArt]);
 		$result = $request->fetch();
@@ -29,7 +29,7 @@ class LIKECOM{
 	function get_1LikeComPlusCom($numMemb, $numSeqCom, $numArt){
 		global $db;
 
-		$query = 'SELECT * FROM LIKECOM INNER JOIN COMMENT ON LIKECOM.numSeqCom=COMMENT.numSeqCom, LIKECOM.numArt=COMMENT.numArt, WHERE numMemb=?, numSeqCom=?, numArt=?;';
+		$query = 'SELECT * FROM likecom INNER JOIN comment ON likecom.numSeqCom=comment.numSeqCom, likecom.numArt=comment.numArt, WHERE numMemb=?, numSeqCom=?, numArt=?;';
 		$request = $db->prepare($query);
 		$request->execute([$numMemb, $numSeqCom, $numArt]);
 		$result = $request->fetch();
@@ -40,7 +40,7 @@ class LIKECOM{
 	function get_1LikeComPlusArt($numMemb, $numSeqCom, $numArt){
 		global $db;
 
-		$query = 'SELECT * FROM LIKECOM INNER JOIN ARTICLE ON LIKECOM.numArt=ARTICLE.numArt, WHERE numMemb=?, numSeqCom=?, numArt=?;';
+		$query = 'SELECT * FROM likecom INNER JOIN article ON likecom.numArt=article.numArt, WHERE numMemb=?, numSeqCom=?, numArt=?;';
 		$request = $db->prepare($query);
 		$request->execute([$numMemb, $numSeqCom, $numArt]);
 		$result = $request->fetch();
@@ -50,9 +50,9 @@ class LIKECOM{
 
 	function get_AllLikesCom(){
 		global $db;
-		$query = 'SELECT LIKECOM.*, MEMBRE.pseudoMemb, ARTICLE.*  FROM LIKECOM 
-				INNER JOIN MEMBRE ON LIKECOM.numMemb=MEMBRE.numMemb
-				INNER JOIN ARTICLE ON LIKECOM.numArt=ARTICLE.numArt;';
+		$query = 'SELECT likecom.*, membre.pseudoMemb, article.*  FROM likecom 
+				INNER JOIN membre ON likecom.numMemb=membre.numMemb
+				INNER JOIN article ON likecom.numArt=article.numArt;';
 		$request = $db->query($query);
 		
 		$allLikesCom = $request->fetchAll();
@@ -63,7 +63,7 @@ class LIKECOM{
 	function get_AllLikesComByComment($numSeqCom, $numArt){
 		global $db;
 
-		$query = 'SELECT * FROM LIKECOM WHERE numSeqCom=?, numArt=?;';
+		$query = 'SELECT * FROM likecom WHERE numSeqCom=?, numArt=?;';
 		$request = $db->prepare($query);
 		$request->execute([$numSeqCom, $numArt]);
 		$result = $request->fetchAll();
@@ -75,7 +75,7 @@ class LIKECOM{
 	function get_nbLikesComByComment($numSeqCom, $numArt){
 		global $db;
 
-		$query = 'SELECT * FROM LIKECOM WHERE numSeqCom=?, numArt=?;';
+		$query = 'SELECT * FROM likecom WHERE numSeqCom=?, numArt=?;';
 		$request = $db->prepare($query);
 		$request->execute([$numSeqCom, $numArt]);
 		$result = $request->rowCount();
@@ -86,7 +86,7 @@ class LIKECOM{
 	function get_AllLikesComByMembre($numMemb){
 		global $db;
 
-		$query = 'SELECT * FROM LIKECOM WHERE numMemb=?;';
+		$query = 'SELECT * FROM likecom WHERE numMemb=?;';
 		$request = $db->prepare($query);
 		$request->execute([$numMemb]);
 		$result = $request->fetchAll();
@@ -100,7 +100,7 @@ class LIKECOM{
 		try {
 			$db->beginTransaction();
 
-			$query = 'INSERT INTO LIKECOM (numMemb, numSeqCom, numArt, likeC) VALUES (?, ?, ?, ?);';
+			$query = 'INSERT INTO likecom (numMemb, numSeqCom, numArt, likeC) VALUES (?, ?, ?, ?);';
 			$request = $db->prepare($query);
 			$request->execute( [$numMemb, $numSeqCom, $numArt, $likeC]);
 			$db->commit();
@@ -109,7 +109,7 @@ class LIKECOM{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur insert LIKECOM : ' . $e->getMessage());
+			die('Erreur insert likecom : ' . $e->getMessage());
 		}
 	}
 
@@ -119,7 +119,7 @@ class LIKECOM{
 		try {
 			$db->beginTransaction();
 
-			$query = 'UPDATE LIKECOM SET likeC=? WHERE numMemb=? AND numSeqCom=? AND numArt=?;';
+			$query = 'UPDATE likecom SET likeC=? WHERE numMemb=? AND numSeqCom=? AND numArt=?;';
 			$request = $db->prepare($query);
 			$request->execute([$likeC, $numMemb, $numSeqCom, $numArt]);
 
@@ -129,7 +129,7 @@ class LIKECOM{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur update LIKECOM : ' . $e->getMessage());
+			die('Erreur update likecom : ' . $e->getMessage());
 		}
 	}
 
@@ -141,7 +141,7 @@ class LIKECOM{
 			$db->beginTransaction();
 
 
-			$query = 'INSERT INTO LIKECOM (numMemb, numSeqCom, numArt, likeC) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE likeC = NOT likeC;';
+			$query = 'INSERT INTO likecom (numMemb, numSeqCom, numArt, likeC) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE likeC = NOT likeC;';
 			$request = $db->prepare($query);
 			$request->execute([$numMemb, $numSeqCom, $numArt, $likeC]);
 
@@ -151,7 +151,7 @@ class LIKECOM{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur insert Or Update LIKECOM : ' . $e->getMessage());
+			die('Erreur insert Or Update likecom : ' . $e->getMessage());
 		}
 	}
 
@@ -162,7 +162,7 @@ class LIKECOM{
 		try {
 			$db->beginTransaction();
 
-			$query = 'DELETE FROM LIKECOM SET numMemb=?, numSeqCom=?, numArt=? WHERE likeArt=?;';
+			$query = 'DELETE FROM likecom SET numMemb=?, numSeqCom=?, numArt=? WHERE likeArt=?;';
 			$request = $db->prepare($query);
 			$request->execute([$numMemb], [$numSeqCom], [$numArt]);
 			$count = $request->rowCount();
@@ -173,7 +173,7 @@ class LIKECOM{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur delete LIKECOM : ' . $e->getMessage());
+			die('Erreur delete likecom : ' . $e->getMessage());
 		}
 	}
 }	// End of class

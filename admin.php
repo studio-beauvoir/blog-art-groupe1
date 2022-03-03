@@ -20,13 +20,13 @@ require_once __DIR__ . '/layouts/back/head.php';
 
 	<a class="btn btn-lg done" href="./back/comment/comment.php">Commentaire (*)</a>
 
-	<a class="btn btn-lg to-test" href="./back/commentplus/commentplus.php">Réponse sur Commentaire</a>
+	<a class="btn btn-lg to-test">Réponse sur Commentaire</a>
 
 	<a class="btn btn-lg done" href="./back/langue/langue.php">Langue (*)</a>
 
-	<a class="btn btn-lg done" href="./back/likeart/likeart.php">Like Article (*)</a>
+	<a class="btn btn-lg done" href="./back/likeart/likeArt.php">Like Article (*)</a>
 
-	<a class="btn btn-lg to-test" href="./back/likecom/likecom.php">Like Commentaire (*)</a>
+	<a class="btn btn-lg to-test" href="./back/likecom/likeCom.php">Like Commentaire (*)</a>
 
 <!-- Membre (*) - reCaptcha à ajouter -->
 	<a class="btn btn-lg done" href="./back/membre/membre.php">Membre (*)</a>

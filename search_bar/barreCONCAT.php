@@ -1,27 +1,14 @@
 <?php
-////////////////////////////////////////////////////////////
-//
-//  Gestion des CRUD (PDO) - Modifié : 4 Juillet 2021
-//
-//  Script  : barreCONCAT.php  -  (ETUD)  BLOGART22
-//
-////////////////////////////////////////////////////////////
-
 // Plusieurs tags
 
-// Mode DEV
-require_once __DIR__ . '/../util/utilErrOn.php';
-
-// controle des saisies du formulaire
-require_once __DIR__ . '/../util/ctrlSaisies.php';
-
-// Recup et mise en forme mots clés pour prépar requete SQL
-require_once __DIR__ . '/../util/preparerTags.php';
+// Insertion fichiers utiles
+require_once __DIR__ . '/../util/index.php';
 
 // Insertion classe Article
+require_once __DIR__ . '/../class_crud/article.class.php';
 
 // Instanciation Classe Article
-
+$monArticle = new ARTICLE();
 
 // Initialisation var
 $motcle = "";

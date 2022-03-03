@@ -27,12 +27,19 @@ main {
     position: relative;
     display: inline-block;
 }
+.interactive-lien-text.white{
+    color: var(--p1);
+}
+.interactive-lien-text.white::after {
+    background: var(--p1);
+}
+
 .interactive-lien-text::after {
     position: absolute;
     content: ' ';
     bottom: 0;
     left: 0;
-    height: 3px;
+    height: 2px;
     width: 100%;
     background: var(--i);
     transform: scaleX(0);

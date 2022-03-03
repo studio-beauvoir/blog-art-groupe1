@@ -44,10 +44,15 @@ if (isset($erreur) && $erreur && isset($errSaisies)) {
         <?php require_once __DIR__ . './../general/header.php'; ?>
         <main>
             <div class="page-header">
-            <?php require_once __DIR__ . '/../../layouts/back/nav.php'; ?>
-            <?php if(isset($pageTitle)) { ?>
-                <h2><?=$pageTitle?></h2>
-            <?php } ?>
+                <div class="admin-statut">
+                    <label>Connecté en tant que</label>
+                    <h3><?=$loggedUser['pseudoUser'] ?></h3>
+                    <a href="<?= webSitePath('/admin/deconnexion.php')?>" class="interactive-lien-text">Se déconnecter</a>
+                </div>
+                <?php require_once __DIR__ . '/../../layouts/back/nav.php'; ?>
+                <?php if(isset($pageTitle)) { ?>
+                    <h2><?=$pageTitle?></h2>
+                <?php } ?>
             </div>
 
             <?php if(count($listErrors)>0) { ?>

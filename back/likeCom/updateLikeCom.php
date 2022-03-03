@@ -3,7 +3,7 @@
 $submitBtn = "Éditer";
 $pageCrud = "likeCom";
 $pagePrecedent = "./$pageCrud.php";
-$pageTitle = "Créer un $pageCrud";
+$pageTitle = "Modifier un $pageCrud";
 $pageNav = ['Home:/admin.php', 'Gestion des likes de commentaires:'.$pagePrecedent, $pageTitle];
 // Insertion des fonctions utilitaires
 require_once __DIR__ . '/../../util/index.php';
@@ -28,9 +28,6 @@ $validator = Validator::make();
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $validator->addRules([
-        ValidationRule::required('numMemb'),
-        ValidationRule::required('numSeqCom'),
-        ValidationRule::required('numArt'),
         ValidationRule::required('likeC'),
     ])->bindValues($_POST);
 
@@ -39,9 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Saisies valides
         $erreur = false;
 
-        $numMemb = $validator->verifiedField('numMemb');
-        $numSeqCom = $validator->verifiedField('numSeqCom');
-        $numArt = $validator->verifiedField('numArt');
+        $numMemb = $_GET['numMemb'];
+        $numSeqCom = $_GET['numSeqCom'];
+        $numArt = $_GET['numArt'];
         $likeC = $validator->verifiedField('likeC') == "true"?1:0;
         
         $monLikeCom->update($numMemb, $numSeqCom, $numArt, $likeC);
@@ -75,7 +72,7 @@ $likeC = $likeCom['likeC'];
     <form 
         class="admin-form"
         method="POST" 
-        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" 
+        action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>?numMemb=<?=$_GET['numMemb'];?>&numArt=<?=$_GET['numArt'];?>&numSeqCom=<?=$_GET['numSeqCom']?>" 
         enctype="multipart/form-data" 
         accept-charset="UTF-8"
     >
@@ -118,7 +115,7 @@ $likeC = $likeCom['likeC'];
         </div>
 
         <div class="field">
-            <label for="likeC">Like?</label>
+            <label for="likeC">Like ?</label>
             <select name="likeC" id="likeC">
                 <option <?=$likeC?'selected':'' ?> value="true">Oui</option>
                 <option <?=$likeC?'':'selected' ?> value="false">Non</option>

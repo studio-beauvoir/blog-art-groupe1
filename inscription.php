@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $passMemb = $validator->verifiedField('passMemb', false);
         // hashage du mot de passe
-        $passMemb = password_hash($passMemb, PASSWORD_BCRYPT);
+        $passMembHash = password_hash($passMemb, PASSWORD_BCRYPT);
 
         $eMailMemb = $validator->verifiedField('eMailMemb');
 
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $idStat = 3; // Membre niveau 1
 
         
-        $monMembre->create($prenomMemb, $nomMemb, $pseudoMemb, $passMemb, $eMailMemb, $dtCreaMemb, $accordMemb, $idStat);
+        $monMembre->create($prenomMemb, $nomMemb, $pseudoMemb, $passMembHash, $eMailMemb, $dtCreaMemb, $accordMemb, $idStat);
         
         $monMembre->login($pseudoMemb, $passMemb);
         die();

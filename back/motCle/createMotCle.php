@@ -33,7 +33,7 @@ if($validator->success()) {
     
     $monMotCle->create($libMotCle, $numLang);
 
-    header("Location: ./motCle.php");
+    header("Location: ./motcle.php");
     die();
 } else {
     // Saisies invalides
@@ -46,7 +46,7 @@ if($validator->success()) {
 include __DIR__ . '/initMotCle.php';
 
 $submitBtn = "Créer";
-$pagePrecedent = "./motCle.php";
+$pagePrecedent = "./motcle.php";
 $pageTitle = "Créer un Mot Clé";
 $pageNav = ['Home:/admin.php', 'Gestion des mots clés:'.$pagePrecedent, $pageTitle];
 include __DIR__ . '/../../layouts/back/head.php';

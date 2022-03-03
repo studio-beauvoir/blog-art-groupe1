@@ -9,8 +9,8 @@ $pageNav = ['Home:/admin.php', 'Gestion des likes de commentaires:'.$pagePrecede
 require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe LikeArt
-require_once __DIR__ . '/../../CLASS_CRUD/likecom.class.php'; 
-require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php'; 
+require_once __DIR__ . '/../../class_crud/likecom.class.php'; 
+require_once __DIR__ . '/../../class_crud/comment.class.php'; 
 require_once __DIR__ . '/../../class_crud/membre.class.php'; 
 require_once __DIR__ . '/../../class_crud/article.class.php'; 
 

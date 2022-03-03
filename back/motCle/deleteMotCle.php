@@ -1,7 +1,7 @@
 <?php
 
 $submitBtn = "Supprimer";
-$pageCrud = "motCle";
+$pageCrud = "motcle";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "$submitBtn un $pageCrud";
 $pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];

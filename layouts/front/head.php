@@ -16,5 +16,5 @@ require_once __DIR__ . '/../../util/index.php';
 
     </head>
     <body>
-        <?php require_once __DIR__ . './../general/header.php'; ?>
+        <?php require_once __DIR__ . '/../general/header.php'; ?>
         <main class="container-fluid">

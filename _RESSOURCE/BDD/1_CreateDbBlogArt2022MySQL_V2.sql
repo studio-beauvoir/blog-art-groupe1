@@ -151,12 +151,12 @@ create index LANGUE_FK on langue
 
 -- --------------------------------------------------------------------
 --
--- Structure de la table PAYS
+-- Structure de la table pays
 --
 /*====================================================================*/
-/* Table : PAYS                                                       */
+/* Table : pays                                                       */
 /*====================================================================*/
-create table PAYS
+create table pays
 (
    numPays char(4) not null, -- numéro pays
    cdPays char(2) not null, -- code pays
@@ -168,7 +168,7 @@ create table PAYS
 /*====================================================================*/
 /* Index : PAYS_FK                                                    */
 /*====================================================================*/
-create index PAYS_FK on PAYS
+create index PAYS_FK on pays
 (
    numPays
 );
@@ -492,7 +492,7 @@ alter table user add constraint FK_ASSOCIATION_6 foreign key (idStat)
 -- --------------------------------------------------------------------
 
 alter table langue add constraint FK_ASSOCIATION_7 foreign key (numPays)
-      references PAYS (numPays) on delete restrict on update restrict;
+      references pays (numPays) on delete restrict on update restrict;
 
 -- --------------------------------------------------------------------
 

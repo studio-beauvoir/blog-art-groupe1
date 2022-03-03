@@ -12,12 +12,14 @@ require_once __DIR__ . '/../../class_crud/article.class.php';
 require_once __DIR__ . '/../../class_crud/langue.class.php'; 
 require_once __DIR__ . '/../../class_crud/angle.class.php'; 
 require_once __DIR__ . '/../../class_crud/thematique.class.php'; 
+require_once __DIR__ . '/../../class_crud/motclearticle.class.php'; 
 
 // Instanciation de la classe Membre
 $monArticle = new ARTICLE(); 
 $maLangue = new LANGUE();
 $monAngle = new ANGLE();
 $maThematique = new THEMATIQUE();
+$monMotcleArticle = new MOTCLEARTICLE();
 
 $validator = Validator::make();
 $fileValidator = Validator::make();

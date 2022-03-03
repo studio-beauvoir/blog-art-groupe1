@@ -26,7 +26,7 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <th>Accroche</th>
                 <th>Angle</th>
                 <th>Thématique</th>
-                <th colspan="2">Action</th>
+                <th class="sticky-right">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -43,10 +43,8 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <td> <?= $row['libAccrochArt']; ?> </td>
                 <td><a href="<?=webCrudPath('angle/updateAngle.php?id='.$row['numAngl'])?>"><?= $row['libAngl']; ?></a></td>
                 <td><a href="<?=webCrudPath('thematique/updateThematique.php?id='.$row['numThem'])?>"><?= $row['libThem']; ?></a></td>
-                <td>
+                <td class="actions sticky-right">
                     <a class="btn btn-md" href="./updateArticle.php?id=<?=$row['numArt']; ?>" title="Modifier l'article">Modifier</a>
-                </td>
-                <td>
                     <a class="btn btn-md btn-danger" href="./deleteArticle.php?id=<?=$row['numArt']?>" title="Supprimer l'article">Supprimer</a>
                 </td>
             </tr>

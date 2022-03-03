@@ -22,7 +22,7 @@ include __DIR__ . '/../../layouts/back/head.php';
                 <th>Commentaire</th>
                 <th>Article</th>
                 <th>Like?</th>
-                <th colspan="2">Action</th>
+                <th class="sticky-right">Action</th>
             </tr>
         </thead>
         <tbody>

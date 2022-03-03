@@ -20,7 +20,7 @@ include __DIR__ . '/../../layouts/back/head.php';
             <tr>
                 <th>Numéro</th>
                 <th>Nom</th>
-                <th colspan="2">Action</th>
+                <th class="sticky-right">Action</th>
             </tr>
         </thead>
         <tbody>

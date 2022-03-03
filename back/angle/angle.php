@@ -21,7 +21,7 @@ include __DIR__ . '/../../layouts/back/head.php';
                 <th>Numéro</th>
                 <th>Libellé</th>
                 <th>Langue</th>
-                <th colspan="2">Action</th>
+                <th class="sticky-right">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -39,10 +39,8 @@ include __DIR__ . '/../../layouts/back/head.php';
                 <td><a href="<?=webCrudPath('langue/updateLangue.php?id='.$row['numLang'])?>"><?= $row['lib1Lang']; ?></a></td>
 
                 <!-- actions -->
-                <td>
+                <td class="actions sticky-right">
                     <a class="btn btn-md" href="./updateAngle.php?id=<?=$row['numAngl']; ?>" title="Modifier l'angle">Modifier</a>
-                </td>
-                <td>  
                     <!-- lien : test ternaire super admin -->
                     <a class="btn btn-md btn-danger" href="<?= $row['numAngl']!=1?'./deleteAngle.php?id='.$row['numAngl']:'#'; ?>" title="Supprimer l'angle">Supprimer</a>
                 </td>

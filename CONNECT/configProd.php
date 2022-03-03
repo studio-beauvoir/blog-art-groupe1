@@ -1,6 +1,7 @@
 <?php
 // nom de votre serveur (ou 127.0.0.1)
-$hostBD = "plateforme-mmi.iut.u-bordeaux-montaigne.fr";
+// $hostBD = "plateforme-mmi.iut.u-bordeaux-montaigne.fr";
+$hostBD = "localhost";
 // nom BD
 $nomBD = "db_mmi_01";
 // Serveur
@@ -8,7 +9,7 @@ $nomBD = "db_mmi_01";
 $serverBD = "mysql:dbname=$nomBD;host=$hostBD;charset=utf8";
 
 // nom utilisateur de connexion à la BDD
-$userBD = 'etummiuser_db_XX';         // Votre login
+$userBD = 'etummiuser_db_01';         // Votre login
 // mot de passe de connexion à la BDD
 // $passBD = 'root';         // Pass WAMP MAC
 $passBD = 'mmi-etu';         // Pass WAMP WINDOW

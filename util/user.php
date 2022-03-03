@@ -1,10 +1,10 @@
 <?php
 
-require_once __DIR__ . '/../class_crud/membre.class.php';
+require_once __DIR__ . '/../class_crud/user.class.php';
 
-function getLoggedMemberOrFalse() {
-    $monMembre = new membre();
-    $loggedMember = false;
+function getLoggedUserOrFalse() {
+    $monUser = new user();
+    $loggedUser = false;
 
     // if(isset($_COOKIE['session_token'])) {
     //     // membre potentiellement loggé
@@ -14,29 +14,29 @@ function getLoggedMemberOrFalse() {
     //     if(count($data) > 2 AND $data[0] === "true") { // le token est valide
     //         $numMemb = intval($data[1]);
     
-    //         $potentialMember = $monMembre->get_1Membre($numMemb);
-    //         if($potentialMember) {
+    //         $potentialUser = $monUser->get_1User($numMemb);
+    //         if($potentialUser) {
     //             // membre connecté
-    //             $loggedMember = $potentialMember;
+    //             $loggedUser = $potentialUser;
     //         }
     //     }
     // }
 
     if ( empty($_SESSION) ) { session_start(); }
 
-    if(isset($_SESSION['member_id'])) {
+    if(isset($_SESSION['user_id'])) {
         // membre potentiellement loggé
-        $potentialMember = $monMembre->get_1Membre($_SESSION['member_id']);
-        if($potentialMember) {
+        $potentialUser = $monUser->get_1User($_SESSION['user_id']);
+        if($potentialUser) {
             // membre connecté
-            $loggedMember = $potentialMember;
+            $loggedUser = $potentialUser;
         }
     }
 
-    return $loggedMember;
+    return $loggedUser;
 }
 
-function logoutMember() {
+function logoutUser() {
     // if (isset($_COOKIE['session_token'])) {
     //     unset($_COOKIE['session_token']); 
     //     setcookie('session_token', null, time()-3600); 

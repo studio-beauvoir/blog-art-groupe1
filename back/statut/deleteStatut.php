@@ -6,18 +6,18 @@ require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/statut.class.php'; 
 
 // Instanciation de la classe Statut
-$monStatut = new STATUT(); 
+$monStatut = new statut(); 
 
 // Ctrl CIR
 // Insertion classe User
 require_once __DIR__ . '/../../class_crud/user.class.php';
 // Instanciation de la classe User
-$monUser = new USER();
+$monUser = new user();
 
 // Insertion classe Membre
 require_once __DIR__ . '/../../class_crud/membre.class.php';
 // Instanciation de la classe Membre
-$monMembre = new MEMBRE();
+$monMembre = new membre();
 
 // Gestion des erreurs de saisie
 $erreur = false;

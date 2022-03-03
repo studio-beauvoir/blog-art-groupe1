@@ -13,24 +13,24 @@ require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/langue.class.php'; 
 
 // Instanciation de la classe langue
-$maLangue = new LANGUE(); 
+$maLangue = new langue(); 
 
 // Ctrl CIR
 // Insertion classe Angle
 require_once __DIR__ . '/../../class_crud/angle.class.php';
 
 // Instanciation de la classe Angle
-$monAngle = new ANGLE();
+$monAngle = new angle();
 
 // Insertion classe Thematique
 require_once __DIR__ . '/../../class_crud/thematique.class.php';
 // Instanciation de la classe Thematique
-$maThematique = new THEMATIQUE();
+$maThematique = new thematique();
 
 // Insertion classe Motcle
 require_once __DIR__ . '/../../class_crud/motcle.class.php';
 // Instanciation de la classe Motcle
-$monMotCle = new MOTCLE();
+$monMotCle = new motcle();
 
 
 // Gestion des erreurs de saisie

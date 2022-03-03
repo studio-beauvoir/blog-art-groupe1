@@ -14,11 +14,11 @@ require_once __DIR__ . '/../../class_crud/angle.class.php';
 require_once __DIR__ . '/../../class_crud/thematique.class.php'; 
 require_once __DIR__ . '/../../class_crud/motclearticle.class.php'; 
 
-$monMotcleArticle = new MOTCLEARTICLE();
-$monArticle = new ARTICLE(); 
-$maLangue = new LANGUE();
-$monAngle = new ANGLE();
-$maThematique = new THEMATIQUE();
+$monMotcleArticle = new motclearticle();
+$monArticle = new article(); 
+$maLangue = new langue();
+$monAngle = new angle();
+$maThematique = new thematique();
 
 $validator = Validator::make();
 $fileValidator = Validator::make();

@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/membre.class.php'; 
 
 // Instanciation de la classe langue
-$monMembre = new MEMBRE(); 
+$monMembre = new membre(); 
 
 $pageTitle = "Gestion des Membres";
 $pageNav = ['Home:/admin.php', $pageTitle];

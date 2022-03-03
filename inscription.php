@@ -2,7 +2,7 @@
 require_once __DIR__ . '/util/index.php';
 
 require_once __DIR__ . './class_crud/membre.class.php';
-$monMembre = new MEMBRE();
+$monMembre = new membre();
 
 $validator = Validator::make();
 

@@ -78,12 +78,12 @@ USE BLOGART22;
 
 -- --------------------------------------------------------------------
 --
--- Structure de la table ANGLE
+-- Structure de la table angle
 --
 /*====================================================================*/
-/* Table : ANGLE                                                	    */
+/* Table : angle                                                	    */
 /*====================================================================*/
-create table ANGLE
+create table angle
 (
    numAngl varchar(8) not null,	-- PK numéro angle
    libAngl varchar(60) not null,	-- nom angle
@@ -94,7 +94,7 @@ create table ANGLE
 /*====================================================================*/
 /* Index : ANGLE_FK                                     			       */
 /*====================================================================*/
-create index ANGLE_FK on ANGLE
+create index ANGLE_FK on angle
 (
    numAngl
 );
@@ -102,12 +102,12 @@ create index ANGLE_FK on ANGLE
 
 -- --------------------------------------------------------------------
 --
--- Structure de la table THEMATIQUE
+-- Structure de la table thematique
 --
 /*====================================================================*/
-/* Table : THEMATIQUE                                                 */
+/* Table : thematique                                                 */
 /*====================================================================*/
-create table THEMATIQUE
+create table thematique
 (
    numThem varchar(8) not null,  -- PK numéro thématique
    libThem varchar(60) not null, -- nom thèmatique
@@ -118,7 +118,7 @@ create table THEMATIQUE
 /*====================================================================*/
 /* Index : THEMATIQUE_FK                                              */
 /*====================================================================*/
-create index THEMATIQUE_FK on THEMATIQUE
+create index THEMATIQUE_FK on thematique
 (
    NumThem
 );
@@ -126,12 +126,12 @@ create index THEMATIQUE_FK on THEMATIQUE
 
 -- --------------------------------------------------------------------
 --
--- Structure de la table LANGUE
+-- Structure de la table langue
 --
 /*====================================================================*/
-/* Table : LANGUE                                                     */
+/* Table : langue                                                     */
 /*====================================================================*/
-create table LANGUE
+create table langue
 (
    numLang varchar(8) not null,  -- PK numéro langue
    lib1Lang varchar(30),         -- Libellé court langue
@@ -143,7 +143,7 @@ create table LANGUE
 /*====================================================================*/
 /* Index : LANGUE_FK                                                  */
 /*====================================================================*/
-create index LANGUE_FK on LANGUE
+create index LANGUE_FK on langue
 (
    numLang
 );
@@ -176,12 +176,12 @@ create index PAYS_FK on PAYS
 
 -- --------------------------------------------------------------------
 --
--- Structure de la table MEMBRE
+-- Structure de la table membre
 --
 /*====================================================================*/
-/* Table : MEMBRE                                                     */
+/* Table : membre                                                     */
 /*====================================================================*/
-create table MEMBRE
+create table membre
 (
    numMemb int(10) not null auto_increment, -- PK
    prenomMemb varchar(70) not null,
@@ -198,7 +198,7 @@ create table MEMBRE
 /*====================================================================*/
 /* Index : MEMBRE_FK                                                  */
 /*====================================================================*/
-create index MEMBRE_FK on MEMBRE
+create index MEMBRE_FK on membre
 (
    numMemb
 );
@@ -206,12 +206,12 @@ create index MEMBRE_FK on MEMBRE
 
 -- --------------------------------------------------------------------
 --
--- Structure de la table ARTICLE
+-- Structure de la table article
 --
 /*====================================================================*/
-/* Table : ARTICLE                                              	    */
+/* Table : article                                              	    */
 /*====================================================================*/
-create table ARTICLE
+create table article
 (
    numArt int(8) not null auto_increment,   -- PK numéro article
    dtCreArt timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,	-- Date création article
@@ -233,7 +233,7 @@ create table ARTICLE
 /*====================================================================*/
 /* Index : ARTICLE_FK                                     			    */
 /*====================================================================*/
-create index ARTICLE_FK on ARTICLE
+create index ARTICLE_FK on article
 (
    numArt
 );
@@ -241,12 +241,12 @@ create index ARTICLE_FK on ARTICLE
 
 -- --------------------------------------------------------------------
 --
--- Structure de la table USER
+-- Structure de la table user
 --
 /*====================================================================*/
-/* Table : USER                                                 	    */
+/* Table : user                                                 	    */
 /*====================================================================*/
-create table USER
+create table user
 (
    pseudoUser varchar(60) not null,	-- PK login
    passUser varchar(60) not null,	-- PK password
@@ -258,9 +258,9 @@ create table USER
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*====================================================================*/
-/* Index : USER_FK                                     				    */
+/* Index : user_FK                                     				    */
 /*====================================================================*/
-create index USER_FK on USER
+create index user_FK on user
 (
    pseudoUser,
    passUser
@@ -269,12 +269,12 @@ create index USER_FK on USER
 
 -- --------------------------------------------------------------------
 --
--- Structure de la table STATUT
+-- Structure de la table statut
 --
 /*====================================================================*/
-/* Table : STATUT                                                 	 */
+/* Table : statut                                                 	 */
 /*====================================================================*/
-create table STATUT
+create table statut
 (
    idStat int(5) not null auto_increment,   -- PK
    libStat varchar(25) not null,
@@ -284,7 +284,7 @@ create table STATUT
 /*====================================================================*/
 /* Index : STATUT_FK                                     				 */
 /*====================================================================*/
-create index STATUT_FK on STATUT
+create index STATUT_FK on statut
 (
    idStat
 );
@@ -292,12 +292,12 @@ create index STATUT_FK on STATUT
 
 -- --------------------------------------------------------------------
 --
--- Structure de la table MOTCLE
+-- Structure de la table motcle
 --
 /*====================================================================*/
-/* Table : MOTCLE                                                     */
+/* Table : motcle                                                     */
 /*====================================================================*/
-create table MOTCLE
+create table motcle
 (
    numMotCle int(8) not null auto_increment,   -- PK
    libMotCle varchar(60) not null,
@@ -308,7 +308,7 @@ create table MOTCLE
 /*====================================================================*/
 /* Index : MOTCLE_FK                                                  */
 /*====================================================================*/
-create index MOTCLE_FK on MOTCLE
+create index MOTCLE_FK on motcle
 (
    numMotCle
 );
@@ -316,12 +316,12 @@ create index MOTCLE_FK on MOTCLE
 
 -- --------------------------------------------------------------------
 --
--- Structure de la table MOTCLEARTICLE   (TJ)
+-- Structure de la table motclearticle   (TJ)
 --
 /*====================================================================*/
-/* Table : MOTCLEARTICLE                                              */
+/* Table : motclearticle                                              */
 /*====================================================================*/
-create table MOTCLEARTICLE
+create table motclearticle
 (
    numArt int(8) not null,    -- PK, FK
    numMotCle int(8) not null, -- PK, FK
@@ -331,7 +331,7 @@ create table MOTCLEARTICLE
 /*====================================================================*/
 /* Index : MOTCLEARTICLE_FK                                           */
 /*====================================================================*/
-create index MOTCLEARTICLE_FK on MOTCLEARTICLE
+create index MOTCLEARTICLE_FK on motclearticle
 (
    numArt
 );
@@ -339,7 +339,7 @@ create index MOTCLEARTICLE_FK on MOTCLEARTICLE
 /*====================================================================*/
 /* Index : MOTCLEARTICLE2_FK                                          */
 /*====================================================================*/
-create index MOTCLEARTICLE2_FK on MOTCLEARTICLE
+create index MOTCLEARTICLE2_FK on motclearticle
 (
    numMotCle
 );
@@ -347,12 +347,12 @@ create index MOTCLEARTICLE2_FK on MOTCLEARTICLE
 
 -- --------------------------------------------------------------------
 --
--- Structure de la table COMMENT
+-- Structure de la table comment
 --
 /*====================================================================*/
-/* Table : COMMENT                                                    */
+/* Table : comment                                                    */
 /*====================================================================*/
-create table COMMENT
+create table comment
 (
    numSeqCom int(10) not null,    -- PK (id. Relatif)
    numArt int(8) not null,        -- PK, FK
@@ -369,7 +369,7 @@ create table COMMENT
 /*====================================================================*/
 /* Index : COMMENT_FK                                                 */
 /*====================================================================*/
-create index COMMENT_FK on COMMENT
+create index COMMENT_FK on comment
 (
    numSeqCom,
    numArt
@@ -378,12 +378,12 @@ create index COMMENT_FK on COMMENT
 
 -- --------------------------------------------------------------------
 --
--- Structure de la table COMMENTPLUS   (TJ)
+-- Structure de la table commentplus   (TJ)
 --
 /*====================================================================*/
-/* Table : COMMENTPLUS                                                */
+/* Table : commentplus                                                */
 /*====================================================================*/
-create table COMMENTPLUS
+create table commentplus
 (
    numSeqCom int(10) not null,  -- PK, FK (id. Relatif)
    numArt int(8) not null,      -- PK, FK
@@ -395,7 +395,7 @@ create table COMMENTPLUS
 /*====================================================================*/
 /* Index : COMMENTPLUS_FK                                             */
 /*====================================================================*/
-create index COMMENTPLUS_FK on COMMENTPLUS
+create index COMMENTPLUS_FK on commentplus
 (
    numSeqCom,
    numArt,
@@ -406,12 +406,12 @@ create index COMMENTPLUS_FK on COMMENTPLUS
 
 -- --------------------------------------------------------------------
 --
--- Structure de la table LIKEART   (TJ)
+-- Structure de la table likeart   (TJ)
 --
 /*====================================================================*/
-/* Table : LIKEART                                                    */
+/* Table : likeart                                                    */
 /*====================================================================*/
-create table LIKEART
+create table likeart
 (
    numMemb int(10) not null, -- PK, FK
    numArt int(8) not null,   -- PK, FK
@@ -422,7 +422,7 @@ create table LIKEART
 /*====================================================================*/
 /* Index : LIKEART_FK                                                 */
 /*====================================================================*/
-create index LIKEART_FK on LIKEART
+create index LIKEART_FK on likeart
 (
    numMemb,
    numArt
@@ -431,12 +431,12 @@ create index LIKEART_FK on LIKEART
 
 -- --------------------------------------------------------------------
 --
--- Structure de la table LIKECOM   (TJ)
+-- Structure de la table likecom   (TJ)
 --
 /*====================================================================*/
-/* Table : LIKECOM                                                    */
+/* Table : likecom                                                    */
 /*====================================================================*/
-create table LIKECOM
+create table likecom
 (
    numMemb int(10) not null,   -- PK, FK
    numSeqCom int(10) not null, -- PK, FK (id. Relatif)
@@ -448,7 +448,7 @@ create table LIKECOM
 /*====================================================================*/
 /* Index : LIKECOM_FK                                                 */
 /*====================================================================*/
-create index LIKECOM_FK on LIKECOM
+create index LIKECOM_FK on likecom
 (
    numMemb,
    numSeqCom,
@@ -469,77 +469,77 @@ create index LIKECOM_FK on LIKECOM
 
 -- --------------------------------------------------------------------
 
-alter table ARTICLE add constraint FK_ASSOCIATION_1 foreign key (numAngl)
-      references ANGLE (numAngl) on delete restrict on update restrict;
+alter table article add constraint FK_ASSOCIATION_1 foreign key (numAngl)
+      references angle (numAngl) on delete restrict on update restrict;
 
-alter table ARTICLE add constraint FK_ASSOCIATION_2 foreign key (numThem)
-      references THEMATIQUE (numThem) on delete restrict on update restrict;
+alter table article add constraint FK_ASSOCIATION_2 foreign key (numThem)
+      references thematique (numThem) on delete restrict on update restrict;
 
-alter table ANGLE add constraint FK_ASSOCIATION_3 foreign key (numLang)
-      references LANGUE (numLang) on delete restrict on update restrict;
+alter table angle add constraint FK_ASSOCIATION_3 foreign key (numLang)
+      references langue (numLang) on delete restrict on update restrict;
 
-alter table THEMATIQUE add constraint FK_ASSOCIATION_4 foreign key (numLang)
-      references LANGUE (numLang) on delete restrict on update restrict;
+alter table thematique add constraint FK_ASSOCIATION_4 foreign key (numLang)
+      references langue (numLang) on delete restrict on update restrict;
 
-alter table MOTCLE add constraint FK_ASSOCIATION_5 foreign key (numLang)
-      references LANGUE (numLang) on delete restrict on update restrict;
-
--- --------------------------------------------------------------------
-
-alter table USER add constraint FK_ASSOCIATION_6 foreign key (idStat)
-      references STATUT (idStat) on delete restrict on update restrict;
+alter table motcle add constraint FK_ASSOCIATION_5 foreign key (numLang)
+      references langue (numLang) on delete restrict on update restrict;
 
 -- --------------------------------------------------------------------
 
-alter table LANGUE add constraint FK_ASSOCIATION_7 foreign key (numPays)
+alter table user add constraint FK_ASSOCIATION_6 foreign key (idStat)
+      references statut (idStat) on delete restrict on update restrict;
+
+-- --------------------------------------------------------------------
+
+alter table langue add constraint FK_ASSOCIATION_7 foreign key (numPays)
       references PAYS (numPays) on delete restrict on update restrict;
 
 -- --------------------------------------------------------------------
 
-alter table COMMENT add constraint FK_ASSOCIATION_8 foreign key (numArt)
-      references ARTICLE (numArt) on delete restrict on update restrict;
+alter table comment add constraint FK_ASSOCIATION_8 foreign key (numArt)
+      references article (numArt) on delete restrict on update restrict;
 
 -- --------------------------------------------------------------------
 
-alter table COMMENT add constraint FK_ASSOCIATION_9 foreign key (numMemb)
-      references MEMBRE (numMemb) on delete restrict on update restrict;
+alter table comment add constraint FK_ASSOCIATION_9 foreign key (numMemb)
+      references membre (numMemb) on delete restrict on update restrict;
 
 -- --------------------------------------------------------------------
 
-alter table MEMBRE add constraint FK_ASSOCIATION_10 foreign key (idStat)
-      references STATUT (idStat) on delete restrict on update restrict;
+alter table membre add constraint FK_ASSOCIATION_10 foreign key (idStat)
+      references statut (idStat) on delete restrict on update restrict;
 
 -- --------------------------------------------------------------------
 
-alter table COMMENTPLUS add constraint FK_COMMENTPLUS foreign key (numSeqComR, numArtR)
-      references COMMENT (numSeqCom, numArt) on delete restrict on update restrict;
+alter table commentplus add constraint FK_COMMENTPLUS foreign key (numSeqComR, numArtR)
+      references comment (numSeqCom, numArt) on delete restrict on update restrict;
 
-alter table COMMENTPLUS add constraint FK_COMMENTPLUS2 foreign key (numSeqCom, numArt)
-      references COMMENT (numSeqCom, numArt) on delete restrict on update restrict;
-
--- --------------------------------------------------------------------
-
-alter table MOTCLEARTICLE add constraint FK_MotCleArt1 foreign key (numMotCle)
-      references MOTCLE (numMotCle) on delete restrict on update restrict;
-
-alter table MOTCLEARTICLE add constraint FK_MotCleArt2 foreign key (numArt)
-      references ARTICLE (numArt) on delete restrict on update restrict;
+alter table commentplus add constraint FK_COMMENTPLUS2 foreign key (numSeqCom, numArt)
+      references comment (numSeqCom, numArt) on delete restrict on update restrict;
 
 -- --------------------------------------------------------------------
 
-alter table LIKEART add constraint FK_LIKEART foreign key (numArt)
-      references ARTICLE (numArt) on delete restrict on update restrict;
+alter table motclearticle add constraint FK_MotCleArt1 foreign key (numMotCle)
+      references motcle (numMotCle) on delete restrict on update restrict;
 
-alter table LIKEART add constraint FK_LIKEART2 foreign key (numMemb)
-      references MEMBRE (numMemb) on delete restrict on update restrict;
+alter table motclearticle add constraint FK_MotCleArt2 foreign key (numArt)
+      references article (numArt) on delete restrict on update restrict;
 
 -- --------------------------------------------------------------------
 
-alter table LIKECOM add constraint FK_LIKECOM foreign key (numSeqCom, numArt)
-      references COMMENT (numSeqCom, numArt) on delete restrict on update restrict;
+alter table likeart add constraint FK_LIKEART foreign key (numArt)
+      references article (numArt) on delete restrict on update restrict;
 
-alter table LIKECOM add constraint FK_LIKECOM2 foreign key (numMemb)
-      references MEMBRE (numMemb) on delete restrict on update restrict;
+alter table likeart add constraint FK_LIKEART2 foreign key (numMemb)
+      references membre (numMemb) on delete restrict on update restrict;
+
+-- --------------------------------------------------------------------
+
+alter table likecom add constraint FK_LIKECOM foreign key (numSeqCom, numArt)
+      references comment (numSeqCom, numArt) on delete restrict on update restrict;
+
+alter table likecom add constraint FK_LIKECOM2 foreign key (numMemb)
+      references membre (numMemb) on delete restrict on update restrict;
 
 -- --------------------------------------------------------------------
 

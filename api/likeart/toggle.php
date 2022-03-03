@@ -1,10 +1,10 @@
 <?php
 
-require_once __DIR__ . '/../../middleware/loggedMember';
+require_once __DIR__ . '/../../middleware/loggedMember.php';
 require_once __DIR__ . '/../../util/index.php';
-require_once __DIR__ . '/../../class_crud/LIKEART.class.php'; 
+require_once __DIR__ . '/../../class_crud/likeart.class.php'; 
 
-$monLikeArt = new LIKEART(); 
+$monLikeArt = new likeart(); 
 
 $result = false;
 $errors = false;

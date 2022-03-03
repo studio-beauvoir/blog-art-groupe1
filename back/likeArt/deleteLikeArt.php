@@ -9,13 +9,13 @@ $pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pa
 require_once __DIR__ . '/../../util/index.php';
 
 require_once __DIR__ . '/../../CLASS_CRUD/likeart.class.php';
-$monLikeArt = new LIKEART(); 
+$monLikeArt = new likeart(); 
 
 // Ctrl CIR
 // Insertion classe Article
 require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
 // Instanciation de la classe Article
-$monArticle = new LIKEART(); 
+$monArticle = new likeart(); 
 
 
 

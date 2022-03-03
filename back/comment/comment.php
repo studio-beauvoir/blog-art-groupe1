@@ -9,7 +9,7 @@ $pageNav = ['Home:/admin.php', $pageTitle];
 require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/comment.class.php'; 
 
-$monComment = new COMMENT(); 
+$monComment = new comment(); 
 
 require_once __DIR__ . '/../../layouts/back/head.php';
 ?>

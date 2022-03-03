@@ -4,14 +4,14 @@ require_once __DIR__ . '/../../util/index.php';
 // Insertion classe MotCle
 require_once __DIR__ . '/../../class_crud/motcle.class.php';
 
-//Instanciation de la classe MOTCLE
-$monMotCle = new MOTCLE();
+//Instanciation de la classe motcle
+$monMotCle = new motcle();
 
 // Insertion classe Langue
 require_once __DIR__ . '/../../class_crud/langue.class.php';
 
 // Instanciation de la classe Langue
-$maLangue = new LANGUE();
+$maLangue = new langue();
 
 // BBCode
 

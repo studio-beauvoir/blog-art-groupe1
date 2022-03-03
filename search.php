@@ -7,7 +7,7 @@ require_once __DIR__ . '/util/index.php';
 require_once __DIR__ . '/class_crud/article.class.php';
 
 //Instanciation de la classe Article
-$monArticle = new ARTICLE(); 
+$monArticle = new article(); 
 
 $allArticles = $monArticle->get_AllByMotCle($_GET['motCle']);
 

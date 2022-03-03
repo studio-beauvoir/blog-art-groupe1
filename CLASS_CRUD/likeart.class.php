@@ -1,15 +1,15 @@
 <?php
-// CRUD LIKEART
+// CRUD likeart
 // ETUD
 require_once __DIR__ . '../../connect/database.php';
 
-class LIKEART{
+class likeart{
 	function get_1LikeArt($numMemb, $numArt){
 		global $db;
 
 		try {
 			$db->beginTransaction();
-			$query = 'SELECT * FROM LIKEART WHERE numMemb=? AND numArt=?;';
+			$query = 'SELECT * FROM likeart WHERE numMemb=? AND numArt=?;';
 			$request = $db->prepare($query);
 			$request->execute([$numMemb, $numArt]);
 
@@ -24,7 +24,7 @@ class LIKEART{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur insert LIKEART : ' . $e->getMessage());
+			die('Erreur insert likeart : ' . $e->getMessage());
 		}
 	}
 	
@@ -32,9 +32,9 @@ class LIKEART{
 	function get_AllLikesArt(){
 		global $db;
 
-		$query = 'SELECT LIKEART.*, MEMBRE.pseudoMemb, ARTICLE.libTitrArt FROM LIKEART 
-				INNER JOIN MEMBRE ON LIKEART.numMemb=MEMBRE.numMemb
-				INNER JOIN ARTICLE ON LIKEART.numArt=ARTICLE.numArt;';
+		$query = 'SELECT likeart.*, membre.pseudoMemb, article.libTitrArt FROM likeart 
+				INNER JOIN membre ON likeart.numMemb=membre.numMemb
+				INNER JOIN article ON likeart.numArt=article.numArt;';
 		$request = $db->query($query);
 		$allLikesArt = $request->fetchAll();
 		return($allLikesArt);
@@ -43,7 +43,7 @@ class LIKEART{
 	function get_AllLikesArtByNumArt(){
 		global $db;
 
-		$query = 'SELECT * FROM MEMBRE ME INNER JOIN LIKEART LKA ON ME.numMemb = LKA.numMemb INNER JOIN ARTICLE ART ON LKA.numArt = ART.numArt GROUP BY ART.numArt;';
+		$query = 'SELECT * FROM membre ME INNER JOIN likeart LKA ON ME.numMemb = LKA.numMemb INNER JOIN article ART ON LKA.numArt = ART.numArt GROUP BY ART.numArt;';
 		$result = $db->query($query);
 		$allLikesArtByNumArt = $result->fetchAll();
 		return($allLikesArtByNumArt);
@@ -52,8 +52,8 @@ class LIKEART{
 	function get_AllLikesArtByNumMemb($numMemb){
 		global $db;
 
-		// $query = 'SELECT * FROM LIKEART INNER JOIN ARTICLE ON LIKEART.numArt = ARTICLE.numArt WHERE numMemb=? GROUP BY LIKEART.numArt;';
-		$query = 'SELECT * FROM LIKEART WHERE numMemb=? AND likeA=1;';
+		// $query = 'SELECT * FROM likeart INNER JOIN article ON likeart.numArt = article.numArt WHERE numMemb=? GROUP BY likeart.numArt;';
+		$query = 'SELECT * FROM likeart WHERE numMemb=? AND likeA=1;';
 		$request = $db->prepare($query);
 		$request->execute([$numMemb]);
 		$allLikesArtByNumMemb = $request->fetchAll();
@@ -64,8 +64,8 @@ class LIKEART{
 	function get_MembHasLikedArt($numMemb, $numArt){
 		global $db;
 
-		// $query = 'SELECT * FROM LIKEART INNER JOIN ARTICLE ON LIKEART.numArt = ARTICLE.numArt WHERE numMemb=? GROUP BY LIKEART.numArt;';
-		$query = 'SELECT * FROM LIKEART WHERE numMemb=? AND numArt=? AND likeA=1';
+		// $query = 'SELECT * FROM likeart INNER JOIN article ON likeart.numArt = article.numArt WHERE numMemb=? GROUP BY likeart.numArt;';
+		$query = 'SELECT * FROM likeart WHERE numMemb=? AND numArt=? AND likeA=1';
 		$request = $db->prepare($query);
 		$request->execute([$numMemb, $numArt]);
 		$hasLiked = $request->rowCount() > 0;
@@ -76,7 +76,7 @@ class LIKEART{
 	function get_nbLikesArtByArticle($numArt){
 		global $db;
 
-		$query = 'SELECT COUNT(*) AS nbLikes FROM LIKEART WHERE numArt=? AND likeA=1;';
+		$query = 'SELECT COUNT(*) AS nbLikes FROM likeart WHERE numArt=? AND likeA=1;';
 		$request = $db->prepare($query);
 		$request->execute([$numArt]);
 		$allNbLikesArtByArticle = $request->fetchAll();
@@ -87,7 +87,7 @@ class LIKEART{
 	function get_nbLikesArtByMembre($numMemb){
 		global $db;
 
-		$query = 'SELECT * FROM LIKEART WHERE numMemb=?;';
+		$query = 'SELECT * FROM likeart WHERE numMemb=?;';
 		$request = $db->prepare($query);
 		$request->execute([$numMemb]);
 		$allLikesArtByMembre = $request->fetchAll();
@@ -100,7 +100,7 @@ class LIKEART{
 		try {
 			$db->beginTransaction();
 
-			$query = 'INSERT INTO LIKEART (numMemb, numArt, likeA) VALUES (?, ?, ?);';
+			$query = 'INSERT INTO likeart (numMemb, numArt, likeA) VALUES (?, ?, ?);';
 			$request = $db->prepare($query);
 			$request->execute( [$numMemb, $numArt, $likeA]);
 			$db->commit();
@@ -109,7 +109,7 @@ class LIKEART{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur insert LIKEART : ' . $e->getMessage());
+			die('Erreur insert likeart : ' . $e->getMessage());
 		}
 	}
 
@@ -119,7 +119,7 @@ class LIKEART{
 		try {
 			$db->beginTransaction();
 
-			$query = 'UPDATE LIKEART SET likeA=? WHERE numMemb=? AND numArt=?;';
+			$query = 'UPDATE likeart SET likeA=? WHERE numMemb=? AND numArt=?;';
 			$request = $db->prepare($query);
 			$request->execute([$likeA, $numMemb, $numArt]);
 			$db->commit();
@@ -128,7 +128,7 @@ class LIKEART{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur update LIKEART : ' . $e->getMessage());
+			die('Erreur update likeart : ' . $e->getMessage());
 		}
 	}
 
@@ -139,7 +139,7 @@ class LIKEART{
 		try {
 			$db->beginTransaction();
 
-			$query = 'INSERT INTO LIKEART (numMemb, numArt, likeA) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE likeA = NOT likeA;';
+			$query = 'INSERT INTO likeart (numMemb, numArt, likeA) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE likeA = NOT likeA;';
 			$request = $db->prepare($query);
 			$request->execute([$numMemb, $numArt, $likeA]);
 
@@ -149,7 +149,7 @@ class LIKEART{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur insert Or Toggle LIKEART : ' . $e->getMessage());
+			die('Erreur insert Or Toggle likeart : ' . $e->getMessage());
 		}
 	}
 
@@ -160,7 +160,7 @@ class LIKEART{
 		try {
 			$db->beginTransaction();
 
-			$query = 'DELETE FROM LIKEART SET numMemb=?,numArt=? WHERE likeArt=?;';
+			$query = 'DELETE FROM likeart SET numMemb=?,numArt=? WHERE likeArt=?;';
 			$request = $db->prepare($query);
 			$request->execute([$numMemb], [$numArt]);
 			$count = $request->rowCount();
@@ -171,7 +171,7 @@ class LIKEART{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur delete LIKEART : ' . $e->getMessage());
+			die('Erreur delete likeart : ' . $e->getMessage());
 		}
 	}
 }	// End of class

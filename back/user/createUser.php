@@ -13,8 +13,8 @@ require_once __DIR__ . '/../../class_crud/user.class.php';
 require_once __DIR__ . '/../../class_crud/statut.class.php'; 
 
 // Instanciation de la classe User
-$monUser = new USER(); 
-$monStatut = new STATUT();
+$monUser = new user(); 
+$monStatut = new statut();
 
 // Gestion des erreurs de saisie
 $validator = Validator::make();

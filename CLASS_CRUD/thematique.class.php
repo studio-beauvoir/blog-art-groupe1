@@ -1,14 +1,14 @@
 <?php
-// CRUD THEMATIQUE
+// CRUD thematique
 // ETUD
 require_once __DIR__ . '../../connect/database.php';
 
-class THEMATIQUE{
+class thematique{
 	function get_1Thematique($numThem){
 		global $db;
 
 		try {
-			$query = 'SELECT * FROM THEMATIQUE WHERE numThem=?;';
+			$query = 'SELECT * FROM thematique WHERE numThem=?;';
 			$request = $db->prepare($query);
 			
 			$request->execute([$numThem]);
@@ -24,7 +24,7 @@ class THEMATIQUE{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur insert THEMATIQUE : ' . $e->getMessage());
+			die('Erreur insert thematique : ' . $e->getMessage());
 		}
 	}
 
@@ -32,7 +32,7 @@ class THEMATIQUE{
 		global $db;
 
 		// select
-		$query = 'SELECT * FROM THEMATIQUE WHERE numLang=?;';
+		$query = 'SELECT * FROM thematique WHERE numLang=?;';
 		// prepare
 		$request = $db->prepare($query);
 		// execute
@@ -44,7 +44,7 @@ class THEMATIQUE{
 	function get_AllThematiques(){
 		global $db;
 
-		$query = 'SELECT * FROM THEMATIQUE INNER JOIN LANGUE ON THEMATIQUE.numLang=LANGUE.numLang;';
+		$query = 'SELECT * FROM thematique INNER JOIN langue ON thematique.numLang=langue.numLang;';
 		$request = $db->query($query);
 		$allThematiques = $request->fetchAll();
 
@@ -54,7 +54,7 @@ class THEMATIQUE{
 	function get_AllThematiquesByLang($numLang){
 		global $db;
 
-		$query = 'SELECT * FROM THEMATIQUE WHERE numLang=?;';
+		$query = 'SELECT * FROM thematique WHERE numLang=?;';
 		$request = $db->prepare($query);
 		$request->execute([$numLang]);
 		$allThematiquesByLang = $request->fetchAll();
@@ -68,7 +68,7 @@ class THEMATIQUE{
 
 		$db->beginTransaction();
 		
-		$query = 'SELECT COUNT (*) FROM THEMATIQUE WHERE numLang=?';
+		$query = 'SELECT COUNT (*) FROM thematique WHERE numLang=?';
 		$request = $db->prepare($query);
 		$request->execute([$numLang]);
 		$allNbThematiquesBynumLang = $request->fetch();
@@ -83,40 +83,40 @@ class THEMATIQUE{
 	function getNextNumThem($numLang) {
 		global $db;
 	
-		// Découpage FK LANGUE
+		// Découpage FK langue
 		$libLangSelect = substr($numLang, 0, 4);
 		$parmNumLang = $libLangSelect . '%';
 	
-		$requete = "SELECT MAX(numLang) AS numLang FROM THEMATIQUE WHERE numLang LIKE '$parmNumLang';";
+		$requete = "SELECT MAX(numLang) AS numLang FROM thematique WHERE numLang LIKE '$parmNumLang';";
 		$result = $db->query($requete);
 	
 		if ($result) {
 			$tuple = $result->fetch();
 			$numLang = $tuple["numLang"];
-			if (is_null($numLang)) {    // New lang dans THEMATIQUE
+			if (is_null($numLang)) {    // New lang dans thematique
 				// Récup dernière PK utilisée
-				$requete = "SELECT MAX(numThem) AS numThem FROM THEMATIQUE;";
+				$requete = "SELECT MAX(numThem) AS numThem FROM thematique;";
 				$result = $db->query($requete);
 				$tuple = $result->fetch();
 				$numThem = $tuple["numThem"];
 	
 				$numThemSelect = (int)substr($numThem, 4, 2);
-				// No séquence suivant LANGUE
+				// No séquence suivant langue
 				$numSeq1Them = $numThemSelect + 1;
-				// Init no séquence THEMATIQUE pour nouvelle lang
+				// Init no séquence thematique pour nouvelle lang
 				$numSeq2Them = 1;
 			} else {
 				// Récup dernière PK pour FK sélectionnée
-				$requete = "SELECT MAX(numThem) AS numThem FROM THEMATIQUE WHERE numLang LIKE '$parmNumLang' ;";
+				$requete = "SELECT MAX(numThem) AS numThem FROM thematique WHERE numLang LIKE '$parmNumLang' ;";
 				$result = $db->query($requete);
 				$tuple = $result->fetch();
 				$numThem = $tuple["numThem"];
 	
-				// No séquence actuel LANGUE
+				// No séquence actuel langue
 				$numSeq1Them = (int)substr($numThem, 4, 2);
-				// No séquence actuel LANGUE
+				// No séquence actuel langue
 				$numSeq2Them = (int)substr($numThem, 6, 2);
-				// No séquence suivant THEMATIQUE
+				// No séquence suivant thematique
 				$numSeq2Them++;
 			}
 	
@@ -133,7 +133,7 @@ class THEMATIQUE{
 			} else {
 				$numThem = $numThem . $numSeq2Them;
 			}
-		}   // End of if ($result) / no seq LANGUE
+		}   // End of if ($result) / no seq langue
 		return $numThem;
 	} // End of function
 
@@ -143,7 +143,7 @@ class THEMATIQUE{
 		try {
 			$db->beginTransaction();
 
-			$query = 'INSERT INTO THEMATIQUE (numThem, libThem, numLang) VALUES (?, ?, ?);';
+			$query = 'INSERT INTO thematique (numThem, libThem, numLang) VALUES (?, ?, ?);';
 			$request = $db->prepare($query);
 			$request->execute( [$numThem, $libThem, $numLang]);
 			$db->commit();
@@ -152,7 +152,7 @@ class THEMATIQUE{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur insert THEMATIQUE : ' . $e->getMessage());
+			die('Erreur insert thematique : ' . $e->getMessage());
 		}
 	}
 
@@ -162,7 +162,7 @@ class THEMATIQUE{
 		try {
 			$db->beginTransaction();
 
-			$query = 'UPDATE THEMATIQUE SET libThem=?,numlang=? WHERE numThem=?;';
+			$query = 'UPDATE thematique SET libThem=?,numlang=? WHERE numThem=?;';
 			$request = $db->prepare($query);
 			$request->execute([$libThem, $numLang, $numThem]);
 			$db->commit();
@@ -171,18 +171,18 @@ class THEMATIQUE{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur update THEMATIQUE : ' . $e->getMessage());
+			die('Erreur update thematique : ' . $e->getMessage());
 		}
 	}
 
-	// Ctrl FK sur THEMATIQUE, ANGLE, MOTCLE avec del
+	// Ctrl FK sur thematique, angle, motcle avec del
 	function delete($numThem){
 		global $db;
 		
 		try {
 			$db->beginTransaction();
 
-			$query = 'DELETE FROM THEMATIQUE WHERE `numThem` = ?;';
+			$query = 'DELETE FROM thematique WHERE `numThem` = ?;';
 			$request = $db->prepare($query);
 			$request->execute([$numThem]);
 			$count = $request->rowCount();
@@ -193,7 +193,7 @@ class THEMATIQUE{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur delete THEMATIQUE : ' . $e->getMessage());
+			die('Erreur delete thematique : ' . $e->getMessage());
 		}
 	}
 }		// End of class

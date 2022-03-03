@@ -9,37 +9,37 @@ require_once __DIR__ . '/middleware/getMember.php';
 require_once __DIR__ . '/class_crud/article.class.php';
 
 //Instanciation de la classe Article
-$monArticle = new ARTICLE(); 
+$monArticle = new article(); 
 
 //Insertion classe Angle
 require_once __DIR__ . '/class_crud/angle.class.php';
 
 //Instanciation de la classe Angle
-$monAngle = new ANGLE(); 
+$monAngle = new angle(); 
 
 //Insertion classe Thématique
 require_once __DIR__ . '/class_crud/thematique.class.php';
 
 //Instanciation de la classe Thématique
-$maThematique = new THEMATIQUE();
+$maThematique = new thematique();
 
 //Insertion classe Langue
 require_once __DIR__ . '/class_crud/langue.class.php';
 
 //Instanciation de la classe Langue
-$maLangue = new LANGUE(); 
+$maLangue = new langue(); 
 
 //Insertion classe Commentaire
 require_once __DIR__ . '/class_crud/comment.class.php'; 
 
 //Instanciation de la classe Commment
-$monComment = new COMMENT(); 
+$monComment = new comment(); 
 
 // //Insertion classe Membre
 // require_once __DIR__ . '/class_crud/membre.class.php'; 
 
 // //Instanciation de la classe Membre
-// $monMembre = new MEMBRE();
+// $monMembre = new membre();
 
 // Ctrl CIR
 

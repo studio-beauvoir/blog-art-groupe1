@@ -1,12 +1,12 @@
 <?php
 
-require_once __DIR__ . '/../../middleware/loggedMember';
+require_once __DIR__ . '/../../middleware/loggedMember.php';
 require_once __DIR__ . '/../../util/index.php';
-require_once __DIR__ . '/../../class_crud/LIKECOM.class.php'; 
-require_once __DIR__ . '/../../class_crud/COMMENT.class.php'; 
+require_once __DIR__ . '/../../class_crud/likecom.class.php'; 
+require_once __DIR__ . '/../../class_crud/comment.class.php'; 
 
-$monLikeCom = new LIKECOM(); 
-$monComment = new COMMENT(); 
+$monLikeCom = new likecom(); 
+$monComment = new comment(); 
 
 $result = false;
 $errors = false;

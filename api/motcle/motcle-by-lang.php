@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/motcle.class.php'; 
 
-$monMotcle = new MOTCLE();
+$monMotcle = new motcle();
 
 $result = false;
 $errors = false;

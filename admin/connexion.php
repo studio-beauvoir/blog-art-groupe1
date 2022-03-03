@@ -2,39 +2,39 @@
 
 $submitBtn = "Connexion";
 $pageTitle = "$submitBtn";
-require_once __DIR__ . '/util/index.php';
-require_once __DIR__ . '/class_crud/membre.class.php'; 
+require_once __DIR__ . '/../util/index.php';
+require_once __DIR__ . '/../class_crud/user.class.php'; 
 
 
-require_once __DIR__ . '/middleware/getMember.php';
-if($loggedMember) {
+require_once __DIR__ . '/../middleware/getUser.php';
+if($loggedUser) {
     header('location: '.webSitePath('/home.php'));
 }
 
-$monMembre = new MEMBRE();
+$monUser = new user();
 
 $validator = Validator::make();
 $loginState = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $validator->addRules([
-        ValidationRule::required('pseudoMemb')->customError('isRequired', 'Le pseudo est requis'),
-        ValidationRule::required('passMemb')->customError('isRequired', 'Le mot de passe est requis')->password()
+        ValidationRule::required('pseudoUser')->customError('isRequired', 'Le pseudo est requis'),
+        ValidationRule::required('passUser')->customError('isRequired', 'Le mot de passe est requis')->password()
     ])->bindValues($_POST);
 
     if($validator->success()) {
-        $pseudoMemb = $validator->verifiedField('pseudoMemb');
+        $pseudoUser = $validator->verifiedField('pseudoUser');
 
         // on conserve les caractères spéciaux (d'ou le false)
-        $passMemb = $validator->verifiedField('passMemb', false);
+        $passUser = $validator->verifiedField('passUser', false);
 
-        $loginAttempt = $monMembre->login($pseudoMemb, $passMemb);
+        $loginAttempt = $monUser->login($pseudoUser, $passUser);
         if($loginAttempt["error"]) {
             $loginState = '<div class="errors"><div class="error">'.$loginAttempt['message'].'</div></div>';
         }
     }
 }
 
-require_once __DIR__ . '/layouts/front/head.php';
+require_once __DIR__ . '/../layouts/front/head.php';
 ?>
 
 <script>
@@ -49,7 +49,7 @@ require_once __DIR__ . '/layouts/front/head.php';
         }
 </script>
 <div class="container">
-    <h1>Se connecter</h1>
+    <h1>Administration</h1>
 
     <?=$validator->echoErrors() ?>
     <?=$loginState?>
@@ -62,13 +62,13 @@ require_once __DIR__ . '/layouts/front/head.php';
     >
         <div class="field">
             <label>Pseudo</label>
-            <input value="<?=$validator->oldField('pseudoMemb')?>" type="text" name="pseudoMemb">
+            <input value="<?=$validator->oldField('pseudoUser')?>" type="text" name="pseudoUser">
         </div>
         
         <div class="field">
             <label> Mot de passe </label>
-            <input value="<?=$validator->oldField('passMemb')?>" type="password" name="passMemb" id="passMemb">
-            <label><input type="checkbox" onclick="myFunction('passMemb')"><i>Afficher le mot de passe</i></label>
+            <input value="<?=$validator->oldField('passUser')?>" type="password" name="passUser" id="passUser">
+            <label><input type="checkbox" onclick="myFunction('passUser')"><i>Afficher le mot de passe</i></label>
             <p>
                 Le mot de passe doit comporter entre 6 et 15 caractères, 
                 <br/>et au moins une lettre, un chiffre et un caractère spécial parmi &@#$%_-.?!
@@ -83,4 +83,4 @@ require_once __DIR__ . '/layouts/front/head.php';
     document.querySelectorAll(`input:not([type="file"], [type="submit"], [type="hidden"], [type="password"], [type="radio"])`).forEach(el=>el.value="lorem_ipsum_input");
     document.querySelectorAll(`input[type="password"]`).forEach(el=>el.value='qdqsd43&ds');
 </script>
-<?php require_once __DIR__ . '/layouts/front/foot.php';?>
+<?php require_once __DIR__ . '/../layouts/front/foot.php';?>

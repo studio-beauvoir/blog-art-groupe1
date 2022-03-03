@@ -13,8 +13,8 @@ require_once __DIR__ . '/../../class_crud/motcle.class.php';
 require_once __DIR__ . '/../../class_crud/langue.class.php';
 
 // Instanciation de la classe Thematique
-$monMotCle = new MOTCLE();
-$maLangue = new LANGUE();
+$monMotCle = new motcle();
+$maLangue = new langue();
 
 
 // Gestion des erreurs de saisie

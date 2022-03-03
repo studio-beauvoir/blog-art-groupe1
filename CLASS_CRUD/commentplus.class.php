@@ -1,13 +1,13 @@
 <?php
-// CRUD COMMENTPLUS
+// CRUD commentplus
 // ETUD
 require_once __DIR__ . '../../connect/database.php';
 
-class COMMENTPLUS{
+class commentplus{
 	function get_1CommentPlus($numSeqCom){
 		global $db;
 
-		$query = 'SELECT * FROM COMMENTPLUS WHERE numSeqCom=?;';
+		$query = 'SELECT * FROM commentplus WHERE numSeqCom=?;';
 		$request = $db->prepare($query);
 		$request->execute([$numSeqCom]);
 		$result = $request->fetch();
@@ -19,13 +19,13 @@ class COMMENTPLUS{
 		global $db;
 
 	
-		// $query = 'SELECT comment.*, commentplus.*, membre.pseudoMemb FROM COMMENTPLUS INNER JOIN COMMENT ON COMMENTPLUS.numSeqCom=COMMENT.numSeqCom INNER JOIN MEMBRE ON COMMENT.numMemb=MEMBRE.numMemb WHERE COMMENTPLUS.numArt=? ;';
+		// $query = 'SELECT comment.*, commentplus.*, membre.pseudoMemb FROM commentplus INNER JOIN comment ON commentplus.numSeqCom=comment.numSeqCom INNER JOIN membre ON comment.numMemb=membre.numMemb WHERE commentplus.numArt=? ;';
 		// $query = 	'SELECT comment.*, membre.pseudoMemb, COUNT(likecom.numSeqCom) AS nblike FROM comment
 		// 			JOIN membre ON comment.numMemb=membre.numMemb
 		// 			LEFT JOIN likecom ON likecom.numSeqCom=comment.numSeqCom WHERE (likecom.numArt=comment.numArt OR comment.numArt=?)
 		// 			GROUP BY comment.numSeqCom;';
 
-		$query = 'SELECT * FROM COMMENTPLUS WHERE numArt=? ;';
+		$query = 'SELECT * FROM commentplus WHERE numArt=? ;';
 
 		$request = $db->prepare($query);
 		$request->execute([$numArt]);
@@ -35,7 +35,7 @@ class COMMENTPLUS{
 
 	function get_AllCommentPlus(){
 		global $db;
-		$query = 'SELECT * FROM COMMENTPLUS INNER JOIN ARTICLE ON COMMENTPLUS.numArt=ARTICLE.numArt;';
+		$query = 'SELECT * FROM commentplus INNER JOIN article ON commentplus.numArt=article.numArt;';
 		$request = $db->query($query);
 		$allCommentPlus = $request->fetchAll();
 
@@ -48,7 +48,7 @@ class COMMENTPLUS{
 		// select
 		// prepare
 		// execute
-		return($result->fetchAll());
+		// return($result->fetchAll());
 	}
 
 	function create($numSeqCom, $numArt, $numSeqComR, $numArtR){
@@ -57,7 +57,7 @@ class COMMENTPLUS{
 		try {
 			$db->beginTransaction();
 
-			$query = 'INSERT INTO COMMENTPLUS (numSeqCom, numArt, numSeqComR, numArtR) VALUES (?, ?, ?, ?);';
+			$query = 'INSERT INTO commentplus (numSeqCom, numArt, numSeqComR, numArtR) VALUES (?, ?, ?, ?);';
 			$request = $db->prepare($query);
 			$request->execute( [$numSeqCom, $numArt, $numSeqComR, $numArtR]);
 			$db->commit();
@@ -66,7 +66,7 @@ class COMMENTPLUS{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur insert COMMENTPLUS : ' . $e->getMessage());
+			die('Erreur insert commentplus : ' . $e->getMessage());
 		}
 	}
 
@@ -77,7 +77,7 @@ class COMMENTPLUS{
 			$db->beginTransaction();
 
 			// delete
-			$query = 'DELETE FROM COMMENTPLUS WHERE `numSeqCom` = ?;';
+			$query = 'DELETE FROM commentplus WHERE `numSeqCom` = ?;';
 			// prepare
 			$request = $db->prepare($query);
 			// execute
@@ -90,7 +90,7 @@ class COMMENTPLUS{
 		catch (PDOException $e) {
 			$db->rollBack();
 			$request->closeCursor();
-			die('Erreur delete COMMENTPLUS : ' . $e->getMessage());
+			die('Erreur delete commentplus : ' . $e->getMessage());
 		}
 	}
 }	// End of class

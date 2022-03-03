@@ -9,10 +9,10 @@ $pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pa
 require_once __DIR__ . '/../../util/index.php';
 
 require_once __DIR__ . '/../../class_crud/membre.class.php';
-$monMembre = new MEMBRE(); 
+$monMembre = new membre(); 
 
 require_once __DIR__ . '/../../class_crud/statut.class.php';
-$monStatut = new STATUT(); 
+$monStatut = new statut(); 
 
 // Ctrl CIR
 // Insertion classe Article

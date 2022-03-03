@@ -1,6 +1,6 @@
 <?php
 /*
-* Table ARTICLE
+* Table article
 * initArticle.php
 */
 // PK Article

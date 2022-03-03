@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '../../connect/database.php';
 
-class SEARCH{
+class search{
     function get_SearchByMotCle($motcle){
         global $db;
         $query = 'SELECT motcle.*, motclearticle.*, article.numArt,article.libTitrArt, article.libChapoArt, article.urlPhotArt FROM motcle 

@@ -1,6 +1,6 @@
 <?php
 /*
-* Table LIKECOM
+* Table likecom
 * initLikeCom.php
 */
 // FK PK LikeCom

@@ -14,9 +14,9 @@ require_once __DIR__ . '/../../class_crud/membre.class.php';
 require_once __DIR__ . '/../../class_crud/article.class.php'; 
 
 // Instanciation de la classe LikeArt
-$monLikeArt = new LIKEART(); 
-$monMembre = new MEMBRE();
-$monArticle = new ARTICLE();
+$monLikeArt = new likeart(); 
+$monMembre = new membre();
+$monArticle = new article();
 
 // Gestion des erreurs de saisie
 $erreur = false;

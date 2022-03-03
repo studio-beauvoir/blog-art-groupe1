@@ -1,10 +1,10 @@
 <?php
 
-require_once __DIR__ . '/../../middleware/loggedMember';
+require_once __DIR__ . '/../../middleware/loggedMember.php';
 require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/comment.class.php'; 
 
-$monComment = new COMMENT(); 
+$monComment = new comment(); 
 
 $result = false;
 $errors = false;

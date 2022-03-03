@@ -6,14 +6,14 @@ require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/thematique.class.php'; 
 
 // Instanciation de la classe Thematique
-$maThematique = new THEMATIQUE();
+$maThematique = new thematique();
 
 
 // Insertion classe Langue
 require_once __DIR__ . '/../../class_crud/langue.class.php'; 
 
 // Instanciation de la classe Langue
-$maLangue = new LANGUE();
+$maLangue = new langue();
 
 // BBCode
 

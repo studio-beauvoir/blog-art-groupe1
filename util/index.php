@@ -6,6 +6,7 @@ require_once __DIR__ . '/utilErrOn.php';
 // utils perso
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/member.php';
+require_once __DIR__ . '/user.php';
 require_once __DIR__ . '/crypto.php';
 require_once __DIR__ . '/paths.php';
 require_once __DIR__ . '/ctrlUploadImage.php';

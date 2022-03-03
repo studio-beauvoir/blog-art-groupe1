@@ -1,6 +1,6 @@
 <?php
 /*
-* Table STATUT
+* Table statut
 * initStatut.php
 */
 // PK Statut

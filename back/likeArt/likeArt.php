@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '/../../class_crud/likeart.class.php'; 
 
 // Instanciation de la classe LikeArt
-$monLikeArt = new LIKEART(); 
+$monLikeArt = new likeart(); 
 
 $pageTitle = "Gestion du Like";
 $pageNav = ['Home:/admin.php', $pageTitle];

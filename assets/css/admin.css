@@ -37,7 +37,6 @@ table th {
     background: var(--bg2);
 }
 table td {
-    color: var(--p3);
     background: var(--bg3);
 }
 
@@ -69,8 +68,21 @@ table tbody {
 }
 
 .page-header {
-    padding: 50px 50px 50px 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
 }
+
+.admin-statut {
+    text-align: right;
+    margin: 4rem 0 4rem auto;
+}
+.admin-statut h3 {
+    margin: 0.2rem 0;
+}
+
+
 
 .list-crud {
     margin: 5rem 0;
@@ -233,4 +245,5 @@ table tbody {
     align-items: flex-start;
     gap: 0.5rem;
 }
+
 

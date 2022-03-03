@@ -1,7 +1,7 @@
 <?php
 
 $submitBtn = "Modifier";
-$pageCrud = "motCle";
+$pageCrud = "motcle";
 $pagePrecedent = "./$pageCrud.php";
 $pageTitle = "$submitBtn un $pageCrud";
 $pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pageTitle];
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
         $monMotCle->update($numMotCle, $libMotCle, $numLang);
 
-        header("Location: ./motCle.php");
+        header("Location: ./motcle.php");
         die();
     } else {
         // Saisies invalides

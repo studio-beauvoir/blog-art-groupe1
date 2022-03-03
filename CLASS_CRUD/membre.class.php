@@ -201,14 +201,12 @@ class membre{
 		$rowCount = $request->rowCount();
 
 
-		var_dump('login');
 		if($rowCount < 1){
 			// pas de correspondance dan la bdd
 
 			$db->commit();
 			$request->closeCursor();
 
-			var_dump('pas de correspondance bdd');
 			return [
 				"error"=>true,
 				"message"=>"Ce pseudo n'est lié à aucun compte"
@@ -219,11 +217,9 @@ class membre{
 			$db->commit();
 			$request->closeCursor();
 
-			var_dump('correspondance bdd');
 			// ensuite on check que les mdp soient bon
 			if (password_verify($passMemb, $membre['passMemb']))
 			{
-				var_dump('mdp bon');
 
 				session_start();
 				$_SESSION['member_id'] = $membre['numMemb'];
@@ -234,8 +230,6 @@ class membre{
 				];
 			}
 			
-			var_dump('mdp pas bon');
-
 			return [
 				"error"=>true,
 				"message"=>"Le mot de passe est incorrect"

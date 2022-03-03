@@ -8,7 +8,7 @@ require_once __DIR__ . '/class_crud/membre.class.php';
 
 require_once __DIR__ . '/middleware/getMember.php';
 if($loggedMember) {
-    header('location: '.webSitePath('/home.php'));
+    header('location: '.webSitePath('/profil.php'));
 }
 
 $monMembre = new membre();

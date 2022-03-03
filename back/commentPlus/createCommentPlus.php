@@ -9,19 +9,19 @@ $pageNav = ['Home:/admin.php', 'Gestion des ' .$pageCrud .$pagePrecedent, $pageT
 require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe Comment Plus
-require_once __DIR__ . '/../../CLASS_CRUD/commentplus.class.php'; 
+require_once __DIR__ . '/../../class_crud/commentplus.class.php'; 
 
 // Instanciation de la classe Comment Plus
 $monCommentPlus = new commentplus(); 
 
 // Insertion classe Article
-require_once __DIR__ . '/../../CLASS_CRUD/article.class.php'; 
+require_once __DIR__ . '/../../class_crud/article.class.php'; 
 
 // Instanciation de la classe Article
 $monArticle = new article(); 
 
 // Insertion classe Comment
-require_once __DIR__ . '/../../CLASS_CRUD/comment.class.php'; 
+require_once __DIR__ . '/../../class_crud/comment.class.php'; 
 
 // Instanciation de la classe Comment
 $monComment = new comment();

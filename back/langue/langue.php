@@ -22,7 +22,7 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <th>Nom court</th>
                 <th>Nom long</th>
                 <th>Pays</th>
-                <th colspan="2">Action</th>
+                <th class="sticky-right">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -36,10 +36,8 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <td> <?= $row['lib1Lang']; ?> </td>
                 <td> <?= $row['lib2Lang']; ?> </td>
                 <td><?= $row['frPays']; ?></td>
-                <td>
+                <td class="actions sticky-right">
                     <a class="btn btn-md" href="./updateLangue.php?id=<?=$row['numLang']; ?>" title="Modifier la langue">Modifier</a>
-                </td>
-                <td>
                     <a class="btn btn-md btn-danger" href="./deleteLangue.php?id=<?=$row['numLang']?>" title="Supprimer la langue">Supprimer</a>
                 </td>
             </tr>

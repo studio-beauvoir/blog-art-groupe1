@@ -29,7 +29,7 @@ include __DIR__ . '/../../layouts/back/head.php';
                 <th>Numéro</th>
                 <th>Nom</th>
                 <th>Langue</th>
-                <th colspan="2">Action</th>
+                <th class="sticky-right">Action</th>
             </tr>
         </thead>
         <tbody>

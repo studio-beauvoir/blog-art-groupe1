@@ -21,7 +21,7 @@ include __DIR__ . '/../../layouts/back/head.php';
                 <th>Membre</th>
                 <th>Article</th>
                 <th>Liké?</th>
-                <th colspan="2">Action</th>
+                <th class="sticky-right">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -44,7 +44,7 @@ include __DIR__ . '/../../layouts/back/head.php';
                     <?php } ?>
                 </td>
                 <!-- actions -->
-                <td>
+                <td class="actions sticky-right">
                     <a class="btn btn-md" href="./updateLikeArt.php?numMemb=<?=$row['numMemb']?>&numArt=<?=$row['numArt']?>" title="Modifier le like">Modifier</a>
                 </td>
             </tr>

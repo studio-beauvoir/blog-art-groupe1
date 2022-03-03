@@ -23,7 +23,7 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <th colspan="2">Identité</th>
                 <th>EMail</th>
                 <th>Statut</th>
-                <th colspan="2">Action</th>
+                <th class="sticky-right">Action</th>
             </tr>
         </thead>
         <tbody>

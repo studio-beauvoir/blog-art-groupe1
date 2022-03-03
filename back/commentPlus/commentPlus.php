@@ -34,7 +34,7 @@ include __DIR__ . '/../../layouts/back/head.php';
                 <th>Numéro de l'article</th>
                 <th>Numéro de Seq Commentaire Réponse</th>
                 <th>Like de l'article Réponse</th>
-                <th colspan="2">Action</th>
+                <th class="sticky-right">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -53,10 +53,8 @@ include __DIR__ . '/../../layouts/back/head.php';
                 <td><?= $row['numArtR']; ?></td>
 
                 <!-- actions -->
-                <td>
+                <td class="actions sticky-right">
                     <a class="btn btn-md" href="./updateCommentPlus.php?numSeqCom=<?=$row['numSeqCom'];?>&numArt=<?=$row['numArt'];?>" title="Modifier le Comment Plus">Modifier</a>
-                </td>
-                <td>  
                      <!--lien : test ternaire super admin-->
                     <a class="btn btn-md btn-danger" href="./deleteCommentPlus.php?numSeqCom=<?=$row['numSeqCom'];?>&numArt=<?=$row['numArt'];?>" title="Supprimer le Comment Plus">Supprimer</a>
                 </td>

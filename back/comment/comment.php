@@ -28,7 +28,7 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <th>Commentaire<br>visible</th>
                 <th>Justification modération<br>si non visible</th>
                 <th>Delete<br>logique</th>
-                <th colspan="2">Action</th>
+                <th class="sticky-right">Action</th>
             </tr>
         </thead>
         
@@ -50,10 +50,8 @@ require_once __DIR__ . '/../../layouts/back/head.php';
                 <td> <?= $row['attModOK']; ?> </td> 
                 <td> <?= $row['notifComKOAff']; ?> </td> 
                 <td> <?= $row['delLogiq']; ?> </td> 
-                <td>
+                <td class="actions sticky-right">
                     <a class="btn btn-md" href="./updateComment.php?idCom=<?=$row['numSeqCom'];?>&idArt=<?=$row['numArt']?>" title="Modifier l'article">Modifier</a>
-                </td>
-                <td>
                     <a class="btn btn-md btn-danger" href="./deleteComment.php?idCom=<?=$row['numSeqCom'];?>&idArt=<?=$row['numArt']?>" title="Supprimer l'article">Supprimer</a>
                 </td>
             </tr>

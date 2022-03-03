@@ -15,8 +15,12 @@ function ctrlSaisies($saisie){
     $saisie = trim($saisie);
     // Suppression des antislashs d'une chaîne
     $saisie = stripslashes($saisie);
+    
+    // Conversion des caractères spéciaux en entités HTML y compris les accents
+    // $saisie = htmlentities($saisie);
+
     // Conversion des caractères spéciaux en entités HTML
-    $saisie = htmlentities($saisie);
+    $saisie = htmlspecialchars($saisie);
 
     $saisie = preg_replace('/&(amp;){2,}/', '&amp;', $saisie);
 

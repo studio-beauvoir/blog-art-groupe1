@@ -1,4 +1,4 @@
-ErrorDocument 404 /bordeaux-street-art/error.php
+ErrorDocument 404 /etu-mmi-01/error.php
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f

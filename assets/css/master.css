@@ -87,6 +87,10 @@ input, select, textarea, .input {
     border: 2px solid var(--p1);
     font: var(--p);
 }
+
+img {
+    user-select: none;
+}
 img.input {
     padding: 0;
     cursor: pointer;
@@ -258,7 +262,8 @@ header{
     align-items: center;
 }
 
-.searchbar {
+.searchbar,
+.searchbar-form {
     display: flex;
     flex-direction: row nowrap;
     align-items: center;

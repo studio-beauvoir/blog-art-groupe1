@@ -8,12 +8,12 @@ $pageNav = ['Home:/admin.php', 'Gestion des '.$pageCrud.'s:'.$pagePrecedent, $pa
 
 require_once __DIR__ . '/../../util/index.php';
 
-require_once __DIR__ . '/../../CLASS_CRUD/likeart.class.php';
+require_once __DIR__ . '/../../class_crud/likeart.class.php';
 $monLikeArt = new likeart(); 
 
 // Ctrl CIR
 // Insertion classe Article
-require_once __DIR__ . '/../../CLASS_CRUD/article.class.php';
+require_once __DIR__ . '/../../class_crud/article.class.php';
 // Instanciation de la classe Article
 $monArticle = new likeart(); 
 

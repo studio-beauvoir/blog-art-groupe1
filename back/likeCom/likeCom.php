@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../../util/index.php';
 
 // Insertion classe LikeArt
-require_once __DIR__ . '/../../CLASS_CRUD/likecom.class.php'; 
+require_once __DIR__ . '/../../class_crud/likecom.class.php'; 
 
 // Instanciation de la classe LikeArt
 $monLikeCom = new likecom(); 

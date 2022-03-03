@@ -4,6 +4,20 @@
 require_once __DIR__ . '/../connect/database.php';
 
 class ARTICLE{
+
+	function get_AllByMotCle($motcle){
+        global $db;
+		$likeMotcle="%$motcle%";
+        $query = "SELECT motcle.*, motclearticle.*, article.numArt,article.libTitrArt, article.libChapoArt, article.urlPhotArt FROM motcle 
+            JOIN motclearticle ON motcle.numMotCle = motclearticle.numMotCle
+            JOIN article ON motclearticle.numArt = article.numArt
+            WHERE motcle.libMotCle LIKE ? ";
+        $request = $db->prepare($query);
+		$request->execute([$likeMotcle]);
+        $articles = $request->fetchAll();
+        return $articles;
+    }
+
 	function get_1Article($numArt){
 		global $db;
 		

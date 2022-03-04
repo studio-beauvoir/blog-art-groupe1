@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . '/../../util/index.php';
+require_once __DIR__ . '../../../middleware/getUser.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="fr-FR">
@@ -18,3 +20,5 @@ require_once __DIR__ . '/../../util/index.php';
     <body>
         <?php require_once __DIR__ . '/../general/header.php'; ?>
         <main class="container-fluid">
+
+

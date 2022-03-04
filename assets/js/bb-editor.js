@@ -1,3 +1,5 @@
+// author Arthaud Proust
+
 function getSelectionText() {
     var text = "";
     if (window.getSelection) {

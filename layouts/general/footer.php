@@ -14,7 +14,7 @@
                 <ul>
                     <li><h4>Navigation</h4></li>
                     <li><p><a href="<?= webSitePath('/') ?>">Accueil</a></p></li> 
-                    <li><p><a href="<?= webSitePath('/connexion.php') ?>">Se connecter</a></p></li> 
+                    <!-- <li><p><a href="<?= webSitePath('/connexion.php') ?>">Se connecter</a></p></li>  -->
                     <li><p><a href="<?= webSitePath('/admin/connexion.php') ?>">Accès Admin</a></p></li> 
                 </ul>
             </div>

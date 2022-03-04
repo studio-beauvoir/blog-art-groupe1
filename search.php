@@ -17,7 +17,7 @@ require_once __DIR__ . '/layouts/front/head.php';
 ?>
 <div class="container">
     <div class="home-title primary">
-        <h1>Résultat(s) de votre recherches</h1>
+        <h1>Résultat(s) de votre recherche</h1>
     </div>
     <div class="home-title secondary">
         <h2>R<span class="purple">E</span><span class="bleu">S</span>UL<span class="green">T</span>AT(S) <span class="orange">D</span><span class="bleu">E</span> <span class="green">V</span>O<span class="purple"></span><span class=purple>T</span>RE <span class="bleu">R</span>EC<span class="orange">H</span><span class=purple>E</span>R<span class=bleu>C</span><span class=green>H</span>E</h2> 

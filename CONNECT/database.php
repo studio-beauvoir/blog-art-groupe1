@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__.'/../config/isProd.php';
+require_once __DIR__.'/../config/inProd.php';
 
 // CONNEXION BDD
 // Variables connexion

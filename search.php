@@ -29,7 +29,11 @@ require_once __DIR__ . '/layouts/front/head.php';
                     <img src="<?= webUploadPath($article['urlPhotArt']) ?>" alt="Image de l'oeuvre nommée : <?= $article['libTitrArt']; ?>">
                 </div>
                 <div class="home-article-text">
-                    <h2 class="home-article-title yellow"><?= $article['libTitrArt']; ?></h2>
+                    <h2 class="home-article-title yellow">
+                        <a href="<?=webSitePath('/article.php?numArt='.$article['numArt']); ?>">
+                            <?= $article['libTitrArt']; ?>
+                        </a> 
+                    </h2>
                     <p class="home-article-desc"><?= $article['libChapoArt']; ?></p>
                     <a class="home-article-link btn btn-lg" href="<?=webSitePath('/article.php?numArt='.$article['numArt']); ?>"><b>Lire plus</b></a>
                 </div>

@@ -71,7 +71,7 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
-    filter:brightness(40%) /*contrast(60%);*/
+    filter:brightness(30%) /*contrast(60%);*/
 }
 
 .head-h1 {

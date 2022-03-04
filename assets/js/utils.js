@@ -19,7 +19,7 @@ function removeChilds(node) {
 
 String.prototype.singularise = function(n) {
     var parsedN = this.replace(/\:n/, n);
-    if(n==1 || n==-1) {
+    if(n==1 || n==0 || n==-1) {
         parsedN = parsedN.replace(/\(\w+\)/gm, "");
     } else {
         parsedN = parsedN.replace(/\((\w+)\)/gm, "$1");

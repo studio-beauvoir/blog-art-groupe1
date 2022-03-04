@@ -3,6 +3,7 @@
 require_once __DIR__ . '/middleware/loggedMember.php';
 
 require_once __DIR__ . '/layouts/front/head.php';
+
 ?>
 <div class="container section-profil">
         <div class="identity-box">

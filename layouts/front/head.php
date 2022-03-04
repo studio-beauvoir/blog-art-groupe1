@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '../../../middleware/getUser.php';
-require_once __DIR__.'/../../config/isProd.php';
+require_once __DIR__.'/../../config/inProd.php';
 
 ?>
 <!DOCTYPE html>

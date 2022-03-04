@@ -39,7 +39,7 @@ require_once __DIR__ . '/layouts/front/head.php';
 
 <script src="<?= webAssetPath('js/password.js') ?>"></script>
 
-<div class="container container-spaced">
+<div class="container container-auth">
     <h1>Se connecter</h1>
 
     <?=$validator->echoErrors() ?>
@@ -66,5 +66,7 @@ require_once __DIR__ . '/layouts/front/head.php';
         <p>Pas de compte? <a href="<?= webSitePath('/inscription.php') ?>">Inscrivez-vous</a></p>
     </form>
 </div>
-<script src="<?= webAssetPath('js/autofill-form.js') ?>"></script>
+<?php if(!IN_PROD):?>
+    <script src="<?= webAssetPath('js/autofill-form.js') ?>"></script>
+<?php endif?>
 <?php require_once __DIR__ . '/layouts/front/foot.php';?>

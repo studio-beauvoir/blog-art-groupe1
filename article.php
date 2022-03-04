@@ -122,25 +122,30 @@ include __DIR__ . '/layouts/front/head.php';
 <div class="discover">
     <h2 class="discover-title"><?=$libAccrochArt?></h2>
 </div>
+
 <div class="container articles">
-    <div class="artist-box">
-        <div class="artist-text">
-            <p bbtext><?=$parag1Art ?></p>
-        </div>
-        <h2 class="artist-title"><span class="purple" id="heading-text">Un article plus qu'incroyable</span></h2>
-    </div>
+
 
     <div class="corps">
+        <div class="artist-box">
+            <div class="artist-text">
+                <p bbtext><?=$parag1Art ?></p>
+            </div>
+            <h2 class="artist-title"><span class="purple" id="heading-text">Un article plus qu'incroyable</span></h2>
+        </div>
+
         <div class="oeuvre">
             <h2 class="oeuvre-title"><span class="green"><?=$libSsTitr1Art ?></span></h2>
             <p class="oeuvre-text">
                 <?=$parag2Art?>
             </p>
         </div>
+
         <div class="expo">
             <h2 class="expo-title"><span class="orange"><?=$libSsTitr2Art ?></span></h2>
             <p class="expo-text"><?=$parag3Art ?></p>           
         </div>
+        
         <div class="conclusion">
             <p><?=$libConclArt?></p>
         </div>

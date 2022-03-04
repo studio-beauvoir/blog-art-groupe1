@@ -140,11 +140,11 @@ span.bleu {
 .artist-box {
     width: 100%;
     display: flex;
+    gap: 4rem;
 }
 
 .artist-text {
     width: 50%;
-    margin-top: 100px;
 }
 
 .artist-title {
@@ -152,45 +152,41 @@ span.bleu {
     width: 50%;
     justify-content: center;
     align-items: center;
-    padding-top: 50px;
 }
 
 .corps{
+    padding-top: 8rem;
+    padding-bottom: 8rem;
     display: flex;
     flex-direction: column;
-    gap: 6rem;
+    gap: 10rem;
 }
 
 .oeuvre{
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 2rem;
 }
 
 .oeuvre-title {
     display: flex;
     width: 80%;
-    Margin-top: 100px;
 }
 
 .oeuvre-text {
     display: block;
     flex-direction: row;
-    Margin-top: 30px;
     width: 100%;
     columns: 2 auto;
     gap: 4rem;
-    margin-bottom: 5%;
 }
 
 .expo{
     display: flex;
     flex-direction:row;
     width: 100%;
-    height: 360px;
     align-items: center;
-    gap: 2rem;
-    margin-top: 60px;
+    gap: 4rem;
 }
 
 .expo-title{
@@ -199,14 +195,11 @@ span.bleu {
 
 .expo-text{
     width: 60%;
-    margin-top: 2%;
-    margin-bottom: 2%;
 }
 
 .conclusion {
     display: block;
     flex-direction: row;
-    margin-top: 60px;
     columns: 2;
     gap: 4rem;
 }

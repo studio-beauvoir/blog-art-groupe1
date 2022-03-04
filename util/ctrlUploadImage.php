@@ -52,8 +52,9 @@ function uploadImage($file, $filename=false) {
     // enregistre le fichier
     $isUploaded = move_uploaded_file($file['tmp_name'], uploadPath($nomImage));
     if (!$isUploaded) {
-        exit("<p>Erreur : upload file! <br>Vérifiez les droits en création ou créer le dossier en amont !");
-    } // End of if (!mkdir(TARGET, 0755))
+        // exit("<p>Erreur : upload file! <br>Vérifiez les droits en création ou créer le dossier en amont !");
+    } 
+    
     // retourne le résultat (bool)
     return [
         'is_uploaded' => $isUploaded,

@@ -3,6 +3,7 @@ require_once __DIR__ . '/../../util/index.php';
 $siteTitle="Bordeaux Street Art";
 $siteDesc="Connaissez-vous le street art à Bordeaux? Très peu? Vous avez surement vu une ou plusieur oeuvres mais ne les avez pas regardées? Alors venez donc!";
 $siteHeroImg=webAssetPath('img/hero.png');
+$siteUrl = 'http://plateforme-mmi.iut.u-bordeaux-montaigne.fr/etu-mmi-01/';
 ?>
 
 
@@ -13,9 +14,9 @@ $siteHeroImg=webAssetPath('img/hero.png');
 <meta name="language" content="fr">
 
 <meta http-equiv="content-language" content="fr" />
-<meta name="url" content="<?= webSitePath() ?>">
-<meta name="identifier-URL" content="<?= webSitePath() ?>">
-<link rel="canonical" href="<?= webSitePath() ?>" />
+<meta name="url" content="<?= $siteUrl ?>">
+<meta name="identifier-URL" content="<?= $siteUrl ?>">
+<link rel="canonical" href="<?= $siteUrl ?>" />
 
 <meta name="subject" content="street-art">
 <meta name="description" content="<?=isset($pageDesc)?$pageDesc:$siteDesc?>" />
@@ -25,15 +26,15 @@ $siteHeroImg=webAssetPath('img/hero.png');
 <meta property="og:type" content="website" />
 <meta property="og:description" content="<?=isset($pageDesc)?$pageDesc:$siteDesc?>" />
 <meta property="og:site_name" content="Bordeaux Street Art" />
-<meta property="og:url" content="<?= webSitePath() ?>" />
+<meta property="og:url" content="<?= $siteUrl ?>" />
 <meta property="og:locale" content="fr" />
 <meta property="og:image" content="<?=isset($pageHeroImg)?$pageHeroImg:$siteHeroImg ?>" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content="<?= webSitePath() ?>">
+<meta property="twitter:url" content="<?= $siteUrl ?>">
 <meta name="twitter:title" content="<?=isset($pageTitle)?$pageTitle:$siteTitle?>" />
 <meta name="twitter:description" content="<?=isset($pageDesc)?$pageDesc:$siteDesc?>" />
-<meta name="twitter:site" content="<?= webSitePath() ?>" />
+<meta name="twitter:site" content="<?= $siteUrl ?>" />
 <meta name="twitter:image" content="<?=isset($pageHeroImg)?$pageHeroImg:$siteHeroImg ?>" />
 
 <meta name="apple-mobile-web-app-capable" content="yes" />

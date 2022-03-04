@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ValidationRule::required('urlPhotArt')->maxLength(70),
         ValidationRule::required('libTitrArt')->maxLength(100),
         ValidationRule::required('libChapoArt'),
-        ValidationRule::required('libAccrochArt')->maxLength(100)->unsafe(),
+        ValidationRule::required('libAccrochArt')->maxLength(100),
         ValidationRule::required('parag1Art'),
         ValidationRule::required('libSsTitr1Art')->maxLength(100),
         ValidationRule::required('parag2Art'),

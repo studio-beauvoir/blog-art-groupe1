@@ -6,6 +6,7 @@ require_once __DIR__ . '/getUser.php';
 
 if(!$loggedUser) {
     header('location: '.webSitePath('/admin/connexion.php'));
+    die();
 }
 
 ?>

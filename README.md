@@ -21,11 +21,13 @@
 
 ## Panel Admin
 
-Accessible depuis : `/admin.php`
+- Accessible depuis : `/admin.php`
+- https://plateforme-mmi.iut.u-bordeaux-montaigne.fr/etu-mmi-01/admin.php
 
 ## Panel front
 
-Accessible depuis : `/index.php` (si c'est bien la page d'accueil que vous attendez)
+- Accessible depuis : `/index.php` (si c'est bien la page d'accueil que vous attendez)
+- https://plateforme-mmi.iut.u-bordeaux-montaigne.fr/etu-mmi-01/ 
 
 **Identifiant localhost/serveur iut**
 

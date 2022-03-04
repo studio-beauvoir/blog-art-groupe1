@@ -107,6 +107,10 @@ $idAngl = $article['numAngl'];
 $idThem = $article['numThem'];
 
 
+$pageTitle=$libTitrArt;
+$pageDesc=$libChapoArt;
+$pageHeroImg=webUploadPath($urlPhotArt);
+
 include __DIR__ . '/layouts/front/head.php';
 ?>
 

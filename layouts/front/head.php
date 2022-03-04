@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '../../../middleware/getUser.php';
+require_once __DIR__.'/../../config/isProd.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="fr-FR">
@@ -8,6 +10,8 @@ require_once __DIR__ . '../../../middleware/getUser.php';
         <meta charset="utf-8" />
         <title><?= isset($pageTitle)?$pageTitle:'Title' ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <?php require __DIR__ . '/../includes/seo.php'; ?>
 
         <link href="<?= webSitePath() ?>/assets/css/var.css" rel="stylesheet" type="text/css" />
         <link href="<?= webSitePath() ?>/assets/css/master.css" rel="stylesheet" type="text/css" />
@@ -24,7 +28,7 @@ require_once __DIR__ . '../../../middleware/getUser.php';
             <div class="container container-full">
                 <div class="admin-statut">
                     <div class="admin-statut-inner">
-                        <label>Administration</label>
+                        <label class="link-to-panel"><a href="<?= webSitePath('/admin.php')?>">Administration</a></label>
                         <h3><?=$loggedUser['pseudoUser'] ?></h3>
                         <a href="<?= webSitePath('/admin/deconnexion.php')?>" class="interactive-lien-text">Se déconnecter</a>
                     </div>

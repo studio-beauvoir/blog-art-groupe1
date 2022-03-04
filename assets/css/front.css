@@ -353,6 +353,66 @@ span.bleu {
     width: 85%;
 }
 
+/* ----------------- Page Profil ----------------- */
+
+.section-profil{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.identity-box{
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
+    margin-top: 50px;
+    margin-bottom: 10px;
+   background-color: var(--bg2);
+   border-radius: var(--rounded-lg);
+}
+
+.pdp{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--g1);
+    width: 250px;
+    height: 250px;
+    margin-right: 50px;
+    border-radius: var(--rounded-lg);
+}
+
+.svg-avatar{
+    width:200px;
+    height:200px;
+}
+
+.vous-box .vous-item h2{
+    margin: 0;
+}
+
+
+.donnee-box{
+   margin-top: 10px;
+   margin-bottom: 50px;
+}
+
+.donnee-box .donnee,
+.vous-item{
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0px 10px 0px;
+}
+.donnee-box .donnee label{
+    margin-bottom: 5px;
+}
+
+.donnee-box .donnee p,
+.vous-box .vous-item p
+{
+    font-size: 1.5rem;
+}
+
 
 /* ----------------------------------- FIN MAIN -----------------------------------*/
 

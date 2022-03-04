@@ -298,6 +298,13 @@ span.bleu {
     align-items: flex-start;
     gap: 2rem;
 }
+.home-article:hover {
+    cursor: pointer;
+}
+.home-article:hover .home-article-title{
+    text-decoration: underline;
+}
+
 
 .home-article:nth-child(2n){
     flex-flow: row-reverse nowrap;

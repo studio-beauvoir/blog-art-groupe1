@@ -11,6 +11,8 @@ require_once __DIR__.'/../../config/isProd.php';
         <title><?= isset($pageTitle)?$pageTitle:'Title' ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+        <?php require __DIR__ . '/../includes/seo.php'; ?>
+
         <link href="<?= webSitePath() ?>/assets/css/var.css" rel="stylesheet" type="text/css" />
         <link href="<?= webSitePath() ?>/assets/css/master.css" rel="stylesheet" type="text/css" />
         <link href="<?= webSitePath() ?>/assets/css/front.css" rel="stylesheet" type="text/css" />

@@ -56,8 +56,7 @@ require_once __DIR__ . '/layouts/front/head.php';
 ?>
 
 <script src="<?= webAssetPath('js/password.js') ?>"></script>
-
-<div class="container container-spaced">
+<div class="container container-auth">
     <h1>S'inscrire</h1>
     <?=$validator->echoErrors()?>
     <form
@@ -81,6 +80,9 @@ require_once __DIR__ . '/layouts/front/head.php';
         <div class="field">
             <label for="prenomMemb">Pseudo</label>
             <input value="<?=$validator->oldField('pseudoMemb')?>" name="pseudoMemb" id="pseudoMemb" placeholder="" size="100" maxlength="100" />
+            <p>
+                Entre 6 et 60 caractères, sans espaces, les caractères -_. sont autorisés
+            </p>
         </div>
 
         <div class="field">
@@ -124,7 +126,10 @@ require_once __DIR__ . '/layouts/front/head.php';
 
     </form>
 </div>
-<script src="<?= webAssetPath('js/autofill-form.js') ?>"></script>
+
+<?php if(!IN_PROD):?>
+    <script src="<?= webAssetPath('js/autofill-form.js') ?>"></script>
+<?php endif?>
 
 <?php require_once __DIR__ . '/layouts/front/foot.php';?>
 

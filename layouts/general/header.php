@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../middleware/getMember.php';
 <header >
     <div class="header-box container ">
         <div class="header-box-logo">
-            <a href="<?= webSitePath('/admin.php')?>"><img class="logo" src="<?= webAssetPath('img/logo.png') ?>" alt="logo du blog bordeaux street art"></a>
+            <a href="<?= webSitePath('/')?>"><img class="logo" src="<?= webAssetPath('img/logo.png') ?>" alt="logo du blog bordeaux street art"></a>
         </div>
         <nav class="header-box-liste">
             <ul>

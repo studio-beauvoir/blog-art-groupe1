@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../../util/index.php';
 require_once __DIR__ . '../../../middleware/getUser.php';
+require_once __DIR__.'/../../config/isProd.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="fr-FR">
@@ -24,7 +26,7 @@ require_once __DIR__ . '../../../middleware/getUser.php';
             <div class="container container-full">
                 <div class="admin-statut">
                     <div class="admin-statut-inner">
-                        <label>Administration</label>
+                        <label class="link-to-panel"><a href="<?= webSitePath('/admin.php')?>">Administration</a></label>
                         <h3><?=$loggedUser['pseudoUser'] ?></h3>
                         <a href="<?= webSitePath('/admin/deconnexion.php')?>" class="interactive-lien-text">Se déconnecter</a>
                     </div>

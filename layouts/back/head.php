@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '../../../util/index.php';
 require_once __DIR__ . '../../../middleware/userShouldBeMoreThanUser.php';
+require_once __DIR__.'/../../config/isProd.php';
 
 // Gestion des CIR => affichage erreur sinon
 $errCIR = isset($_GET['err_cir']) && $_GET['err_cir'] == true;
@@ -46,7 +47,7 @@ if (isset($erreur) && $erreur && isset($errSaisies)) {
             <div class="page-header">
                 <div class="admin-statut">
                     <div class="admin-statut-inner">
-                        <label>Administration</label>
+                        <label class="link-to-panel"><a href="<?= webSitePath('/admin.php')?>">Administration</a></label>
                         <h3><?=$loggedUser['pseudoUser'] ?></h3>
                         <a href="<?= webSitePath('/admin/deconnexion.php')?>" class="interactive-lien-text">Se déconnecter</a>
                     </div>

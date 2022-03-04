@@ -4,6 +4,7 @@ $siteTitle="Bordeaux Street Art";
 $siteDesc="Connaissez-vous le street art à Bordeaux? Très peu? Vous avez surement vu une ou plusieur oeuvres mais ne les avez pas regardées? Alors venez donc!";
 $siteHeroImg=webAssetPath('img/hero.png');
 $siteUrl = 'http://plateforme-mmi.iut.u-bordeaux-montaigne.fr/etu-mmi-01/';
+$siteBase = 'http://plateforme-mmi.iut.u-bordeaux-montaigne.fr';
 ?>
 
 
@@ -28,14 +29,14 @@ $siteUrl = 'http://plateforme-mmi.iut.u-bordeaux-montaigne.fr/etu-mmi-01/';
 <meta property="og:site_name" content="Bordeaux Street Art" />
 <meta property="og:url" content="<?= $siteUrl ?>" />
 <meta property="og:locale" content="fr" />
-<meta property="og:image" content="<?=isset($pageHeroImg)?$pageHeroImg:$siteHeroImg ?>" />
+<meta property="og:image" content="<?=$siteBase.(isset($pageHeroImg)?$pageHeroImg:$siteHeroImg) ?>" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content="<?= $siteUrl ?>">
 <meta name="twitter:title" content="<?=isset($pageTitle)?$pageTitle:$siteTitle?>" />
 <meta name="twitter:description" content="<?=isset($pageDesc)?$pageDesc:$siteDesc?>" />
 <meta name="twitter:site" content="<?= $siteUrl ?>" />
-<meta name="twitter:image" content="<?=isset($pageHeroImg)?$pageHeroImg:$siteHeroImg ?>" />
+<meta name="twitter:image" content="<?=$siteBase.(isset($pageHeroImg)?$pageHeroImg:$siteHeroImg) ?>" />
 
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-title" content="{{ site.title }}" />

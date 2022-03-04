@@ -6,7 +6,7 @@ require_once __DIR__.'/../../config/isProd.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr-FR">
-    <head>
+    <head prefix="og: http://ogp.me/ns#">
         <meta charset="utf-8" />
         <title><?= isset($pageTitle)?$pageTitle:'Title' ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

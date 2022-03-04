@@ -298,11 +298,12 @@ span.bleu {
     align-items: flex-start;
     gap: 2rem;
 }
-.home-article:hover {
-    cursor: pointer;
+.home-article .home-article-title a {
+    text-decoration: none;
 }
-.home-article:hover .home-article-title{
+.home-article .home-article-title a:hover {
     text-decoration: underline;
+    cursor: pointer;
 }
 
 

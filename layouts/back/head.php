@@ -45,9 +45,11 @@ if (isset($erreur) && $erreur && isset($errSaisies)) {
         <main>
             <div class="page-header">
                 <div class="admin-statut">
-                    <label>Administration</label>
-                    <h3><?=$loggedUser['pseudoUser'] ?></h3>
-                    <a href="<?= webSitePath('/admin/deconnexion.php')?>" class="interactive-lien-text">Se déconnecter</a>
+                    <div class="admin-statut-inner">
+                        <label>Administration</label>
+                        <h3><?=$loggedUser['pseudoUser'] ?></h3>
+                        <a href="<?= webSitePath('/admin/deconnexion.php')?>" class="interactive-lien-text">Se déconnecter</a>
+                    </div>
                 </div>
                 <?php require_once __DIR__ . '/../../layouts/back/nav.php'; ?>
                 <?php if(isset($pageTitle)) { ?>

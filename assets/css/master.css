@@ -194,6 +194,9 @@ main, .container {
     padding-top: 6rem;
     padding-bottom: 5rem;
 }
+.container-full {
+    width: 100%;
+}
 
 h1, h2, h3, h4 {
     margin-top: 1rem;
@@ -306,7 +309,22 @@ header{
 
 /* -------------------------------- FIN HEADER -------------------------------- */
 
+.admin-statut {
+    display: flex;
+}
 
+.admin-statut-inner {
+    display: block;
+    background: var(--bg2);
+    text-align: right;
+    align-self: flex-end;
+    margin: 4rem 0 4rem auto;
+    padding: 1.5rem 2rem;
+    border-radius: 1rem;
+}
+.admin-statut h3 {
+    margin: 0.2rem 0;
+}
 
 /* -----------------------------------FOOTER-----------------------------------*/
 footer {
@@ -345,6 +363,7 @@ ul li{
     list-style: none;
     margin: 10px;
 }
+
 
 .container-section-law{
     display: flex;

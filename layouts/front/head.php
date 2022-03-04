@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../util/index.php';
+require_once __DIR__ . '../../../middleware/getUser.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr-FR">
@@ -18,3 +19,15 @@ require_once __DIR__ . '/../../util/index.php';
     <body>
         <?php require_once __DIR__ . '/../general/header.php'; ?>
         <main class="container-fluid">
+
+        <?php if($loggedUser): ?>
+            <div class="container container-full">
+                <div class="admin-statut">
+                    <div class="admin-statut-inner">
+                        <label>Administration</label>
+                        <h3><?=$loggedUser['pseudoUser'] ?></h3>
+                        <a href="<?= webSitePath('/admin/deconnexion.php')?>" class="interactive-lien-text">Se déconnecter</a>
+                    </div>
+                </div>
+            </div>
+        <?php endif ?>

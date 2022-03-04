@@ -7,6 +7,7 @@ require_once __DIR__ . '/loggedUser.php';
 // il ne doit donc pas avoir le statut d'id 3 ou 4
 if( !($loggedUser['idStat']=='3' OR $loggedUser['idStat']=='4') ) {
     header('location: '.webSitePath('/erreur400.php'));
+    die();
 }
 
 ?>

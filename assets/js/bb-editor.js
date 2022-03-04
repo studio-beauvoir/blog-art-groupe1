@@ -74,6 +74,25 @@ class bbEditor {
         this.DOM.editor.setAttribute('contenteditable', 'true');
         this.DOM.container.appendChild(this.DOM.editor);
 
+        this.DOM.editor.addEventListener('paste', e=>{
+            let paste = (e.clipboardData || window.clipboardData).getData('text');
+
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return false;
+            selection.deleteFromDocument();
+            selection.getRangeAt(0).insertNode(document.createTextNode(paste));
+
+            e.preventDefault();
+            this.stringifyContent();
+        })
+
+        this.DOM.editor.addEventListener('keydown', event => {
+            if (event.key === 'Enter') {
+              document.execCommand('insertLineBreak')
+              event.preventDefault()
+            }
+          })
+
         this.DOM.editor.addEventListener('keyup', e=>{
             this.stringifyContent();
         })
@@ -221,6 +240,7 @@ class bbEditor {
         var content = "";
         const actionsWithBBEl = this.actions.filter(action=>action.bbElement!==undefined);
  
+        console.log(this.DOM.editor.childNodes);
         for(let node of this.DOM.editor.childNodes) {
             if(node.nodeName == "#text") {
                 let span = document.createElement('span');
@@ -228,7 +248,7 @@ class bbEditor {
                 span.appendChild(node);
             }
         }
-        console.log(this.DOM.editor.childNodes);
+        console.log(this.DOM.editor.children);
         for(let part of this.DOM.editor.children) {
             // nettoyage des balises vides
             if(part.innerText=="") {
@@ -245,8 +265,10 @@ class bbEditor {
                     break;
                 }
             }
-            content += contentBefore+part.innerText+contentAfter;
+            content += contentBefore+part.innerText.replace(/\r?\n|\r/gm, '[br/]')+contentAfter;
         }
+
+        content = content.replace(/<br\s?\/?>/gm, '[br/]');
         this.DOM.input.value = content;
     }
 
@@ -261,11 +283,11 @@ class bbEditor {
                 value = value.replace(new RegExp(`\\[\\/${action.bbElement}\\]`), `</${action.element}><span>`);
             }
         }
+        value = value.replace(/\[br\/\]/gm, `<br/>`);
         return value;
     }
 
     parseValue() {
-        console.log(this.getParsedValue());
         this.DOM.editor.innerHTML = this.getParsedValue();
     }
 

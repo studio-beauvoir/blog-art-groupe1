@@ -15,11 +15,11 @@ require_once __DIR__ . '/layouts/front/head.php';
                 </div>
                 <div class="vous-item">
                 <label>Pseudo</label> 
-                <p class="interactive-lien-text"><?=$loggedMember['pseudoMemb']?></p>
+                <p ><?=$loggedMember['pseudoMemb']?></p>
                 </div>
                 <div class="vous-item">
                 <label>Statut</label>
-                <p class="interactive-lien-text"><?=$loggedMember['libStat']?></p>
+                <p ><?=$loggedMember['libStat']?></p>
                 </div>
             </div>
         </div>
@@ -28,15 +28,15 @@ require_once __DIR__ . '/layouts/front/head.php';
                 <h3>Données de votre profil</h3>
                 <div class="donnee">
                 <label>Prénom</label>
-                <p class="interactive-lien-text"><?=$loggedMember['prenomMemb']?></p>
+                <p ><?=$loggedMember['prenomMemb']?></p>
                 </div>
                 <div class="donnee">
                 <label>Nom</label>
-                <p class="interactive-lien-text"><?=$loggedMember['nomMemb']?> </p>
+                <p ><?=$loggedMember['nomMemb']?> </p>
                 </div>
                 <div class="donnee">
                 <label>Email</label>
-                <p class="interactive-lien-text"><?=$loggedMember['eMailMemb']?></p>
+                <p ><?=$loggedMember['eMailMemb']?></p>
                 </div>
             </div>
         </div>

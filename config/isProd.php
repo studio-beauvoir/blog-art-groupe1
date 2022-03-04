@@ -1,3 +1,3 @@
 <?php
 
-define('IN_PROD', false);
+define('IN_PROD', true);

@@ -10,6 +10,7 @@ require_once __DIR__ . '/user.php';
 require_once __DIR__ . '/crypto.php';
 require_once __DIR__ . '/paths.php';
 require_once __DIR__ . '/ctrlUploadImage.php';
+require_once __DIR__ . '/stripAccents.php';
 
 // utils code Martine
 require_once __DIR__ . '/ctrlSaisies.php';

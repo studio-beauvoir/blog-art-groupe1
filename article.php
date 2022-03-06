@@ -116,7 +116,7 @@ include __DIR__ . '/layouts/front/head.php';
 
 <div class="head-bg">
     <img class=img-bg src="<?= webUploadPath($urlPhotArt) ?>" alt="Photo de l'article : <?= $article['libTitrArt']; ?>">
-    <h1 class="head-h1"><?=$libTitrArt?></h1>
+    <h1 class="head-h1"><?=stripAccents($libTitrArt)?></h1>
     <div class="head-h2"><h2><span class="bleu"> <?=$libTitrArt?> </span></h2></div>
     <div class="head-h4"><h4><?=$libChapoArt?></h4></div>
 </div>
